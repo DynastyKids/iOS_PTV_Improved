@@ -10,9 +10,10 @@
 		5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A331BF622731FAF00467C8B /* AppDelegate.swift */; };
 		5A331BF922731FAF00467C8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A331BF822731FAF00467C8B /* ViewController.swift */; };
 		5A331BFC22731FAF00467C8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A331BFA22731FAF00467C8B /* Main.storyboard */; };
-		5A331BFF22731FAF00467C8B /* Oh_My_Transport.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A331BFD22731FAF00467C8B /* Oh_My_Transport.xcdatamodeld */; };
 		5A331C0122731FB000467C8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A331C0022731FB000467C8B /* Assets.xcassets */; };
 		5A331C0422731FB000467C8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A331C0222731FB000467C8B /* LaunchScreen.storyboard */; };
+		5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A331C0B2273276700467C8B /* localTransportData.xcdatamodeld */; };
+		5A331C0F22732BC000467C8B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A331C0E22732BC000467C8B /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +21,11 @@
 		5A331BF622731FAF00467C8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A331BF822731FAF00467C8B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5A331BFB22731FAF00467C8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5A331BFE22731FAF00467C8B /* Oh_My_Transport.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Oh_My_Transport.xcdatamodel; sourceTree = "<group>"; };
 		5A331C0022731FB000467C8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A331C0322731FB000467C8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A331C0522731FB000467C8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A331C0C2273276700467C8B /* localTransportData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = localTransportData.xcdatamodel; sourceTree = "<group>"; };
+		5A331C0E22732BC000467C8B /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +64,8 @@
 				5A331C0022731FB000467C8B /* Assets.xcassets */,
 				5A331C0222731FB000467C8B /* LaunchScreen.storyboard */,
 				5A331C0522731FB000467C8B /* Info.plist */,
-				5A331BFD22731FAF00467C8B /* Oh_My_Transport.xcdatamodeld */,
+				5A331C0B2273276700467C8B /* localTransportData.xcdatamodeld */,
+				5A331C0E22732BC000467C8B /* AboutViewController.swift */,
 			);
 			path = "Oh_My-Transport";
 			sourceTree = "<group>";
@@ -138,9 +141,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */,
 				5A331BF922731FAF00467C8B /* ViewController.swift in Sources */,
+				5A331C0F22732BC000467C8B /* AboutViewController.swift in Sources */,
 				5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */,
-				5A331BFF22731FAF00467C8B /* Oh_My_Transport.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,13 +346,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		5A331BFD22731FAF00467C8B /* Oh_My_Transport.xcdatamodeld */ = {
+		5A331C0B2273276700467C8B /* localTransportData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				5A331BFE22731FAF00467C8B /* Oh_My_Transport.xcdatamodel */,
+				5A331C0C2273276700467C8B /* localTransportData.xcdatamodel */,
 			);
-			currentVersion = 5A331BFE22731FAF00467C8B /* Oh_My_Transport.xcdatamodel */;
-			path = Oh_My_Transport.xcdatamodeld;
+			currentVersion = 5A331C0C2273276700467C8B /* localTransportData.xcdatamodel */;
+			path = localTransportData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
