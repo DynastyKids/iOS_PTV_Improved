@@ -67,7 +67,7 @@ class DisruptionDetailViewController: UIViewController {
 }
 
 // MARK: WKNavigationDelegate
-extension ViewController: WKNavigationDelegate {
+extension UIViewController: WKNavigationDelegate {
     //视图开始载入的时候显示网络活动指示器
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
