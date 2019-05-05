@@ -32,8 +32,8 @@
 		5AFA5F44227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F3E227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift */; };
 		5AFA5F45227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F3F227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift */; };
 		5AFA5F46227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F40227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift */; };
-		5AFA5F4C227F2BDE00FAAA1D /* metroTrainData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F4B227F2BDE00FAAA1D /* metroTrainData.swift */; };
 		5AFA5F4E227F445600FAAA1D /* disruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */; };
+		5AFA5F50227F4A0800FAAA1D /* Disruption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F4F227F4A0800FAAA1D /* Disruption.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,8 +64,8 @@
 		5AFA5F3E227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5AFA5F3F227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5AFA5F40227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5AFA5F4B227F2BDE00FAAA1D /* metroTrainData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metroTrainData.swift; sourceTree = "<group>"; };
 		5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = disruptionTableViewCell.swift; sourceTree = "<group>"; };
+		5AFA5F4F227F4A0800FAAA1D /* Disruption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disruption.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,8 +144,8 @@
 			children = (
 				5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */,
 				5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */,
-				5AFA5F4B227F2BDE00FAAA1D /* metroTrainData.swift */,
 				5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */,
+				5AFA5F4F227F4A0800FAAA1D /* Disruption.swift */,
 			);
 			path = Disruptions;
 			sourceTree = "<group>";
@@ -237,9 +237,9 @@
 				5AFA5F41227F1E0B00FAAA1D /* FavStop+CoreDataClass.swift in Sources */,
 				5AFA5F45227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift in Sources */,
 				5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */,
+				5AFA5F50227F4A0800FAAA1D /* Disruption.swift in Sources */,
 				5A331C0F22732BC000467C8B /* AboutViewController.swift in Sources */,
 				5AFA5F46227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift in Sources */,
-				5AFA5F4C227F2BDE00FAAA1D /* metroTrainData.swift in Sources */,
 				5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */,
 				5AFA5F43227F1E0B00FAAA1D /* APIInfo+CoreDataClass.swift in Sources */,
 				5AFA5F42227F1E0B00FAAA1D /* FavStop+CoreDataProperties.swift in Sources */,
