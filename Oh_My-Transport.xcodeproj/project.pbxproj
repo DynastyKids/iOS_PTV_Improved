@@ -20,6 +20,11 @@
 		5A7B1AED227E0A990012E09C /* nearbyStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AEC227E0A990012E09C /* nearbyStopsTableViewCell.swift */; };
 		5A7B1AEF227E0AA70012E09C /* savedStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AEE227E0AA70012E09C /* savedStopsTableViewCell.swift */; };
 		5A7B1AF1227E0B020012E09C /* StopsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AF0227E0B020012E09C /* StopsTableViewController.swift */; };
+		5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */; };
+		5A7B1B03227EEBE50012E09C /* Favorite+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AFF227EEBE50012E09C /* Favorite+CoreDataClass.swift */; };
+		5A7B1B04227EEBE50012E09C /* Favorite+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1B00227EEBE50012E09C /* Favorite+CoreDataProperties.swift */; };
+		5A7B1B05227EEBE50012E09C /* APIInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1B01227EEBE50012E09C /* APIInfo+CoreDataClass.swift */; };
+		5A7B1B06227EEBE50012E09C /* APIInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1B02227EEBE50012E09C /* APIInfo+CoreDataProperties.swift */; };
 		5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */; };
 		5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */; };
 		5AEA77D9227C6FC3005A6A74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D8227C6FC3005A6A74 /* HomeViewController.swift */; };
@@ -44,6 +49,11 @@
 		5A7B1AEC227E0A990012E09C /* nearbyStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nearbyStopsTableViewCell.swift; sourceTree = "<group>"; };
 		5A7B1AEE227E0AA70012E09C /* savedStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedStopsTableViewCell.swift; sourceTree = "<group>"; };
 		5A7B1AF0227E0B020012E09C /* StopsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsTableViewController.swift; sourceTree = "<group>"; };
+		5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		5A7B1AFF227EEBE50012E09C /* Favorite+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorite+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5A7B1B00227EEBE50012E09C /* Favorite+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Favorite+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5A7B1B01227EEBE50012E09C /* APIInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5A7B1B02227EEBE50012E09C /* APIInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionsTableViewController.swift; sourceTree = "<group>"; };
 		5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionDetailViewController.swift; sourceTree = "<group>"; };
 		5AEA77D8227C6FC3005A6A74 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +92,7 @@
 		5A331BF522731FAF00467C8B /* Oh_My-Transport */ = {
 			isa = PBXGroup;
 			children = (
+				5A7B1AF4227EE91D0012E09C /* DataModel */,
 				5AEA77DC227C70BC005A6A74 /* StopsPage */,
 				5AEA77D7227C6FB1005A6A74 /* Homepage */,
 				5AEA77D0227C67A8005A6A74 /* Disruptions */,
@@ -90,11 +101,23 @@
 				5A331C0022731FB000467C8B /* Assets.xcassets */,
 				5A331C0222731FB000467C8B /* LaunchScreen.storyboard */,
 				5A331C0522731FB000467C8B /* Info.plist */,
-				5A331C0B2273276700467C8B /* localTransportData.xcdatamodeld */,
 				5A331C0E22732BC000467C8B /* AboutViewController.swift */,
 				5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */,
 			);
 			path = "Oh_My-Transport";
+			sourceTree = "<group>";
+		};
+		5A7B1AF4227EE91D0012E09C /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				5A7B1AFF227EEBE50012E09C /* Favorite+CoreDataClass.swift */,
+				5A7B1B00227EEBE50012E09C /* Favorite+CoreDataProperties.swift */,
+				5A7B1B01227EEBE50012E09C /* APIInfo+CoreDataClass.swift */,
+				5A7B1B02227EEBE50012E09C /* APIInfo+CoreDataProperties.swift */,
+				5A331C0B2273276700467C8B /* localTransportData.xcdatamodeld */,
+				5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 		5AEA77D0227C67A8005A6A74 /* Disruptions */ = {
@@ -208,11 +231,16 @@
 				5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */,
 				5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */,
 				5AEA77E2227C72E3005A6A74 /* nextArrive.swift in Sources */,
+				5A7B1B04227EEBE50012E09C /* Favorite+CoreDataProperties.swift in Sources */,
+				5A7B1B05227EEBE50012E09C /* APIInfo+CoreDataClass.swift in Sources */,
 				5AEA77DE227C70D7005A6A74 /* StopsViewController.swift in Sources */,
 				5A7B1AE7227E058D0012E09C /* StopsTableViewCell.swift in Sources */,
 				5A7B1AF1227E0B020012E09C /* StopsTableViewController.swift in Sources */,
 				5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */,
 				5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */,
+				5A7B1B06227EEBE50012E09C /* APIInfo+CoreDataProperties.swift in Sources */,
+				5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */,
+				5A7B1B03227EEBE50012E09C /* Favorite+CoreDataClass.swift in Sources */,
 				5AEA77D9227C6FC3005A6A74 /* HomeViewController.swift in Sources */,
 				5A7B1AEF227E0AA70012E09C /* savedStopsTableViewCell.swift in Sources */,
 				5A7B1AEB227E0A550012E09C /* stopsTableView.swift in Sources */,
