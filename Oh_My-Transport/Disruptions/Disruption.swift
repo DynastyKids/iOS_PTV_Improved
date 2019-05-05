@@ -1,5 +1,5 @@
 //
-//  metroTrainData.swift
+//  Disruption.swift
 //  Oh_My-Transport
 //
 //  Created by OriWuKids on 6/5/19.
@@ -7,7 +7,3 @@
 //
 
 import Foundation
-
-class metroTrainData: NSObject, Decodable{
-    
-}
