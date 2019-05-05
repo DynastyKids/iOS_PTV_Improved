@@ -11,9 +11,10 @@ import CommonCrypto
 import Foundation
 import CoreData
 
-class HomeViewController: UIViewController, UISearchResultsUpdating, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var taskFetchedResultsController: NSFetchedResultsController<Favorite>!
+    var stopFetchedResultsController: NSFetchedResultsController<FavStops>!
+    var routeFetchedResultsController: NSFetchedResultsController<FavRoutes>!
     var filteredTasks: [Favorite] = []
     var searchAllTasks: [Favorite] = []
     var stops:[Stops]=[]
@@ -48,11 +49,11 @@ class HomeViewController: UIViewController, UISearchResultsUpdating, UITableView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView ==
+        if tableView == 
     }
     
 
@@ -67,10 +68,10 @@ class HomeViewController: UIViewController, UISearchResultsUpdating, UITableView
     */
     
     // MARK: - Search Function
-    func updateSearchResults(for searchController: UISearchController) {
-        if taskFetchedResultsController.fetchedObjects?.isEmpty == false{
-            searchAllTasks = taskFetchedResultsController.fetchedObjects!
-        }
+//    func updateSearchResults(for searchController: UISearchController) {
+//        if taskFetchedResultsController.fetchedObjects?.isEmpty == false{
+//            searchAllTasks = taskFetchedResultsController.fetchedObjects!
+//        }
 //        if let searchText = searchController.searchBar.text?.lowercased(), searchText.count > 0{
 //            filteredTasks = searchAllTasks.filter({(favorite: Favorite) -> Bool in
 //                return (favorite.title?.lowercased().contains(searchText))!
