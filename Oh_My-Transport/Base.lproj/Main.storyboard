@@ -629,21 +629,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="disruptions" rowHeight="150" id="sgt-vZ-dUG" customClass="disruptionTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="150"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="disruptions" id="sgt-vZ-dUG" customClass="disruptionTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sgt-vZ-dUG" id="12Q-AU-Igp">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="149.66666666666666"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cranbourne and Pakenham lines: Service alterations from 9.20am to 7.15pm on Sunday 12 May 2019" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdB-V3-inX">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Cranbourne and Pakenham lines: Service alterations from 9.20am to 7.15pm on Sunday 12 May 2019" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdB-V3-inX">
                                             <rect key="frame" x="16" y="8" width="382" height="71.666666666666671"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Published On:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obq-KO-wUx">
-                                            <rect key="frame" x="16" y="85.666666666666671" width="96" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Published On: 02MAY2019 05:49:50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obq-KO-wUx">
+                                            <rect key="frame" x="16" y="85.666666666666742" width="251" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -654,6 +654,7 @@
                                         <constraint firstAttribute="trailing" secondItem="QdB-V3-inX" secondAttribute="trailing" constant="16" id="Nch-Nd-a7C"/>
                                         <constraint firstItem="obq-KO-wUx" firstAttribute="leading" secondItem="12Q-AU-Igp" secondAttribute="leading" constant="16" id="ew6-wW-VPt"/>
                                         <constraint firstItem="QdB-V3-inX" firstAttribute="top" secondItem="12Q-AU-Igp" secondAttribute="top" constant="8" id="mev-AM-EBv"/>
+                                        <constraint firstAttribute="bottom" secondItem="obq-KO-wUx" secondAttribute="bottom" constant="8" id="tqk-or-jzu"/>
                                         <constraint firstItem="QdB-V3-inX" firstAttribute="leading" secondItem="12Q-AU-Igp" secondAttribute="leading" constant="16" id="uJ1-tt-Fzh"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -672,7 +673,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ulh-n4-WKG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3007" y="1545"/>
+            <point key="canvasLocation" x="3005.7971014492755" y="1544.8369565217392"/>
         </scene>
         <!--Disruptions Detail-->
         <scene sceneID="f2n-yQ-vOF">
@@ -685,18 +686,7 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sp2-1X-HjQ">
                                 <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="COH-LU-Va8">
-                                        <barButtonItem key="rightBarButtonItem" style="plain" id="2A6-gA-9uK">
-                                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o8s-VT-JmT">
-                                                <rect key="frame" x="302" y="7" width="92" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Done"/>
-                                                <connections>
-                                                    <action selector="dismissWebKit:" destination="BJB-We-4jd" eventType="touchUpInside" id="LEp-PX-FUE"/>
-                                                </connections>
-                                            </button>
-                                        </barButtonItem>
-                                    </navigationItem>
+                                    <navigationItem title="Title" id="COH-LU-Va8"/>
                                 </items>
                             </navigationBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cranbourne and Pakenham lines: Service alterations from 9.20am to 7.15pm on Sunday 12 May 2019" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pF-0J-bJ9" userLabel="disruptionTitle">
@@ -728,23 +718,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xK6-yp-hYI">
-                                <rect key="frame" x="40" y="412" width="144" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="View on PTV website"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xK6-yp-hYI">
+                                <rect key="frame" x="16" y="363" width="382" height="30"/>
+                                <state key="normal" title="View details on PTV website"/>
                                 <connections>
                                     <action selector="viewInWebKit:" destination="BJB-We-4jd" eventType="touchUpInside" id="0Vs-92-Mgj"/>
                                 </connections>
                             </button>
-                            <wkWebView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GgD-A4-rLV" userLabel="WebKitView">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" allowsPictureInPictureMediaPlayback="NO">
-                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -753,16 +733,15 @@
                             <constraint firstItem="0pF-0J-bJ9" firstAttribute="top" secondItem="5cf-AQ-8fQ" secondAttribute="top" constant="16" id="5X0-NS-e1q"/>
                             <constraint firstItem="EwJ-XQ-Dz1" firstAttribute="leading" secondItem="5cf-AQ-8fQ" secondAttribute="leading" constant="20" id="Bif-1V-O3g"/>
                             <constraint firstItem="ZF2-Hp-AOh" firstAttribute="top" secondItem="fF4-AZ-dl4" secondAttribute="bottom" constant="4" id="Jw7-Qu-EQb"/>
-                            <constraint firstItem="GgD-A4-rLV" firstAttribute="bottom" secondItem="5cf-AQ-8fQ" secondAttribute="bottom" id="OWK-7d-t63"/>
                             <constraint firstAttribute="trailing" secondItem="Sp2-1X-HjQ" secondAttribute="trailing" id="QWM-I3-3Vn"/>
-                            <constraint firstItem="GgD-A4-rLV" firstAttribute="top" secondItem="5cf-AQ-8fQ" secondAttribute="top" id="VFw-85-21Z"/>
+                            <constraint firstItem="xK6-yp-hYI" firstAttribute="top" secondItem="NXc-xP-6Gt" secondAttribute="bottom" constant="24" id="Ryw-LY-gD1"/>
+                            <constraint firstItem="5cf-AQ-8fQ" firstAttribute="trailing" secondItem="xK6-yp-hYI" secondAttribute="trailing" constant="16" id="UE9-QD-fCx"/>
                             <constraint firstItem="EwJ-XQ-Dz1" firstAttribute="top" secondItem="0pF-0J-bJ9" secondAttribute="bottom" constant="12" id="a3a-P9-Z4Z"/>
-                            <constraint firstItem="GgD-A4-rLV" firstAttribute="trailing" secondItem="5cf-AQ-8fQ" secondAttribute="trailing" id="aRc-tr-lvk"/>
                             <constraint firstItem="Sp2-1X-HjQ" firstAttribute="leading" secondItem="Z3Y-kl-n6r" secondAttribute="leading" id="cjI-pb-HiD"/>
                             <constraint firstItem="fF4-AZ-dl4" firstAttribute="leading" secondItem="5cf-AQ-8fQ" secondAttribute="leading" constant="20" id="evp-he-y6q"/>
                             <constraint firstItem="NXc-xP-6Gt" firstAttribute="top" secondItem="ZF2-Hp-AOh" secondAttribute="bottom" constant="20" id="fg7-GA-vnl"/>
+                            <constraint firstItem="xK6-yp-hYI" firstAttribute="leading" secondItem="5cf-AQ-8fQ" secondAttribute="leading" constant="16" id="fjv-SZ-kGJ"/>
                             <constraint firstItem="NXc-xP-6Gt" firstAttribute="leading" secondItem="5cf-AQ-8fQ" secondAttribute="leading" constant="16" id="o70-vk-hwZ"/>
-                            <constraint firstItem="GgD-A4-rLV" firstAttribute="leading" secondItem="5cf-AQ-8fQ" secondAttribute="leading" id="oAm-pH-hxS"/>
                             <constraint firstItem="fF4-AZ-dl4" firstAttribute="top" secondItem="EwJ-XQ-Dz1" secondAttribute="bottom" constant="4" id="pKn-fO-xcv"/>
                             <constraint firstItem="5cf-AQ-8fQ" firstAttribute="trailing" secondItem="NXc-xP-6Gt" secondAttribute="trailing" constant="16" id="pMo-QJ-H57"/>
                             <constraint firstItem="ZF2-Hp-AOh" firstAttribute="leading" secondItem="5cf-AQ-8fQ" secondAttribute="leading" constant="20" id="sFq-GP-tsk"/>
@@ -776,8 +755,6 @@
                         <outlet property="disruptionPublishDateLabel" destination="EwJ-XQ-Dz1" id="fVs-ug-pvI"/>
                         <outlet property="disruptionStartDateLabel" destination="fF4-AZ-dl4" id="TbG-Zl-thn"/>
                         <outlet property="disruptionTitleLabel" destination="0pF-0J-bJ9" id="To3-YD-4OY"/>
-                        <outlet property="doneButton" destination="2A6-gA-9uK" id="WRn-w2-HB8"/>
-                        <outlet property="webkitview" destination="GgD-A4-rLV" id="pky-PG-6cN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFK-3t-LTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
