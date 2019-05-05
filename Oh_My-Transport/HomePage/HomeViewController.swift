@@ -12,12 +12,12 @@ import Foundation
 import CoreData
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var stopFetchedResultsController: NSFetchedResultsController<FavStops>!
+    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
     var filteredRoutes: [FavRoute] = []
-    var filteredStops: [FavStops] = []
+    var filteredStops: [FavStop] = []
     var searchAllRoutes: [FavRoute] = []
-    var searchAllStops: [FavStops] = []
+    var searchAllStops: [FavStop] = []
     
     @IBOutlet weak var stopsTableView: UITableView!
     
@@ -33,7 +33,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let hardcodedDevID:String = "3001122"
         let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
         let searchPattern:String = "/v3/search/"+Pattern+"?devid="+hardcodedDevID;
-        let signature:String = searchPattern.hmac(algorithm: .SHA1, key: hardcodedDevKey);
+        let signature:String = searchPattern.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey);
         
         let resultString:String = hardcodedURL+searchPattern+"&signature="+signature;
         

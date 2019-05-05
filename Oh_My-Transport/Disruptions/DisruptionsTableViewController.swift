@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import Foundation
+import CommonCrypto
 
 class DisruptionsTableViewController: UITableViewController {
+    
+    let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
+    let hardcodedDevID:String = "3001122"
+    let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +29,8 @@ class DisruptionsTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,33 +45,6 @@ class DisruptionsTableViewController: UITableViewController {
         // Configure the cell...
 
         return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
     }
     */
 
@@ -86,5 +65,39 @@ class DisruptionsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func createResultString(Pattern:String)->String{
+        let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
+        let hardcodedDevID:String = "3001122"
+        let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
+        let searchPattern:String = "/v3/search/"+Pattern+"?devid="+hardcodedDevID;
+        let signature:String = searchPattern.hmac(algorithm: .SHA1, key: hardcodedDevKey);
+        
+        let resultString:String = hardcodedURL+searchPattern+"&signature="+signature;
+        
+        return resultString
+    }
+    
+    fileprivate func extractedFunc(_ request: String) -> String {
+        let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
+        let requestAddress: String = hardcodedURL+request+"&signature="+signature
+        
+        print(requestAddress)
+        return requestAddress
+    }
+    
+    func disruptionAll()->String{
+        let request: String = "/v3/disruptions?devid="+hardcodedDevID
+        return extractedFunc(request)
+    }
+    func disruptionByRoute(routeID: Int16)->String{
+        let request: String = "/v3/disruptions/route/"+String(routeID)+"?devid="+hardcodedDevID
+        return extractedFunc(request)
+    }
+    func disruptionByStop(stopID: Int16)->String{
+        let request: String = "/v3/disruptions/stop/"+String(stopID)+"?devid="+hardcodedDevID
+        return extractedFunc(request)
+    }
 
 }
+
