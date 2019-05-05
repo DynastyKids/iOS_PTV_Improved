@@ -17,9 +17,9 @@ extension FavRoute {
         return NSFetchRequest<FavRoute>(entityName: "FavRoute")
     }
 
-    @NSManaged public var stopID: Int32
-    @NSManaged public var stopName: String?
-    @NSManaged public var stopSuburb: String?
-    @NSManaged public var stopType: Int16
+    @NSManaged public var route_id: Int16
+    @NSManaged public var route_name: String?
+    @NSManaged public var route_number: String?
+    @NSManaged public var route_type: Int16
 
 }

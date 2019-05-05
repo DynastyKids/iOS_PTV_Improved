@@ -24,14 +24,14 @@
 		5AEA77DE227C70D7005A6A74 /* StopsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77DD227C70D7005A6A74 /* StopsViewController.swift */; };
 		5AEA77E2227C72E3005A6A74 /* nextArrive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77E1227C72E3005A6A74 /* nextArrive.swift */; };
 		5AFA5F1C227F07E300FAAA1D /* favoriteRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F1B227F07E300FAAA1D /* favoriteRouteTableViewCell.swift */; };
-		5AFA5F2F227F0B1A00FAAA1D /* APIInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F29227F0B1900FAAA1D /* APIInfo+CoreDataClass.swift */; };
-		5AFA5F30227F0B1A00FAAA1D /* APIInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F2A227F0B1900FAAA1D /* APIInfo+CoreDataProperties.swift */; };
-		5AFA5F31227F0B1A00FAAA1D /* FavStops+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F2B227F0B1900FAAA1D /* FavStops+CoreDataClass.swift */; };
-		5AFA5F32227F0B1A00FAAA1D /* FavStops+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F2C227F0B1A00FAAA1D /* FavStops+CoreDataProperties.swift */; };
-		5AFA5F33227F0B1A00FAAA1D /* FavRoute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F2D227F0B1A00FAAA1D /* FavRoute+CoreDataClass.swift */; };
-		5AFA5F34227F0B1A00FAAA1D /* FavRoute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F2E227F0B1A00FAAA1D /* FavRoute+CoreDataProperties.swift */; };
 		5AFA5F38227F19FE00FAAA1D /* favoriteStopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F37227F19FE00FAAA1D /* favoriteStopTableViewCell.swift */; };
 		5AFA5F3A227F1A0E00FAAA1D /* nearbyStopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F39227F1A0E00FAAA1D /* nearbyStopTableViewCell.swift */; };
+		5AFA5F41227F1E0B00FAAA1D /* FavStop+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F3B227F1E0B00FAAA1D /* FavStop+CoreDataClass.swift */; };
+		5AFA5F42227F1E0B00FAAA1D /* FavStop+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F3C227F1E0B00FAAA1D /* FavStop+CoreDataProperties.swift */; };
+		5AFA5F43227F1E0B00FAAA1D /* APIInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F3D227F1E0B00FAAA1D /* APIInfo+CoreDataClass.swift */; };
+		5AFA5F44227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F3E227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift */; };
+		5AFA5F45227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F3F227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift */; };
+		5AFA5F46227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F40227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,14 +54,14 @@
 		5AEA77DD227C70D7005A6A74 /* StopsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopsViewController.swift; sourceTree = "<group>"; };
 		5AEA77E1227C72E3005A6A74 /* nextArrive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextArrive.swift; sourceTree = "<group>"; };
 		5AFA5F1B227F07E300FAAA1D /* favoriteRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favoriteRouteTableViewCell.swift; sourceTree = "<group>"; };
-		5AFA5F29227F0B1900FAAA1D /* APIInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5AFA5F2A227F0B1900FAAA1D /* APIInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5AFA5F2B227F0B1900FAAA1D /* FavStops+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavStops+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5AFA5F2C227F0B1A00FAAA1D /* FavStops+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavStops+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5AFA5F2D227F0B1A00FAAA1D /* FavRoute+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5AFA5F2E227F0B1A00FAAA1D /* FavRoute+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5AFA5F37227F19FE00FAAA1D /* favoriteStopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favoriteStopTableViewCell.swift; sourceTree = "<group>"; };
 		5AFA5F39227F1A0E00FAAA1D /* nearbyStopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nearbyStopTableViewCell.swift; sourceTree = "<group>"; };
+		5AFA5F3B227F1E0B00FAAA1D /* FavStop+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavStop+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5AFA5F3C227F1E0B00FAAA1D /* FavStop+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavStop+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5AFA5F3D227F1E0B00FAAA1D /* APIInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5AFA5F3E227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5AFA5F3F227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5AFA5F40227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,12 +112,12 @@
 		5A7B1AF4227EE91D0012E09C /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				5AFA5F29227F0B1900FAAA1D /* APIInfo+CoreDataClass.swift */,
-				5AFA5F2A227F0B1900FAAA1D /* APIInfo+CoreDataProperties.swift */,
-				5AFA5F2B227F0B1900FAAA1D /* FavStops+CoreDataClass.swift */,
-				5AFA5F2C227F0B1A00FAAA1D /* FavStops+CoreDataProperties.swift */,
-				5AFA5F2D227F0B1A00FAAA1D /* FavRoute+CoreDataClass.swift */,
-				5AFA5F2E227F0B1A00FAAA1D /* FavRoute+CoreDataProperties.swift */,
+				5AFA5F3B227F1E0B00FAAA1D /* FavStop+CoreDataClass.swift */,
+				5AFA5F3C227F1E0B00FAAA1D /* FavStop+CoreDataProperties.swift */,
+				5AFA5F3D227F1E0B00FAAA1D /* APIInfo+CoreDataClass.swift */,
+				5AFA5F3E227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift */,
+				5AFA5F3F227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift */,
+				5AFA5F40227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift */,
 				5A331C0B2273276700467C8B /* localTransportData.xcdatamodeld */,
 				5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */,
 			);
@@ -227,27 +227,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AFA5F44227F1E0B00FAAA1D /* APIInfo+CoreDataProperties.swift in Sources */,
+				5AFA5F41227F1E0B00FAAA1D /* FavStop+CoreDataClass.swift in Sources */,
+				5AFA5F45227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift in Sources */,
 				5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */,
 				5A331C0F22732BC000467C8B /* AboutViewController.swift in Sources */,
+				5AFA5F46227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift in Sources */,
 				5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */,
+				5AFA5F43227F1E0B00FAAA1D /* APIInfo+CoreDataClass.swift in Sources */,
+				5AFA5F42227F1E0B00FAAA1D /* FavStop+CoreDataProperties.swift in Sources */,
 				5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */,
 				5AEA77E2227C72E3005A6A74 /* nextArrive.swift in Sources */,
 				5AFA5F1C227F07E300FAAA1D /* favoriteRouteTableViewCell.swift in Sources */,
 				5AFA5F3A227F1A0E00FAAA1D /* nearbyStopTableViewCell.swift in Sources */,
-				5AFA5F33227F0B1A00FAAA1D /* FavRoute+CoreDataClass.swift in Sources */,
 				5AEA77DE227C70D7005A6A74 /* StopsViewController.swift in Sources */,
-				5AFA5F32227F0B1A00FAAA1D /* FavStops+CoreDataProperties.swift in Sources */,
-				5AFA5F34227F0B1A00FAAA1D /* FavRoute+CoreDataProperties.swift in Sources */,
 				5AFA5F38227F19FE00FAAA1D /* favoriteStopTableViewCell.swift in Sources */,
 				5A7B1AE7227E058D0012E09C /* StopsTableViewCell.swift in Sources */,
-				5AFA5F30227F0B1A00FAAA1D /* APIInfo+CoreDataProperties.swift in Sources */,
 				5A7B1AF1227E0B020012E09C /* StopsTableViewController.swift in Sources */,
 				5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */,
 				5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */,
 				5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */,
 				5AEA77D9227C6FC3005A6A74 /* HomeViewController.swift in Sources */,
-				5AFA5F31227F0B1A00FAAA1D /* FavStops+CoreDataClass.swift in Sources */,
-				5AFA5F2F227F0B1A00FAAA1D /* APIInfo+CoreDataClass.swift in Sources */,
 				5A7B1AE9227E05C90012E09C /* StopsInfoTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
