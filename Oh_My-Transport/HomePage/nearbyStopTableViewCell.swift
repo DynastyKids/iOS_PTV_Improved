@@ -9,7 +9,16 @@
 import UIKit
 
 class nearbyStopTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var stopNameLabel: UILabel!
+    @IBOutlet weak var stopSuburbLabel: UILabel!
+    @IBOutlet weak var depature1Label: UILabel!
+    @IBOutlet weak var dep1timeLabel: UILabel!
+    @IBOutlet weak var departure2Label: UILabel!
+    @IBOutlet weak var dep2timeLabel: UILabel!
+    @IBOutlet weak var departure3Label: UILabel!
+    @IBOutlet weak var dep3timeLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
