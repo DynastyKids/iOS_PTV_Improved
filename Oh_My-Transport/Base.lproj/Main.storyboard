@@ -35,11 +35,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tgO-pY-T9h" userLabel="stopsTableView">
-                                <rect key="frame" x="0.0" y="119" width="414" height="321"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tgO-pY-T9h" userLabel="stopsTableView">
+                                <rect key="frame" x="0.0" y="64" width="414" height="628"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="nearbyStopsCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nearbyStopsCell" rowHeight="65" id="ift-tC-Lfr">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nearbyStopsCell" rowHeight="65" id="ift-tC-Lfr" customClass="nearbyStopTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ift-tC-Lfr" id="Eyy-Nf-w1S">
@@ -154,10 +154,18 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="dep1timeLabel" destination="meW-OC-SoH" id="GiM-2K-Ast"/>
+                                            <outlet property="dep2timeLabel" destination="g7b-SH-Wa8" id="4on-4J-muz"/>
+                                            <outlet property="dep3timeLabel" destination="ub3-vO-XHF" id="vLu-GK-2YV"/>
+                                            <outlet property="departure2Label" destination="yad-r8-wka" id="qb9-aV-tpr"/>
+                                            <outlet property="departure3Label" destination="gG2-ze-Awb" id="xtV-KN-zTH"/>
+                                            <outlet property="depature1Label" destination="REn-6L-mWv" id="Jcn-G1-h05"/>
+                                            <outlet property="stopNameLabel" destination="ySJ-M2-Wes" id="VFg-O3-IcN"/>
+                                            <outlet property="stopSuburbLabel" destination="0sV-El-fsS" id="H3O-Il-WlO"/>
                                             <segue destination="1VC-xj-ddh" kind="show" id="a24-h9-w01"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="savedStopsCell" rowHeight="65" id="vWR-bR-dIX" customClass="savedStopsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="savedStopsCell" rowHeight="65" id="vWR-bR-dIX" customClass="favoriteStopTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="93" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vWR-bR-dIX" id="ohf-PE-3Bv">
@@ -264,20 +272,22 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="dep1timeLabel" destination="ko3-EW-0ME" id="GyU-Tn-nXN"/>
+                                            <outlet property="dep2timeLabel" destination="gUT-Rh-lqF" id="ld5-6V-SUL"/>
+                                            <outlet property="dep3timeLabel" destination="8oo-yR-0Yd" id="wkc-J5-OuD"/>
+                                            <outlet property="departure1Label" destination="zjO-r5-Gj1" id="mnG-mu-drP"/>
+                                            <outlet property="departure2Label" destination="O4a-dn-FZb" id="Lvf-BU-NTF"/>
+                                            <outlet property="departure3Label" destination="xkY-bg-fcd" id="eRv-gU-ujm"/>
+                                            <outlet property="stopNameLabel" destination="VO0-29-itQ" id="q4M-kD-tfS"/>
+                                            <outlet property="stopSuburbLabel" destination="ZKY-Qb-a7q" id="kgv-a9-QDg"/>
                                             <segue destination="1VC-xj-ddh" kind="show" id="pPR-36-sIS"/>
                                         </connections>
                                     </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="96m-OK-rbu" userLabel="favoriteRouteTableView">
-                                <rect key="frame" x="0.0" y="484" width="414" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="favorRouteCell" id="Pil-dg-UA8">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="favorRouteCell" id="Pil-dg-UA8" customClass="favoriteRouteTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="158" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Pil-dg-UA8" id="WQt-ha-Yuf">
-                                            <rect key="frame" x="0.0" y="0.0" width="362" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iDv-Xc-quu" userLabel="RouteSign">
@@ -309,6 +319,11 @@
                                                 <constraint firstItem="Kpp-RA-Hpb" firstAttribute="top" secondItem="WQt-ha-Yuf" secondAttribute="top" constant="8" id="nfI-IE-RDn"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="routeInfo" destination="4ic-gu-h7u" id="VuR-UK-Z5d"/>
+                                            <outlet property="routeNumber" destination="Kpp-RA-Hpb" id="zh7-ab-Sa4"/>
+                                            <outlet property="routeSign" destination="iDv-Xc-quu" id="sqC-1e-HNu"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -347,21 +362,18 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="89f-lL-WKi" firstAttribute="trailing" secondItem="IyT-qi-Pis" secondAttribute="trailing" id="6Y3-MO-lgD"/>
-                            <constraint firstItem="96m-OK-rbu" firstAttribute="leading" secondItem="IyT-qi-Pis" secondAttribute="leading" id="7iA-U1-emI"/>
                             <constraint firstItem="89f-lL-WKi" firstAttribute="leading" secondItem="IyT-qi-Pis" secondAttribute="leading" id="8Ve-0M-TOd"/>
-                            <constraint firstItem="96m-OK-rbu" firstAttribute="top" secondItem="tgO-pY-T9h" secondAttribute="bottom" id="Kht-tv-j41"/>
+                            <constraint firstItem="tgO-pY-T9h" firstAttribute="leading" secondItem="IyT-qi-Pis" secondAttribute="leading" id="FWL-2f-5I2"/>
+                            <constraint firstItem="tgO-pY-T9h" firstAttribute="trailing" secondItem="IyT-qi-Pis" secondAttribute="trailing" id="HzD-AG-0Y1"/>
                             <constraint firstItem="IyT-qi-Pis" firstAttribute="bottom" secondItem="89f-lL-WKi" secondAttribute="bottom" id="KsL-0J-0zh"/>
-                            <constraint firstItem="tgO-pY-T9h" firstAttribute="leading" secondItem="IyT-qi-Pis" secondAttribute="leading" id="SGP-O3-VZJ"/>
-                            <constraint firstItem="IyT-qi-Pis" firstAttribute="trailing" secondItem="96m-OK-rbu" secondAttribute="trailing" id="SwY-ij-ocN"/>
-                            <constraint firstItem="IyT-qi-Pis" firstAttribute="trailing" secondItem="tgO-pY-T9h" secondAttribute="trailing" id="ebQ-LV-i5a"/>
+                            <constraint firstItem="89f-lL-WKi" firstAttribute="top" secondItem="tgO-pY-T9h" secondAttribute="bottom" id="Pdx-Hk-urY"/>
+                            <constraint firstItem="tgO-pY-T9h" firstAttribute="top" secondItem="IyT-qi-Pis" secondAttribute="top" id="gG9-bs-G9K"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IyT-qi-Pis"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="nav-A9-W8a"/>
                     <connections>
-                        <outlet property="favoriteRoute" destination="Pil-dg-UA8" id="fVm-yQ-Ao0"/>
-                        <outlet property="favoriteStops" destination="vWR-bR-dIX" id="cEN-q8-cAg"/>
-                        <outlet property="nearByStops" destination="ift-tC-Lfr" id="07N-DN-mUM"/>
+                        <outlet property="stopsTableView" destination="tgO-pY-T9h" id="LU2-87-mbU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z1h-kO-okF" userLabel="First Responder" sceneMemberID="firstResponder"/>
