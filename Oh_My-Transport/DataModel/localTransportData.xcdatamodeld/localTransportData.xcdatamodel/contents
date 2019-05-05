@@ -7,11 +7,13 @@
     <entity name="Favorite" representedClassName="Favorite" syncable="YES">
         <attribute name="routeDirectionid" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="routeid" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="routeName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="routeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="stopid" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="stopName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="APIInfo" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="Favorite" positionX="-54" positionY="9" width="128" height="105"/>
+        <element name="Favorite" positionX="-54" positionY="9" width="128" height="135"/>
     </elements>
 </model>
