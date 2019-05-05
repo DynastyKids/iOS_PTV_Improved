@@ -9,8 +9,19 @@
 import UIKit
 import CommonCrypto
 import Foundation
+import CoreData
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UISearchResultsUpdating, UITableViewDelegate, UITableViewDataSource {
+    
+    var taskFetchedResultsController: NSFetchedResultsController<Favorite>!
+    var filteredTasks: [Favorite] = []
+    var searchAllTasks: [Favorite] = []
+    var stops:[Stops]=[]
+    
+    @IBOutlet weak var nearByStops: UITableViewCell!
+    @IBOutlet weak var favoriteStops: UITableViewCell!
+    @IBOutlet weak var favoriteRoute: UITableViewCell!
+    
     
     let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
@@ -36,6 +47,14 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1;
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView ==
+    }
+    
 
     /*
     // MARK: - Navigation
@@ -46,6 +65,21 @@ class HomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Search Function
+    func updateSearchResults(for searchController: UISearchController) {
+        if taskFetchedResultsController.fetchedObjects?.isEmpty == false{
+            searchAllTasks = taskFetchedResultsController.fetchedObjects!
+        }
+//        if let searchText = searchController.searchBar.text?.lowercased(), searchText.count > 0{
+//            filteredTasks = searchAllTasks.filter({(favorite: Favorite) -> Bool in
+//                return (favorite.title?.lowercased().contains(searchText))!
+//            })
+//        }else{
+//            filteredTasks = searchAllTasks;
+//        }
+//        tableView.reloadData()
+    }
 
 }
 
@@ -90,7 +124,7 @@ extension String {
     }
     
     private func stringFromResult(result: UnsafeMutablePointer<CUnsignedChar>, length: Int) -> String {
-        var hash = NSMutableString()
+        let hash = NSMutableString()
         for i in 0..<length {
             hash.appendFormat("%02x", result[i])
         }
