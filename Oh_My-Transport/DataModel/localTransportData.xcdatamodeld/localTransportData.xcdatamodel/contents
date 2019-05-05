@@ -4,16 +4,21 @@
         <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Favorite" representedClassName="Favorite" syncable="YES">
-        <attribute name="routeDirectionid" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="routeid" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    <entity name="FavRoute" representedClassName="FavRoute" syncable="YES" codeGenerationType="class">
+        <attribute name="stopID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="stopName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stopSuburb" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stopType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="FavStops" representedClassName="FavStops" syncable="YES">
+        <attribute name="routeDirectionid" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="routeID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="routeName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="routeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="stopid" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="stopName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="APIInfo" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="Favorite" positionX="-54" positionY="9" width="128" height="135"/>
+        <element name="FavStops" positionX="-54" positionY="9" width="128" height="105"/>
+        <element name="FavRoute" positionX="-54" positionY="45" width="128" height="105"/>
     </elements>
 </model>

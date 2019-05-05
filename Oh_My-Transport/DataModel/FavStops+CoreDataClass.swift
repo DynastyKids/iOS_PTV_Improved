@@ -1,5 +1,5 @@
 //
-//  Favorite+CoreDataClass.swift
+//  FavStops+CoreDataClass.swift
 //  Oh_My-Transport
 //
 //  Created by OriWuKids on 5/5/19.
@@ -10,7 +10,7 @@
 import Foundation
 import CoreData
 
-@objc(Favorite)
-public class Favorite: NSManagedObject {
+@objc(FavStops)
+public class FavStops: NSManagedObject {
 
 }
