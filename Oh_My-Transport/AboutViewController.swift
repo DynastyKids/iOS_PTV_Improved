@@ -14,24 +14,34 @@ class AboutViewController: UIViewController, UINavigationControllerDelegate, MFM
     @IBOutlet weak var userIdTextField: UITextField!
     @IBOutlet weak var apiKeyTextField: UITextField!
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBAction func updateKey(_ sender: Any) {
+        let uid = userIdTextField.text
+        let apikey = apiKeyTextField.text
+    }
+    
+    @IBAction func sendMail(_ sender: Any) {
         if MFMailComposeViewController.canSendMail(){
             let controller = MFMailComposeViewController()
             controller.mailComposeDelegate = self
             controller.setSubject("PTV Timetable API – request for key")
             controller.setToRecipients(["APIKeyRequest@ptv.vic.gov.au"])
-
+            
             controller.setMessageBody("", isHTML: false)
-
+            
             self.present(controller, animated: true, completion: nil)
         }else{
             print("Sending Mail Failed")
         }
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+
+    }
+    
+    
     
     private func mailComposeController(controller: MFMailComposeViewController,
                                didFinishWithResult result: MFMailComposeResult, error: Error?) {
@@ -53,13 +63,6 @@ class AboutViewController: UIViewController, UINavigationControllerDelegate, MFM
     }
 
     // Update the data to NSUserDefaults
-    @IBAction func updateClick(_ sender: Any) {
-        let uid = userIdTextField.text
-        let apikey = apiKeyTextField.text
-        
-        
-    }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
