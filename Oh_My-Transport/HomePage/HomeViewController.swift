@@ -12,16 +12,14 @@ import Foundation
 import CoreData
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
     var stopFetchedResultsController: NSFetchedResultsController<FavStops>!
-    var routeFetchedResultsController: NSFetchedResultsController<FavRoutes>!
-    var filteredTasks: [Favorite] = []
-    var searchAllTasks: [Favorite] = []
-    var stops:[Stops]=[]
+    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
+    var filteredRoutes: [FavRoute] = []
+    var filteredStops: [FavStops] = []
+    var searchAllRoutes: [FavRoute] = []
+    var searchAllStops: [FavStops] = []
     
-    @IBOutlet weak var nearByStops: UITableViewCell!
-    @IBOutlet weak var favoriteStops: UITableViewCell!
-    @IBOutlet weak var favoriteRoute: UITableViewCell!
+    @IBOutlet weak var stopsTableView: UITableView!
     
     
     let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
@@ -49,13 +47,41 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == 
+        if section == 1{
+            return 2
+        } else if section == 2 {
+            return filteredStops.count
+        } else {
+            return filteredRoutes.count
+        }
     }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        // Configure the cell...
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionName: String
+        switch section {
+        case 0:
+            sectionName = NSLocalizedString("Nearby Stops:", comment: "Nearby stops")
+        case 1:
+            sectionName = NSLocalizedString("My Favorite Stops:", comment: "Favorite stops:")
+        case 2:
+            sectionName = NSLocalizedString("My favorite Routes:", comment: "favorite Route")
+        default:
+            sectionName = ""
+        }
+        return sectionName
+    }
 
     /*
     // MARK: - Navigation
@@ -80,8 +106,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //            filteredTasks = searchAllTasks;
 //        }
 //        tableView.reloadData()
-    }
-
+//    }
 }
 
 enum CryptoAlgorithm {
@@ -143,3 +168,33 @@ extension String {
         return hexBytes.joined()
     }
 }
+
+//// Database Controller Delegate - all-in-one
+//extension TaskListTableViewController: NSFetchedResultsControllerDelegate{
+//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        tableView.beginUpdates()
+//    }
+//
+//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        tableView.endUpdates()
+//    }
+//
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+//        switch type {
+//        case .insert:
+//            if let indexPath = newIndexPath{
+//                tableView.insertRows(at: [indexPath], with: .automatic)
+//            }
+//        case .delete:
+//            if let indexPath = indexPath{
+//                tableView.deleteRows(at: [indexPath], with: .automatic)
+//            }
+//        case .update:
+//            if let indexPath = indexPath, let _ = tableView.cellForRow(at: indexPath){
+//                _ = taskFetchedResultsController.object(at: indexPath)
+//            }
+//        default:
+//            break
+//        }
+//    }
+//}

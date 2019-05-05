@@ -19,7 +19,7 @@ extension FavStops {
 
     @NSManaged public var routeDirectionid: Int16
     @NSManaged public var routeID: Int32
-    @NSManaged public var routeType: Int32
     @NSManaged public var routeName: String?
+    @NSManaged public var routeType: Int32
 
 }
