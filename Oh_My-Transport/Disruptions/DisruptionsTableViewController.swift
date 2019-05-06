@@ -10,6 +10,65 @@ import UIKit
 import Foundation
 import CommonCrypto
 
+struct disruptionResults:Decodable {
+    var disruptions: [disruptions]
+    var status: [status]
+    
+}
+struct disruptions: Decodable {
+    var general: [general]
+    var metro_train:[general]
+    var metro_tram:[general]
+    var metro_bus:[general]
+    var regional_train: [general]
+    var regional_coach: [general]
+    var regional_bus:[general]
+    var school_bus: [general]
+    var telebus: [general]
+    var nightbus: [general]
+    var ferry: [general]
+    var interstate: [general]
+    var skybus: [general]
+    var taxi:[general]
+}
+struct status: Decodable {
+    var version: String
+    var health: Int16
+}
+
+struct general: Decodable{
+    var disruption_id: Int
+    var title: String
+    var url: String?
+    var description: String
+    var disruption_status: String?
+    var disruption_type: String?
+    var published_on: String?
+    var last_updated: String?
+    var from_date: String?
+    var to_date: String?
+    struct routes: Decodable{
+        var route_type: Int16?
+        var route_id: Int16?
+        var route_name: String?
+        var route_number: String?
+        var route_gtfs_id: String?
+        struct direction: Decodable{
+            var route_direction_id: Int16?
+            var direction_id: Int16?
+            var direction_name: String?
+            var service_time: String?
+        }
+    }
+    struct stops:Decodable{
+        var stop_id: Int16?
+        var stop_name: String?
+    }
+    var colour: String?
+    var display_on_board: Bool?
+    var display_status: Bool?
+}
+
 class DisruptionsTableViewController: UITableViewController {
     
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
@@ -21,64 +80,7 @@ class DisruptionsTableViewController: UITableViewController {
     let disruptionNumbers: Int = 1;
     
     //Decodable只能解析，不能被编码
-    struct disruptionResults:Decodable {
-        var disruptions: [disruptions]
-        var status: [status]
-        
-    }
-    struct disruptions: Decodable {
-        var general: [general]
-        var metro_train:[general]
-        var metro_tram:[general]
-        var metro_bus:[general]
-        var regional_train: [general]
-        var regional_coach: [general]
-        var regional_bus:[general]
-        var school_bus: [general]
-        var telebus: [general]
-        var nightbus: [general]
-        var ferry: [general]
-        var interstate: [general]
-        var skybus: [general]
-        var taxi:[general]
-    }
-    struct status: Decodable {
-        var version: String
-        var health: Int16
-    }
 
-    struct general: Decodable{
-        var disruption_id: Int
-        var title: String
-        var url: String?
-        var description: String
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes: Decodable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Decodable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Decodable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
 //    func swift4JSONParser() {
 //        // 数据获取 Data Fetching
 //        let urlStr: String = disruptionAll()
@@ -98,11 +100,7 @@ class DisruptionsTableViewController: UITableViewController {
     
     func getDisruptionData(){
         if let url = URL(string: disruptionAll()) {
-//            let task = URLSession.shared.dataTask(with: url) { (data, response , error) in
-//                do {
-//                    let decoder = JSONDecoder()
-//                    let disruptions
-//                }
+            let task = URLSession.shared.dataTask(with: url) { (data, response , error) in
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 if let data = data, let disruption = try? decoder.decode(disruptions.self, from: data) {
@@ -112,9 +110,22 @@ class DisruptionsTableViewController: UITableViewController {
                 } else {
                     print(error?.localizedDescription)
                 }
-            }
-            task.resume()
+            }.resume()
         }
+    }
+    
+    func getDisruptionData2(){
+        let url = URL(string: disruptionAll())
+        URLSession.shared.dataTask(with: url!){(data, response , error) in
+            do{
+                var disruptionResult = try JSONDecoder().decode([disruptionResults].self, from: data!)
+                for service in disruptionResult{
+                    print(service.disruptions)
+                }
+            }catch{
+                print(error)
+            }
+        }.resume()
     }
 
     
@@ -128,7 +139,7 @@ class DisruptionsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
 //        swift4JSONParser()
-        getDisruptionData()
+        getDisruptionData2()
         
     }
 
