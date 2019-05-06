@@ -10,64 +10,7 @@ import UIKit
 import Foundation
 import CommonCrypto
 
-struct disruptionResults:Decodable {
-    var disruptions: [disruptions]
-    var status: [status]
-    
-}
-struct disruptions: Decodable {
-    var general: [general]
-    var metro_train:[general]
-    var metro_tram:[general]
-    var metro_bus:[general]
-    var regional_train: [general]
-    var regional_coach: [general]
-    var regional_bus:[general]
-    var school_bus: [general]
-    var telebus: [general]
-    var nightbus: [general]
-    var ferry: [general]
-    var interstate: [general]
-    var skybus: [general]
-    var taxi:[general]
-}
-struct status: Decodable {
-    var version: String
-    var health: Int16
-}
 
-struct general: Decodable{
-    var disruption_id: Int
-    var title: String
-    var url: String?
-    var description: String
-    var disruption_status: String?
-    var disruption_type: String?
-    var published_on: String?
-    var last_updated: String?
-    var from_date: String?
-    var to_date: String?
-    struct routes: Decodable{
-        var route_type: Int16?
-        var route_id: Int16?
-        var route_name: String?
-        var route_number: String?
-        var route_gtfs_id: String?
-        struct direction: Decodable{
-            var route_direction_id: Int16?
-            var direction_id: Int16?
-            var direction_name: String?
-            var service_time: String?
-        }
-    }
-    struct stops:Decodable{
-        var stop_id: Int16?
-        var stop_name: String?
-    }
-    var colour: String?
-    var display_on_board: Bool?
-    var display_status: Bool?
-}
 
 class DisruptionsTableViewController: UITableViewController {
     
@@ -97,6 +40,64 @@ class DisruptionsTableViewController: UITableViewController {
 //        }
 //        print(disruptions)
 //    }
+//
+    struct disruptioninfo: Decodable{
+        var disruption_id: Int?
+        var title: String?
+        var url: String?
+        var description: String
+        var disruption_status: String?
+        var disruption_type: String?
+        var published_on: String?
+        var last_updated: String?
+        var from_date: String?
+        var to_date: String?
+        struct routes: Decodable{
+            var route_type: Int16?
+            var route_id: Int16?
+            var route_name: String?
+            var route_number: String?
+            var route_gtfs_id: String?
+            struct direction: Decodable{
+                var route_direction_id: Int16?
+                var direction_id: Int16?
+                var direction_name: String?
+                var service_time: String?
+            }
+        }
+        struct stops:Decodable{
+            var stop_id: Int16?
+            var stop_name: String?
+        }
+        var colour: String?
+        var display_on_board: Bool?
+        var display_status: Bool?
+    }
+    struct disruptions: Decodable {
+        var general: [disruptioninfo]
+        var metro_train:[disruptioninfo]
+        var metro_tram:[disruptioninfo]
+        var metro_bus:[disruptioninfo]
+        var regional_train: [disruptioninfo]
+        var regional_coach: [disruptioninfo]
+        var regional_bus:[disruptioninfo]
+        var school_bus: [disruptioninfo]
+        var telebus: [disruptioninfo]
+        var nightbus: [disruptioninfo]
+        var ferry: [disruptioninfo]
+        var interstate: [disruptioninfo]
+        var skybus: [disruptioninfo]
+        var taxi:[disruptioninfo]
+    }
+    struct status: Decodable {
+        var version: String
+        var health: Int16
+    }
+    struct disruptionResults:Decodable {
+        var disruptions: disruptions
+        var status: [status]
+        
+    }
     
     func getDisruptionData(){
         if let url = URL(string: disruptionAll()) {
@@ -107,27 +108,13 @@ class DisruptionsTableViewController: UITableViewController {
                     for service in disruption.metro_train {
                         print(service)
                     }
-                } else {
-                    print(error?.localizedDescription)
+                }else {
+                    print(error)
                 }
-            }.resume()
+            }
+            task.resume()
         }
     }
-    
-    func getDisruptionData2(){
-        let url = URL(string: disruptionAll())
-        URLSession.shared.dataTask(with: url!){(data, response , error) in
-            do{
-                var disruptionResult = try JSONDecoder().decode([disruptionResults].self, from: data!)
-                for service in disruptionResult{
-                    print(service.disruptions)
-                }
-            }catch{
-                print(error)
-            }
-        }.resume()
-    }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,9 +124,8 @@ class DisruptionsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-//        swift4JSONParser()
-        getDisruptionData2()
+
+        getDisruptionData()
         
     }
 
@@ -151,8 +137,7 @@ class DisruptionsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //         #warning Incomplete implementation, return the number of rows
 //        Return by json data count
-        
-        return Int(disruptionNumbers)
+        return disruptionNumbers
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
