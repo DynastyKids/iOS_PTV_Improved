@@ -21,53 +21,57 @@ class DisruptionsTableViewController: UITableViewController {
     let disruptionNumbers: Int = 1;
     
     //Decodable只能解析，不能被编码
-//    struct disruptionResults:Codable {
-        struct disruptions: Codable {
-            var general: [general]
-            var metro_train:[metro_train]
-            var metro_tram:[metro_tram]
-            var metro_bus:[metro_bus]
-            var regional_train: [regional_train]
-            var regional_coach: [regional_coach]
-            var regional_bus:[regional_bus]
-            var school_bus: [school_bus]
-            var telebus: [telebus]
-            var nightbus: [night_bus]
-            var ferry: [ferry]
-            var interstate: [interstate_train]
-            var skybus: [skybus]
-            var taxi:[taxi]
-        }
-        struct status: Codable {
-            var version: String
-            var health: Int16
-        }
-//    }
-    struct general: Codable{
-        var disruption_id: Int16?
-        var title: String?
+    struct disruptionResults:Decodable {
+        var disruptions: [disruptions]
+        var status: [status]
+        
+    }
+    struct disruptions: Decodable {
+        var general: [general]
+        var metro_train:[general]
+        var metro_tram:[general]
+        var metro_bus:[general]
+        var regional_train: [general]
+        var regional_coach: [general]
+        var regional_bus:[general]
+        var school_bus: [general]
+        var telebus: [general]
+        var nightbus: [general]
+        var ferry: [general]
+        var interstate: [general]
+        var skybus: [general]
+        var taxi:[general]
+    }
+    struct status: Decodable {
+        var version: String
+        var health: Int16
+    }
+
+    struct general: Decodable{
+        var disruption_id: Int
+        var title: String
         var url: String?
-        var description: String?
+        var description: String
         var disruption_status: String?
         var disruption_type: String?
         var published_on: String?
         var last_updated: String?
         var from_date: String?
         var to_date: String?
-        struct routes: Codable{
+        struct routes: Decodable{
             var route_type: Int16?
             var route_id: Int16?
             var route_name: String?
             var route_number: String?
             var route_gtfs_id: String?
-            struct direction: Codable{
+            struct direction: Decodable{
                 var route_direction_id: Int16?
                 var direction_id: Int16?
                 var direction_name: String?
                 var service_time: String?
             }
         }
-        struct stops:Codable{
+        struct stops:Decodable{
             var stop_id: Int16?
             var stop_name: String?
         }
@@ -75,423 +79,6 @@ class DisruptionsTableViewController: UITableViewController {
         var display_on_board: Bool?
         var display_status: Bool?
     }
-    struct metro_train:Codable{
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct metro_tram:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct metro_bus:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct regional_train:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct regional_coach:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct regional_bus:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct school_bus:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct telebus:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct night_bus:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct ferry: Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct interstate_train: Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct skybus: Codable{
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    struct taxi:Codable {
-        var disruption_id: Int16?
-        var title: String?
-        var url: String?
-        var description: String?
-        var disruption_status: String?
-        var disruption_type: String?
-        var published_on: String?
-        var last_updated: String?
-        var from_date: String?
-        var to_date: String?
-        struct routes:Codable{
-            var route_type: Int16?
-            var route_id: Int16?
-            var route_name: String?
-            var route_number: String?
-            var route_gtfs_id: String?
-            struct direction: Codable{
-                var route_direction_id: Int16?
-                var direction_id: Int16?
-                var direction_name: String?
-                var service_time: String?
-            }
-        }
-        struct stops:Codable{
-            var stop_id: Int16?
-            var stop_name: String?
-        }
-        var colour: String?
-        var display_on_board: Bool?
-        var display_status: Bool?
-    }
-    
 //    func swift4JSONParser() {
 //        // 数据获取 Data Fetching
 //        let urlStr: String = disruptionAll()
@@ -510,9 +97,12 @@ class DisruptionsTableViewController: UITableViewController {
 //    }
     
     func getDisruptionData(){
-        let urlStr = disruptionAll()
-        if let url = URL(string: urlStr.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) {
-            let task = URLSession.shared.dataTask(with: url) { (data, response , error) in
+        if let url = URL(string: disruptionAll()) {
+//            let task = URLSession.shared.dataTask(with: url) { (data, response , error) in
+//                do {
+//                    let decoder = JSONDecoder()
+//                    let disruptions
+//                }
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 if let data = data, let disruption = try? decoder.decode(disruptions.self, from: data) {
@@ -600,4 +190,3 @@ class DisruptionsTableViewController: UITableViewController {
     }
 
 }
-
