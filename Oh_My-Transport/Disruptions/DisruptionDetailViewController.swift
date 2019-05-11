@@ -10,8 +10,8 @@ import UIKit
 import Foundation
 
 struct disruptionDetailroot: Codable{
-    var disruption: disruptionbyIdDetail
-    var disruptionByIdstatus: disruptionByIdstatus
+    var disruption: disruptionbyIdDetail?
+    var disruptionByIdstatus: disruptionByIdstatus?
     
     private enum CodingKeys: String, CodingKey{
         case disruption
@@ -20,16 +20,16 @@ struct disruptionDetailroot: Codable{
 }
 
 struct disruptionbyIdDetail: Codable {
-    var disruptionId: Int
-    var title: String
+    var disruptionId: Int?
+    var title: String?
     var url: String?
-    var description: String
+    var description: String?
     var disruptionStatus: String?
     var disruptionType: String?
-    var publishDate: Date?
-    var updateDate: Date?
-    var startDate: Date?
-    var endDate: Date?
+    var publishDate: String?
+    var updateDate: String?
+    var startDate: String?
+    var endDate: String?
     var routes: disryptionByIdroutes?
     var stops: disruptionByIdStops?
     var colour: String?
@@ -62,10 +62,10 @@ struct disruptionbyIdDetail: Codable {
         self.description = try container.decode(String.self, forKey: .description)
         self.disruptionStatus = try container.decode(String.self, forKey: .disruptionStatus)
         self.disruptionType = try container.decode(String.self, forKey: .disruptionType)
-        self.publishDate = try container.decode(Date.self, forKey: .publishDate)
-        self.updateDate = try container.decode(Date.self, forKey: .updateDate)
-        self.startDate = try container.decode(Date.self, forKey: .startDate)
-        self.endDate = try container.decode(Date.self, forKey: .endDate)
+        self.publishDate = try container.decode(String.self, forKey: .publishDate)
+        self.updateDate = try container.decode(String.self, forKey: .updateDate)
+        self.startDate = try container.decode(String.self, forKey: .startDate)
+        self.endDate = try container.decode(String.self, forKey: .endDate)
         self.routes = try? container.decode(disryptionByIdroutes.self, forKey: .routes)
         self.stops = try? container.decode(disruptionByIdStops.self, forKey: .stops)
         self.colour = try container.decode(String.self, forKey: .colour)
@@ -134,8 +134,8 @@ struct disruptionByIdStops: Codable{
 }
 
 struct disruptionByIdstatus: Codable {
-    var version: Double
-    var health: Int
+    var version: String?
+    var health: Int?
     private enum CodingKeys: String, CodingKey{
         case version
         case health
@@ -151,6 +151,8 @@ class DisruptionDetailViewController: UIViewController {
     @IBOutlet weak var disruptionDetailLabel: UILabel!
 
     var webkitAddress: String = "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353"
+    
+    
     
     @IBAction func viewInWebKit(_ sender: Any) {
         UIApplication.shared.openURL(URL(string: webkitAddress)!)
@@ -174,14 +176,17 @@ class DisruptionDetailViewController: UIViewController {
                 // Data recieved.  Decode it from JSON.
                 let decoder = JSONDecoder()
                 let disruptionDetail = try decoder.decode(disruptionDetailroot.self, from: data!)
-                print(disruptionDetail.disruption.disruptionId)
-                print(disruptionDetail.disruption.title)
-//                self.disruptionTitleLabel.text = self.disruptionDetails[0].title
-//                self.disruptionPublishDateLabel.text = self.disruptionDetails[0].publishDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
-//                self.disruptionStartDateLabel.text = self.disruptionDetails[0].startDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
-//                self.disruptionEndDateLabel.text = self.disruptionDetails[0].endDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
-//                self.disruptionDetailLabel.text = self.disruptionDetails[0].description
-//                self.webkitAddress = self.disruptionDetails[0].url!
+                
+                
+                print(disruptionDetail.disruption?.disruptionId)
+                print(disruptionDetail.disruption?.title)
+                print(disruptionDetail.disruption?.description)
+                self.disruptionTitleLabel.text = disruptionDetail.disruption?.title
+                self.disruptionPublishDateLabel.text = "Publish Date: " +  (disruptionDetail.disruption?.publishDate)!
+                self.disruptionStartDateLabel.text = "Effect From: " + (disruptionDetail.disruption?.startDate)!
+                self.disruptionEndDateLabel.text = "Effect Until: " + (disruptionDetail.disruption?.endDate)!
+                self.disruptionDetailLabel.text = disruptionDetail.disruption?.description
+                self.webkitAddress = (disruptionDetail.disruption?.url)!
             } catch {
                 print("Error:"+error.localizedDescription)
             }
