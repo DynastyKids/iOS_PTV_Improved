@@ -85,13 +85,6 @@ struct direction: Codable{
         case direction_name
         case service_time
     }
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        self.route_direction_id = try container.decode(Int.self, forKey: .route_direction_id)
-//        self.direction_id = try container.decode(Int.self, forKey: .direction_id)
-//        self.direction_name = try container.decode(String.self, forKey: .direction_name)
-//        self.service_time = try container.decode(String.self, forKey: .service_time)
-//    }
 }
 
 struct disryptionByIdroutes: Codable{
@@ -109,14 +102,6 @@ struct disryptionByIdroutes: Codable{
         case gtfsId = "route_gtfs_id"
         case direction
     }
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        self.routeType = try container.decode(Int.self, forKey: .routeType)
-//        self.routeId = try container.decode(Int.self, forKey: .routeId)
-//        self.routeName = try container.decode(String.self, forKey: .routeName)
-//        self.routeNumber = try container.decode(String.self, forKey: .routeNumber)
-//        self.gtfsId = try container.decode(String.self, forKey: .gtfsId)
-//    }
 }
 
 struct disruptionByIdStops: Codable{
@@ -126,11 +111,6 @@ struct disruptionByIdStops: Codable{
         case stopId = "stop_id"
         case stopName = "stop_name"
     }
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        self.stopId = try container.decode(Int.self, forKey: .stopId)
-//        self.stopName = try container.decode(String.self, forKey: .stopName)
-//    }
 }
 
 struct disruptionByIdstatus: Codable {
@@ -152,8 +132,6 @@ class DisruptionDetailViewController: UIViewController {
 
     var webkitAddress: String = "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353"
     
-    
-    
     @IBAction func viewInWebKit(_ sender: Any) {
         UIApplication.shared.openURL(URL(string: webkitAddress)!)
     }
@@ -163,8 +141,6 @@ class DisruptionDetailViewController: UIViewController {
 //        Do any additional setup after loading the view.
         
         //Disruption sample detail page
-        // http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353
-        
         let url = URL(string: "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353")
         
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
@@ -176,17 +152,11 @@ class DisruptionDetailViewController: UIViewController {
                 // Data recieved.  Decode it from JSON.
                 let decoder = JSONDecoder()
                 let disruptionDetail = try decoder.decode(disruptionDetailroot.self, from: data!)
-                
-                
                 print(disruptionDetail.disruption?.disruptionId)
                 print(disruptionDetail.disruption?.title)
                 print(disruptionDetail.disruption?.description)
-                self.disruptionTitleLabel.text = disruptionDetail.disruption?.title
-                self.disruptionPublishDateLabel.text = "Publish Date: " +  (disruptionDetail.disruption?.publishDate)!
-                self.disruptionStartDateLabel.text = "Effect From: " + (disruptionDetail.disruption?.startDate)!
-                self.disruptionEndDateLabel.text = "Effect Until: " + (disruptionDetail.disruption?.endDate)!
-                self.disruptionDetailLabel.text = disruptionDetail.disruption?.description
-                self.webkitAddress = (disruptionDetail.disruption?.url)!
+                self.updateScreen(disruption: disruptionDetail.disruption!)
+                
             } catch {
                 print("Error:"+error.localizedDescription)
             }
@@ -203,4 +173,13 @@ class DisruptionDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func updateScreen(disruption:disruptionbyIdDetail){
+        self.disruptionTitleLabel.text = disruption.title
+        self.disruptionPublishDateLabel.text = "Publish Date: " +  (disruption.publishDate)!
+        self.disruptionStartDateLabel.text = "Effect From: " + (disruption.startDate)!
+        self.disruptionEndDateLabel.text = "Effect Until: " + (disruption.endDate)!
+        self.disruptionDetailLabel.text = disruption.description
+        self.webkitAddress = (disruption.url)!
+    }
 }
