@@ -14,6 +14,8 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    let jsonDecoder = JSONDecoder()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -25,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("Notifications declined")
             }
         }
+        
+        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
         
         return true
     }

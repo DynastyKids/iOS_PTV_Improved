@@ -7,9 +7,142 @@
 //
 
 import UIKit
-//import WebKit
+import Foundation
 
-class DisruptionDetailViewController: UIViewController {
+struct disruptionDetailroot: Codable{
+    var disruption: disruptionbyIdDetail
+    var disruptionByIdstatus: disruptionByIdstatus
+    
+    private enum CodingKeys: String, CodingKey{
+        case disruption
+        case disruptionByIdstatus = "status"
+    }
+}
+
+struct disruptionbyIdDetail: Codable {
+    var disruptionID: Int
+    var title: String
+    var url: String?
+    var description: String
+    var disruptionStatus: String?
+    var disruptionType: String?
+    var publishDate: Date?
+    var updateDate: Date?
+    var startDate: Date?
+    var endDate: Date?
+    var routes: disryptionByIdroutes?
+    var stops: disruptionByIdStops?
+    var colour: String?
+    var displayOnBoard: Bool?
+    var displayStatus: Bool?
+    
+    private enum CodingKeys: String, CodingKey{
+        case disruptionID = "disruption_id"
+        case title
+        case url
+        case description
+        case disruptionStatus = "disruption_status"
+        case disruptionType = "disruption_type"
+        case publishDate = "published_on"
+        case updateDate = "last_updated"
+        case startDate = "from_date"
+        case endDate = "to_date"
+        case routes
+        case stops
+        case colour
+        case displayOnBoard = "display_on_board"
+        case displayStatus = "display_status"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.disruptionID = try container.decode(Int.self, forKey: .disruptionID)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.url = try container.decode(String.self, forKey: .url)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.disruptionStatus = try container.decode(String.self, forKey: .disruptionStatus)
+        self.disruptionType = try container.decode(String.self, forKey: .disruptionType)
+        self.publishDate = try container.decode(Date.self, forKey: .publishDate)
+        self.updateDate = try container.decode(Date.self, forKey: .updateDate)
+        self.startDate = try container.decode(Date.self, forKey: .startDate)
+        self.endDate = try container.decode(Date.self, forKey: .endDate)
+        self.routes = try? container.decode(disryptionByIdroutes.self, forKey: .routes)
+        self.stops = try? container.decode(disruptionByIdStops.self, forKey: .stops)
+        self.colour = try container.decode(String.self, forKey: .colour)
+        self.displayOnBoard = try container.decode(Bool.self, forKey: .displayOnBoard)
+        self.displayStatus = try container.decode(Bool.self, forKey: .displayStatus)
+    }
+}
+
+struct direction: Codable{
+    var route_direction_id: Int?
+    var direction_id: Int?
+    var direction_name: String?
+    var service_time: String?
+    private enum CodingKeys: String, CodingKey{
+        case route_direction_id
+        case direction_id
+        case direction_name
+        case service_time
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.route_direction_id = try container.decode(Int.self, forKey: .route_direction_id)
+        self.direction_id = try container.decode(Int.self, forKey: .direction_id)
+        self.direction_name = try container.decode(String.self, forKey: .direction_name)
+        self.service_time = try container.decode(String.self, forKey: .service_time)
+    }
+}
+
+struct disryptionByIdroutes: Codable{
+    var routeType: Int?
+    var routeId: Int?
+    var routeName: String?
+    var routeNumber: String?
+    var gtfsId: String?
+    var direction: direction?
+    private enum CodingKeys: String, CodingKey{
+        case routeType = "route_type"
+        case routeId = "route_id"
+        case routeName = "route_name"
+        case routeNumber = "route_number"
+        case gtfsId = "route_gtfs_id"
+        case direction
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.routeType = try container.decode(Int.self, forKey: .routeType)
+        self.routeId = try container.decode(Int.self, forKey: .routeId)
+        self.routeName = try container.decode(String.self, forKey: .routeName)
+        self.routeNumber = try container.decode(String.self, forKey: .routeNumber)
+        self.gtfsId = try container.decode(String.self, forKey: .gtfsId)
+    }
+}
+
+struct disruptionByIdStops: Codable{
+    var stopId: Int?
+    var stopName: String?
+    private enum CodingKeys: String, CodingKey{
+        case stopId = "stop_id"
+        case stopName = "stop_name"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.stopId = try container.decode(Int.self, forKey: .stopId)
+        self.stopName = try container.decode(String.self, forKey: .stopName)
+    }
+}
+
+struct disruptionByIdstatus: Codable {
+    var version: String
+    var health: Int
+    private enum CodingKeys: String, CodingKey{
+        case version
+        case health
+    }
+}
+
+class DisruptionDetailViewController: UIViewController, URLSessionTaskDelegate {
     
     @IBOutlet weak var disruptionTitleLabel: UILabel!
     @IBOutlet weak var disruptionPublishDateLabel: UILabel!
@@ -17,42 +150,48 @@ class DisruptionDetailViewController: UIViewController {
     @IBOutlet weak var disruptionEndDateLabel: UILabel!
     @IBOutlet weak var disruptionDetailLabel: UILabel!
 
+    let config = URLSessionConfiguration.background(withIdentifier: "edu.Monash.wgon0001.Oh-My-Transport")
+    lazy var session = {
+        return URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
+    }()
+    var disruptionDetails: [disruptionbyIdDetail] = []
+    var webkitAddress: String = "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353"
     
-
-//    var webView: WKWebView!
-//
     @IBAction func viewInWebKit(_ sender: Any) {
-        UIApplication.shared.openURL(URL(string: "http://ptv.vic.gov.au/live-travel-updates/article/cranbourne-and-pakenham-lines-service-alterations-from-9-20am-to-7-15pm-on-sunday-12-may-2019")!)
-//        webkitview.isHidden = false
-//        doneButton.isEnabled = true
+        UIApplication.shared.openURL(URL(string: webkitAddress)!)
     }
-//
-//    @IBAction func dismissWebKit(_ sender: Any) {
-//        doneButton.isEnabled = false
-//        webkitview.isHidden = true
-//    }
-    
-//    override func loadView() {
-//        //创建网页加载的偏好设置
-//        let prefrences = WKPreferences()
-//        prefrences.javaScriptEnabled = false
-//
-//        //配置网页视图
-//        let webConfiguration = WKWebViewConfiguration()
-//        webConfiguration.preferences = prefrences
-//
-//        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-//        webView.navigationDelegate = self as? WKNavigationDelegate;
-//        view = webView
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        // Do any additional setup after loading the view.
-        let myURL = URL(string: "http://ptv.vic.gov.au/live-travel-updates/article/frankston-line-buses-replacing-trains-from-8-10pm-to-last-train-on-tuesday-14-may-2019")
-//        let myRequest = URLRequest(url: myURL!)
-//        webView.load(myRequest)
+//        Do any additional setup after loading the view.
+        
+        //Disruption sample detail page
+        // http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353
+        
+        let url = URL(string: "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353")
+        
+        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            if let error = error {
+                print("Download failed: \(String(describing: error))")
+                return
+            }
+            do {
+                // Data recieved.  Decode it from JSON.
+                let decoder = JSONDecoder()
+                let disruptionDetail = try decoder.decode(disruptionDetailroot.self, from: data!)
+                self.disruptionDetails = [disruptionDetail.disruption]
+                print(disruptionDetail.disruption)
+//                self.disruptionTitleLabel.text = self.disruptionDetails[0].title
+//                self.disruptionPublishDateLabel.text = self.disruptionDetails[0].publishDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
+//                self.disruptionStartDateLabel.text = self.disruptionDetails[0].startDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
+//                self.disruptionEndDateLabel.text = self.disruptionDetails[0].endDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
+//                self.disruptionDetailLabel.text = self.disruptionDetails[0].description
+//                self.webkitAddress = self.disruptionDetails[0].url!
+            } catch {
+                print("Error:"+error.localizedDescription)
+            }
+        }
+        task.resume()
     }
 
     /*
@@ -64,31 +203,11 @@ class DisruptionDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        if totalBytesExpectedToWrite > 0 {
+            let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+            print("\(downloadTask.currentRequest!.description): Progress \(progress)")
+        }
+    }
 }
-
-//// MARK: WKNavigationDelegate
-//extension UIViewController: WKNavigationDelegate {
-//    //视图开始载入的时候显示网络活动指示器
-//    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//    }
-//
-//    //载入结束后，关闭网络活动指示器
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-//    }
-//
-//    //阻止链接被点击
-//    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-//        if navigationAction.navigationType == .linkActivated {
-//            decisionHandler(.cancel)
-//
-//            let alertController = UIAlertController(title: "Action not allowed", message: "Tapping on links is not allowed. Sorry!", preferredStyle: .alert)
-//            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//            present(alertController, animated: true, completion: nil)
-//            return
-//        }
-//        decisionHandler(.allow)
-//    }
-//}
