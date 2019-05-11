@@ -91,21 +91,21 @@ struct disruptionInfo: Codable{
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disruptionId = try container.decode(Int.self, forKey: .disruptionId)
-        self.title = try container.decode(String.self, forKey: .title)
-        self.url = try container.decode(String.self, forKey: .url)
-        self.description = try container.decode(String.self, forKey: .description)
-        self.disruptionStatus = try container.decode(String.self, forKey: .disruptionStatus)
-        self.disruptionType = try container.decode(String.self, forKey: .disruptionType)
-        self.publishDate = try container.decode(String.self, forKey: .publishDate)
-        self.updateDate = try container.decode(String.self, forKey: .updateDate)
-        self.startDate = try container.decode(String.self, forKey: .startDate)
-        self.endDate = try container.decode(String.self, forKey: .endDate)
+        self.disruptionId = try? container.decode(Int.self, forKey: .disruptionId)
+        self.title = try? container.decode(String.self, forKey: .title)
+        self.url = try? container.decode(String.self, forKey: .url)
+        self.description = try? container.decode(String.self, forKey: .description)
+        self.disruptionStatus = try? container.decode(String.self, forKey: .disruptionStatus)
+        self.disruptionType = try? container.decode(String.self, forKey: .disruptionType)
+        self.publishDate = try? container.decode(String.self, forKey: .publishDate)
+        self.updateDate = try? container.decode(String.self, forKey: .updateDate)
+        self.startDate = try? container.decode(String.self, forKey: .startDate)
+        self.endDate = try? container.decode(String.self, forKey: .endDate)
         self.routes = try? container.decode([disruptionRoutes].self, forKey: .routes)
         self.stops = try? container.decode([disruptionStops].self, forKey: .stops)
-        self.colour = try container.decode(String.self, forKey: .colour)
-        self.displayOnBoard = try container.decode(Bool.self, forKey: .displayOnBoard)
-        self.displayStatus = try container.decode(Bool.self, forKey: .displayStatus)
+        self.colour = try? container.decode(String.self, forKey: .colour)
+        self.displayOnBoard = try? container.decode(Bool.self, forKey: .displayOnBoard)
+        self.displayStatus = try? container.decode(Bool.self, forKey: .displayStatus)
     }
 }
 struct disruptionRoutes: Codable{
@@ -174,6 +174,7 @@ class DisruptionsTableViewController: UITableViewController {
         
         // Loading disruption data from PTV
         let url = URL(string: disruptionAll());
+        
         print(url);
         let task = URLSession.shared.dataTask(with: url!){(data, response, error) in
             print(url);
@@ -225,9 +226,9 @@ class DisruptionsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "disruptions", for: indexPath) as! disruptionTableViewCell
         let disruption = disruptions[indexPath.row]
-
+        let disruptionId = disruption.disruptionId
         cell.disruptionTitleLabel.text = disruption.title
-        cell.disruptionPublishDateLabel.text = disruption.publishDate
+        cell.disruptionPublishDateLabel.text = "Last Update: " + disruption.updateDate!
         
         return cell
     }
@@ -240,15 +241,18 @@ class DisruptionsTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDisruptionDetail"{
+            let page2:DisruptionDetailViewController = segue.destination as! DisruptionDetailViewController
+            page2.webkitAddress = disruptionById(disruptionId: (disruptions[tableView.indexPathForSelectedRow!.row]).disruptionId!)
+        }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
     
     fileprivate func extractedFunc(_ request: String) -> String {
         let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
@@ -267,6 +271,10 @@ class DisruptionsTableViewController: UITableViewController {
     }
     func disruptionByStop(stopID: Int) -> String{
         let request: String = "/v3/disruptions/stop/"+String(stopID)+"?devid="+hardcodedDevID
+        return extractedFunc(request)
+    }
+    func disruptionById(disruptionId: Int) -> String{
+        let request: String = "/v3/disruptions/"+String(disruptionId)+"?devid="+hardcodedDevID
         return extractedFunc(request)
     }
 }

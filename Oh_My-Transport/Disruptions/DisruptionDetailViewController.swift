@@ -130,7 +130,7 @@ class DisruptionDetailViewController: UIViewController {
     @IBOutlet weak var disruptionEndDateLabel: UILabel!
     @IBOutlet weak var disruptionDetailLabel: UILabel!
 
-    var webkitAddress: String = "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353"
+    var webkitAddress: String = ""
     
     @IBAction func viewInWebKit(_ sender: Any) {
         UIApplication.shared.openURL(URL(string: webkitAddress)!)
@@ -141,8 +141,8 @@ class DisruptionDetailViewController: UIViewController {
 //        Do any additional setup after loading the view.
         
         //Disruption sample detail page
-        let url = URL(string: "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353")
-        
+        let url = URL(string: webkitAddress)
+        print(webkitAddress)
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if let error = error {
                 print("Download failed: \(String(describing: error))")
