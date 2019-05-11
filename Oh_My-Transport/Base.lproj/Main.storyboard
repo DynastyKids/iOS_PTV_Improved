@@ -348,7 +348,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="warningIcon"/>
                                             <connections>
-                                                <segue destination="Rur-ig-BSX" kind="show" id="EpR-Nc-agv"/>
+                                                <segue destination="Rur-ig-BSX" kind="show" identifier="showAllDisruptions" id="EpR-Nc-agv"/>
                                             </connections>
                                         </button>
                                     </barButtonItem>
@@ -501,7 +501,7 @@
                                                                 </constraints>
                                                                 <state key="normal" image="warningIcon_White"/>
                                                                 <connections>
-                                                                    <segue destination="Rur-ig-BSX" kind="show" id="DrN-CA-ZUT"/>
+                                                                    <segue destination="Rur-ig-BSX" kind="show" identifier="showRouteDisruptions" id="DrN-CA-ZUT"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -924,23 +924,45 @@
                                 <rect key="frame" x="0.0" y="317" width="414" height="419"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="EvG-tZ-TWP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="routeDisruption" id="EvG-tZ-TWP">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EvG-tZ-TWP" id="893-ey-OeZ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="122 - Southern Cross Station / Spencer St" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqW-8Q-7rJ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption Notice:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqW-8Q-7rJ">
+                                                    <rect key="frame" x="20" y="0.0" width="386" height="43.666666666666664"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="pqW-8Q-7rJ" secondAttribute="bottom" id="33L-bx-5tF"/>
+                                                <constraint firstAttribute="trailing" secondItem="pqW-8Q-7rJ" secondAttribute="trailing" constant="8" id="CmT-dS-2qx"/>
+                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="leading" secondItem="893-ey-OeZ" secondAttribute="leadingMargin" id="bqX-Ac-EnP"/>
+                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="top" secondItem="893-ey-OeZ" secondAttribute="top" id="ve9-BD-Z9j"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="routeStops" id="mi4-ru-WvC">
+                                        <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mi4-ru-WvC" id="RXj-c3-GbU">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="122 - Southern Cross Station / Spencer St" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O40-Jw-kEk">
                                                     <rect key="frame" x="20" y="0.0" width="287" height="43.666666666666664"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 pm" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9Z-md-DxY">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00 pm" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qog-Ue-GAc">
                                                     <rect key="frame" x="331" y="8.0000000000000018" width="75" height="27.666666666666671"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="75" id="oHP-d2-vtJ"/>
+                                                        <constraint firstAttribute="width" constant="75" id="Xz4-XR-xBW"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -948,13 +970,13 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="leading" secondItem="893-ey-OeZ" secondAttribute="leadingMargin" id="3wt-e6-dWi"/>
-                                                <constraint firstAttribute="trailing" secondItem="w9Z-md-DxY" secondAttribute="trailing" constant="8" id="K5g-0C-ENV"/>
-                                                <constraint firstAttribute="bottom" secondItem="pqW-8Q-7rJ" secondAttribute="bottom" id="Yd0-ON-qG1"/>
-                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="top" secondItem="893-ey-OeZ" secondAttribute="top" id="cml-qv-BAX"/>
-                                                <constraint firstItem="w9Z-md-DxY" firstAttribute="top" secondItem="893-ey-OeZ" secondAttribute="top" constant="8" id="cyw-n4-wf9"/>
-                                                <constraint firstItem="w9Z-md-DxY" firstAttribute="leading" secondItem="pqW-8Q-7rJ" secondAttribute="trailing" constant="24" id="tRm-Lm-DDI"/>
-                                                <constraint firstAttribute="bottom" secondItem="w9Z-md-DxY" secondAttribute="bottom" constant="8" id="utS-qS-nIf"/>
+                                                <constraint firstAttribute="trailing" secondItem="qog-Ue-GAc" secondAttribute="trailing" constant="8" id="55Z-vU-yLz"/>
+                                                <constraint firstItem="O40-Jw-kEk" firstAttribute="leading" secondItem="RXj-c3-GbU" secondAttribute="leadingMargin" id="9vF-Ih-gue"/>
+                                                <constraint firstAttribute="bottom" secondItem="O40-Jw-kEk" secondAttribute="bottom" id="O36-YH-CEP"/>
+                                                <constraint firstItem="O40-Jw-kEk" firstAttribute="top" secondItem="RXj-c3-GbU" secondAttribute="top" id="ghL-Zh-78S"/>
+                                                <constraint firstAttribute="bottom" secondItem="qog-Ue-GAc" secondAttribute="bottom" constant="8" id="rII-rO-sWX"/>
+                                                <constraint firstItem="qog-Ue-GAc" firstAttribute="leading" secondItem="O40-Jw-kEk" secondAttribute="trailing" constant="24" id="yBL-Dt-61d"/>
+                                                <constraint firstItem="qog-Ue-GAc" firstAttribute="top" secondItem="RXj-c3-GbU" secondAttribute="top" constant="8" id="zSA-k6-AyW"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -984,7 +1006,7 @@
                                                 <state key="normal" title="Button" image="warningIcon"/>
                                             </button>
                                             <connections>
-                                                <segue destination="Rur-ig-BSX" kind="show" id="ob8-zn-BH3"/>
+                                                <segue destination="Rur-ig-BSX" kind="show" identifier="showRouteDisruptions" id="ob8-zn-BH3"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -1090,7 +1112,7 @@ To obtain a key:
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTB-G5-rs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="286" y="2305"/>
+            <point key="canvasLocation" x="-87" y="2332"/>
         </scene>
     </scenes>
     <resources>
