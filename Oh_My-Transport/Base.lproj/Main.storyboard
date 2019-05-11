@@ -333,7 +333,7 @@
                                 <items>
                                     <barButtonItem image="mapIcon" style="plain" id="FyF-qL-GtY">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Hcc-Qc-zfB">
-                                            <rect key="frame" x="20" y="9.6666666666666643" width="35" height="25"/>
+                                            <rect key="frame" x="20" y="9" width="35" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="mapIcon"/>
                                             <connections>
@@ -425,11 +425,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRO-yZ-aIz">
-                                                <rect key="frame" x="0.0" y="0.0" width="28" height="60"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="48.666666666666664" height="60"/>
                                                 <state key="normal" title="&lt;"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="122-Southern Corss Station / Spencer St" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IjY-Rh-O3o" userLabel="StopName">
-                                                <rect key="frame" x="28" y="0.0" width="386" height="60"/>
+                                                <rect key="frame" x="48.666666666666657" y="0.0" width="365.33333333333337" height="60"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1097,7 +1097,7 @@ To obtain a key:
     <resources>
         <image name="busIcon" width="25" height="25"/>
         <image name="busIcon_white" width="25" height="25"/>
-        <image name="mapIcon" width="25" height="25"/>
+        <image name="mapIcon" width="26" height="26"/>
         <image name="regionalTrainIcon_White" width="25" height="25"/>
         <image name="sateliteIcon_White" width="25" height="25"/>
         <image name="settingIcon" width="25" height="25"/>

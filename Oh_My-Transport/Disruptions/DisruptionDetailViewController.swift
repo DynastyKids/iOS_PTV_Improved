@@ -20,7 +20,7 @@ struct disruptionDetailroot: Codable{
 }
 
 struct disruptionbyIdDetail: Codable {
-    var disruptionID: Int
+    var disruptionId: Int
     var title: String
     var url: String?
     var description: String
@@ -37,7 +37,7 @@ struct disruptionbyIdDetail: Codable {
     var displayStatus: Bool?
     
     private enum CodingKeys: String, CodingKey{
-        case disruptionID = "disruption_id"
+        case disruptionId = "disruption_id"
         case title
         case url
         case description
@@ -56,7 +56,7 @@ struct disruptionbyIdDetail: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disruptionID = try container.decode(Int.self, forKey: .disruptionID)
+        self.disruptionId = try container.decode(Int.self, forKey: .disruptionId)
         self.title = try container.decode(String.self, forKey: .title)
         self.url = try container.decode(String.self, forKey: .url)
         self.description = try container.decode(String.self, forKey: .description)
@@ -85,13 +85,13 @@ struct direction: Codable{
         case direction_name
         case service_time
     }
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.route_direction_id = try container.decode(Int.self, forKey: .route_direction_id)
-        self.direction_id = try container.decode(Int.self, forKey: .direction_id)
-        self.direction_name = try container.decode(String.self, forKey: .direction_name)
-        self.service_time = try container.decode(String.self, forKey: .service_time)
-    }
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        self.route_direction_id = try container.decode(Int.self, forKey: .route_direction_id)
+//        self.direction_id = try container.decode(Int.self, forKey: .direction_id)
+//        self.direction_name = try container.decode(String.self, forKey: .direction_name)
+//        self.service_time = try container.decode(String.self, forKey: .service_time)
+//    }
 }
 
 struct disryptionByIdroutes: Codable{
@@ -109,14 +109,14 @@ struct disryptionByIdroutes: Codable{
         case gtfsId = "route_gtfs_id"
         case direction
     }
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.routeType = try container.decode(Int.self, forKey: .routeType)
-        self.routeId = try container.decode(Int.self, forKey: .routeId)
-        self.routeName = try container.decode(String.self, forKey: .routeName)
-        self.routeNumber = try container.decode(String.self, forKey: .routeNumber)
-        self.gtfsId = try container.decode(String.self, forKey: .gtfsId)
-    }
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        self.routeType = try container.decode(Int.self, forKey: .routeType)
+//        self.routeId = try container.decode(Int.self, forKey: .routeId)
+//        self.routeName = try container.decode(String.self, forKey: .routeName)
+//        self.routeNumber = try container.decode(String.self, forKey: .routeNumber)
+//        self.gtfsId = try container.decode(String.self, forKey: .gtfsId)
+//    }
 }
 
 struct disruptionByIdStops: Codable{
@@ -126,15 +126,15 @@ struct disruptionByIdStops: Codable{
         case stopId = "stop_id"
         case stopName = "stop_name"
     }
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.stopId = try container.decode(Int.self, forKey: .stopId)
-        self.stopName = try container.decode(String.self, forKey: .stopName)
-    }
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        self.stopId = try container.decode(Int.self, forKey: .stopId)
+//        self.stopName = try container.decode(String.self, forKey: .stopName)
+//    }
 }
 
 struct disruptionByIdstatus: Codable {
-    var version: String
+    var version: Double
     var health: Int
     private enum CodingKeys: String, CodingKey{
         case version
@@ -142,7 +142,7 @@ struct disruptionByIdstatus: Codable {
     }
 }
 
-class DisruptionDetailViewController: UIViewController, URLSessionTaskDelegate {
+class DisruptionDetailViewController: UIViewController {
     
     @IBOutlet weak var disruptionTitleLabel: UILabel!
     @IBOutlet weak var disruptionPublishDateLabel: UILabel!
@@ -150,11 +150,6 @@ class DisruptionDetailViewController: UIViewController, URLSessionTaskDelegate {
     @IBOutlet weak var disruptionEndDateLabel: UILabel!
     @IBOutlet weak var disruptionDetailLabel: UILabel!
 
-    let config = URLSessionConfiguration.background(withIdentifier: "edu.Monash.wgon0001.Oh-My-Transport")
-    lazy var session = {
-        return URLSession(configuration: config, delegate: self, delegateQueue: OperationQueue())
-    }()
-    var disruptionDetails: [disruptionbyIdDetail] = []
     var webkitAddress: String = "http://timetableapi.ptv.vic.gov.au/v3/disruptions/172753?devid=3001136&signature=0d109322726f7d0cdf172d376f062ba3fccf0353"
     
     @IBAction func viewInWebKit(_ sender: Any) {
@@ -179,8 +174,8 @@ class DisruptionDetailViewController: UIViewController, URLSessionTaskDelegate {
                 // Data recieved.  Decode it from JSON.
                 let decoder = JSONDecoder()
                 let disruptionDetail = try decoder.decode(disruptionDetailroot.self, from: data!)
-                self.disruptionDetails = [disruptionDetail.disruption]
-                print(disruptionDetail.disruption)
+                print(disruptionDetail.disruption.disruptionId)
+                print(disruptionDetail.disruption.title)
 //                self.disruptionTitleLabel.text = self.disruptionDetails[0].title
 //                self.disruptionPublishDateLabel.text = self.disruptionDetails[0].publishDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
 //                self.disruptionStartDateLabel.text = self.disruptionDetails[0].startDate?.toString(dateFormat: "dd-MMM-YYYY hh:mm")
@@ -203,11 +198,4 @@ class DisruptionDetailViewController: UIViewController, URLSessionTaskDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        if totalBytesExpectedToWrite > 0 {
-            let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-            print("\(downloadTask.currentRequest!.description): Progress \(progress)")
-        }
-    }
 }
