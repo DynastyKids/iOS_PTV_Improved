@@ -640,14 +640,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Cranbourne and Pakenham lines: Service alterations from 9.20am to 7.15pm on Sunday 12 May 2019" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdB-V3-inX">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Fetching disruption information from PTV" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdB-V3-inX">
                                             <rect key="frame" x="16" y="8" width="382" height="71.666666666666671"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Published On: 02MAY2019 05:49:50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obq-KO-wUx">
-                                            <rect key="frame" x="16" y="85.666666666666742" width="251" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Published On: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obq-KO-wUx">
+                                            <rect key="frame" x="16.000000000000007" y="85.666666666666742" width="99.666666666666686" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -657,7 +657,7 @@
                                         <constraint firstItem="obq-KO-wUx" firstAttribute="top" secondItem="QdB-V3-inX" secondAttribute="bottom" constant="6" id="JFl-jh-Rxe"/>
                                         <constraint firstAttribute="trailing" secondItem="QdB-V3-inX" secondAttribute="trailing" constant="16" id="Nch-Nd-a7C"/>
                                         <constraint firstItem="obq-KO-wUx" firstAttribute="leading" secondItem="12Q-AU-Igp" secondAttribute="leading" constant="16" id="ew6-wW-VPt"/>
-                                        <constraint firstItem="QdB-V3-inX" firstAttribute="top" secondItem="12Q-AU-Igp" secondAttribute="top" constant="8" id="mev-AM-EBv"/>
+                                        <constraint firstItem="QdB-V3-inX" firstAttribute="top" secondItem="12Q-AU-Igp" secondAttribute="top" constant="7" id="mev-AM-EBv"/>
                                         <constraint firstAttribute="bottom" secondItem="obq-KO-wUx" secondAttribute="bottom" constant="8" id="tqk-or-jzu"/>
                                         <constraint firstItem="QdB-V3-inX" firstAttribute="leading" secondItem="12Q-AU-Igp" secondAttribute="leading" constant="16" id="uJ1-tt-Fzh"/>
                                     </constraints>
@@ -665,7 +665,7 @@
                                 <connections>
                                     <outlet property="disruptionPublishDateLabel" destination="obq-KO-wUx" id="GZs-Tf-aUH"/>
                                     <outlet property="disruptionTitleLabel" destination="QdB-V3-inX" id="EkZ-cB-W95"/>
-                                    <segue destination="BJB-We-4jd" kind="show" id="LlG-rG-Syf"/>
+                                    <segue destination="BJB-We-4jd" kind="show" identifier="showDisruptionDetail" id="LlG-rG-Syf"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -694,36 +694,36 @@
                                     <navigationItem title="Title" id="COH-LU-Va8"/>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption Information is now loading, please wait" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pF-0J-bJ9" userLabel="disruptionTitle">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption Information is now loading, please wait" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pF-0J-bJ9" userLabel="disruptionTitle">
                                 <rect key="frame" x="16" y="80" width="382" height="52.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" red="1" green="0.48424340170000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Published on: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EwJ-XQ-Dz1" userLabel="disruptionPublishDate">
-                                <rect key="frame" x="20" y="144.66666666666666" width="97" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <rect key="frame" x="19.999999999999993" y="144.66666666666666" width="114.33333333333331" height="21.666666666666657"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption from: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-AZ-dl4" userLabel="disruptionStartDate">
-                                <rect key="frame" x="20" y="166.66666666666666" width="115" height="18"/>
+                                <rect key="frame" x="20" y="170.33333333333334" width="115" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption ends:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZF2-Hp-AOh" userLabel="DisruptionEndDate">
-                                <rect key="frame" x="20" y="188.66666666666666" width="113" height="18"/>
+                                <rect key="frame" x="20" y="192.33333333333334" width="113" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption detail loading" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXc-xP-6Gt" userLabel="disruptionDetail">
-                                <rect key="frame" x="16" y="226.66666666666666" width="382" height="21.666666666666657"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption detail loading" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXc-xP-6Gt" userLabel="disruptionDetail">
+                                <rect key="frame" x="16" y="230.33333333333334" width="382" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xK6-yp-hYI">
-                                <rect key="frame" x="16" y="272.33333333333331" width="382" height="30"/>
+                                <rect key="frame" x="16" y="278.33333333333331" width="382" height="30"/>
                                 <state key="normal" title="View details on PTV website"/>
                                 <connections>
                                     <action selector="viewInWebKit:" destination="BJB-We-4jd" eventType="touchUpInside" id="0Vs-92-Mgj"/>
