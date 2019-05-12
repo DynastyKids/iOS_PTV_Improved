@@ -27,10 +27,10 @@ class DisruptionDetailViewController: UIViewController {
     @IBOutlet weak var disruptionEndDateLabel: UILabel!
     @IBOutlet weak var disruptionDetailLabel: UILabel!
 
-    var webkitAddress: String = ""
+    var fetchAddress: String = ""
     
     @IBAction func viewInWebKit(_ sender: Any) {
-        UIApplication.shared.openURL(URL(string: webkitAddress)!)
+        UIApplication.shared.openURL(URL(string: fetchAddress)!)
     }
     
     override func viewDidLoad() {
@@ -38,8 +38,8 @@ class DisruptionDetailViewController: UIViewController {
 //        Do any additional setup after loading the view.
         
         //Disruption sample detail page
-        let url = URL(string: webkitAddress)
-        print(webkitAddress)
+        let url = URL(string: fetchAddress)
+        print(fetchAddress)
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if let error = error {
                 print("Download failed: \(String(describing: error))")
@@ -79,7 +79,7 @@ class DisruptionDetailViewController: UIViewController {
             self.disruptionEndDateLabel.text = "Effect Until: " + iso8601DateConvert(iso8601Date: disruption.endDate ?? "Nil", withTime: true)
         }
         self.disruptionDetailLabel.text = disruption.description
-        self.webkitAddress = (disruption.url)!
+        self.fetchAddress = (disruption.url)!
     }
     
     func iso8601DateConvert(iso8601Date: String, withTime: Bool?) -> String{

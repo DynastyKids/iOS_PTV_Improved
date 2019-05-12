@@ -102,7 +102,7 @@ class DisruptionsTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDisruptionDetail"{
             let page2:DisruptionDetailViewController = segue.destination as! DisruptionDetailViewController
-            page2.webkitAddress = disruptionById(disruptionId: (disruptions[tableView.indexPathForSelectedRow!.row]).disruptionId!)
+            page2.fetchAddress = disruptionById(disruptionId: (disruptions[tableView.indexPathForSelectedRow!.row]).disruptionId!)
         }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
