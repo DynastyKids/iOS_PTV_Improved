@@ -1,5 +1,5 @@
 //
-//  StopsTableViewCell.swift
+//  nextServiceTableViewCell.swift
 //  Oh_My-Transport
 //
 //  Created by OriWuKids on 5/5/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StopsTableViewCell: UITableViewCell {
+class nextServiceTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
