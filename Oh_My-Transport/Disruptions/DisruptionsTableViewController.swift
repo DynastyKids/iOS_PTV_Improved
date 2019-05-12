@@ -10,153 +10,11 @@ import UIKit
 import Foundation
 import CommonCrypto
 
-//Decodable只能解析，不能被编码
-struct disruptionRoot: Codable{
-    var disruptions: disruptionOverview?
-    var status: disruptionOverviewStatus?
-    private enum CodingKeys: String, CodingKey{
-        case disruptions
-        case status
-    }
-}
-
-struct disruptionOverview: Codable{
-    var general: [disruptionInfo]?
-    var metroTrain: [disruptionInfo]?
-    var metroTram: [disruptionInfo]?
-    var metroBus: [disruptionInfo]?
-    var vlineTrain: [disruptionInfo]?
-    var vlineCoach: [disruptionInfo]?
-    var regionalBus: [disruptionInfo]?
-    var schoolBus: [disruptionInfo]?
-    var telebus: [disruptionInfo]?
-    var nightbus: [disruptionInfo]?
-    var ferry: [disruptionInfo]?
-    var interstate: [disruptionInfo]?
-    var skybus: [disruptionInfo]?
-    var taxi: [disruptionInfo]?
-    
-    private enum CodingKeys: String, CodingKey{
-        case general
-        case metroTrain = "metro_train"
-        case metroTram = "metro_tram"
-        case metroBus = "metro_bus"
-        case vlineTrain = "regional_train"
-        case vlineCoach = "regional_coach"
-        case regionalBus = "regional_bus"
-        case schoolBus = "school_bus"
-        case telebus
-        case nightbus = "night_bus"
-        case ferry
-        case interstate = "interstate_train"
-        case skybus
-        case taxi
-    }
-}
-
-struct disruptionInfo: Codable{
-    var disruptionId: Int?
-    var title: String?
-    var url: String?
-    var description: String?
-    var disruptionStatus: String?
-    var disruptionType: String?
-    var publishDate: String?
-    var updateDate: String?
-    var startDate: String?
-    var endDate: String?
-    var routes: [disruptionRoutes]?
-    var stops: [disruptionStops]?
-    var colour: String?
-    var displayOnBoard: Bool?
-    var displayStatus: Bool?
-    
-    private enum CodingKeys: String, CodingKey{
-        case disruptionId = "disruption_id"
-        case title
-        case url
-        case description
-        case disruptionStatus = "disruption_status"
-        case disruptionType = "disruption_type"
-        case publishDate = "published_on"
-        case updateDate = "last_updated"
-        case startDate = "from_date"
-        case endDate = "to_date"
-        case routes
-        case stops
-        case colour
-        case displayOnBoard = "display_on_board"
-        case displayStatus = "display_status"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disruptionId = try? container.decode(Int.self, forKey: .disruptionId)
-        self.title = try? container.decode(String.self, forKey: .title)
-        self.url = try? container.decode(String.self, forKey: .url)
-        self.description = try? container.decode(String.self, forKey: .description)
-        self.disruptionStatus = try? container.decode(String.self, forKey: .disruptionStatus)
-        self.disruptionType = try? container.decode(String.self, forKey: .disruptionType)
-        self.publishDate = try? container.decode(String.self, forKey: .publishDate)
-        self.updateDate = try? container.decode(String.self, forKey: .updateDate)
-        self.startDate = try? container.decode(String.self, forKey: .startDate)
-        self.endDate = try? container.decode(String.self, forKey: .endDate)
-        self.routes = try? container.decode([disruptionRoutes].self, forKey: .routes)
-        self.stops = try? container.decode([disruptionStops].self, forKey: .stops)
-        self.colour = try? container.decode(String.self, forKey: .colour)
-        self.displayOnBoard = try? container.decode(Bool.self, forKey: .displayOnBoard)
-        self.displayStatus = try? container.decode(Bool.self, forKey: .displayStatus)
-    }
-}
-struct disruptionRoutes: Codable{
-    var routeType: Int?
-    var routeId: Int?
-    var routeName: String?
-    var routeNumber: String?
-    var gtfsId: String?
-    var direction: disruptionDirection?
-    private enum routesCodingKeys: String, CodingKey{
-        case routeType = "route_type"
-        case routeId = "route_id"
-        case routeName = "route_name"
-        case routeNumber = "route_number"
-        case gtfsId = "route_gtfs_id"
-        case direction
-    }
-}
-struct disruptionDirection: Codable{
-    var routeDirectionId: Int?
-    var directionId: Int?
-    var directionName: String?
-    var serviceTime: String?
-    private enum directionCodingKeys: String, CodingKey{
-        case routeDirectionId = "route_direction_id"
-        case directionId = "direction_id"
-        case directionName = "direction_name"
-        case serviceTime = "service_time"
-    }
-}
-struct disruptionStops: Codable{
-    var stopId: Int?
-    var stopName: String?
-    private enum CodingKeys: String, CodingKey{
-        case stopId = "stop_id"
-        case stopName = "stop_name"
-    }
-}
-
-struct disruptionOverviewStatus: Codable {
-    var version: String?
-    var health: Int?
-    private enum CodingKeys: String, CodingKey{
-        case version
-        case health
-    }
-}
+// Struct has been moved to PTVdataStruct.swift
 
 class DisruptionsTableViewController: UITableViewController {
     
-    var disruptions: [disruptionInfo] = []
+    var disruptions: [disruption] = []
     
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
@@ -185,7 +43,7 @@ class DisruptionsTableViewController: UITableViewController {
             do{
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
-                let disruptionData = try decoder.decode(disruptionRoot.self, from: data!)
+                let disruptionData = try decoder.decode(disruptionsResponse.self, from: data!)
                 self.disruptions = (disruptionData.disruptions?.metroTrain)!
                 self.disruptions += (disruptionData.disruptions?.metroTram)!
                 self.disruptions += (disruptionData.disruptions?.metroBus)!
@@ -199,7 +57,7 @@ class DisruptionsTableViewController: UITableViewController {
                 self.disruptions += (disruptionData.disruptions?.skybus)!
                 self.disruptions += (disruptionData.disruptions?.ferry)!
                 self.disruptions += (disruptionData.disruptions?.taxi)!
-                print(disruptionData.disruptions?.metroTrain?.count)
+//                print(disruptionData.disruptions?.metroTrain?.count)
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

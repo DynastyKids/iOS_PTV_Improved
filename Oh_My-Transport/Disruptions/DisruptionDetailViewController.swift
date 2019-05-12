@@ -10,67 +10,12 @@ import UIKit
 import Foundation
 
 struct disruptionDetailroot: Codable{
-    var disruption: disruptionbyIdDetail?
-    var disruptionByIdstatus: disruptionByIdstatus?
+    var disruption: disruption?
+    var status: status?
     
     private enum CodingKeys: String, CodingKey{
         case disruption
-        case disruptionByIdstatus = "status"
-    }
-}
-
-struct disruptionbyIdDetail: Codable {
-    var disruptionId: Int?
-    var title: String?
-    var url: String?
-    var description: String?
-    var disruptionStatus: String?
-    var disruptionType: String?
-    var publishDate: String?
-    var updateDate: String?
-    var startDate: String?
-    var endDate: String?
-    var routes: disryptionByIdroutes?
-    var stops: disruptionByIdStops?
-    var colour: String?
-    var displayOnBoard: Bool?
-    var displayStatus: Bool?
-    
-    private enum CodingKeys: String, CodingKey{
-        case disruptionId = "disruption_id"
-        case title
-        case url
-        case description
-        case disruptionStatus = "disruption_status"
-        case disruptionType = "disruption_type"
-        case publishDate = "published_on"
-        case updateDate = "last_updated"
-        case startDate = "from_date"
-        case endDate = "to_date"
-        case routes
-        case stops
-        case colour
-        case displayOnBoard = "display_on_board"
-        case displayStatus = "display_status"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disruptionId = try? container.decode(Int.self, forKey: .disruptionId)
-        self.title = try? container.decode(String.self, forKey: .title)
-        self.url = try? container.decode(String.self, forKey: .url)
-        self.description = try? container.decode(String.self, forKey: .description)
-        self.disruptionStatus = try? container.decode(String.self, forKey: .disruptionStatus)
-        self.disruptionType = try? container.decode(String.self, forKey: .disruptionType)
-        self.publishDate = try? container.decode(String.self, forKey: .publishDate)
-        self.updateDate = try? container.decode(String.self, forKey: .updateDate)
-        self.startDate = try? container.decode(String.self, forKey: .startDate)
-        self.endDate = try? container.decode(String.self, forKey: .endDate)
-        self.routes = try? container.decode(disryptionByIdroutes.self, forKey: .routes)
-        self.stops = try? container.decode(disruptionByIdStops.self, forKey: .stops)
-        self.colour = try? container.decode(String.self, forKey: .colour)
-        self.displayOnBoard = try? container.decode(Bool.self, forKey: .displayOnBoard)
-        self.displayStatus = try? container.decode(Bool.self, forKey: .displayStatus)
+        case status
     }
 }
 
@@ -173,7 +118,7 @@ class DisruptionDetailViewController: UIViewController {
     }
     */
     
-    func updateScreen(disruption:disruptionbyIdDetail){
+    func updateScreen(disruption:disruption){
         self.disruptionTitleLabel.text = disruption.title
         self.disruptionPublishDateLabel.text = "Publish Date: " +  iso8601DateConvert(iso8601Date: disruption.publishDate ?? "Nil", withTime: false)
         self.disruptionStartDateLabel.text = "Effect From: " + iso8601DateConvert(iso8601Date: disruption.startDate ?? "Nil", withTime: true)
