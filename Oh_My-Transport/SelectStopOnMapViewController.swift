@@ -80,35 +80,19 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        loading JSON decoder
-        locationManager.requestWhenInUseAuthorization()
-        
-        // Check for Location Services
-        if (CLLocationManager.locationServicesEnabled()) {
-            locationManager.requestAlwaysAuthorization()
-            locationManager.requestWhenInUseAuthorization()
-        }
-        
         if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
             guard locationManager.location != nil else {
                 return
             }
         }
-
+        
         self.mainMapView = MKMapView(frame:self.view.frame)
         self.view.addSubview(self.mainMapView)
-        
         mainMapView.showsUserLocation = true
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        
-//        创建一个MKCoordinateSpan对象，设置地图的范围（越小越精确）
-//        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)
-//        let userLocation = locationManager.location?.coordinate
-//        let currentRegion = MKCoordinateRegion(center: userLocation!, span: currentLocationSpan)
-//        self.mainMapView.setRegion(currentRegion, animated: true)
         
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
@@ -135,6 +119,7 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     */
     
     //MARK:- CLLocationManager Delegates
+    //创建一个MKCoordinateSpan对象，设置地图的范围（越小越精确）
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)

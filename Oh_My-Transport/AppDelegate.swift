@@ -10,12 +10,13 @@ import UIKit
 import CoreData
 import UserNotifications
 import CommonCrypto
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+    var locationManager = CLLocationManager()
     let jsonDecoder = JSONDecoder()
 
 
@@ -30,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        loadLocation()
         
         return true
     }
@@ -139,5 +142,23 @@ extension String {
         }
         let hexBytes = digest.map { String(format: "%02hhx", $0) }
         return hexBytes.joined()
+    }
+}
+
+extension AppDelegate:CLLocationManagerDelegate{
+    func loadLocation(){
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters  //Save Battery
+        if (CLLocationManager.locationServicesEnabled()) {
+            locationManager.requestAlwaysAuthorization()
+            locationManager.requestWhenInUseAuthorization()
+        }
+        if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
+            guard locationManager.location != nil else {
+                return
+            }
+        }
+        locationManager.startUpdatingLocation()
     }
 }
