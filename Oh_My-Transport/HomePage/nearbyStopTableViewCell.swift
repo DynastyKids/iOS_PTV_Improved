@@ -17,6 +17,7 @@ class nearbyStopTableViewCell: UITableViewCell {
     @IBOutlet weak var dep2timeLabel: UILabel!
     @IBOutlet weak var departure3Label: UILabel!
     @IBOutlet weak var dep3timeLabel: UILabel!
+    @IBOutlet weak var nearbyLabel: UILabel!
     
     
     override func awakeFromNib() {
