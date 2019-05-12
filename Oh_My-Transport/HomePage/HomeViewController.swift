@@ -10,14 +10,25 @@ import UIKit
 import CommonCrypto
 import Foundation
 import CoreData
+import CoreLocation
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+// Data struct has been moved to /PTVdataStruct.swift
+
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+    let locationManager = CLLocationManager()
+    var nslock = NSLock()
+    var currentLocation:CLLocation!
+    
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
+//    var savedStops
+//    var savedRoutes
+    var nearbyStops: [stopGeosearch] = []
     var filteredRoutes: [FavRoute] = []
     var filteredStops: [FavStop] = []
-    var searchAllRoutes: [FavRoute] = []
-    var searchAllStops: [FavStop] = []
+    
+    var latitude: Double = 0.0
+    var longtitude: Double = 0.0
     
     @IBOutlet weak var stopsTableView: UITableView!
     
@@ -43,6 +54,30 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        //Get user location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        // Allocate near by 2 stops
+        let nearbyStopurl = URL(string: nearByStops(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longtitude: locationManager.location?.coordinate.longitude ?? 144.9663325)) // If value is null, default will set at Flider St. station.
+        let nearbyTask = URLSession.shared.dataTask(with: nearbyStopurl!){ (data,response, error) in
+            if let error = error {
+                print("Nearby stop fetch failed")
+            }
+        }
+        
+        //  Stop info
+        
+        //  Next departure
+        
+        // End of Allocate near by 2 stops
+        
+        // Allocate saved stops from CoreData
+        
+        // Allocate Saved routes from CoreData
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -51,19 +86,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1{
-            return 2
+            return 2    //Show Nearby 2 stops only
         } else if section == 2 {
-            return filteredStops.count
+            return filteredStops.count  // Show all saved stops
         } else {
-            return filteredRoutes.count
+            return filteredRoutes.count // Show all saved routes
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        
-        // Configure the cell...
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "nonExistCell", for: indexPath)
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "nearbyStopsCell", for: indexPath)
+            return cell
+        } else if indexPath.section == 1{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "savedStopsCell", for: indexPath)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "favorRouteCell", for: indexPath)
+            return cell
+        }
         return cell
     }
     
@@ -107,68 +149,33 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        tableView.reloadData()
 //    }
     
-    
-}
-
-struct homeDeparturesResponse: Codable {
-    var departures: [homeDepartures]
-    var status: homeStatus
-    
-    private enum CodingKeys: String, CodingKey{
-        case departures
-        case status
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations location: [CLLocation]) {  // Get User location
+        nslock.lock()
+        currentLocation = location.last //用最后一个经纬度数组定位
+        latitude = currentLocation.coordinate.latitude
+        longtitude = currentLocation.coordinate.longitude
+        locationManager.stopUpdatingLocation()
+        nslock.unlock()
     }
-}
-
-struct homeDepartures: Codable{
-    var stopsId: Int?
-    var routesId: Int?
-    var runId: Int?
-    var directionId: Int?
-    var disruptionIds: [Int]?
-    var scheduledDepartureUTC: String?
-    var estimatedDepartureUTC: String?
-    var atPlatform: Bool
-    var platformNumber: String?
-    var flags: String?
-    var departureSequence: Int?
-    
-    private enum CodingKeys: String, CodingKey{
-        case stopsId = "stop_id"
-        case routesId = "route_id"
-        case runId = "run_id"
-        case directionId = "direction_id"
-        case disruptionIds = "disruption_ids"
-        case scheduledDepartureUTC = "scheduled_departure_utc"
-        case estimatedDepartureUTC = "estimated_departure_utc"
-        case atPlatform = "at_platform"
-        case platformNumber = "platform_number"
-        case flags
-        case departureSequence = "departure_sequence"
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error while get user location:\(error)")
     }
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.stopsId = try? container.decode(Int.self, forKey: .stopsId)
-        self.routesId = try? container.decode(Int.self, forKey: .routesId)
-        self.runId = try? container.decode(Int.self, forKey: .runId)
-        self.directionId = try? container.decode(Int.self, forKey: .directionId)
-        self.disruptionIds = try? container.decode([Int].self, forKey: .disruptionIds)
-        self.scheduledDepartureUTC = try? container.decode(String.self, forKey: .scheduledDepartureUTC)
-        self.estimatedDepartureUTC = try? container.decode(String.self, forKey: .estimatedDepartureUTC)
-        self.atPlatform = try container.decode(Bool.self, forKey: .atPlatform)
-        self.platformNumber = try? container.decode(String.self, forKey: .platformNumber)
-        self.flags = try? container.decode(String.self, forKey: .flags)
-        self.departureSequence = try? container.decode(Int.self, forKey: .departureSequence)
-    }
-}
-
-struct homeStatus: Codable {
-    var version: String
-    var health: Int
     
-    private enum CodingKeys: String, CodingKey{
-        case version
-        case health
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning() // Dispose of any resources that can be recreated.
+    }
+    
+//    Construct PTV lookup address
+    fileprivate func extractedFunc(_ request: String) -> String {
+        let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
+        let requestAddress: String = hardcodedURL+request+"&signature="+signature
+        
+        return requestAddress
+    }
+    
+    func nearByStops(latitude: Double, longtitude: Double) -> String{
+        let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=2&max_distance=1000&devid="+hardcodedDevID
+        return extractedFunc(request)
     }
 }
 
