@@ -231,7 +231,7 @@ struct disruptionStop: Codable{
     /v3/stops/location/{latitude},{longitude}
 */
 struct stopsByDistanceResponse: Codable {
-    var stops: stopGeosearch?
+    var stops: [stopGeosearch]?
     //    var disruptions: disruptions?
     var status: status?
     

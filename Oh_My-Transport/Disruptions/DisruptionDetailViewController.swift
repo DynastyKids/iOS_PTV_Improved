@@ -49,10 +49,9 @@ class DisruptionDetailViewController: UIViewController {
                 // Data recieved.  Decode it from JSON.
                 let decoder = JSONDecoder()
                 let disruptionDetail = try decoder.decode(disruptionByIdResponse.self, from: data!)
-//                print(disruptionDetail.disruption?.disruptionId)
-//                print(disruptionDetail.disruption?.title)
-//                print(disruptionDetail.disruption?.description)
-                self.updateScreen(disruption: disruptionDetail.disruption!)
+                DispatchQueue.main.async {
+                    self.updateScreen(disruption: disruptionDetail.disruption!)
+                }
             } catch {
                 print("Error:"+error.localizedDescription)
             }

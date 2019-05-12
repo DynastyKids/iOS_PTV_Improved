@@ -33,9 +33,7 @@ class DisruptionsTableViewController: UITableViewController {
         // Loading disruption data from PTV
         let url = URL(string: disruptionAll());
         
-        print(url);
         let task = URLSession.shared.dataTask(with: url!){(data, response, error) in
-            print(url);
             if let error = error{
                 print("fetching error: \(String(describing: error))")
                 return
