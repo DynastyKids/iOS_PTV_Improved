@@ -56,21 +56,21 @@ struct disruptionbyIdDetail: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disruptionId = try container.decode(Int.self, forKey: .disruptionId)
-        self.title = try container.decode(String.self, forKey: .title)
-        self.url = try container.decode(String.self, forKey: .url)
-        self.description = try container.decode(String.self, forKey: .description)
-        self.disruptionStatus = try container.decode(String.self, forKey: .disruptionStatus)
-        self.disruptionType = try container.decode(String.self, forKey: .disruptionType)
-        self.publishDate = try container.decode(String.self, forKey: .publishDate)
-        self.updateDate = try container.decode(String.self, forKey: .updateDate)
-        self.startDate = try container.decode(String.self, forKey: .startDate)
-        self.endDate = try container.decode(String.self, forKey: .endDate)
+        self.disruptionId = try? container.decode(Int.self, forKey: .disruptionId)
+        self.title = try? container.decode(String.self, forKey: .title)
+        self.url = try? container.decode(String.self, forKey: .url)
+        self.description = try? container.decode(String.self, forKey: .description)
+        self.disruptionStatus = try? container.decode(String.self, forKey: .disruptionStatus)
+        self.disruptionType = try? container.decode(String.self, forKey: .disruptionType)
+        self.publishDate = try? container.decode(String.self, forKey: .publishDate)
+        self.updateDate = try? container.decode(String.self, forKey: .updateDate)
+        self.startDate = try? container.decode(String.self, forKey: .startDate)
+        self.endDate = try? container.decode(String.self, forKey: .endDate)
         self.routes = try? container.decode(disryptionByIdroutes.self, forKey: .routes)
         self.stops = try? container.decode(disruptionByIdStops.self, forKey: .stops)
-        self.colour = try container.decode(String.self, forKey: .colour)
-        self.displayOnBoard = try container.decode(Bool.self, forKey: .displayOnBoard)
-        self.displayStatus = try container.decode(Bool.self, forKey: .displayStatus)
+        self.colour = try? container.decode(String.self, forKey: .colour)
+        self.displayOnBoard = try? container.decode(Bool.self, forKey: .displayOnBoard)
+        self.displayStatus = try? container.decode(Bool.self, forKey: .displayStatus)
     }
 }
 
@@ -152,11 +152,10 @@ class DisruptionDetailViewController: UIViewController {
                 // Data recieved.  Decode it from JSON.
                 let decoder = JSONDecoder()
                 let disruptionDetail = try decoder.decode(disruptionDetailroot.self, from: data!)
-                print(disruptionDetail.disruption?.disruptionId)
-                print(disruptionDetail.disruption?.title)
-                print(disruptionDetail.disruption?.description)
+//                print(disruptionDetail.disruption?.disruptionId)
+//                print(disruptionDetail.disruption?.title)
+//                print(disruptionDetail.disruption?.description)
                 self.updateScreen(disruption: disruptionDetail.disruption!)
-                
             } catch {
                 print("Error:"+error.localizedDescription)
             }
@@ -176,10 +175,37 @@ class DisruptionDetailViewController: UIViewController {
     
     func updateScreen(disruption:disruptionbyIdDetail){
         self.disruptionTitleLabel.text = disruption.title
-        self.disruptionPublishDateLabel.text = "Publish Date: " +  (disruption.publishDate)!
-        self.disruptionStartDateLabel.text = "Effect From: " + (disruption.startDate)!
-        self.disruptionEndDateLabel.text = "Effect Until: " + (disruption.endDate)!
+        self.disruptionPublishDateLabel.text = "Publish Date: " +  iso8601DateConvert(iso8601Date: disruption.publishDate ?? "Nil", withTime: false)
+        self.disruptionStartDateLabel.text = "Effect From: " + iso8601DateConvert(iso8601Date: disruption.startDate ?? "Nil", withTime: true)
+        if disruption.endDate == nil{
+            self.disruptionEndDateLabel.text = ""
+        }else{
+            self.disruptionEndDateLabel.text = "Effect Until: " + iso8601DateConvert(iso8601Date: disruption.endDate ?? "Nil", withTime: true)
+        }
         self.disruptionDetailLabel.text = disruption.description
         self.webkitAddress = (disruption.url)!
+    }
+    
+    func iso8601DateConvert(iso8601Date: String, withTime: Bool?) -> String{
+        if iso8601Date == "Nil"{
+            return ""
+        }
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let date = formatter.date(from: iso8601Date)
+        
+        var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
+        
+        let mydateformat = DateFormatter()
+        if withTime == false {
+            mydateformat.dateFormat = "EEE dd MMM yyyy"
+        }else{
+            mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
+        }
+        return mydateformat.string(from: date!)
     }
 }

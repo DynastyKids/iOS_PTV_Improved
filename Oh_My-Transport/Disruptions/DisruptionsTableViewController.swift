@@ -219,16 +219,14 @@ class DisruptionsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 1
         return disruptions.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "disruptions", for: indexPath) as! disruptionTableViewCell
         let disruption = disruptions[indexPath.row]
-        let disruptionId = disruption.disruptionId
         cell.disruptionTitleLabel.text = disruption.title
-        cell.disruptionPublishDateLabel.text = "Last Update: " + disruption.updateDate!
+        cell.disruptionPublishDateLabel.text = "Last Update: " + iso8601DateConvert(iso8601Date: disruption.updateDate ?? "nil", withTime: true)
         
         return cell
     }
@@ -276,5 +274,28 @@ class DisruptionsTableViewController: UITableViewController {
     func disruptionById(disruptionId: Int) -> String{
         let request: String = "/v3/disruptions/"+String(disruptionId)+"?devid="+hardcodedDevID
         return extractedFunc(request)
+    }
+    
+    func iso8601DateConvert(iso8601Date: String, withTime: Bool?) -> String{
+        if iso8601Date == "nil"{
+            return ""
+        }
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let date = formatter.date(from: iso8601Date)
+        
+        var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
+        
+        let mydateformat = DateFormatter()
+        if withTime == false {
+            mydateformat.dateFormat = "EEE dd MMM yyyy"
+        }else{
+            mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
+        }
+        return mydateformat.string(from: date!)
     }
 }
