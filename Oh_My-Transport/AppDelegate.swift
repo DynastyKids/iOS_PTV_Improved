@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import UserNotifications
+import CommonCrypto
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -104,3 +105,59 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension ISO8601DateFormatter {
+    convenience init(_ formatOptions: Options, timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!) {
+        self.init()
+        self.formatOptions = formatOptions
+        self.timeZone = timeZone
+    }
+}
+extension Formatter {
+    static let iso8601 = ISO8601DateFormatter([.withInternetDateTime, .withFractionalSeconds])
+}
+extension Date {
+    var iso8601: String {
+        return Formatter.iso8601.string(from: self)
+    }
+}
+extension String {
+    var iso8601: Date? {
+        return Formatter.iso8601.date(from: self)
+    }
+
+    func hmac(algorithm: CryptoAlgorithm, key: String) -> String {
+        let str = self.cString(using: String.Encoding.utf8)
+        let strLen = Int(self.lengthOfBytes(using: String.Encoding.utf8))
+        let digestLen = algorithm.digestLength
+        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
+        let keyStr = key.cString(using: String.Encoding.utf8)
+        let keyLen = Int(key.lengthOfBytes(using: String.Encoding.utf8))
+        
+        CCHmac(algorithm.HMACAlgorithm, keyStr!, keyLen, str!, strLen, result)
+        
+        let digest = stringFromResult(result: result, length: digestLen)
+        
+        result.deallocate(capacity: digestLen)
+        
+        return digest
+    }
+    
+    private func stringFromResult(result: UnsafeMutablePointer<CUnsignedChar>, length: Int) -> String {
+        let hash = NSMutableString()
+        for i in 0..<length {
+            hash.appendFormat("%02x", result[i])
+        }
+        return String(hash)
+    }
+    
+    
+    func sha1() -> String {
+        let data = Data(self.utf8)
+        var digest = [UInt8](repeating: 0, count:Int(CC_SHA1_DIGEST_LENGTH))
+        data.withUnsafeBytes {
+            _ = CC_SHA1($0, CC_LONG(data.count), &digest)
+        }
+        let hexBytes = digest.map { String(format: "%02hhx", $0) }
+        return hexBytes.joined()
+    }
+}

@@ -27,7 +27,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
     
     // Testing path
-    
     func createResultString(Pattern:String)->String{
         let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
         let hardcodedDevID:String = "3001122"
@@ -107,11 +106,74 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        }
 //        tableView.reloadData()
 //    }
+    
+    
+}
+
+struct homeDeparturesResponse: Codable {
+    var departures: [homeDepartures]
+    var status: homeStatus
+    
+    private enum CodingKeys: String, CodingKey{
+        case departures
+        case status
+    }
+}
+
+struct homeDepartures: Codable{
+    var stopsId: Int?
+    var routesId: Int?
+    var runId: Int?
+    var directionId: Int?
+    var disruptionIds: [Int]?
+    var scheduledDepartureUTC: String?
+    var estimatedDepartureUTC: String?
+    var atPlatform: Bool
+    var platformNumber: String?
+    var flags: String?
+    var departureSequence: Int?
+    
+    private enum CodingKeys: String, CodingKey{
+        case stopsId = "stop_id"
+        case routesId = "route_id"
+        case runId = "run_id"
+        case directionId = "direction_id"
+        case disruptionIds = "disruption_ids"
+        case scheduledDepartureUTC = "scheduled_departure_utc"
+        case estimatedDepartureUTC = "estimated_departure_utc"
+        case atPlatform = "at_platform"
+        case platformNumber = "platform_number"
+        case flags
+        case departureSequence = "departure_sequence"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.stopsId = try? container.decode(Int.self, forKey: .stopsId)
+        self.routesId = try? container.decode(Int.self, forKey: .routesId)
+        self.runId = try? container.decode(Int.self, forKey: .runId)
+        self.directionId = try? container.decode(Int.self, forKey: .directionId)
+        self.disruptionIds = try? container.decode([Int].self, forKey: .disruptionIds)
+        self.scheduledDepartureUTC = try? container.decode(String.self, forKey: .scheduledDepartureUTC)
+        self.estimatedDepartureUTC = try? container.decode(String.self, forKey: .estimatedDepartureUTC)
+        self.atPlatform = try container.decode(Bool.self, forKey: .atPlatform)
+        self.platformNumber = try? container.decode(String.self, forKey: .platformNumber)
+        self.flags = try? container.decode(String.self, forKey: .flags)
+        self.departureSequence = try? container.decode(Int.self, forKey: .departureSequence)
+    }
+}
+
+struct homeStatus: Codable {
+    var version: String
+    var health: Int
+    
+    private enum CodingKeys: String, CodingKey{
+        case version
+        case health
+    }
 }
 
 enum CryptoAlgorithm {
     case MD5, SHA1
-    
     var HMACAlgorithm: CCHmacAlgorithm {
         var result: Int = 0
         switch self {
@@ -120,7 +182,6 @@ enum CryptoAlgorithm {
         }
         return CCHmacAlgorithm(result)
     }
-    
     var digestLength: Int {
         var result: Int32 = 0
         switch self {
@@ -131,43 +192,6 @@ enum CryptoAlgorithm {
     }
 }
 
-extension String {
-    func hmac(algorithm: CryptoAlgorithm, key: String) -> String {
-        let str = self.cString(using: String.Encoding.utf8)
-        let strLen = Int(self.lengthOfBytes(using: String.Encoding.utf8))
-        let digestLen = algorithm.digestLength
-        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
-        let keyStr = key.cString(using: String.Encoding.utf8)
-        let keyLen = Int(key.lengthOfBytes(using: String.Encoding.utf8))
-        
-        CCHmac(algorithm.HMACAlgorithm, keyStr!, keyLen, str!, strLen, result)
-        
-        let digest = stringFromResult(result: result, length: digestLen)
-        
-        result.deallocate(capacity: digestLen)
-        
-        return digest
-    }
-    
-    private func stringFromResult(result: UnsafeMutablePointer<CUnsignedChar>, length: Int) -> String {
-        let hash = NSMutableString()
-        for i in 0..<length {
-            hash.appendFormat("%02x", result[i])
-        }
-        return String(hash)
-    }
-
-
-    func sha1() -> String {
-        let data = Data(self.utf8)
-        var digest = [UInt8](repeating: 0, count:Int(CC_SHA1_DIGEST_LENGTH))
-        data.withUnsafeBytes {
-            _ = CC_SHA1($0, CC_LONG(data.count), &digest)
-        }
-        let hexBytes = digest.map { String(format: "%02hhx", $0) }
-        return hexBytes.joined()
-    }
-}
 
 //// Database Controller Delegate - all-in-one
 //extension TaskListTableViewController: NSFetchedResultsControllerDelegate{
