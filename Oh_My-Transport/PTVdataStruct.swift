@@ -11,8 +11,8 @@ import Foundation
  Status
 */
 struct status: Codable {
-    var version: String
-    var health: Int
+    var version: String     //API Version number
+    var health: Int         //API system health status (0=offline, 1=online) = ['0', '1']}
     
     private enum CodingKeys: String, CodingKey{
         case version
@@ -220,9 +220,53 @@ struct disruptionStop: Codable{
 }
 
 
-
-
-
+/*
+    Routes
+ 
+    /v3/Routes
+    /v3/Routes/{Route_id}
+ */
+struct RouteResponse: Codable{
+    var route: RouteWithStatus? //  Train lines, tram routes, bus routes, regional coach routes, Night Bus routes ,
+    var status: status?
+    private enum CodingKeys: String, CodingKey{
+        case route
+        case status
+    }
+}
+struct RouteWithStatus: Codable {
+    var routeServiceStatus: RouteServiceStatus?
+    var routeType: Int? //Transport mode identifier ,
+    var routeId: Int? //Route identifier ,
+    var routeName: String? // Name of route ,
+    var routeNumber: String? //Route number presented to public (nb. not route_id)
+    var GtfsId: String? // GTFS Identifer of the route
+    private enum CodingKeys: String, CodingKey{
+        case routeServiceStatus = "route_service_status"
+        case routeType = "route_type"
+        case routeId = "route_id"
+        case routeName = "route_name"
+        case routeNumber = "route_number"
+        case GtfsId = "route_gtfs_id"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.routeServiceStatus = try? container.decode(RouteServiceStatus.self, forKey: .routeServiceStatus)
+        self.routeType = try? container.decode(Int.self, forKey: .routeType)
+        self.routeId = try? container.decode(Int.self, forKey: .routeId)
+        self.routeName = try? container.decode(String.self, forKey: .routeName)
+        self.routeNumber = try? container.decode(String.self, forKey: .routeNumber)
+        self.GtfsId = try? container.decode(String.self, forKey: .GtfsId)
+    }
+}
+struct RouteServiceStatus: Codable {
+    var description: String?
+    var timestamp: String?
+    private enum CodingKeys: String, CodingKey{
+        case description
+        case timestamp
+    }
+}
 
 
 /*
