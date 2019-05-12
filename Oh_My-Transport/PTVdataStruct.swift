@@ -25,8 +25,9 @@ struct status: Codable {
 
 /*
     Departures
+ 
+    GET /v3/departures/route_type/{route_type}/stop/{stop_id}
 */
-//    GET /v3/departures/route_type/{route_type}/stop/{stop_id}
 struct departuresResponse: Codable {
     var departures: [departure]
     var status: status
@@ -81,8 +82,10 @@ struct departure: Codable{
 
 /*
     Disruptions
+ 
+    /v3/disruptions
+    /v3/disruptions/disruption_id
  */
-//  /v3/disruptions
 struct disruptionsResponse: Codable{
     var disruptions: disruptions?
     var status: status?
@@ -220,10 +223,13 @@ struct disruptionStop: Codable{
 
 
 
+
+
 /*
- Stops
+    Stops
+
+    /v3/stops/location/{latitude},{longitude}
 */
-//    "/v3/stops/location/{latitude},{longitude}"
 struct stopsByDistanceResponse: Codable {
     var stops: stopGeosearch?
     //    var disruptions: disruptions?

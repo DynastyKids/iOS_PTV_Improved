@@ -9,61 +9,13 @@
 import UIKit
 import Foundation
 
-struct disruptionDetailroot: Codable{
+struct disruptionByIdResponse: Codable{
     var disruption: disruption?
     var status: status?
     
     private enum CodingKeys: String, CodingKey{
         case disruption
         case status
-    }
-}
-
-struct direction: Codable{
-    var route_direction_id: Int?
-    var direction_id: Int?
-    var direction_name: String?
-    var service_time: String?
-    private enum CodingKeys: String, CodingKey{
-        case route_direction_id
-        case direction_id
-        case direction_name
-        case service_time
-    }
-}
-
-struct disryptionByIdroutes: Codable{
-    var routeType: Int?
-    var routeId: Int?
-    var routeName: String?
-    var routeNumber: String?
-    var gtfsId: String?
-    var direction: direction?
-    private enum CodingKeys: String, CodingKey{
-        case routeType = "route_type"
-        case routeId = "route_id"
-        case routeName = "route_name"
-        case routeNumber = "route_number"
-        case gtfsId = "route_gtfs_id"
-        case direction
-    }
-}
-
-struct disruptionByIdStops: Codable{
-    var stopId: Int?
-    var stopName: String?
-    private enum CodingKeys: String, CodingKey{
-        case stopId = "stop_id"
-        case stopName = "stop_name"
-    }
-}
-
-struct disruptionByIdstatus: Codable {
-    var version: String?
-    var health: Int?
-    private enum CodingKeys: String, CodingKey{
-        case version
-        case health
     }
 }
 
@@ -96,7 +48,7 @@ class DisruptionDetailViewController: UIViewController {
             do {
                 // Data recieved.  Decode it from JSON.
                 let decoder = JSONDecoder()
-                let disruptionDetail = try decoder.decode(disruptionDetailroot.self, from: data!)
+                let disruptionDetail = try decoder.decode(disruptionByIdResponse.self, from: data!)
 //                print(disruptionDetail.disruption?.disruptionId)
 //                print(disruptionDetail.disruption?.title)
 //                print(disruptionDetail.disruption?.description)
