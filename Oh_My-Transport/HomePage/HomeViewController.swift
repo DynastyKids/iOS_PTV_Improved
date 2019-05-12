@@ -75,7 +75,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             do{
                 let decoder = JSONDecoder()
-                let nearbyData = try decoder.decode(stopsByDistanceResponse.self, from: data!)
+                let nearbyData = try decoder.decode(stopResponseByLocation.self, from: data!)
                 self.nearbyStops = (nearbyData.stops)!
                 
                 DispatchQueue.main.async {
@@ -202,10 +202,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Pass the selected object to the new view controller.
         if segue.identifier == "showNearByStop" || segue.identifier == "showSavedStop"{
             let page2:StopsViewController = segue.destination as! StopsViewController
-            page2.webkitAddress = disruptionById(disruptionId: (disruptions[tableView.indexPathForSelectedRow!.row]).disruptionId!)
+            page2.nextDepartsURL = nextDepartureByStop(routeType: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType! , stopId: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId! )
+            page2.stopURL = lookupStops(stopId: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType! )
+            page2.routeType = (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType!
+        }
+        if segue.identifier == "busRouteSegue"{
+            
         }
     }
-    
     // MARK: - Search Function
 //    func updateSearchResults(for searchController: UISearchController) {
 //        if taskFetchedResultsController.fetchedObjects?.isEmpty == false{
@@ -258,6 +262,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func lookupRoutes(routeId: Int) -> String{
         let request: String = "/v3/routes/\(routeId)?devid="+hardcodedDevID
+        return extractedFunc(request)
+    }
+    
+    func lookupStops(stopId: Int, routeType: Int) -> String{
+        let request: String = "/v3/stops/\(stopId)/route_type/\(routeType)?devid="+hardcodedDevID
         return extractedFunc(request)
     }
     
