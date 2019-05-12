@@ -52,48 +52,36 @@ struct findStopByGPSstatus: Codable {
     }
 }
 
+final class BusStopAnnotation: NSObject, MKAnnotation{
+    var coordinate: CLLocationCoordinate2D
+    var title: String?
+    var subtitle: String?
+    
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String?){
+        self.coordinate = coordinate
+        self.title = title
+        self.subtitle = subtitle
+//        添加车站图标
+        super.init()
+    }
+}
+
 class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
     let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
-
-    var mainMapView: MKMapView!
-    var locManager = CLLocationManager()
-    var currentLocation: CLLocation!
     
-    //定位管理器
-    var locationManager:CLLocationManager = CLLocationManager()
+    @IBOutlet weak var mainMapView: MKMapView!
+
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locManager.requestWhenInUseAuthorization()
-
-        self.mainMapView = MKMapView(frame:self.view.frame)
-        self.view.addSubview(self.mainMapView)
-        self.mainMapView.mapType = MKMapType.standard
         
-        //创建一个MKCoordinateSpan对象，设置地图的范围（越小越精确）
-        let latDelta = 0.012
-        let longDelta = 0.012
-        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
-        
-        mainMapView.showsUserLocation = true
-        mainMapView.showsCompass = true
-        mainMapView.showsScale = true
-
-        if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
-            guard locManager.location != nil else {
-                return
-            }
-        }
-        
-        //定义地图区域和中心
-        //使用自定义位置
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+//        loading JSON decoder
+        locationManager.requestWhenInUseAuthorization()
         
         // Check for Location Services
         if (CLLocationManager.locationServicesEnabled()) {
@@ -101,10 +89,26 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             locationManager.requestWhenInUseAuthorization()
         }
         
-        //重新定向到用户位置
-        let userLocation = locationManager.location?.coordinate
-        let currentRegion = MKCoordinateRegion(center: userLocation!, span: currentLocationSpan)
-        self.mainMapView.setRegion(currentRegion, animated: true)
+        if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
+            guard locationManager.location != nil else {
+                return
+            }
+        }
+
+        self.mainMapView = MKMapView(frame:self.view.frame)
+        self.view.addSubview(self.mainMapView)
+        
+        mainMapView.showsUserLocation = true
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        
+//        创建一个MKCoordinateSpan对象，设置地图的范围（越小越精确）
+//        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)
+//        let userLocation = locationManager.location?.coordinate
+//        let currentRegion = MKCoordinateRegion(center: userLocation!, span: currentLocationSpan)
+//        self.mainMapView.setRegion(currentRegion, animated: true)
         
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
@@ -117,14 +121,7 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         claytonStation.subtitle = "Clayton"    //设置点击大头针之后显示的描述
         self.mainMapView.addAnnotation(claytonStation)  //添加大头针
         
-        let westallStation = MKPointAnnotation()    //创建一个大头针对象
-        westallStation.coordinate = CLLocation(latitude: -37.93849,longitude: 145.13884).coordinate  //设置大头针的显示位置
-        westallStation.title = "Westall Station"    //设置点击大头针之后显示的标题
-        westallStation.subtitle = "Clayton South"    //设置点击大头针之后显示的描述
-        self.mainMapView.addAnnotation(westallStation)  //添加大头针
-        
     }
-
     
 
     /*
@@ -140,7 +137,8 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     //MARK:- CLLocationManager Delegates
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002))
+        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: currentLocationSpan)
         self.mainMapView.setRegion(region, animated: true)
     }
     
@@ -169,4 +167,15 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         let request: String = "/v3/stops/location/"+String(latitude)+","+String(longitude)+"?max_results="+String(stopQuantity)+"&max_distance"+String(distance)+"&devid="+hardcodedDevID
         return extractedFunc(request)
     }
+    
+//    func StopsAnnotationView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        if let BusStopAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier) as?
+//            MKMarkerAnnotationView{
+//            BusStopAnnotation.animatesWhenAdded = true
+//            BusStopAnnotation.titleVisibility = .adaptive
+//            BusStopAnnotation.subtitleVisibility = .adaptive
+//
+//            return BusStopAnnotation
+//        }
+//    }
 }
