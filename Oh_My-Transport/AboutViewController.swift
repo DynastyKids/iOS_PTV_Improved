@@ -15,8 +15,8 @@ class AboutViewController: UIViewController, UINavigationControllerDelegate, MFM
     @IBOutlet weak var apiKeyTextField: UITextField!
     
     @IBAction func updateKey(_ sender: Any) {
-        let uid = userIdTextField.text
-        let apikey = apiKeyTextField.text
+        _ = userIdTextField.text
+        _ = apiKeyTextField.text
     }
     
     @IBAction func sendMail(_ sender: Any) {
