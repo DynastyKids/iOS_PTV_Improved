@@ -274,7 +274,7 @@ struct RouteServiceStatus: Codable {
 
     /v3/stops/location/{latitude},{longitude}
 */
-struct stopsByDistanceResponse: Codable {
+struct stopResponseByLocation: Codable {
     var stops: [stopGeosearch]?
     //    var disruptions: disruptions?
     var status: status?
@@ -318,3 +318,45 @@ struct stopGeosearch: Codable{
         self.stopSequence = try? container.decode(Int.self, forKey: .stopSequence)
     }
 }
+
+struct stopResposeById: Codable{
+    var stop: StopDetails?
+    var status: status?
+    private enum CodingKeys: String, CodingKey{
+        case stop
+        case status
+    }
+}
+
+struct StopDetails: Codable{
+    var disruptionIds: [Int]?  // (Array[integer], optional): Disruption information identifier(s) ,
+    var stationType: String?   // (string, optional): Type of metropolitan train station (i.e. "Premium", "Host" or "Unstaffed" station); returns null for V/Line train ,
+    var stationDescription: String?    // (string, optional): The definition applicable to the station_type; returns null for V/Line train ,
+    var routeType: Int?    // (integer, optional): Transport mode identifier ,
+//    var stop_location (V3.StopLocation, optional): Location details of the stop ,
+//    var stop_amenities (V3.StopAmenityDetails, optional): Amenity and facility details at the stop ,
+//    var stop_accessibility (V3.StopAccessibility, optional): Facilities relating to the accessibility of the stop ,
+//    var stop_staffing (V3.StopStaffing, optional): Staffing details for the stop ,
+    var stopId: Int?   // (integer, optional): Stop identifier ,
+    var stopName: String?  // (string, optional): Name of stop
+    
+    private enum CodingKeys: String, CodingKey{
+        case disruptionIds = "disruption_ids"
+        case stationType = "station_type"
+        case stationDescription = "station_description"
+        case routeType = "route_type"
+        case stopId = "stop_id"
+        case stopName = "stop_name"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.disruptionIds = try? container.decode([Int].self, forKey: .disruptionIds)
+        self.stationType = try? container.decode(String.self, forKey: .stationType)
+        self.stationDescription = try? container.decode(String.self, forKey: .stationDescription)
+        self.routeType = try? container.decode(Int.self, forKey: .routeType)
+        self.stopId = try? container.decode(Int.self, forKey: .stopId)
+        self.stopName = try? container.decode(String.self, forKey: .stopName)
+    }
+}
+
