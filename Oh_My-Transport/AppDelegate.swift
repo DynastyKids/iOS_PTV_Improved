@@ -148,7 +148,7 @@ extension String {
 extension AppDelegate:CLLocationManagerDelegate{
     func loadLocation(){
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters  //Save Battery
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager.requestAlwaysAuthorization()
             locationManager.requestWhenInUseAuthorization()
