@@ -39,7 +39,7 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="628"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nearbyStopsCell" rowHeight="65" id="ift-tC-Lfr" customClass="nearbyStopTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nearbyStopsCell" rowHeight="65" id="ift-tC-Lfr" customClass="nearbyStopTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333333333333343" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ift-tC-Lfr" id="Eyy-Nf-w1S">
@@ -47,8 +47,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySJ-M2-Wes" userLabel="stopNameLabel">
-                                                    <rect key="frame" x="20" y="2" width="250" height="41.666666666666664"/>
+                                                    <rect key="frame" x="20" y="2" width="250" height="40"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="BlR-UC-g5w"/>
                                                         <constraint firstAttribute="width" constant="250" id="Lft-ir-iXi"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -56,7 +57,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Suburb Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sV-El-fsS" userLabel="suburbLabel">
-                                                    <rect key="frame" x="20" y="45.666666666666664" width="120" height="17"/>
+                                                    <rect key="frame" x="20" y="44" width="120" height="18.666666666666671"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="120" id="F7Y-6Y-oPA"/>
                                                     </constraints>
@@ -163,7 +164,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Near By Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cn4-e2-0mP">
-                                                    <rect key="frame" x="140" y="45.666666666666664" width="124" height="15"/>
+                                                    <rect key="frame" x="140" y="44" width="124" height="19.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -171,7 +172,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Cn4-e2-0mP" firstAttribute="top" secondItem="ySJ-M2-Wes" secondAttribute="bottom" constant="2" id="3Be-Nx-yAD"/>
-                                                <constraint firstAttribute="bottom" secondItem="Cn4-e2-0mP" secondAttribute="bottom" constant="4" id="754-ts-0re"/>
+                                                <constraint firstAttribute="bottom" secondItem="Cn4-e2-0mP" secondAttribute="bottom" constant="1" id="754-ts-0re"/>
                                                 <constraint firstItem="ySJ-M2-Wes" firstAttribute="top" secondItem="Eyy-Nf-w1S" secondAttribute="top" constant="2" id="7cn-gm-CPv"/>
                                                 <constraint firstItem="ySJ-M2-Wes" firstAttribute="leading" secondItem="Eyy-Nf-w1S" secondAttribute="leadingMargin" id="Ads-cU-I7n"/>
                                                 <constraint firstItem="CSP-dI-rkZ" firstAttribute="top" secondItem="Eyy-Nf-w1S" secondAttribute="top" constant="4" id="CUG-bz-YA1"/>
@@ -197,24 +198,25 @@
                                             <segue destination="1VC-xj-ddh" kind="show" identifier="showNearByStop" id="a24-h9-w01"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="savedStopsCell" rowHeight="65" id="vWR-bR-dIX" customClass="favoriteStopTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="savedStopsCell" rowHeight="65" id="vWR-bR-dIX" customClass="favoriteStopTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="120.33333333333334" width="414" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vWR-bR-dIX" id="ohf-PE-3Bv">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="64.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Stop Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VO0-29-itQ" userLabel="stopName">
-                                                    <rect key="frame" x="20" y="2" width="250" height="19.333333333333332"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VO0-29-itQ" userLabel="stopName">
+                                                    <rect key="frame" x="20" y="2" width="250" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="250" id="9j7-Ks-BQd"/>
+                                                        <constraint firstAttribute="height" constant="40" id="RhU-5C-gfy"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Clayton" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKY-Qb-a7q" userLabel="SuburbName">
-                                                    <rect key="frame" x="20" y="45.666666666666664" width="49" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clayton" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZKY-Qb-a7q" userLabel="SuburbName">
+                                                    <rect key="frame" x="20" y="46" width="49" height="16.666666666666671"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -326,7 +328,7 @@
                                             <segue destination="1VC-xj-ddh" kind="show" identifier="showSavedStop" id="pPR-36-sIS"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="favorRouteCell" id="Pil-dg-UA8" customClass="favoriteRouteTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="favorRouteCell" id="Pil-dg-UA8" customClass="favoriteRouteTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="185.33333333333334" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Pil-dg-UA8" id="WQt-ha-Yuf">
