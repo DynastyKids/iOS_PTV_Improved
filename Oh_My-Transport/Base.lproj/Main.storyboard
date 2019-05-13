@@ -509,7 +509,7 @@
                                         <rect key="frame" x="0.0" y="187" width="414" height="485"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="nextService" rowHeight="65" id="Cq4-Rr-kzJ" customClass="nextServiceTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="nextService" rowHeight="65" id="Cq4-Rr-kzJ" customClass="upcomingServiceTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="65"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Cq4-Rr-kzJ" id="ksm-aw-Ecz">
@@ -556,8 +556,8 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Extra Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYo-MP-bgK">
-                                                            <rect key="frame" x="77" y="35" width="75.333333333333314" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYo-MP-bgK">
+                                                            <rect key="frame" x="77" y="35" width="44.333333333333343" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -581,6 +581,11 @@
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="detailsLabel" destination="zYo-MP-bgK" id="c3a-7j-b3N"/>
+                                                    <outlet property="dueTimeLabel" destination="aHz-DO-nmG" id="2xu-ja-S1H"/>
+                                                    <outlet property="serviceDestLabel" destination="l9f-S6-Zu7" id="Pcw-vK-c43"/>
+                                                    <outlet property="statusLabel" destination="pNG-tj-xM1" id="MAc-v2-5Hz"/>
+                                                    <outlet property="typeLabel" destination="fPG-0E-bcw" id="egR-RN-ArR"/>
                                                     <segue destination="f1e-ej-sol" kind="show" id="fBY-z2-pOb"/>
                                                 </connections>
                                             </tableViewCell>
@@ -1180,7 +1185,7 @@ To obtain a key:
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fBY-z2-pOb"/>
-        <segue reference="EpR-Nc-agv"/>
+        <segue reference="xlW-BE-S0R"/>
         <segue reference="pPR-36-sIS"/>
     </inferredMetricsTieBreakers>
 </document>

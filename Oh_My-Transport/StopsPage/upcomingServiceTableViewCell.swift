@@ -1,14 +1,21 @@
 //
-//  nextServiceTableViewCell.swift
+//  upcomingServiceTableViewCell.swift
 //  Oh_My-Transport
 //
-//  Created by OriWuKids on 5/5/19.
+//  Created by OriWuKids on 13/5/19.
 //  Copyright © 2019 wgon0001. All rights reserved.
 //
 
 import UIKit
 
-class nextServiceTableViewCell: UITableViewCell {
+class upcomingServiceTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var serviceDestLabel: UILabel!
+    @IBOutlet weak var detailsLabel: UILabel!
+    @IBOutlet weak var dueTimeLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

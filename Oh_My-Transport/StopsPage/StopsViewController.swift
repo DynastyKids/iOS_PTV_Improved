@@ -117,7 +117,7 @@ class StopsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nextService", for: indexPath) as! nextServiceTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "nextService", for: indexPath) as! upcomingServiceTableViewCell
         return cell
     }
 
