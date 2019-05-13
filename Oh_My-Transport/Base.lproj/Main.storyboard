@@ -478,17 +478,18 @@
                                         <size key="shadowOffset" width="1" height="-1"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="yvP-vP-3UL">
-                                        <rect key="frame" x="0.0" y="90" width="414" height="67"/>
+                                        <rect key="frame" x="0.0" y="90" width="414" height="49.666666666666657"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FRx-gF-VY5">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="67"/>
-                                                <state key="normal" title="Disruptions: Tap to see details" image="warning_White"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FRx-gF-VY5">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="49.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <state key="normal" title="3 distruptions in effect." image="warning_White"/>
                                                 <connections>
-                                                    <segue destination="Rur-ig-BSX" kind="show" id="xlW-BE-S0R"/>
+                                                    <segue destination="Rur-ig-BSX" kind="show" identifier="stopPageDistruptions" id="xlW-BE-S0R"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xuK-ln-apJ">
-                                                <rect key="frame" x="374" y="27" width="40" height="40"/>
+                                                <rect key="frame" x="374" y="9.6666666666666572" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="JSF-MB-lfw"/>
                                                     <constraint firstAttribute="width" constant="40" id="QIZ-8Q-7nb"/>
@@ -506,7 +507,7 @@
                                         </constraints>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tzB-bz-hlf">
-                                        <rect key="frame" x="0.0" y="187" width="414" height="485"/>
+                                        <rect key="frame" x="0.0" y="169.66666666666666" width="414" height="502.33333333333337"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="nextService" rowHeight="65" id="Cq4-Rr-kzJ" customClass="upcomingServiceTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
@@ -1185,7 +1186,7 @@ To obtain a key:
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fBY-z2-pOb"/>
-        <segue reference="xlW-BE-S0R"/>
+        <segue reference="EpR-Nc-agv"/>
         <segue reference="pPR-36-sIS"/>
     </inferredMetricsTieBreakers>
 </document>
