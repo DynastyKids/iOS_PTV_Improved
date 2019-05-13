@@ -33,6 +33,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var filteredRoutes: [FavRoute] = []
     var filteredStops: [FavStop] = []
     
+    var lookupRouteName: Bool = true
+    
     var latitude: Double = 0.0
     var longtitude: Double = 0.0
     
@@ -122,36 +124,38 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 var cycle = 0;
                 for nextdeparts in self.departureSequenceTemp{
                     self.departureSequence.append(nextdeparts);
+                    do{
+                        let url = URL(string: self.lookupRoutes(routeId: nextdeparts.routesId!))
+                        print("\nFrom:\(nextdeparts.routesId) + Content:\(url)");
+                        let nextRouteTask = URLSession.shared.dataTask(with: url!){ (data, response, error) in
+                            if error != nil {
+                                print("Stop information fetch failed:\(error)")
+                                return
+                            }
+                            do{
+                                let decoder = JSONDecoder()
+                                let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
+                                self.nextRouteInfo.append(nextRouteData.route!)
+                                
+                                if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{ // Matching 3/6 routes info, avoid exit loop early
+                                    DispatchQueue.main.async {
+                                        self.navigationItem.title = "Oh My Transport"
+                                        self.stopsTableView.reloadData()
+                                    }
+                                }
+                            }
+                            catch{
+                                print("Error:\(error)")
+                            }
+                        }.resume()
+                    } catch {
+                        print(error)
+                    }
+                    
                     if cycle == 2{
                         break
                     }
                     cycle += 1
-                }
-                
-                for nextdeparts in self.departureSequence{
-                    let nextRoutesURL = URL(string: self.lookupRoutes(routeId: nextdeparts.routesId!))
-                    let nextRouteTask = URLSession.shared.dataTask(with: nextRoutesURL!){ (data, response, error) in
-                        if error != nil {
-                            print("Stop information fetch failed:\(error)")
-                            return
-                        }
-                        do{
-                            let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
-                            self.nextRouteInfo.append(nextRouteData.route!)
-                            
-                            if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{ // Matching 3/6 routes info, avoid exit loop early
-                                DispatchQueue.main.async {
-                                    self.navigationItem.title = "Oh My Transport"
-                                    self.stopsTableView.reloadData()
-                                }
-                            }
-                        }
-                        catch{
-                            print("Error:\(error)")
-                        }
-                    }
-                    nextRouteTask.resume()
                 }
             }
             catch{
@@ -192,9 +196,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
             cell.departure1Label.textColor = UIColor.white
             cell.departure1Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3].routeType!)
+            
             cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].routeNumber
             cell.departure2Label.textColor = UIColor.white
             cell.departure2Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[(indexPath.row*3)+1].routeType!)
+            
             cell.departure3Label.text = self.nextRouteInfo[(indexPath.row*3)+2].routeNumber
             cell.departure3Label.textColor = UIColor.white
             cell.departure3Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[(indexPath.row*3)+2].routeType!)
@@ -392,7 +398,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         default:
             return UIColor.white
         }
-
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
 }
 
