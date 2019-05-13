@@ -140,7 +140,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo.append(nextRouteData.route!)
                             
-                            if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{
+                            if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{ // Matching 3/6 routes info, avoid exit loop early
                                 DispatchQueue.main.async {
                                     self.navigationItem.title = "Oh My Transport"
                                     self.stopsTableView.reloadData()
