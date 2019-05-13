@@ -24,10 +24,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
 
     var nearbyStops: [stopGeosearch] = []
-    var departureSequence0: [departure] = []
-    var departureSequence1: [departure] = []
+    var departureSequence: [departure] = []         // Departure data: data to be present
+    var departureSequenceTemp: [departure] = []     // Departure data:Store all excesss data
+    var nextRouteInfo: [RouteWithStatus] = []       // Route data: data to be present
+    var nextrouteInfoTemp: [RouteWithStatus] = []   // Route data: store all excess data fetched
 
-    var nextRouteName: [String] = []
     var nextRouteCount: Int = 0
     var filteredRoutes: [FavRoute] = []
     var filteredStops: [FavStop] = []
@@ -36,7 +37,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var longtitude: Double = 0.0
     
     @IBOutlet weak var stopsTableView: UITableView!
-    
     
     let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
@@ -82,67 +82,73 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 print(self.nearbyStops.count)   // Fetching time for next depart
                 
-                switch self.nearbyStops.count{
-                case 1:
-                    
+                if self.nearbyStops.count == 0{
+                    DispatchQueue.main.async {
+                        self.navigationItem.title = "Oh My Transport"
+                        self.stopsTableView.reloadData()
+                    }
+                }else if self.nearbyStops.count == 1{
                     let nextDepartUrl = URL(string: self.nextDepartureByStop(routeType: self.nearbyStops[0].routeType!, stopId: self.nearbyStops[0].stopId!))
-                    _ = URLSession.shared.dataTask(with: nextDepartUrl!){ (data, response, error) in
-                        if error != nil {
-                            print("Next departure fetch failed")
-                            return
-                        }
-                        do{
-                            let nextDepartureData = try JSONDecoder().decode(departuresResponse.self, from: data!)
-                            self.departureSequence0 = nextDepartureData.departures
-                            DispatchQueue.main.async {
-                                self.navigationItem.title = "Oh My Transport"
-                                self.stopsTableView.reloadData()
-                            }
-                        }
-                        catch{
-                            print("Error:\(error)")
-                        }
-                        }.resume()
-                    
-                case 2:
+                    self.getStopInfoReload(nextDepartUrl, reloadTableView: true)
+                }else if self.nearbyStops.count > 1 {
                     let nextDepartUrl0 = URL(string: self.nextDepartureByStop(routeType: self.nearbyStops[0].routeType!, stopId: self.nearbyStops[0].stopId!))
                     let nextDepartUrl1 = URL(string: self.nextDepartureByStop(routeType: self.nearbyStops[1].routeType!, stopId: self.nearbyStops[1].stopId!))
-                    
-                    _ = URLSession.shared.dataTask(with: nextDepartUrl0!){ (data, response, error) in
+                    self.getStopInfoReload(nextDepartUrl0, reloadTableView: false)
+                    self.getStopInfoReload(nextDepartUrl1, reloadTableView: true)
+                }
+            }
+            catch{
+                print("Error:\(error)")
+            }
+        }.resume()
+        
+        print("Fetch Finished")
+        
+        // End of Allocate near by 2 stops
+        
+        // Allocate saved stops from CoreData
+        
+        // Allocate Saved routes from CoreData
+    }
+    fileprivate func getStopInfoReload(_ nextDepartUrl: URL?, reloadTableView: Bool!) {
+        _ = URLSession.shared.dataTask(with: nextDepartUrl!){ (data, response, error) in
+            if error != nil {
+                print("Next departure fetch failed")
+                return
+            }
+            do{
+                let nextDepartureData = try JSONDecoder().decode(departuresResponse.self, from: data!)
+                self.departureSequenceTemp = nextDepartureData.departures
+                var cycle = 0;
+                for nextdeparts in self.departureSequenceTemp{
+                    self.departureSequence.append(nextdeparts);
+                    if cycle == 2{
+                        break
+                    }
+                    cycle += 1
+                }
+                cycle = 0
+                
+                for nextdeparts in self.departureSequence{
+                    let nextRoutesURL = URL(string: self.lookupRoutes(routeId: nextdeparts.routesId!))
+                    let nextRouteTask = URLSession.shared.dataTask(with: nextRoutesURL!){ (data, response, error) in
                         if error != nil {
                             print("Next departure fetch failed")
                             return
                         }
                         do{
-                            let nextDepartureData0 = try JSONDecoder().decode(departuresResponse.self, from: data!)
-                            self.departureSequence0 = nextDepartureData0.departures
-                            
-                            _ = URLSession.shared.dataTask(with: nextDepartUrl1!){ (data, response, error) in
-                                if error != nil {
-                                    print("Next departure fetch failed")
-                                    return
-                                }
-                                do{
-                                    let nextDepartureData1 = try JSONDecoder().decode(departuresResponse.self, from: data!)
-                                    self.departureSequence1 = nextDepartureData1.departures
-                                    DispatchQueue.main.async {
-                                        self.navigationItem.title = "Oh My Transport"
-                                        self.stopsTableView.reloadData()
-                                    }
-                                }
-                                catch{
-                                    print("Error:\(error)")
-                                }
-                                }.resume()
-                            
+                            let decoder = JSONDecoder()
+                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
+                            self.nextRouteInfo.append(nextRouteData.route!)
                         }
                         catch{
                             print("Error:\(error)")
                         }
-                        }.resume()
-                    
-
-                default:
+                    }
+                    nextRouteTask.resume()
+                }
+                
+                if reloadTableView == true{
                     DispatchQueue.main.async {
                         self.navigationItem.title = "Oh My Transport"
                         self.stopsTableView.reloadData()
@@ -152,36 +158,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             catch{
                 print("Error:\(error)")
             }
-        }.resume()
-        
-//
-//        for nextdeparts in departureSequence{
-//            let nextRoutesURL = URL(string: lookupRoutes(routeId: nextdeparts.routesId!))
-//            let nextRouteTask = URLSession.shared.dataTask(with: nextRoutesURL!){ (data, response, error) in
-//                if error != nil {
-//                    print("Next departure fetch failed")
-//                    return
-//                }
-//                do{
-//                    let decoder = JSONDecoder()
-//                    let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
-//                    self.nextRouteName = [(nextRouteData.route?.routeName)!]
-//                    DispatchQueue.main.async {
-//                        self.stopsTableView.reloadData()
-//                    }
-//                }
-//                catch{
-//                    print("Error:\(error)")
-//                }
-//            }
-//            nextRouteTask.resume()
-//        }
-        
-        // End of Allocate near by 2 stops
-        
-        // Allocate saved stops from CoreData
-        
-        // Allocate Saved routes from CoreData
+            }.resume()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -208,21 +185,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             cell.stopSuburbLabel.text = nearbystops.stopSuburb
             cell.nearbyLabel.text = "Near by: \(Int(nearbystops.stopDistance!))m"
-            if indexPath.row == 0{
-            cell.dep1timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence0[0].estimatedDepartureUTC) ?? ((self.departureSequence0[0].scheduledDepartureUTC ?? nil)!), withDate: false)
-            cell.dep2timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence0[1].estimatedDepartureUTC) ?? ((self.departureSequence0[1].scheduledDepartureUTC ?? nil)!), withDate: false)
-            cell.dep3timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence0[2].estimatedDepartureUTC) ?? ((self.departureSequence0[2].scheduledDepartureUTC ?? nil)!), withDate: false)
-            }
-            if indexPath.row == 1{
-                cell.dep1timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence1[0].estimatedDepartureUTC) ?? ((self.departureSequence1[0].scheduledDepartureUTC ?? nil)!), withDate: false)
-                cell.dep2timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence1[1].estimatedDepartureUTC) ?? ((self.departureSequence1[1].scheduledDepartureUTC ?? nil)!), withDate: false)
-                cell.dep3timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence1[2].estimatedDepartureUTC) ?? ((self.departureSequence1[2].scheduledDepartureUTC ?? nil)!), withDate: false)
-            }
             
-//            cell.depature1Label.text = nextRouteName[indexPath.row*3-3]
-//            cell.departure2Label.text = nextRouteName[indexPath.row*3-3]
-//            cell.departure3Label.text = nextRouteName[indexPath.row*3-3]
-
+            cell.dep1timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[indexPath.row*3].estimatedDepartureUTC) ?? ((self.departureSequence[indexPath.row*3].scheduledDepartureUTC ?? nil)!), withDate: false)
+            cell.dep2timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[indexPath.row*3+1].estimatedDepartureUTC) ?? ((self.departureSequence[indexPath.row*3+1].scheduledDepartureUTC ?? nil)!), withDate: false)
+            cell.dep3timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[indexPath.row*3+2].estimatedDepartureUTC) ?? ((self.departureSequence[indexPath.row*3+2].scheduledDepartureUTC ?? nil)!), withDate: false)
+                
+//            cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
+//            cell.departure1Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3].routeType!)
+//            cell.departure2Label.text = self.nextRouteInfo[indexPath.row*3+1].routeNumber
+//            cell.departure2Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3+1].routeType!)
+//            cell.departure3Label.text = self.nextRouteInfo[indexPath.row*3+2].routeNumber
+//            cell.departure3Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3+2].routeType!)
             
             return cell
         }
@@ -368,6 +341,56 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
         }
         return mydateformat.string(from: date!)
+    }
+    
+    func iso8601toDate(iso8601Date: String) -> Date {
+        if iso8601Date == "nil"{
+            fatalError()
+        }
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let date:Date = formatter.date(from: iso8601Date)!
+        return date
+    }
+    
+    func timeRemainCalculate(date: Date) -> String{
+        let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
+        let minutes = differences.minute ?? 0
+        
+        if minutes == 1{
+            return "1 min"
+        }
+        if minutes < 120{
+            return "\(minutes) mins"
+        }
+        if minutes >= 1440{
+            return "≥ 1 day"
+        } else if minutes >= 120 {
+            return "≥ 2 hours"
+        }
+        return ""
+    }
+    
+    func changeColorForRouteBackground(routeType: Int) -> UIColor{
+        switch routeType {  //API PDF Page43
+        case 0: //Train (metropolitan)
+            return UIColor.init(red: 0.066, green: 0.455, blue: 0.796, alpha: 1)
+        case 1: //Tram
+            return UIColor.init(red: 0.4784, green: 0.7372, blue: 0.1882, alpha: 1)
+        case 2: //Bus (metropolitan, regional and Skybus, but not V/Line)
+            return UIColor.init(red: 0.993, green: 0.5098, blue: 0.1372, alpha: 1)
+        case 3: //  V/Line train and coach
+            return UIColor.init(red: 0.5568, green: 0.1333, blue: 0.5765, alpha: 1)
+        case 4: //Night Bus (which replaced NightRider)
+            return UIColor.init(red: 0.993, green: 0.5098, blue: 0.1372, alpha: 1)
+        default:
+            return UIColor.white
+        }
+
     }
 }
 

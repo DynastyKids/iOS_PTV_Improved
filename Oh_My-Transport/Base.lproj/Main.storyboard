@@ -94,10 +94,10 @@
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
+                                                                <constraint firstItem="meW-OC-SoH" firstAttribute="leading" secondItem="REn-6L-mWv" secondAttribute="trailing" id="35q-l1-vxr"/>
                                                                 <constraint firstAttribute="bottom" secondItem="REn-6L-mWv" secondAttribute="bottom" id="B19-sO-lQU"/>
                                                                 <constraint firstItem="meW-OC-SoH" firstAttribute="top" secondItem="0Nc-0c-Mus" secondAttribute="top" id="GlV-2u-ru9"/>
                                                                 <constraint firstAttribute="trailing" secondItem="meW-OC-SoH" secondAttribute="trailing" id="de8-Oh-JjH"/>
-                                                                <constraint firstItem="meW-OC-SoH" firstAttribute="leading" secondItem="REn-6L-mWv" secondAttribute="trailing" id="fyP-ow-HkT"/>
                                                                 <constraint firstItem="REn-6L-mWv" firstAttribute="top" secondItem="0Nc-0c-Mus" secondAttribute="top" id="j9L-k9-CLb"/>
                                                                 <constraint firstAttribute="bottom" secondItem="meW-OC-SoH" secondAttribute="bottom" id="oOw-A8-6Wb"/>
                                                                 <constraint firstItem="REn-6L-mWv" firstAttribute="leading" secondItem="0Nc-0c-Mus" secondAttribute="leading" id="z0H-ch-hrO"/>
@@ -126,7 +126,6 @@
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="g7b-SH-Wa8" firstAttribute="leading" secondItem="yad-r8-wka" secondAttribute="trailing" id="2Zr-TT-n3n"/>
                                                                 <constraint firstItem="yad-r8-wka" firstAttribute="leading" secondItem="YqE-vO-ifT" secondAttribute="leading" id="6yi-eZ-GUc"/>
                                                                 <constraint firstAttribute="bottom" secondItem="g7b-SH-Wa8" secondAttribute="bottom" id="FR6-Bv-VGE"/>
                                                                 <constraint firstItem="yad-r8-wka" firstAttribute="top" secondItem="YqE-vO-ifT" secondAttribute="top" id="Fh8-yH-Mof"/>
@@ -189,9 +188,9 @@
                                             <outlet property="dep1timeLabel" destination="meW-OC-SoH" id="GiM-2K-Ast"/>
                                             <outlet property="dep2timeLabel" destination="g7b-SH-Wa8" id="4on-4J-muz"/>
                                             <outlet property="dep3timeLabel" destination="ub3-vO-XHF" id="vLu-GK-2YV"/>
+                                            <outlet property="departure1Label" destination="REn-6L-mWv" id="hGp-NE-7ul"/>
                                             <outlet property="departure2Label" destination="yad-r8-wka" id="qb9-aV-tpr"/>
                                             <outlet property="departure3Label" destination="gG2-ze-Awb" id="xtV-KN-zTH"/>
-                                            <outlet property="depature1Label" destination="REn-6L-mWv" id="Jcn-G1-h05"/>
                                             <outlet property="nearbyLabel" destination="Cn4-e2-0mP" id="5tm-0j-V0J"/>
                                             <outlet property="stopNameLabel" destination="ySJ-M2-Wes" id="VFg-O3-IcN"/>
                                             <outlet property="stopSuburbLabel" destination="0sV-El-fsS" id="H3O-Il-WlO"/>
@@ -227,7 +226,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="5ye-ht-HXM">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="5ye-ht-HXM" userLabel="vStackView">
                                                     <rect key="frame" x="278" y="7" width="134" height="51"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="b6d-JF-p8Y">
@@ -974,18 +973,18 @@ Please Wait</string>
         <scene sceneID="Xup-Ie-CLy">
             <objects>
                 <viewController title="900 Caulfield" id="f1e-ej-sol" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2l4-aZ-7CA">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="2l4-aZ-7CA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" scrollEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
                                 <rect key="frame" x="0.0" y="64" width="414" height="230"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="eZG-Wq-bdQ" secondAttribute="height" multiplier="75:46" id="0Cq-aF-Uyd"/>
                                     <constraint firstAttribute="height" constant="230" id="w8p-Jz-FGK"/>
                                 </constraints>
                             </mapView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
                                 <rect key="frame" x="0.0" y="317" width="414" height="419"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
