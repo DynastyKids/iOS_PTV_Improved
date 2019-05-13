@@ -21,8 +21,6 @@ struct status: Codable {
 }
 
 
-
-
 /*
     Departures
  
