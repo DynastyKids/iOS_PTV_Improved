@@ -136,7 +136,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                                 self.nextRouteInfo.append(nextRouteData.route!)
                                 
-                                if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{ // Matching 3/6 routes info, avoid exit loop early
+                                if reloadTableView == true && self.nextRouteInfo.count >= self.departureSequence.count-1{ // Matching 3/6 routes info, avoid exit loop early
                                     DispatchQueue.main.async {
                                         self.navigationItem.title = "Oh My Transport"
                                         self.stopsTableView.reloadData()
@@ -235,9 +235,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Pass the selected object to the new view controller.
         if segue.identifier == "showNearByStop" || segue.identifier == "showSavedStop"{
             let page2:StopsViewController = segue.destination as! StopsViewController
-            page2.nextDepartsURL = nextDepartureByStop(routeType: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType! , stopId: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId! )
             page2.stopURL = lookupStops(stopId: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType! )
             page2.routeType = (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType!
+            page2.stopId = (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId!
         }
         if segue.identifier == "busRouteSegue"{
             
@@ -289,7 +289,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func nextDepartureByStop(routeType: Int, stopId: Int) -> String{
-        let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=3&devid="+hardcodedDevID
+        let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?include_cancelled=true&max_results=3&devid="+hardcodedDevID
         return extractedFunc(request)
     }
     
