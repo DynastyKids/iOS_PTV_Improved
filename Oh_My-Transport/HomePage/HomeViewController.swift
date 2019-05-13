@@ -113,7 +113,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     fileprivate func getStopInfoReload(_ nextDepartUrl: URL?, reloadTableView: Bool!) {
         _ = URLSession.shared.dataTask(with: nextDepartUrl!){ (data, response, error) in
             if error != nil {
-                print("Next departure fetch failed")
+                print("Next departure fetch failed:\(error)")
                 return
             }
             do{
@@ -127,32 +127,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                     cycle += 1
                 }
-                cycle = 0
                 
                 for nextdeparts in self.departureSequence{
                     let nextRoutesURL = URL(string: self.lookupRoutes(routeId: nextdeparts.routesId!))
                     let nextRouteTask = URLSession.shared.dataTask(with: nextRoutesURL!){ (data, response, error) in
                         if error != nil {
-                            print("Next departure fetch failed")
+                            print("Stop information fetch failed:\(error)")
                             return
                         }
                         do{
                             let decoder = JSONDecoder()
                             let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo.append(nextRouteData.route!)
+                            
+                            if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{
+                                DispatchQueue.main.async {
+                                    self.navigationItem.title = "Oh My Transport"
+                                    self.stopsTableView.reloadData()
+                                }
+                            }
                         }
                         catch{
                             print("Error:\(error)")
                         }
                     }
                     nextRouteTask.resume()
-                }
-                
-                if reloadTableView == true{
-                    DispatchQueue.main.async {
-                        self.navigationItem.title = "Oh My Transport"
-                        self.stopsTableView.reloadData()
-                    }
                 }
             }
             catch{
@@ -187,15 +186,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.nearbyLabel.text = "Near by: \(Int(nearbystops.stopDistance!))m"
             
             cell.dep1timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[indexPath.row*3].estimatedDepartureUTC) ?? ((self.departureSequence[indexPath.row*3].scheduledDepartureUTC ?? nil)!), withDate: false)
-            cell.dep2timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[indexPath.row*3+1].estimatedDepartureUTC) ?? ((self.departureSequence[indexPath.row*3+1].scheduledDepartureUTC ?? nil)!), withDate: false)
-            cell.dep3timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[indexPath.row*3+2].estimatedDepartureUTC) ?? ((self.departureSequence[indexPath.row*3+2].scheduledDepartureUTC ?? nil)!), withDate: false)
+            cell.dep2timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[(indexPath.row*3)+1].estimatedDepartureUTC) ?? ((self.departureSequence[(indexPath.row*3)+1].scheduledDepartureUTC ?? nil)!), withDate: false)
+            cell.dep3timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[(indexPath.row*3)+2].estimatedDepartureUTC) ?? ((self.departureSequence[(indexPath.row*3)+2].scheduledDepartureUTC ?? nil)!), withDate: false)
                 
-//            cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
-//            cell.departure1Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3].routeType!)
-//            cell.departure2Label.text = self.nextRouteInfo[indexPath.row*3+1].routeNumber
-//            cell.departure2Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3+1].routeType!)
-//            cell.departure3Label.text = self.nextRouteInfo[indexPath.row*3+2].routeNumber
-//            cell.departure3Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3+2].routeType!)
+            cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
+            cell.departure1Label.textColor = UIColor.white
+            cell.departure1Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3].routeType!)
+            cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].routeNumber
+            cell.departure2Label.textColor = UIColor.white
+            cell.departure2Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[(indexPath.row*3)+1].routeType!)
+            cell.departure3Label.text = self.nextRouteInfo[(indexPath.row*3)+2].routeNumber
+            cell.departure3Label.textColor = UIColor.white
+            cell.departure3Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[(indexPath.row*3)+2].routeType!)
             
             return cell
         }
