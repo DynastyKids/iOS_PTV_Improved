@@ -115,7 +115,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     fileprivate func getStopInfoReload(_ nextDepartUrl: URL?, reloadTableView: Bool!) {
         _ = URLSession.shared.dataTask(with: nextDepartUrl!){ (data, response, error) in
             if error != nil {
-                print("Next departure fetch failed:\(error)")
+//                print("Next departure fetch failed:\(error!)")
                 return
             }
             do{
@@ -126,10 +126,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.departureSequence.append(nextdeparts);
                     do{
                         let url = URL(string: self.lookupRoutes(routeId: nextdeparts.routesId!))
-                        print("\nFrom:\(nextdeparts.routesId) + Content:\(url)");
-                        let nextRouteTask = URLSession.shared.dataTask(with: url!){ (data, response, error) in
+                        _ = URLSession.shared.dataTask(with: url!){ (data, response, error) in
                             if error != nil {
-                                print("Stop information fetch failed:\(error)")
+//                                print("Stop information fetch failed:\(error!)")
                                 return
                             }
                             do{
@@ -148,8 +147,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 print("Error:\(error)")
                             }
                         }.resume()
-                    } catch {
-                        print(error)
                     }
                     
                     if cycle == 2{
