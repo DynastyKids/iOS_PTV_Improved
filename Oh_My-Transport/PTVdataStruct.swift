@@ -260,7 +260,7 @@ struct disruptionStop: Codable{
     GET /v3/Routes
     GET /v3/Routes/{Route_id}
  */
-struct RouteResponse: Codable{
+struct routeResponse: Codable{
     var route: RouteWithStatus? //  Train lines, tram routes, bus routes, regional coach routes, Night Bus routes ,
     var status: status?
     private enum CodingKeys: String, CodingKey{

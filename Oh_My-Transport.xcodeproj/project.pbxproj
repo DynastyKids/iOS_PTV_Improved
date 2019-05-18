@@ -15,6 +15,9 @@
 		5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A331C0B2273276700467C8B /* localTransportData.xcdatamodeld */; };
 		5A331C0F22732BC000467C8B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A331C0E22732BC000467C8B /* AboutViewController.swift */; };
 		5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */; };
+		5A9B88FE22903DF7005F1C25 /* StopPageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B88FD22903DF7005F1C25 /* StopPageTableViewController.swift */; };
+		5A9B89002290411C005F1C25 /* stopInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */; };
+		5A9B89022290421A005F1C25 /* nextServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */; };
 		5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */; };
 		5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */; };
 		5AEA77D9227C6FC3005A6A74 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D8227C6FC3005A6A74 /* HomeViewController.swift */; };
@@ -44,6 +47,9 @@
 		5A331C0C2273276700467C8B /* localTransportData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = localTransportData.xcdatamodel; sourceTree = "<group>"; };
 		5A331C0E22732BC000467C8B /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		5A9B88FD22903DF7005F1C25 /* StopPageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPageTableViewController.swift; sourceTree = "<group>"; };
+		5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stopInfoTableViewCell.swift; sourceTree = "<group>"; };
+		5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextServiceTableViewCell.swift; sourceTree = "<group>"; };
 		5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionsTableViewController.swift; sourceTree = "<group>"; };
 		5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionDetailViewController.swift; sourceTree = "<group>"; };
 		5AEA77D8227C6FC3005A6A74 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +155,9 @@
 			children = (
 				5AEA77DD227C70D7005A6A74 /* StopsViewController.swift */,
 				5AFF0E0E228969A7001C04A9 /* upcomingServiceTableViewCell.swift */,
+				5A9B88FD22903DF7005F1C25 /* StopPageTableViewController.swift */,
+				5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */,
+				5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */,
 			);
 			path = StopsPage;
 			sourceTree = "<group>";
@@ -228,6 +237,7 @@
 				5AFA5F41227F1E0B00FAAA1D /* FavStop+CoreDataClass.swift in Sources */,
 				5AFA5F45227F1E0B00FAAA1D /* FavRoute+CoreDataClass.swift in Sources */,
 				5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */,
+				5A9B89022290421A005F1C25 /* nextServiceTableViewCell.swift in Sources */,
 				5A331C0F22732BC000467C8B /* AboutViewController.swift in Sources */,
 				5AFA5F46227F1E0B00FAAA1D /* FavRoute+CoreDataProperties.swift in Sources */,
 				5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */,
@@ -244,7 +254,9 @@
 				5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */,
 				5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */,
 				5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */,
+				5A9B88FE22903DF7005F1C25 /* StopPageTableViewController.swift in Sources */,
 				5AEA77D9227C6FC3005A6A74 /* HomeViewController.swift in Sources */,
+				5A9B89002290411C005F1C25 /* stopInfoTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
