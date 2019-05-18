@@ -234,7 +234,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         if segue.identifier == "showNearByStop" || segue.identifier == "showSavedStop"{
-            let page2:StopsViewController = segue.destination as! StopsViewController
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.stopURL = lookupStops(stopId: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType! )
             page2.routeType = (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType!
             page2.stopId = (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId!
