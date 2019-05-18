@@ -801,7 +801,7 @@ Please Wait</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="f1e-ej-sol" kind="show" id="nOh-jH-qPa"/>
+                                            <segue destination="Rur-ig-BSX" kind="show" id="zXA-WO-h7o"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="directions" rowHeight="114" id="dEc-VW-pJh" customClass="DirectionTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
@@ -920,6 +920,9 @@ Please Wait</string>
                                                 <constraint firstItem="4Et-mW-cWv" firstAttribute="top" secondItem="CKX-cC-t7p" secondAttribute="bottom" constant="4" id="sSK-HR-Nhy"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="f1e-ej-sol" kind="show" id="yOe-TH-pVY"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -939,7 +942,7 @@ Please Wait</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCD-an-QFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="784" y="2332"/>
+            <point key="canvasLocation" x="791" y="2402"/>
         </scene>
         <!--routeWithStopDetails-->
         <scene sceneID="Xup-Ie-CLy">
@@ -1054,7 +1057,7 @@ Please Wait</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNW-0c-J6P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2391" y="2332"/>
+            <point key="canvasLocation" x="2390" y="2402"/>
         </scene>
         <!--About-->
         <scene sceneID="53E-v8-JuN">
@@ -1146,8 +1149,8 @@ To obtain a key:
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nOh-jH-qPa"/>
-        <segue reference="uPl-tE-DDw"/>
+        <segue reference="yOe-TH-pVY"/>
+        <segue reference="zXA-WO-h7o"/>
         <segue reference="dSz-hK-LpM"/>
     </inferredMetricsTieBreakers>
 </document>
