@@ -133,10 +133,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             }
                             do{
                                 let decoder = JSONDecoder()
-                                let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
+                                let nextRouteData = try decoder.decode(routeResponse.self, from: data!)
                                 self.nextRouteInfo.append(nextRouteData.route!)
                                 
-                                if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{ // Matching routes info, avoid exit loop early
+                                if (reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count && self.nextRouteInfo.count == (self.nearbyStops.count * 3)){ // Matching routes info, avoid exit loop early
                                     DispatchQueue.main.async {
                                         self.navigationItem.title = "Oh My Transport"
                                         self.stopsTableView.reloadData()
@@ -397,13 +397,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//    }
+//
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//    }
 }
 
 enum CryptoAlgorithm {
