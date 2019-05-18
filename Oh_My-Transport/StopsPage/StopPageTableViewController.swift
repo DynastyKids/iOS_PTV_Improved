@@ -17,9 +17,7 @@ class StopPageTableViewController: UITableViewController {
     
     var departureData: [departure] = []
     var routeInfo: [RouteWithStatus] = []
-//    var routesName: [String] = []
-//    var routesDest: [String] = []
-    
+
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
     let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
@@ -92,7 +90,6 @@ class StopPageTableViewController: UITableViewController {
             return cell0
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "nextService", for: indexPath) as! nextServiceTableViewCell
-//        cell.routeSignLabel.text = routesName[indexPath.row]
         cell.routeToLabel.text = " to "
         _ = URLSession.shared.dataTask(with: URL(string: self.showRoute(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
             if error != nil {
@@ -101,18 +98,16 @@ class StopPageTableViewController: UITableViewController {
             }
             do{
                 let showRoute = try JSONDecoder().decode(routeResponse.self, from: data!)
-                if(showRoute.route?.routeType == 0){
-                    cell.routeSignLabel.text = showRoute.route?.GtfsId      // Metro will using its gtfsid to ident which line's service is running
-                } else if (showRoute.route?.routeType == 1){
-                    cell.routeSignLabel.text = showRoute.route?.routeNumber
-                } else if (showRoute.route?.routeType == 2){
-                    cell.routeSignLabel.text = showRoute.route?.routeNumber
-                } else if (showRoute.route?.routeType == 3){
-                    cell.routeSignLabel.text = showRoute.route?.GtfsId      // Vline will using its gtfsid to ident which line's service is running
-                } else if (showRoute.route?.routeType == 4){
-                    cell.routeSignLabel.text = showRoute.route?.routeNumber
+                DispatchQueue.main.async {
+                    if(showRoute.route?.routeType == 0 || showRoute.route?.routeType == 3){
+                        let str: String = showRoute.route!.GtfsId!
+                        let start = str.index(str.startIndex, offsetBy: 2)
+                        cell.routeSignLabel.text = String(str[start...])      // Metro and vline will using its gtfsid to ident which line's service is running
+                    } else {
+                        cell.routeSignLabel.text = showRoute.route?.routeNumber // All other service using existing route numbers
+                    }
+                    cell.routeSignLabel.textColor = UIColor.white
                 }
-                cell.routeSignLabel.textColor = UIColor.white
             } catch{
                 print("Error on looking up route")
             }
@@ -125,7 +120,9 @@ class StopPageTableViewController: UITableViewController {
             do{
                 let showDirection = try JSONDecoder().decode(directionsResponse.self, from: data!)
                 print("\(indexPath.row), Destination:\(showDirection.directions![0].directionName!)")
-                cell.routeDestinationLabel.text = showDirection.directions![0].directionName!
+                DispatchQueue.main.async {
+                    cell.routeDestinationLabel.text = showDirection.directions![0].directionName!
+                }
             }catch{
                 print(error)
             }
@@ -261,14 +258,19 @@ class StopPageTableViewController: UITableViewController {
         let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
         let minutes = differences.minute ?? 0
         
+        if minutes < 0{
+            let mydateformat = DateFormatter()
+            mydateformat.dateFormat = "hh:mm a"
+            return mydateformat.string(from: date)
+        }
         if minutes == 1{
             return "1 min"
         }
         if minutes <= 90{
             return "\(minutes) mins"
         }
-        if minutes >= 1440{
-            return "≥ 1 day"
+        if minutes > 1440{
+            return "> 1 day"
         } else if minutes > 90 {
             let mydateformat = DateFormatter()
             mydateformat.dateFormat = "hh:mm a"

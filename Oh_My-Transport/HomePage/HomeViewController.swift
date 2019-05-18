@@ -180,9 +180,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let cell = tableView.dequeueReusableCell(withIdentifier: "nearbyStopsCell", for: indexPath) as! nearbyStopTableViewCell
             let nearbystops = nearbyStops[indexPath.row];
             cell.stopNameLabel.text = nearbystops.stopName
-            if nearbystops.routeType == 4{
-                cell.stopNameLabel.text = "\(nearbystops.stopName!) (Night Bus)"
-            }
+//            if nearbystops.routeType == 4{
+//                cell.stopNameLabel.text = "\(nearbystops.stopName!) (Night Bus)"
+//            }
             cell.stopSuburbLabel.text = nearbystops.stopSuburb
             cell.nearbyLabel.text = "Near by: \(Int(nearbystops.stopDistance!))m"
             
@@ -191,19 +191,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.dep3timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[(indexPath.row*3)+2].estimatedDepartureUTC) ?? ((self.departureSequence[(indexPath.row*3)+2].scheduledDepartureUTC ?? nil)!), withDate: false)
             
             if (self.nextRouteInfo[indexPath.row*3].routeType == 0 || self.nextRouteInfo[indexPath.row*3].routeType == 3){
-                cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].GtfsId
+                let str: String = self.nextRouteInfo[indexPath.row*3].GtfsId!
+                let start = str.index(str.startIndex, offsetBy: 2)
+                cell.departure1Label.text = String(str[start...])
             } else {
                 cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
             }
             
             if (self.nextRouteInfo[(indexPath.row*3)+1].routeType == 0 || self.nextRouteInfo[(indexPath.row*3)+1].routeType == 3){
-                cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].GtfsId
+                let str: String = self.nextRouteInfo[(indexPath.row*3)+1].GtfsId!
+                let start = str.index(str.startIndex, offsetBy: 2)
+                cell.departure2Label.text = String(str[start...])
             } else {
                 cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].routeNumber
             }
             
             if (self.nextRouteInfo[(indexPath.row*3)+2].routeType == 0 || self.nextRouteInfo[(indexPath.row*3)+2].routeType == 3){
-                cell.departure3Label.text = self.nextRouteInfo[(indexPath.row*3)+2].GtfsId
+                let str: String = self.nextRouteInfo[(indexPath.row*3)+2].GtfsId!
+                let start = str.index(str.startIndex, offsetBy: 2)
+                cell.departure3Label.text = String(str[start...])
             } else {
                 cell.departure3Label.text = self.nextRouteInfo[(indexPath.row*3)+2].routeNumber
             }
@@ -297,7 +303,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func nearByStops(latitude: Double, longtitude: Double) -> String{
-        let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=2&max_distance=1000&devid="+hardcodedDevID
+        let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=2&max_distance=1500&devid="+hardcodedDevID
         return extractedFunc(request)
     }
     
