@@ -86,13 +86,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 if self.nearbyStops.count == 0{
                     DispatchQueue.main.async {
+                        print("Fetch Finished")
                         self.navigationItem.title = "Oh My Transport"
                         self.stopsTableView.reloadData()
                     }
                 }else if self.nearbyStops.count == 1{
+                    print("Fetch Finished")
                     let nextDepartUrl = URL(string: self.nextDepartureByStop(routeType: self.nearbyStops[0].routeType!, stopId: self.nearbyStops[0].stopId!))
                     self.getStopInfoReload(nextDepartUrl, reloadTableView: true)
                 }else if self.nearbyStops.count > 1 {
+                    print("Fetch Finished")
                     let nextDepartUrl0 = URL(string: self.nextDepartureByStop(routeType: self.nearbyStops[0].routeType!, stopId: self.nearbyStops[0].stopId!))
                     let nextDepartUrl1 = URL(string: self.nextDepartureByStop(routeType: self.nearbyStops[1].routeType!, stopId: self.nearbyStops[1].stopId!))
                     self.getStopInfoReload(nextDepartUrl0, reloadTableView: false)
@@ -103,9 +106,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("Error:\(error)")
             }
         }.resume()
-        
-        print("Fetch Finished")
-        
         // End of Allocate near by 2 stops
         
         // Allocate saved stops from CoreData
@@ -136,7 +136,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                                 self.nextRouteInfo.append(nextRouteData.route!)
                                 
-                                if reloadTableView == true && self.nextRouteInfo.count >= self.departureSequence.count-1{ // Matching 3/6 routes info, avoid exit loop early
+                                if reloadTableView == true && self.nextRouteInfo.count == self.departureSequence.count{ // Matching routes info, avoid exit loop early
                                     DispatchQueue.main.async {
                                         self.navigationItem.title = "Oh My Transport"
                                         self.stopsTableView.reloadData()
@@ -193,7 +193,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
             cell.departure1Label.textColor = UIColor.white
             cell.departure1Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3].routeType!)
-            
+
             cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].routeNumber
             cell.departure2Label.textColor = UIColor.white
             cell.departure2Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[(indexPath.row*3)+1].routeType!)
@@ -260,7 +260,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations location: [CLLocation]) {  // Get User location
         nslock.lock()
-        currentLocation = location.last //用最后一个经纬度数组定位
+        currentLocation = location.last // Using last array to get user location
         latitude = currentLocation.coordinate.latitude
         longtitude = currentLocation.coordinate.longitude
         locationManager.stopUpdatingLocation()
