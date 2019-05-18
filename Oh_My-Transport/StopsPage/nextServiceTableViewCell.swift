@@ -15,6 +15,8 @@ class nextServiceTableViewCell: UITableViewCell {
     @IBOutlet weak var routeDueTimeLabel: UILabel!
     @IBOutlet weak var routeStatusLabel: UILabel!
     @IBOutlet weak var routeDetailslabel: UILabel!
+    @IBOutlet weak var routeToLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
