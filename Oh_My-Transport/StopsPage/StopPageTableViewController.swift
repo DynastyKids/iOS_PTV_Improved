@@ -17,9 +17,8 @@ class StopPageTableViewController: UITableViewController {
     
     var departureData: [departure] = []
     var routeInfo: [RouteWithStatus] = []
-    
-    var routesName: [String] = []
-    var routesDest: [String] = []
+//    var routesName: [String] = []
+//    var routesDest: [String] = []
     
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
@@ -59,66 +58,9 @@ class StopPageTableViewController: UITableViewController {
                 // Data recieved.  Decode it from JSON.
                 let showDeparture = try JSONDecoder().decode(departuresResponse.self, from: data!)
                 self.departureData = showDeparture.departures
-                //Departure Data fetch Finished.
-                print("Verify data fetch is finished.")
-                
-//                //Fetching Stopping Infos
-//                if self.departureData.count < 200{
-//                    self.fetchingLimit = self.departureData.count
-//                }
-//                for eachDeparture in self.departureData{
-//                    // Looking up the route Id, match to route name
-//                    _ = URLSession.shared.dataTask(with: URL(string: self.showRoute(routeId: eachDeparture.routesId!))!){(data, response, error) in
-//                        if error != nil{
-//                            print("Route info fetch failed for \(eachDeparture.routesId!)")
-//                        }
-//                        do{
-//                            let showRoute = try JSONDecoder().decode(routeResponse.self, from: data!)
-//                            print("CurrentLoop:\(self.currentLoopCount), Route Id:\(String(describing: eachDeparture.routesId)) Route Name:\(String(describing: showRoute.route?.routeNumber))")
-//                            self.routesName.append((showRoute.route?.routeNumber)!)
-//                            if (self.fetchingLimit == self.routesName.count && self.routesDest.count == self.routesName.count){
-//                                print("Ready to reload data")
-//                                DispatchQueue.main.async {  // When all data has been loaded, then reload the whole table
-//                                    print("Fetch Requested from RoutesDest")
-//                                    self.tableView.reloadData()
-//                                }
-//                            }
-//
-//                        } catch{
-//                            print("Error on looking up route")
-//                        }
-//                        }.resume()
-//
-//
-//                    // Looking up direction Id, match it to Destination
-//                    _ = URLSession.shared.dataTask(with: URL(string: self.showAllDirections(routeId: eachDeparture.routesId!))!){(data, response, error) in
-//                        if error != nil {
-//                            print("Route direction fetch error for \(eachDeparture.routesId!)")
-//                            return
-//                        }
-//                        do{
-//                            let showDirection = try JSONDecoder().decode(directionsResponse.self, from: data!)
-//                            print("CurrentLoop:\(self.currentLoopCount), Route Id:\(String(describing: eachDeparture.routesId)) to \(String(describing: showDirection.directions![0].directionName))")
-//                            self.routesDest.append(showDirection.directions![0].directionName!)
-//                            if (self.fetchingLimit == self.routesDest.count && self.routesDest.count == self.routesName.count){
-//                                print("Ready to reload data")
-                                DispatchQueue.main.async {  // When all data has been loaded, then reload the whole table
-//                                    print("Fetch Requested from RoutesDest")
-                                    self.tableView.reloadData()
-                                }
-//                            }
-//                        }catch{
-//                            print("Fetch error for route:\(String(describing: eachDeparture.routesId))")
-//                        }
-//                        }.resume()
-//                    // End of lookingup direction ID
-//
-//                    if self.currentLoopCount >= 200{
-//                        print(self.tableView(self.tableView, numberOfRowsInSection: 0))
-//                        break
-//                    }
-//                    self.currentLoopCount += 1
-//                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData() // Details data will be loaded when loading cell
+                }
             } catch {
                 print(error)
             }
@@ -153,14 +95,23 @@ class StopPageTableViewController: UITableViewController {
 //        cell.routeSignLabel.text = routesName[indexPath.row]
         cell.routeToLabel.text = " to "
         _ = URLSession.shared.dataTask(with: URL(string: self.showRoute(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
-            if error != nil{
-                print(error)
+            if error != nil {
+                print(error!)
                 return
             }
             do{
                 let showRoute = try JSONDecoder().decode(routeResponse.self, from: data!)
-                print("\(indexPath.row), Route:\(showRoute.route?.routeNumber)")
-                cell.routeSignLabel.text = showRoute.route?.routeNumber
+                if(showRoute.route?.routeType == 0){
+                    cell.routeSignLabel.text = showRoute.route?.GtfsId      // Metro will using its gtfsid to ident which line's service is running
+                } else if (showRoute.route?.routeType == 1){
+                    cell.routeSignLabel.text = showRoute.route?.routeNumber
+                } else if (showRoute.route?.routeType == 2){
+                    cell.routeSignLabel.text = showRoute.route?.routeNumber
+                } else if (showRoute.route?.routeType == 3){
+                    cell.routeSignLabel.text = showRoute.route?.GtfsId      // Vline will using its gtfsid to ident which line's service is running
+                } else if (showRoute.route?.routeType == 4){
+                    cell.routeSignLabel.text = showRoute.route?.routeNumber
+                }
                 cell.routeSignLabel.textColor = UIColor.white
             } catch{
                 print("Error on looking up route")
@@ -168,7 +119,7 @@ class StopPageTableViewController: UITableViewController {
             }.resume()
         _ = URLSession.shared.dataTask(with: URL(string: self.showAllDirections(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
             if error != nil {
-                print(error)
+                print(error!)
                 return
             }
             do{
@@ -185,51 +136,32 @@ class StopPageTableViewController: UITableViewController {
 //        cell.routeDestinationLabel.text = routesDest[indexPath.row]
         cell.routeDetailslabel.text = "Temporary Empty"
         
-        cell.routeDueTimeLabel.text = iso8601DateConvert(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!, withDate: false)
+        cell.routeDueTimeLabel.text = iso8601toRemainTime(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!)
         if departureData[indexPath.row].estimatedDepartureUTC == nil {
             cell.routeStatusLabel.text = "Scheduled"
             cell.routeStatusLabel.textColor = UIColor.black
         }else {
-            cell.routeStatusLabel.text = "Testing Status"
+            let mintes = iso8601toStatus(iso8601DateSchedule: departureData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departureData[indexPath.row].estimatedDepartureUTC!)
+            if mintes > 1 {
+                cell.routeStatusLabel.text = "Late \(mintes) mins"
+                cell.routeStatusLabel.textColor = UIColor.red
+            } else if mintes == 1{
+                cell.routeStatusLabel.text = "Late 1 min"
+                cell.routeStatusLabel.textColor = UIColor.orange
+            } else if mintes == 0 {
+                cell.routeStatusLabel.text = "On Time"
+                cell.routeStatusLabel.textColor = UIColor.green
+            } else if mintes == -1{
+                cell.routeStatusLabel.text = "Early 1 min"
+                cell.routeStatusLabel.textColor = UIColor.green
+            } else if mintes < -1 {
+                let min = mintes * -1
+                cell.routeStatusLabel.text = "Early \(min) mins"
+                cell.routeStatusLabel.textColor = UIColor.yellow
+            }
         }
         return cell
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
@@ -240,13 +172,12 @@ class StopPageTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    /*
+     // MARK: - Self defined reuseable functions
+     // Different colors for difference transport types
+     */
     func getStopTypeColour(routeType: Int) -> UIColor {
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
         // Changeing color after stop info loaded, set the background color theme as transport types
         switch routeType {  // Transport type category on API PDF Page43
         case 0: //Train (metropolitan)
@@ -264,6 +195,7 @@ class StopPageTableViewController: UITableViewController {
         }
     }
     
+    // Extracted functions for genreate URL on different pages
     fileprivate func generateRequestAddress(_ request: String) -> String {
         let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
         let requestAddress: String = hardcodedURL+request+"&signature="+signature
@@ -291,6 +223,7 @@ class StopPageTableViewController: UITableViewController {
         return generateRequestAddress(request)
     }
     
+    // Time convert function
     func iso8601DateConvert(iso8601Date: String, withDate: Bool?) -> String{
         if iso8601Date == "nil"{
             return ""
@@ -312,5 +245,50 @@ class StopPageTableViewController: UITableViewController {
             mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
         }
         return mydateformat.string(from: date!)
+    }
+    
+    func iso8601toRemainTime(iso8601Date: String) -> String {
+        if iso8601Date == "nil"{
+            fatalError()
+        }
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let date:Date = formatter.date(from: iso8601Date)!
+        let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
+        let minutes = differences.minute ?? 0
+        
+        if minutes == 1{
+            return "1 min"
+        }
+        if minutes <= 90{
+            return "\(minutes) mins"
+        }
+        if minutes >= 1440{
+            return "≥ 1 day"
+        } else if minutes > 90 {
+            let mydateformat = DateFormatter()
+            mydateformat.dateFormat = "hh:mm a"
+            return mydateformat.string(from: date)
+        }
+        return ""
+    }
+    
+    func iso8601toStatus(iso8601DateSchedule: String, iso8601DateActual: String) -> Int {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let scheduleDate:Date = formatter.date(from: iso8601DateSchedule)!
+        let actualDate:Date = formatter.date(from: iso8601DateActual)!
+        let differences = Calendar.current.dateComponents([.minute], from: scheduleDate, to: actualDate)
+        let minutes = differences.minute ?? 0
+        
+        return minutes
     }
 }
