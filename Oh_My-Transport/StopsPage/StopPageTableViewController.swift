@@ -6,6 +6,8 @@
 //  Copyright © 2019 wgon0001. All rights reserved.
 //
 
+// Note: Re Construct on Stop Page, replace previsouly build by UIViewController
+
 import UIKit
 
 class StopPageTableViewController: UITableViewController {
