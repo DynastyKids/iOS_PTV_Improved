@@ -77,12 +77,48 @@ struct departure: Codable{
         self.departureSequence = try? container.decode(Int.self, forKey: .departureSequence)
     }
 }
+/*
+    Directions
+ 
+    GET /v3/directions/route/{route_id}
+    GET /v3/directions/{direction_id}/route_type/{route_type}
+ */
+struct directionsResponse: Codable{
+    var directions: [directionWithDescription]?     //Directions of travel of route
+    var status: status?
+    private enum CodingKeys: String, CodingKey{
+        case directions
+        case status
+    }
+}
+
+struct directionWithDescription: Codable {
+    var routeDirectionDescription: String?
+    var directionId: Int?           // Direction of travel identifier
+    var directionName: String?      // Name of direction of travel
+    var routeId: Int?               // Route identifier
+    var routeType: Int?             // Transport mode identifier
+    private enum CodingKeys: String, CodingKey{
+        case routeDirectionDescription = "route_direction_description"
+        case directionId = "direction_id"
+        case directionName = "direction_name"
+        case routeId = "route_id"
+        case routeType = "route_type"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.directionId = try? container.decode(Int.self, forKey: .directionId)
+        self.directionName = try? container.decode(String.self, forKey: .directionName)
+        self.routeId = try? container.decode(Int.self, forKey: .routeId)
+        self.routeType = try? container.decode(Int.self, forKey: .routeType)
+    }
+}
 
 /*
     Disruptions
  
-    /v3/disruptions
-    /v3/disruptions/disruption_id
+    GET /v3/disruptions
+    GET /v3/disruptions/disruption_id
  */
 struct disruptionsResponse: Codable{
     var disruptions: disruptions?
@@ -221,8 +257,8 @@ struct disruptionStop: Codable{
 /*
     Routes
  
-    /v3/Routes
-    /v3/Routes/{Route_id}
+    GET /v3/Routes
+    GET /v3/Routes/{Route_id}
  */
 struct RouteResponse: Codable{
     var route: RouteWithStatus? //  Train lines, tram routes, bus routes, regional coach routes, Night Bus routes ,
@@ -270,7 +306,7 @@ struct RouteServiceStatus: Codable {
 /*
     Stops
 
-    /v3/stops/location/{latitude},{longitude}
+    GET /v3/stops/location/{latitude},{longitude}
 */
 struct stopResponseByLocation: Codable {
     var stops: [stopGeosearch]?
