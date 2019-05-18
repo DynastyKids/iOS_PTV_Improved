@@ -189,16 +189,29 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.dep1timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[indexPath.row*3].estimatedDepartureUTC) ?? ((self.departureSequence[indexPath.row*3].scheduledDepartureUTC ?? nil)!), withDate: false)
             cell.dep2timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[(indexPath.row*3)+1].estimatedDepartureUTC) ?? ((self.departureSequence[(indexPath.row*3)+1].scheduledDepartureUTC ?? nil)!), withDate: false)
             cell.dep3timeLabel.text = iso8601DateConvert(iso8601Date: (departureSequence[(indexPath.row*3)+2].estimatedDepartureUTC) ?? ((self.departureSequence[(indexPath.row*3)+2].scheduledDepartureUTC ?? nil)!), withDate: false)
-                
-            cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
+            
+            if (self.nextRouteInfo[indexPath.row*3].routeType == 0 || self.nextRouteInfo[indexPath.row*3].routeType == 3){
+                cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].GtfsId
+            } else {
+                cell.departure1Label.text = self.nextRouteInfo[indexPath.row*3].routeNumber
+            }
+            
+            if (self.nextRouteInfo[(indexPath.row*3)+1].routeType == 0 || self.nextRouteInfo[(indexPath.row*3)+1].routeType == 3){
+                cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].GtfsId
+            } else {
+                cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].routeNumber
+            }
+            
+            if (self.nextRouteInfo[(indexPath.row*3)+2].routeType == 0 || self.nextRouteInfo[(indexPath.row*3)+2].routeType == 3){
+                cell.departure3Label.text = self.nextRouteInfo[(indexPath.row*3)+2].GtfsId
+            } else {
+                cell.departure3Label.text = self.nextRouteInfo[(indexPath.row*3)+2].routeNumber
+            }
+            
             cell.departure1Label.textColor = UIColor.white
             cell.departure1Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[indexPath.row*3].routeType!)
-
-            cell.departure2Label.text = self.nextRouteInfo[(indexPath.row*3)+1].routeNumber
             cell.departure2Label.textColor = UIColor.white
             cell.departure2Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[(indexPath.row*3)+1].routeType!)
-            
-            cell.departure3Label.text = self.nextRouteInfo[(indexPath.row*3)+2].routeNumber
             cell.departure3Label.textColor = UIColor.white
             cell.departure3Label.backgroundColor = changeColorForRouteBackground(routeType: self.nextRouteInfo[(indexPath.row*3)+2].routeType!)
             
@@ -369,13 +382,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if minutes == 1{
             return "1 min"
         }
-        if minutes < 120{
+        if minutes <= 90{
             return "\(minutes) mins"
         }
         if minutes >= 1440{
             return "≥ 1 day"
-        } else if minutes >= 120 {
-            return "≥ 2 hours"
+        } else if minutes > 90 {
+            let mydateformat = DateFormatter()
+            mydateformat.dateFormat = "hh:mm a"
+            return mydateformat.string(from: date)
         }
         return ""
     }
