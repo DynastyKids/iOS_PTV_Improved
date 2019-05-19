@@ -1,19 +1,20 @@
+
 //
-//  favoriteRouteTableViewCell.swift
+//  savedRouteTableViewCell.swift
 //  Oh_My-Transport
 //
-//  Created by OriWuKids on 5/5/19.
+//  Created by OriWuKids on 20/5/19.
 //  Copyright © 2019 wgon0001. All rights reserved.
 //
 
 import UIKit
 
-class favoriteRouteTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var routeSign: UIButton!
-    @IBOutlet weak var routeNumber: UILabel!
-    @IBOutlet weak var routeInfo: UILabel!
+class savedRouteTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var routeTypeImage: UIImageView!
+    @IBOutlet weak var routeNumberLabel: UILabel!
+    @IBOutlet weak var routeNameLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

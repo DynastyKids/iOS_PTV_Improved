@@ -9,13 +9,19 @@
 // Note: Re Construct on Stop Page, replace previsouly build by UIViewController
 
 import UIKit
+import CoreData
 
 class StopPageTableViewController: UITableViewController {
+    
+    // MARK: - CD Properties
+    var managedContext: NSManagedObjectContext!
+    var stops: FavStop?
     
     var stopURL: String = ""
     var stopId: Int = 0
     var routeType: Int = 0
     var stopName: String = ""
+    var stopSuburb: String = ""
     
     var departureData: [departure] = []
     var routeInfo: [RouteWithStatus] = []
@@ -68,7 +74,22 @@ class StopPageTableViewController: UITableViewController {
     }
     
     
-
+    @IBAction func saveButton(_ sender: Any) {
+        let stop = FavStop(context: managedContext)
+        stop.routeType = Int32(routeType)
+        stop.stopId = Int32(stopId)
+        stop.stopName = stopName
+        stop.stopSuburb = stopSuburb
+        print("saving data")
+        
+        do {
+            try managedContext?.save()
+            dismiss(animated: true)
+        } catch {
+            print("Error to save stop")
+        }
+    }
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2

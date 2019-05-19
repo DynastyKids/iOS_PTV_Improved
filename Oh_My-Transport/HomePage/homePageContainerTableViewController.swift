@@ -1,8 +1,8 @@
 //
-//  HomeViewController.swift
+//  homePageContainerTableViewController.swift
 //  Oh_My-Transport
 //
-//  Created by OriWuKids on 3/5/19.
+//  Created by OriWuKids on 20/5/19.
 //  Copyright © 2019 wgon0001. All rights reserved.
 //
 
@@ -12,24 +12,22 @@ import Foundation
 import CoreData
 import CoreLocation
 
-// Data struct has been moved to /PTVdataStruct.swift
+class homePageContainerTableViewController: UITableViewController, CLLocationManagerDelegate {
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
-    
     let locationManager = CLLocationManager()
     var nslock = NSLock()
     var currentLocation:CLLocation!
     
-    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
-    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
-
     var nearbyStops: [stopGeosearch] = []
     var departureSequence: [departure] = []      // Departure data:Store all excesss data
     var nextRouteInfo0: RouteWithStatus? = nil       // Route data: data to be present
     var nextRouteInfo1: RouteWithStatus? = nil       // Route data: data to be present
     var nextRouteInfo2: RouteWithStatus? = nil       // Route data: data to be present
-
     var nextRouteCount: Int = 0
+    
+    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
+    //    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
+    let coreDataStack = CoreDataStack()
     var filteredRoutes: [FavRoute] = []
     var filteredStops: [FavStop] = []
     
@@ -38,32 +36,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var latitude: Double = 0.0
     var longtitude: Double = 0.0
     
-    @IBOutlet weak var stopsTableView: UITableView!
-    
     let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
     let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
     
-    // Testing path
-    func createResultString(Pattern:String)->String{
-        let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
-        let hardcodedDevID:String = "3001122"
-        let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
-        let searchPattern:String = "/v3/search/"+Pattern+"?devid="+hardcodedDevID;
-        let signature:String = searchPattern.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey);
-        
-        let resultString:String = hardcodedURL+searchPattern+"&signature="+signature;
-        
-        return resultString
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        stopsTableView.delegate = self
-        stopsTableView.dataSource = self
 
-        // Do any additional setup after loading the view.
-        
         //Get user location
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
@@ -84,44 +63,69 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 print(self.nearbyStops.count)   // Fetching time for next depart
                 
-                    DispatchQueue.main.async {
-                        self.navigationItem.title = "Oh My Transport"
-                        self.stopsTableView.reloadData()
-                    }
+                DispatchQueue.main.async {
+                    self.navigationItem.title = "Oh My Transport"
+                    self.tableView.reloadData()
+                }
             }
             catch{
                 print("Error:\(error)")
             }
-        }.resume()
+            }.resume()
         // End of Allocate near by 2 stops
         
         // Allocate saved stops from CoreData
+        // Create Request for CD
+        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
+        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
+        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
+        // Initalize Core Data fetch
+        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+//        stopFetchedResultsController.delegate = self as! NSFetchedResultsControllerDelegate
+        
+        do {
+            try stopFetchedResultsController.performFetch()
+        } catch{
+            print("Saved Stops Core Data fetching error")
+        }
         
         // Allocate Saved routes from CoreData
+        //        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
+        //        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
+        //        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
+        //        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        //        routeFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
+        //        do {
+        //            try routeFetchedResultsController.performFetch()
+        //        } catch {
+        //            print("Saved Route Core Data fetching error")
+        //        }
     }
 
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return nearbyStops.count    //Show Nearby stops only
         } else if section == 1 {
-            return filteredStops.count  // Show all saved stops
+            return stopFetchedResultsController.sections?[0].objects?.count ?? 0
         } else {
-            return filteredRoutes.count // Show all saved routes
+            //            return routeFetchedResultsController.sections?[0].objects?.count ?? 0
+            return 0
         }
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "nearbyStopsCell", for: indexPath) as! nearbyStopTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "nearbyStopsCell", for: indexPath) as! nearbyStopsTableViewCell
             let nearbystops = nearbyStops[indexPath.row];
             cell.stopNameLabel.text = nearbystops.stopName
             cell.stopSuburbLabel.text = nearbystops.stopSuburb
-            cell.nearbyLabel.text = "Near by: \(Int(nearbystops.stopDistance!))m"
+            cell.nearbyTextLabel.text = "Near by: \(Int(nearbystops.stopDistance!))m"
             
             
             // Fetching data inside (Departure time)
@@ -134,12 +138,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let nextDepartureData = try JSONDecoder().decode(departuresResponse.self, from: data!)
                     self.departureSequence = nextDepartureData.departures
                     DispatchQueue.main.async {
-                        cell.dep1timeLabel.text = self.iso8601DateConvert(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), withDate: false)
-                        cell.dep2timeLabel.text = self.iso8601DateConvert(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), withDate: false)
-                        cell.dep3timeLabel.text = self.iso8601DateConvert(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!), withDate: false)
+                        cell.departure0Time.text = self.iso8601DateConvert(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), withDate: false)
+                        cell.departure1Time.text = self.iso8601DateConvert(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), withDate: false)
+                        cell.departure2Time.text = self.iso8601DateConvert(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!), withDate: false)
                     }
                     
-//                     Fetching Data inside (depart Routes)
+                    //                     Fetching Data inside (depart Routes)
                     // Route 0
                     _ = URLSession.shared.dataTask(with: URL(string: self.lookupRoutes(routeId: self.departureSequence[0].routesId!))!){ (data, response, error) in
                         if error != nil {
@@ -155,12 +159,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3){
                                     let str: String = self.nextRouteInfo0!.GtfsId!
                                     let start = str.index(str.startIndex, offsetBy: 2)
-                                    cell.departure1Label.text = String(str[start...])
+                                    cell.departure0Route.text = String(str[start...])
                                 } else {
-                                    cell.departure1Label.text = self.nextRouteInfo0!.routeNumber
+                                    cell.departure0Route.text = self.nextRouteInfo0!.routeNumber
                                 }
-                                cell.departure1Label.textColor = UIColor.white
-                                cell.departure1Label.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo0?.routeType!)!)
+                                cell.departure0Route.textColor = UIColor.white
+                                cell.departure0Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo0?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
@@ -181,12 +185,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3){
                                     let str: String = self.nextRouteInfo1!.GtfsId!
                                     let start = str.index(str.startIndex, offsetBy: 2)
-                                    cell.departure2Label.text = String(str[start...])
+                                    cell.departure1Route.text = String(str[start...])
                                 } else {
-                                    cell.departure2Label.text = self.nextRouteInfo1!.routeNumber
+                                    cell.departure1Route.text = self.nextRouteInfo1!.routeNumber
                                 }
-                                cell.departure2Label.textColor = UIColor.white
-                                cell.departure2Label.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo1?.routeType!)!)
+                                cell.departure1Route.textColor = UIColor.white
+                                cell.departure1Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo1?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
@@ -207,33 +211,41 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3){
                                     let str: String = self.nextRouteInfo1!.GtfsId!
                                     let start = str.index(str.startIndex, offsetBy: 2)
-                                    cell.departure3Label.text = String(str[start...])
+                                    cell.departure2Route.text = String(str[start...])
                                 } else {
-                                    cell.departure3Label.text = self.nextRouteInfo2!.routeNumber
+                                    cell.departure2Route.text = self.nextRouteInfo2!.routeNumber
                                 }
-                                cell.departure3Label.textColor = UIColor.white
-                                cell.departure3Label.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo2?.routeType!)!)
+                                cell.departure2Route.textColor = UIColor.white
+                                cell.departure2Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo2?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
                         }
                         }.resume()
-
+                    
                 }catch{
                     print("Error:\(error)")
                 }
                 }.resume()
             return cell
         }
-        if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "savedStopsCell", for: indexPath) as! favoriteStopTableViewCell
-            return cell
-        }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "favorRouteCell", for: indexPath) as! favoriteRouteTableViewCell
+        //        if indexPath.section == 1 {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "savedStopsCell", for: indexPath) as! savedStopsTableViewCell
+        let savedStop = stopFetchedResultsController.object(at: indexPath)
+        cell.stopNameLabel.text = savedStop.stopName
+        cell.stopSuburbLabel.text = savedStop.stopSuburb
+        return cell
+        //        }
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: "favorRouteCell", for: indexPath) as! savedRoutesTableViewCell
+        //        let savedRoute = routeFetchedResultsController.object(at: indexPath)
+        //        cell.routeNumber.text = savedRoute.routeNumber
+        //        cell.routeInfo.text = savedRoute.routeName
+        //        cell.routeSign = savedRoute.routeType
+        
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionName: String
         switch section {
         case 0:
@@ -248,37 +260,69 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return sectionName
     }
 
-    // MARK: - Navigation
+    /*
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    */
 
+    /*
+    // Override to support editing the table view.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Delete the row from the data source
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }    
+    }
+    */
+
+    /*
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+
+    }
+    */
+
+    /*
+    // Override to support conditional rearranging of the table view.
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the item to be re-orderable.
+        return true
+    }
+    */
+
+    // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "showNearByStop" || segue.identifier == "showSavedStop"{
+        if (segue.identifier == "showNearByStop") {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.stopURL = lookupStops(stopId: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType! )
-            page2.routeType = (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).routeType!
-            page2.stopId = (nearbyStops[stopsTableView.indexPathForSelectedRow!.row]).stopId!
+            page2.stopURL = lookupStops(stopId: (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType! )
+            page2.routeType = (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType!
+            page2.stopId = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId!
+            page2.stopSuburb = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopSuburb!
+        }
+        if segue.identifier == "showSavedStop" {
+            if let page2 = segue.destination as? StopPageTableViewController, let _ = sender as? savedRouteTableViewCell {
+                page2.stopURL = lookupStops(stopId: (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType! )
+                page2.routeType = (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType!
+                page2.stopId = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId!
+                page2.stopSuburb = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopSuburb!
+                page2.managedContext = coreDataStack.managedContext
+            }
         }
         if segue.identifier == "busRouteSegue"{
             
         }
     }
-    // MARK: - Search Function
-//    func updateSearchResults(for searchController: UISearchController) {
-//        if taskFetchedResultsController.fetchedObjects?.isEmpty == false{
-//            searchAllTasks = taskFetchedResultsController.fetchedObjects!
-//        }
-//        if let searchText = searchController.searchBar.text?.lowercased(), searchText.count > 0{
-//            filteredTasks = searchAllTasks.filter({(favorite: Favorite) -> Bool in
-//                return (favorite.title?.lowercased().contains(searchText))!
-//            })
-//        }else{
-//            filteredTasks = searchAllTasks;
-//        }
-//        tableView.reloadData()
-//    }
+
     
+    // Location functions
     func locationManager(_ manager: CLLocationManager, didUpdateLocations location: [CLLocation]) {  // Get User location
         nslock.lock()
         currentLocation = location.last // Using last array to get user location
@@ -291,11 +335,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         print("Error while get user location:\(error)")
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning() // Dispose of any resources that can be recreated.
-    }
-    
-//    Construct PTV lookup address
+    //    Construct PTV lookup address
     fileprivate func extractedFunc(_ request: String) -> String {
         let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
         let requestAddress: String = hardcodedURL+request+"&signature="+signature
@@ -419,63 +459,4 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return UIColor.white
         }
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//    }
-//
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//    }
 }
-
-enum CryptoAlgorithm {
-    case MD5, SHA1
-    var HMACAlgorithm: CCHmacAlgorithm {
-        var result: Int = 0
-        switch self {
-        case .MD5:      result = kCCHmacAlgMD5
-        case .SHA1:     result = kCCHmacAlgSHA1
-        }
-        return CCHmacAlgorithm(result)
-    }
-    var digestLength: Int {
-        var result: Int32 = 0
-        switch self {
-        case .MD5:      result = CC_MD5_DIGEST_LENGTH
-        case .SHA1:     result = CC_SHA1_DIGEST_LENGTH
-        }
-        return Int(result)
-    }
-}
-
-
-//// Database Controller Delegate - all-in-one
-//extension TaskListTableViewController: NSFetchedResultsControllerDelegate{
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        tableView.beginUpdates()
-//    }
-//
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        tableView.endUpdates()
-//    }
-//
-//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-//        switch type {
-//        case .insert:
-//            if let indexPath = newIndexPath{
-//                tableView.insertRows(at: [indexPath], with: .automatic)
-//            }
-//        case .delete:
-//            if let indexPath = indexPath{
-//                tableView.deleteRows(at: [indexPath], with: .automatic)
-//            }
-//        case .update:
-//            if let indexPath = indexPath, let _ = tableView.cellForRow(at: indexPath){
-//                _ = taskFetchedResultsController.object(at: indexPath)
-//            }
-//        default:
-//            break
-//        }
-//    }
-//}

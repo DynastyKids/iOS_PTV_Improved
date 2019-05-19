@@ -1,24 +1,26 @@
 //
-//  favoriteStopTableViewCell.swift
+//  nearbyStopsTableViewCell.swift
 //  Oh_My-Transport
 //
-//  Created by OriWuKids on 5/5/19.
+//  Created by OriWuKids on 20/5/19.
 //  Copyright © 2019 wgon0001. All rights reserved.
 //
 
 import UIKit
 
-class favoriteStopTableViewCell: UITableViewCell {
+class nearbyStopsTableViewCell: UITableViewCell {
     @IBOutlet weak var stopNameLabel: UILabel!
     @IBOutlet weak var stopSuburbLabel: UILabel!
     
-    @IBOutlet weak var departure1Label: UILabel!
-    @IBOutlet weak var dep1timeLabel: UILabel!
-    @IBOutlet weak var departure2Label: UILabel!
-    @IBOutlet weak var dep2timeLabel: UILabel!
-    @IBOutlet weak var departure3Label: UILabel!
-    @IBOutlet weak var dep3timeLabel: UILabel!
+    @IBOutlet weak var departure0Route: UILabel!
+    @IBOutlet weak var departure0Time: UILabel!
+    @IBOutlet weak var departure1Route: UILabel!
+    @IBOutlet weak var departure1Time: UILabel!
+    @IBOutlet weak var departure2Route: UILabel!
+    @IBOutlet weak var departure2Time: UILabel!
     
+    @IBOutlet weak var nearbyTextLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
