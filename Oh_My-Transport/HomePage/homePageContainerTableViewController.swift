@@ -26,7 +26,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     var nextRouteCount: Int = 0
     
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
-    //    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
+    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
     let coreDataStack = CoreDataStack()
     var filteredRoutes: [FavRoute] = []
     var filteredStops: [FavStop] = []
@@ -81,25 +81,24 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
         // Initalize Core Data fetch
         stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
-//        stopFetchedResultsController.delegate = self as! NSFetchedResultsControllerDelegate
-        
+        stopFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
         do {
             try stopFetchedResultsController.performFetch()
         } catch{
-            print("Saved Stops Core Data fetching error")
+            print("Saved Stops Core Data fetching error:\(error)")
         }
         
         // Allocate Saved routes from CoreData
-        //        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
-        //        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
-        //        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
-        //        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        //        routeFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
-        //        do {
-        //            try routeFetchedResultsController.performFetch()
-        //        } catch {
-        //            print("Saved Route Core Data fetching error")
-        //        }
+        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
+        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
+        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
+        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        routeFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
+        do {
+            try routeFetchedResultsController.performFetch()
+        } catch {
+            print("Saved Route Core Data fetching error:\(error)")
+        }
     }
 
     // MARK: - Table view data source
@@ -112,10 +111,9 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         if section == 0 {
             return nearbyStops.count    //Show Nearby stops only
         } else if section == 1 {
-            return stopFetchedResultsController.sections?[0].objects?.count ?? 0
+            return stopFetchedResultsController.sections?[0].numberOfObjects ?? 0
         } else {
-            //            return routeFetchedResultsController.sections?[0].objects?.count ?? 0
-            return 0
+            return routeFetchedResultsController.sections?[0].numberOfObjects ?? 0
         }
     }
 
@@ -229,18 +227,18 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                 }.resume()
             return cell
         }
-        //        if indexPath.section == 1 {
+        if indexPath.section == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "savedStopsCell", for: indexPath) as! savedStopsTableViewCell
         let savedStop = stopFetchedResultsController.object(at: indexPath)
         cell.stopNameLabel.text = savedStop.stopName
         cell.stopSuburbLabel.text = savedStop.stopSuburb
         return cell
-        //        }
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: "favorRouteCell", for: indexPath) as! savedRoutesTableViewCell
-        //        let savedRoute = routeFetchedResultsController.object(at: indexPath)
-        //        cell.routeNumber.text = savedRoute.routeNumber
-        //        cell.routeInfo.text = savedRoute.routeName
-        //        cell.routeSign = savedRoute.routeType
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "favorRouteCell", for: indexPath) as! savedRouteTableViewCell
+        let savedRoute = routeFetchedResultsController.object(at: indexPath)
+        cell.routeNumberLabel.text = savedRoute.routeNumber
+        cell.routeNameLabel.text = savedRoute.routeName
+//        cell.routeTypeImage = savedRoute.routeType
         
         return cell
     }
@@ -300,21 +298,13 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-        if (segue.identifier == "showNearByStop") {
+        if (segue.identifier == "showNearByStop" || segue.identifier == "showSavedStop") {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.stopURL = lookupStops(stopId: (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType! )
             page2.routeType = (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType!
             page2.stopId = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId!
             page2.stopSuburb = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopSuburb!
-        }
-        if segue.identifier == "showSavedStop" {
-            if let page2 = segue.destination as? StopPageTableViewController, let _ = sender as? savedRouteTableViewCell {
-                page2.stopURL = lookupStops(stopId: (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType! )
-                page2.routeType = (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType!
-                page2.stopId = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId!
-                page2.stopSuburb = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopSuburb!
-                page2.managedContext = coreDataStack.managedContext
-            }
+            page2.managedContext = coreDataStack.managedContext
         }
         if segue.identifier == "busRouteSegue"{
             

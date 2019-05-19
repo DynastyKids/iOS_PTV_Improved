@@ -340,7 +340,7 @@
             </objects>
             <point key="canvasLocation" x="-1278" y="1546"/>
         </scene>
-        <!--Loading Data-->
+        <!--Oh My Transport-->
         <scene sceneID="MVb-jZ-OE4">
             <objects>
                 <viewController id="jyl-AG-Pgo" customClass="HomepageViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
@@ -389,7 +389,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IyT-qi-Pis"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Loading Data" id="nav-A9-W8a"/>
+                    <navigationItem key="navigationItem" title="Oh My Transport" id="nav-A9-W8a"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z1h-kO-okF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -75,16 +75,16 @@ class StopPageTableViewController: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: Any) {
-        let stop = FavStop(context: managedContext)
-        stop.routeType = Int32(routeType)
-        stop.stopId = Int32(stopId)
-        stop.stopName = stopName
-        stop.stopSuburb = stopSuburb
-        print("saving data")
-        
+            let stop = FavStop(context: managedContext)
+            stop.routeType = Int32(routeType)
+            stop.stopId = Int32(stopId)
+            stop.stopName = stopName
+            stop.stopSuburb = stopSuburb
+            print("saving data")
+
         do {
             try managedContext?.save()
-            dismiss(animated: true)
+            let _ = navigationController?.popViewController(animated: true)
         } catch {
             print("Error to save stop")
         }
