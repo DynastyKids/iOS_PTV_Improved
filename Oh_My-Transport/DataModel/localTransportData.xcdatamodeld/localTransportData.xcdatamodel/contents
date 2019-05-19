@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G6030" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G7024" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="APIInfo" representedClassName="APIInfo" syncable="YES">
         <attribute name="apiKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="FavRoute" representedClassName="FavRoute" syncable="YES">
-        <attribute name="route_id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="route_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="route_number" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="route_type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="routeId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="routeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="routeNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="routeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="FavStop" representedClassName="FavStop" syncable="YES">
-        <attribute name="route_type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="stop_id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="stop_latitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="stop_longitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="stop_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="stop_suburb" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="routeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="stopId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="stopName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stopSuburb" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="APIInfo" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="FavStop" positionX="-54" positionY="45" width="128" height="135"/>
         <element name="FavRoute" positionX="-54" positionY="9" width="128" height="105"/>
+        <element name="FavStop" positionX="-54" positionY="45" width="128" height="105"/>
     </elements>
 </model>

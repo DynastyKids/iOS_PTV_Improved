@@ -2,7 +2,7 @@
 //  FavStop+CoreDataProperties.swift
 //  Oh_My-Transport
 //
-//  Created by OriWuKids on 5/5/19.
+//  Created by OriWuKids on 20/5/19.
 //  Copyright © 2019 wgon0001. All rights reserved.
 //
 //
@@ -17,11 +17,9 @@ extension FavStop {
         return NSFetchRequest<FavStop>(entityName: "FavStop")
     }
 
-    @NSManaged public var route_type: Int16
-    @NSManaged public var stop_id: Int32
-    @NSManaged public var stop_latitude: Float
-    @NSManaged public var stop_longitude: Float
-    @NSManaged public var stop_name: String?
-    @NSManaged public var stop_suburb: String?
+    @NSManaged public var routeType: Int32
+    @NSManaged public var stopId: Int32
+    @NSManaged public var stopName: String?
+    @NSManaged public var stopSuburb: String?
 
 }
