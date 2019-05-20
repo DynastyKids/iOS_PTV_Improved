@@ -47,10 +47,10 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     var latitude: Double = 0.0
     var longtitude: Double = 0.0
     
-    let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
-    let hardcodedDevID:String = "3001122"
-    let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
-    
+//    let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
+//    let hardcodedDevID:String = "3001122"
+//    let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
+//
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -140,7 +140,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             
             
             // Fetching data inside (Departure time)
-            _ = URLSession.shared.dataTask(with: URL(string: nextDepartureByStop(routeType: nearbystops.routeType!, stopId: nearbystops.stopId!))!){ (data, response, error) in
+            _ = URLSession.shared.dataTask(with: URL(string: nextr3DepartureFromStop(routeType: nearbystops.routeType!, stopId: nearbystops.stopId!))!){ (data, response, error) in
                 if error != nil {
                     print("Next departure fetch failed:\(error!)")
                     return
@@ -149,14 +149,14 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                     self.departureSequence = nextDepartureData.departures
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
-                        cell.departure1Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!))
-                        cell.departure2Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!))
+                        cell.departure0Time.text = iso8601toRemainDate(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
+                        cell.departure1Time.text = iso8601toRemainDate(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!))
+                        cell.departure2Time.text = iso8601toRemainDate(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!))
                     }
                     
-                    //                     Fetching Data inside (depart Routes)
+//                     Fetching Data inside (depart Routes)
                     // Route 0
-                    _ = URLSession.shared.dataTask(with: URL(string: self.lookupRoutes(routeId: self.departureSequence[0].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[0].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -175,14 +175,14 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                     cell.departure0Route.text = self.nextRouteInfo0!.routeNumber
                                 }
                                 cell.departure0Route.textColor = UIColor.white
-                                cell.departure0Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo0?.routeType!)!)
+                                cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo0?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
                         }
                         }.resume()
                     // Route 1
-                    _ = URLSession.shared.dataTask(with: URL(string: self.lookupRoutes(routeId: self.departureSequence[1].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[1].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -201,14 +201,14 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                     cell.departure1Route.text = self.nextRouteInfo1!.routeNumber
                                 }
                                 cell.departure1Route.textColor = UIColor.white
-                                cell.departure1Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo1?.routeType!)!)
+                                cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo1?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
                         }
                         }.resume()
                     // Route 2
-                    _ = URLSession.shared.dataTask(with: URL(string: self.lookupRoutes(routeId: self.departureSequence[2].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[2].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -227,7 +227,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                     cell.departure2Route.text = self.nextRouteInfo2!.routeNumber
                                 }
                                 cell.departure2Route.textColor = UIColor.white
-                                cell.departure2Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo2?.routeType!)!)
+                                cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo2?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
@@ -255,7 +255,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             routeType.append(Int(savedStop.routeType))
             
             // Fetching data inside (Departure time)
-            _ = URLSession.shared.dataTask(with: URL(string: nextDepartureByStop(routeType: Int(savedStopType), stopId: Int(savedStopId)))!){ (data, response, error) in
+            _ = URLSession.shared.dataTask(with: URL(string: nextr3DepartureFromStop(routeType: Int(savedStopType), stopId: Int(savedStopId)))!){ (data, response, error) in
                 if error != nil {
                     print("Next departure fetch failed:\(error!)")
                     return
@@ -264,14 +264,14 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                     self.departureSequence = nextDepartureData.departures
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
-                        cell.departure1Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!))
-                        cell.departure2Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!))
+                        cell.departure0Time.text = iso8601toRemainDate(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
+                        cell.departure1Time.text = iso8601toRemainDate(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!))
+                        cell.departure2Time.text = iso8601toRemainDate(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!))
                     }
                     
                     //                     Fetching Data inside (depart Routes)
                     // Route 0
-                    _ = URLSession.shared.dataTask(with: URL(string: self.lookupRoutes(routeId: self.departureSequence[0].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[0].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -290,14 +290,14 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                     cell.departure0Route.text = self.nextRouteInfo0!.routeNumber
                                 }
                                 cell.departure0Route.textColor = UIColor.white
-                                cell.departure0Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo0?.routeType!)!)
+                                cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo0?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
                         }
                         }.resume()
                     // Route 1
-                    _ = URLSession.shared.dataTask(with: URL(string: self.lookupRoutes(routeId: self.departureSequence[1].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[1].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -316,14 +316,14 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                     cell.departure1Route.text = self.nextRouteInfo1!.routeNumber
                                 }
                                 cell.departure1Route.textColor = UIColor.white
-                                cell.departure1Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo1?.routeType!)!)
+                                cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo1?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
                         }
                         }.resume()
                     // Route 2
-                    _ = URLSession.shared.dataTask(with: URL(string: self.lookupRoutes(routeId: self.departureSequence[2].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[2].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -342,7 +342,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                     cell.departure2Route.text = self.nextRouteInfo2!.routeNumber
                                 }
                                 cell.departure2Route.textColor = UIColor.white
-                                cell.departure2Route.backgroundColor = self.changeColorForRouteBackground(routeType: (self.nextRouteInfo2?.routeType!)!)
+                                cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo2?.routeType!)!)
                             }
                         }catch{
                             print("Error:\(error)")
@@ -425,21 +425,16 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         // Pass the selected object to the new view controller.
         if segue.identifier == "showNearByStop" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.stopURL = lookupStops(stopId: (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType! )
+            page2.stopURL = showStopsInfo(stopId: (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType! )
             page2.routeType = (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType!
             page2.stopId = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId!
             page2.stopSuburb = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopSuburb!
+            page2.stopName = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopName!
             page2.managedContext = coreDataStack.managedContext
         }
         if segue.identifier == "showSavedStop"{
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            print(routeType[(tableView.indexPathForSelectedRow?.row)!]);
-            print(stopId[(tableView.indexPathForSelectedRow?.row)!]);
-            print(stopSuburb[(tableView.indexPathForSelectedRow?.row)!]);
-            print(stopName[(tableView.indexPathForSelectedRow?.row)!]);
-            print("Loading Data")
-            
-            page2.stopURL = lookupStops(stopId: (stopId[(tableView.indexPathForSelectedRow!.row)]), routeType: (routeType[(tableView.indexPathForSelectedRow!.row)]))
+            page2.stopURL = showStopsInfo(stopId: (stopId[(tableView.indexPathForSelectedRow!.row)]), routeType: (routeType[(tableView.indexPathForSelectedRow!.row)]))
             page2.routeType = (routeType[(tableView.indexPathForSelectedRow!.row)])
             page2.stopId = (stopId[(tableView.indexPathForSelectedRow!.row)])
             page2.stopSuburb = stopSuburb[(tableView.indexPathForSelectedRow?.row)!]
@@ -452,7 +447,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         }
     }
 
-    
     // Location functions
     func locationManager(_ manager: CLLocationManager, didUpdateLocations location: [CLLocation]) {  // Get User location
         nslock.lock()
@@ -464,142 +458,5 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error while get user location:\(error)")
-    }
-    
-    //    Construct PTV lookup address
-    fileprivate func extractedFunc(_ request: String) -> String {
-        let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
-        let requestAddress: String = hardcodedURL+request+"&signature="+signature
-        
-        print(requestAddress)
-        return requestAddress
-    }
-    
-    func nearByStops(latitude: Double, longtitude: Double) -> String{
-        let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=3&max_distance=1500&devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    
-    func nextDepartureByStop(routeType: Int, stopId: Int) -> String{
-        let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?include_cancelled=true&max_results=3&devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    
-    func lookupRoutes(routeId: Int) -> String{
-        let request: String = "/v3/routes/\(routeId)?devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    
-    func lookupStops(stopId: Int, routeType: Int) -> String{
-        let request: String = "/v3/stops/\(stopId)/route_type/\(routeType)?devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    
-    func iso8601DateConvert(iso8601Date: String, withTime: Bool?) -> String{
-        if iso8601Date == "nil"{
-            return ""
-        }
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date = formatter.date(from: iso8601Date)
-        
-        var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
-        
-        let mydateformat = DateFormatter()
-        if withTime == false {
-            mydateformat.dateFormat = "EEE dd MMM yyyy"
-        }else{
-            mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
-        }
-        return mydateformat.string(from: date!)
-    }
-    func iso8601DateConvert(iso8601Date: String, withDate: Bool?) -> String{
-        if iso8601Date == "nil"{
-            return ""
-        }
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date = formatter.date(from: iso8601Date)
-        
-        var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
-        
-        let mydateformat = DateFormatter()
-        if withDate == false {
-            mydateformat.dateFormat = "hh:mm a"
-        }else{
-            mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
-        }
-        return mydateformat.string(from: date!)
-    }
-    
-//    func iso8601toDate(iso8601Date: String) -> Date {
-    func iso8601toRemainDate(iso8601Date: String) -> String {
-        if iso8601Date == "nil"{
-            fatalError()
-        }
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date:Date = formatter.date(from: iso8601Date)!
-//        return date
-//    }
-//
-//    func timeRemainCalculate(date: Date) -> String{
-        let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
-        let minutes = differences.minute ?? 0
-        
-        if minutes < 0 {
-            let mydateformat = DateFormatter()
-            mydateformat.dateFormat = "hh:mm a"
-            return mydateformat.string(from: date)
-        }
-        if minutes == 0{
-            return "Now"
-        }
-        if minutes == 1{
-            return "1 min"
-        }
-        if minutes <= 90{
-            return "\(minutes) mins"
-        }
-        if minutes > 2880{
-            return "\(minutes/1440) days"
-        }
-        if minutes > 1440{
-            return "1 day"
-        } else if minutes > 90 {
-            let mydateformat = DateFormatter()
-            mydateformat.dateFormat = "hh:mm a"
-            return mydateformat.string(from: date)
-        }
-        return ""
-    }
-    
-    func changeColorForRouteBackground(routeType: Int) -> UIColor{
-        switch routeType {  //API PDF Page43
-        case 0: //Train (metropolitan)
-            return UIColor.init(red: 0.066, green: 0.455, blue: 0.796, alpha: 1)
-        case 1: //Tram
-            return UIColor.init(red: 0.4784, green: 0.7372, blue: 0.1882, alpha: 1)
-        case 2: //Bus (metropolitan, regional and Skybus, but not V/Line)
-            return UIColor.init(red: 0.993, green: 0.5098, blue: 0.1372, alpha: 1)
-        case 3: //  V/Line train and coach
-            return UIColor.init(red: 0.5568, green: 0.1333, blue: 0.5765, alpha: 1)
-        case 4: //Night Bus (which replaced NightRider)
-            return UIColor.init(red: 0.993, green: 0.5098, blue: 0.1372, alpha: 1)
-        default:
-            return UIColor.white
-        }
     }
 }

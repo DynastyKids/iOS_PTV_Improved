@@ -16,11 +16,6 @@ class DisruptionsTableViewController: UITableViewController {
     
     var disruptions: [Disruption] = []
     
-    let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
-    let hardcodedDevID:String = "3001122"
-    let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,52 +101,5 @@ class DisruptionsTableViewController: UITableViewController {
         }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-    }
-    
-    fileprivate func extractedFunc(_ request: String) -> String {
-        let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
-        let requestAddress: String = hardcodedURL+request+"&signature="+signature
-
-        return requestAddress
-    }
-    
-    func disruptionAll() -> String{
-        let request: String = "/v3/disruptions?devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    func disruptionByRoute(routeID: Int) -> String{
-        let request: String = "/v3/disruptions/route/"+String(routeID)+"?devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    func disruptionByStop(stopID: Int) -> String{
-        let request: String = "/v3/disruptions/stop/"+String(stopID)+"?devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    func disruptionById(disruptionId: Int) -> String{
-        let request: String = "/v3/disruptions/"+String(disruptionId)+"?devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    
-    func iso8601DateConvert(iso8601Date: String, withTime: Bool?) -> String{
-        if iso8601Date == "nil"{
-            return ""
-        }
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date = formatter.date(from: iso8601Date)
-        
-        var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
-        
-        let mydateformat = DateFormatter()
-        if withTime == false {
-            mydateformat.dateFormat = "EEE dd MMM yyyy"
-        }else{
-            mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
-        }
-        return mydateformat.string(from: date!)
     }
 }

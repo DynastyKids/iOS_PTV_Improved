@@ -25,19 +25,14 @@ class StopPageTableViewController: UITableViewController {
     
     var departureData: [Departure] = []
     var routeInfo: [RouteWithStatus] = []
-
-    let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
-    let hardcodedDevID:String = "3001122"
-    let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
     
     var currentLoopCount = 0
     var fetchingLimit = 200
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //Get the stop name
-        _ = URLSession.shared.dataTask(with: URL(string: lookupStops(stopId: stopId, routeType: routeType))!) { (data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: stopId, routeType: routeType))!) { (data, response, error) in
             if let error = error {
                 print("Download failed: \(String(describing: error))")
                 return
@@ -108,12 +103,12 @@ class StopPageTableViewController: UITableViewController {
             let cell0 = tableView.dequeueReusableCell(withIdentifier: "stopInfo", for: indexPath) as! stopInfoTableViewCell
             cell0.stopNameLabel.text = stopName
             cell0.disruptionButton.setTitle("No Disruptions in effect", for: UIControl.State.normal)
-            cell0.backgroundColor = getStopTypeColour(routeType: routeType)
+            cell0.backgroundColor = changeColorByRouteType(routeType: routeType)
             return cell0
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "nextService", for: indexPath) as! nextServiceTableViewCell
         cell.routeToLabel.text = " to "
-        _ = URLSession.shared.dataTask(with: URL(string: self.showRoute(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
             if error != nil {
                 print(error!)
                 return
@@ -134,7 +129,7 @@ class StopPageTableViewController: UITableViewController {
                 print("Error on looking up route")
             }
             }.resume()
-        _ = URLSession.shared.dataTask(with: URL(string: self.showAllDirections(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
             if error != nil {
                 print(error!)
                 return
@@ -153,11 +148,11 @@ class StopPageTableViewController: UITableViewController {
             }
             }.resume()
         
-        cell.routeSignLabel.backgroundColor = getStopTypeColour(routeType: routeType)
+        cell.routeSignLabel.backgroundColor = changeColorByRouteType(routeType: routeType)
 //        cell.routeDestinationLabel.text = routesDest[indexPath.row]
         cell.routeDetailslabel.text = "Temporary Empty"
         
-        cell.routeDueTimeLabel.text = iso8601toRemainTime(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!)
+        cell.routeDueTimeLabel.text = iso8601toRemainDate(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!)
         if departureData[indexPath.row].estimatedDepartureUTC == nil {
             cell.routeStatusLabel.text = "Scheduled"
             cell.routeStatusLabel.textColor = UIColor.gray
@@ -196,138 +191,8 @@ class StopPageTableViewController: UITableViewController {
         if segue.identifier == "showRouteDetails" {
             let page2:RouteDetailsViewController = segue.destination as! RouteDetailsViewController
             page2.myRunId = departureData[tableView.indexPathForSelectedRow!.row].runId!
+            page2.myRouteId = departureData[tableView.indexPathForSelectedRow!.row].routesId!
             page2.myRouteType = routeType
         }
-    }
-    
-    /*
-     // MARK: - Self defined reuseable functions
-     // Different colors for difference transport types
-     */
-    func getStopTypeColour(routeType: Int) -> UIColor {
-        // Changeing color after stop info loaded, set the background color theme as transport types
-        switch routeType {  // Transport type category on API PDF Page43
-        case 0: //Train (metropolitan)
-            return UIColor.init(red: 0.066, green: 0.455, blue: 0.796, alpha: 1)
-        case 1: //Tram
-            return UIColor.init(red: 0.4784, green: 0.7372, blue: 0.1882, alpha: 1)
-        case 2: //Bus (metropolitan, regional and Skybus, but not V/Line)
-            return UIColor.init(red: 0.993, green: 0.5098, blue: 0.1372, alpha: 1)
-        case 3: //  V/Line train and coach
-            return UIColor.init(red: 0.5568, green: 0.1333, blue: 0.5765, alpha: 1)
-        case 4: //Night Bus (which replaced NightRider)
-            return UIColor.init(red: 0.993, green: 0.5098, blue: 0.1372, alpha: 1)
-        default:
-            return UIColor.white
-        }
-    }
-    
-    // Extracted functions for genreate URL on different pages
-    fileprivate func generateRequestAddress(_ request: String) -> String {
-        let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
-        let requestAddress: String = hardcodedURL+request+"&signature="+signature
-        
-        return requestAddress
-    }
-    
-    func showRoute(routeId: Int) -> String{
-        let request: String = "/v3/routes/\(routeId)?devid="+hardcodedDevID
-        return generateRequestAddress(request)
-    }
-    
-    func showAllDirections(routeId: Int) -> String{
-        let request: String = "/v3/directions/route/\(routeId)?devid="+hardcodedDevID
-        return generateRequestAddress(request)
-    }
-    
-    func nextDepartureURL(routeType: Int, stopId: Int) -> String{
-        let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=200&devid="+hardcodedDevID
-        return generateRequestAddress(request)
-    }
-    
-    func lookupStops(stopId: Int, routeType: Int) -> String{
-        let request: String = "/v3/stops/\(stopId)/route_type/\(routeType)?devid="+hardcodedDevID
-        return generateRequestAddress(request)
-    }
-    
-    // Time convert function
-    func iso8601DateConvert(iso8601Date: String, withDate: Bool?) -> String{
-        if iso8601Date == "nil"{
-            return ""
-        }
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date = formatter.date(from: iso8601Date)
-        
-        var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
-        
-        let mydateformat = DateFormatter()
-        if withDate == false {
-            mydateformat.dateFormat = "hh:mm a"
-        }else{
-            mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
-        }
-        return mydateformat.string(from: date!)
-    }
-    
-    func iso8601toRemainTime(iso8601Date: String) -> String {
-        if iso8601Date == "nil"{
-            fatalError()
-        }
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date:Date = formatter.date(from: iso8601Date)!
-        let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
-        let minutes = differences.minute ?? 0
-        
-        if minutes < 0{
-            let mydateformat = DateFormatter()
-            mydateformat.dateFormat = "hh:mm a"
-            return mydateformat.string(from: date)
-        }
-        if minutes == 0{
-            return "Now"
-        }
-        if minutes == 1{
-            return "1 min"
-        }
-        if minutes <= 90{
-            return "\(minutes) mins"
-        }
-        if minutes > 2880{
-            let day = minutes / 1440
-            return "\(day) days"
-        }
-        if minutes > 1440{
-            return "1 day"
-        } else if minutes > 90 {
-            let mydateformat = DateFormatter()
-            mydateformat.dateFormat = "hh:mm a"
-            return mydateformat.string(from: date)
-        }
-        return ""
-    }
-    
-    func iso8601toStatus(iso8601DateSchedule: String, iso8601DateActual: String) -> Int {
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let scheduleDate:Date = formatter.date(from: iso8601DateSchedule)!
-        let actualDate:Date = formatter.date(from: iso8601DateActual)!
-        let differences = Calendar.current.dateComponents([.minute], from: scheduleDate, to: actualDate)
-        let minutes = differences.minute ?? 0
-        
-        return minutes
     }
 }

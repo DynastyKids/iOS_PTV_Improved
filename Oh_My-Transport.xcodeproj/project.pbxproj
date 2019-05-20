@@ -38,6 +38,7 @@
 		5AEF7DD02291C2900087C087 /* savedStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DCF2291C2900087C087 /* savedStopsTableViewCell.swift */; };
 		5AEF7DD22291C2D10087C087 /* savedRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DD12291C2D10087C087 /* savedRouteTableViewCell.swift */; };
 		5AEF7DD42291C53F0087C087 /* nearbyStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DD32291C53F0087C087 /* nearbyStopsTableViewCell.swift */; };
+		5AEF7DE42292F1EC0087C087 /* CommonFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DE32292F1EC0087C087 /* CommonFunction.swift */; };
 		5AFA5F4E227F445600FAAA1D /* disruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		5AEF7DCF2291C2900087C087 /* savedStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedStopsTableViewCell.swift; sourceTree = "<group>"; };
 		5AEF7DD12291C2D10087C087 /* savedRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedRouteTableViewCell.swift; sourceTree = "<group>"; };
 		5AEF7DD32291C53F0087C087 /* nearbyStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nearbyStopsTableViewCell.swift; sourceTree = "<group>"; };
+		5AEF7DE32292F1EC0087C087 /* CommonFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunction.swift; sourceTree = "<group>"; };
 		5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = disruptionTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				5A331C0E22732BC000467C8B /* AboutViewController.swift */,
 				5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */,
 				5A2CB6BC2288254A009A3A13 /* PTVdataStruct.swift */,
+				5AEF7DE32292F1EC0087C087 /* CommonFunction.swift */,
 			);
 			path = "Oh_My-Transport";
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				5A9B89022290421A005F1C25 /* nextServiceTableViewCell.swift in Sources */,
 				5AEF7DC5229196A50087C087 /* APIInfo+CoreDataClass.swift in Sources */,
 				5A331C0F22732BC000467C8B /* AboutViewController.swift in Sources */,
+				5AEF7DE42292F1EC0087C087 /* CommonFunction.swift in Sources */,
 				5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */,
 				5A85D5C2229086AE00E01AD9 /* RoutesStopTableViewCell.swift in Sources */,
 				5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */,
