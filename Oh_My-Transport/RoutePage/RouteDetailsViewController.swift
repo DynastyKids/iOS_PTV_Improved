@@ -73,6 +73,15 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                             do{
                                 let stopData = try JSONDecoder().decode(stopResposeById.self, from: data!)
                                 self.stopInfo.append(stopData.stop!)
+                                //        Showing Annotation on Map View
+                                let latitude:Double = (stopData.stop?.stopLocation?.gps?.latitude)!
+                                let longitude:Double = (stopData.stop?.stopLocation?.gps?.longitude)!
+                                let stopPatterns = MKPointAnnotation()
+                                stopPatterns.title = stopData.stop!.stopName
+                                stopPatterns.subtitle = "Stop ID:\(stopData.stop!.stopId!)"
+                                stopPatterns.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                                self.routeMapView.addAnnotation(stopPatterns)
+                                
                                 DispatchQueue.main.async {
                                     print("Reload table view")
                                     self.routeTableView.reloadData()
@@ -137,17 +146,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         print(stopInfo[indexPath.row].stopName)
         cell.routeStopNameLabel.text = stopInfo[indexPath.row].stopName
         cell.routeStopTimeLabel.text = iso8601DateConvert(iso8601Date: cellDepartureTime)
-        
-        let latitude:Double = (stopInfo[indexPath.row].stopLocation?.gps?.latitude)!
-        let longitude:Double = (stopInfo[indexPath.row].stopLocation?.gps?.longitude)!
-//        Showing Annotation on Map View
-        let stopPatterns = MKPointAnnotation()
-        stopPatterns.title = stopInfo[indexPath.row].stopName
-        stopPatterns.subtitle = "Stop ID:\(stopInfo[indexPath.row].stopId!)"
-        stopPatterns.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        DispatchQueue.main.async {
-            self.routeMapView.addAnnotation(stopPatterns)
-        }
         return cell
     }
     
