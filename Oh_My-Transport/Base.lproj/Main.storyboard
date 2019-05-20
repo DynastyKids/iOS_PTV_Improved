@@ -474,7 +474,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <state key="normal" title="Tap to see more" image="warning_White"/>
                                                     <connections>
-                                                        <segue destination="Rur-ig-BSX" kind="show" id="kz0-4N-VZF"/>
+                                                        <segue destination="Rur-ig-BSX" kind="show" identifier="showStopDisruptions" id="kz0-4N-VZF"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZLd-wv-fWu">
@@ -599,7 +599,7 @@
                                     <outlet property="routeSignLabel" destination="LcA-J5-Kx0" id="THd-8I-oEK"/>
                                     <outlet property="routeStatusLabel" destination="Zuy-8y-hFE" id="l6T-9E-q3H"/>
                                     <outlet property="routeToLabel" destination="zZV-4l-38e" id="Dz8-pQ-GDO"/>
-                                    <segue destination="f1e-ej-sol" kind="show" id="g3m-8j-J5E"/>
+                                    <segue destination="f1e-ej-sol" kind="show" identifier="showRouteDetails" id="g3m-8j-J5E"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1065,6 +1065,7 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="routeMapView" destination="eZG-Wq-bdQ" id="AvY-5w-ukq"/>
                         <outlet property="routeTableView" destination="w7W-g9-U6i" id="Cch-me-VsU"/>
                     </connections>
                 </viewController>
@@ -1161,7 +1162,7 @@ To obtain a key:
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yOe-TH-pVY"/>
+        <segue reference="g3m-8j-J5E"/>
         <segue reference="Rtg-8B-y4f"/>
         <segue reference="uPl-tE-DDw"/>
         <segue reference="3Ii-7b-a41"/>
