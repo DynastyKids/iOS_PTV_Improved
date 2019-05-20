@@ -10,7 +10,7 @@ import Foundation
 /*
  Status
 */
-struct status: Codable {
+struct Status: Codable {
     var version: String     //API Version number
     var health: Int         //API system health status (0=offline, 1=online) = ['0', '1']}
     
@@ -26,9 +26,9 @@ struct status: Codable {
  
     GET /v3/departures/route_type/{route_type}/stop/{stop_id}
 */
-struct departuresResponse: Codable {
-    var departures: [departure]
-    var status: status
+struct DeparturesResponse: Codable {
+    var departures: [Departure]
+    var status: Status
     
     private enum CodingKeys: String, CodingKey{
         case departures
@@ -36,7 +36,7 @@ struct departuresResponse: Codable {
     }
 }
 
-struct departure: Codable{
+struct Departure: Codable{
     var stopsId: Int?
     var routesId: Int?
     var runId: Int?
@@ -83,16 +83,16 @@ struct departure: Codable{
     GET /v3/directions/route/{route_id}
     GET /v3/directions/{direction_id}/route_type/{route_type}
  */
-struct directionsResponse: Codable{
-    var directions: [directionWithDescription]?     //Directions of travel of route
-    var status: status?
+struct DirectionsResponse: Codable{
+    var directions: [DirectionWithDescription]?     //Directions of travel of route
+    var status: Status?
     private enum CodingKeys: String, CodingKey{
         case directions
         case status
     }
 }
 
-struct directionWithDescription: Codable {
+struct DirectionWithDescription: Codable {
     var routeDirectionDescription: String?
     var directionId: Int?           // Direction of travel identifier
     var directionName: String?      // Name of direction of travel
@@ -120,30 +120,30 @@ struct directionWithDescription: Codable {
     GET /v3/disruptions
     GET /v3/disruptions/disruption_id
  */
-struct disruptionsResponse: Codable{
-    var disruptions: disruptions?
-    var status: status?
+struct DisruptionsResponse: Codable{
+    var disruptions: Disruptions?
+    var status: Status?
     private enum CodingKeys: String, CodingKey{
         case disruptions
         case status
     }
 }
 
-struct disruptions: Codable{
-    var general: [disruption]?
-    var metroTrain: [disruption]?
-    var metroTram: [disruption]?
-    var metroBus: [disruption]?
-    var vlineTrain: [disruption]?
-    var vlineCoach: [disruption]?
-    var regionalBus: [disruption]?
-    var schoolBus: [disruption]?
-    var telebus: [disruption]?
-    var nightbus: [disruption]?
-    var ferry: [disruption]?
-    var interstate: [disruption]?
-    var skybus: [disruption]?
-    var taxi: [disruption]?
+struct Disruptions: Codable{
+    var general: [Disruption]?
+    var metroTrain: [Disruption]?
+    var metroTram: [Disruption]?
+    var metroBus: [Disruption]?
+    var vlineTrain: [Disruption]?
+    var vlineCoach: [Disruption]?
+    var regionalBus: [Disruption]?
+    var schoolBus: [Disruption]?
+    var telebus: [Disruption]?
+    var nightbus: [Disruption]?
+    var ferry: [Disruption]?
+    var interstate: [Disruption]?
+    var skybus: [Disruption]?
+    var taxi: [Disruption]?
     
     private enum CodingKeys: String, CodingKey{
         case general
@@ -162,7 +162,7 @@ struct disruptions: Codable{
         case taxi
     }
 }
-struct disruption: Codable{
+struct Disruption: Codable{
     var disruptionId: Int?
     var title: String?
     var url: String?
@@ -173,8 +173,8 @@ struct disruption: Codable{
     var updateDate: String?
     var startDate: String?
     var endDate: String?
-    var routes: [disruptionRoute]?
-    var stops: [disruptionStop]?
+    var routes: [DisruptionRoute]?
+    var stops: [DisruptionStop]?
     var colour: String?
     var displayOnBoard: Bool?
     var displayStatus: Bool?
@@ -209,20 +209,20 @@ struct disruption: Codable{
         self.updateDate = try? container.decode(String.self, forKey: .updateDate)
         self.startDate = try? container.decode(String.self, forKey: .startDate)
         self.endDate = try? container.decode(String.self, forKey: .endDate)
-        self.routes = try? container.decode([disruptionRoute].self, forKey: .routes)
-        self.stops = try? container.decode([disruptionStop].self, forKey: .stops)
+        self.routes = try? container.decode([DisruptionRoute].self, forKey: .routes)
+        self.stops = try? container.decode([DisruptionStop].self, forKey: .stops)
         self.colour = try? container.decode(String.self, forKey: .colour)
         self.displayOnBoard = try? container.decode(Bool.self, forKey: .displayOnBoard)
         self.displayStatus = try? container.decode(Bool.self, forKey: .displayStatus)
     }
 }
-struct disruptionRoute: Codable{
+struct DisruptionRoute: Codable{
     var routeType: Int?
     var routeId: Int?
     var routeName: String?
     var routeNumber: String?
     var gtfsId: String?
-    var direction: disruptionDirection?
+    var direction: DisruptionDirection?
     private enum routesCodingKeys: String, CodingKey{
         case routeType = "route_type"
         case routeId = "route_id"
@@ -232,7 +232,7 @@ struct disruptionRoute: Codable{
         case direction
     }
 }
-struct disruptionDirection: Codable{
+struct DisruptionDirection: Codable{
     var routeDirectionId: Int?
     var directionId: Int?
     var directionName: String?
@@ -244,7 +244,7 @@ struct disruptionDirection: Codable{
         case serviceTime = "service_time"
     }
 }
-struct disruptionStop: Codable{
+struct DisruptionStop: Codable{
     var stopId: Int?
     var stopName: String?
     private enum CodingKeys: String, CodingKey{
@@ -259,13 +259,13 @@ struct disruptionStop: Codable{
  
     GET /v3/pattern/run/{run_id}/route_type/{route_type}
  */
-struct stoppingPattern: Codable {
-    var disruptions: [disruption]?
-    var departures: [patternDepartures]?
+struct StoppingPattern: Codable {
+    var disruptions: [Disruption]?
+    var departures: [PatternDepartures]?
 //    var stops:
 //    var routes:
 //    var directions:
-    var status: status
+    var status: Status
     
     private enum CodingKeys: String, CodingKey{
         case disruptions
@@ -274,7 +274,7 @@ struct stoppingPattern: Codable {
     }
 }
 
-struct patternDepartures: Codable {
+struct PatternDepartures: Codable {
     var stopId: Int?
     var routeId: Int?
     var runId: Int?
@@ -322,9 +322,9 @@ struct patternDepartures: Codable {
     GET /v3/Routes
     GET /v3/Routes/{Route_id}
  */
-struct routeResponse: Codable{
+struct RouteResponse: Codable{
     var route: RouteWithStatus? //  Train lines, tram routes, bus routes, regional coach routes, Night Bus routes ,
-    var status: status?
+    var status: Status?
     private enum CodingKeys: String, CodingKey{
         case route
         case status
@@ -364,16 +364,112 @@ struct RouteServiceStatus: Codable {
     }
 }
 
+/*
+    Runs
+ 
+    GET /v3/runs/route/{route_id}
+    GET /v3/runs/route/{route_id}/route_type/{route_type}
+    GET /v3/runs/{run_id}/route_type/{route_type}
+ */
+struct RunsResponse: Codable {
+    var runs: [Run]?
+    var status: Status?
+    private enum CodingKeys: String, CodingKey{
+        case runs
+        case status
+    }
+}
+struct Run: Codable {
+    var runId: Int?
+    var routeId: Int?
+    var routeType: Int?
+    var finalStopId: Int?
+    var destinationName: String?
+    var status: String?
+    var directionId: Int?
+    var runSequence: Int?
+    var expressStopCount: Int?
+    var vehiclePosition: VehiclePosition?
+    var vehicleDescriptor: VechicleDescriptor?
+    private enum CodingKeys: String, CodingKey{
+        case runId = "run_id"
+        case routeId = "route_id"
+        case routeType = "route_type"
+        case finalStopId = "final_stop_id"
+        case destinationName = "destination_name"
+        case status
+        case directionId = "direction_id"
+        case runSequence = "run_sequence"
+        case expressStopCount = "express_stop_count"
+        case vehiclePosition = "vehicle_position"
+        case vehicleDescriptor = "vehicle_descriptor"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.runId = try? container.decode(Int.self, forKey: .runId)
+        self.routeId = try? container.decode(Int.self, forKey: .routeId)
+        self.routeType = try? container.decode(Int.self, forKey: .routeType)
+        self.finalStopId = try? container.decode(Int.self, forKey: .finalStopId)
+        self.destinationName = try? container.decode(String.self, forKey: .destinationName)
+        self.status = try? container.decode(String.self, forKey: .status)
+        self.directionId = try? container.decode(Int.self, forKey: .directionId)
+        self.runSequence = try? container.decode(Int.self, forKey: .runSequence)
+        self.expressStopCount = try? container.decode(Int.self, forKey: .expressStopCount)
+        self.vehiclePosition = try? container.decode(VehiclePosition.self, forKey: .vehiclePosition)
+        self.vehicleDescriptor = try? container.decode(VechicleDescriptor.self, forKey: .vehicleDescriptor)
+    }
+}
+
+struct VehiclePosition: Codable {
+    var latitude: Double?       //Geographic coordinate of latitude of the vehicle when known. May be null. Only available for some bus runs.
+    var longtitude: Double?     //Geographic coordinate of longitude of the vehicle when known. Only available for some bus runs.
+    var bearing: Double?        //Compass bearing of the vehicle when known, clockwise from True North, i.e., 0 is North and 90 is East. May be null. Only available for some bus runs.
+    private enum CodingKeys: String, CodingKey{
+        case latitude
+        case longtitude
+        case bearing
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.latitude = try? container.decode(Double.self, forKey: .latitude)
+        self.longtitude = try? container.decode(Double.self, forKey: .longtitude)
+        self.bearing = try? container.decode(Double.self, forKey: .bearing)
+    }
+}
+
+struct VechicleDescriptor: Codable{
+    var operators: String?      //Operator name of the vehicle such as "Metro Trains Melbourne", "Yarra Trams", "Ventura Bus Line", "CDC" or "Sita Bus Lines" . May be null/empty. Only available for train, tram, v/line and some bus runs.
+    var id: String?             //Operator identifier of the vehicle such as "26094". May be null/empty. Only available for some tram and bus runs.
+    var lowFloor: Bool?         //Indicator if vehicle has a low floor. May be null. Only available for some tram runs.
+    var airConditioned: Bool?   //Indicator if vehicle is air conditioned. May be null. Only available for some tram runs.
+    var description: String?    //Vehicle description such as "6 Car Comeng", "6 Car Xtrapolis", "3 Car Comeng", "6 Car Siemens", "3 Car Siemens". May be null/empty. Only available for some metropolitan train runs.
+    private enum CodingKeys: String, CodingKey{
+        case operators = "operator"
+        case id
+        case lowFloor = "low_floor"
+        case airConditioned = "air_conditioned"
+        case description
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.operators = try? container.decode(String.self, forKey: .operators)
+        self.id = try? container.decode(String.self, forKey: .id)
+        self.lowFloor = try? container.decode(Bool.self, forKey: .lowFloor)
+        self.airConditioned = try? container.decode(Bool.self, forKey: .airConditioned)
+        self.description = try? container.decode(String.self, forKey: .description)
+    }
+}
+
 
 /*
     Stops
 
     GET /v3/stops/location/{latitude},{longitude}
 */
-struct stopResponseByLocation: Codable {
+struct StopResponseByLocation: Codable {
     var stops: [stopGeosearch]?
     //    var disruptions: disruptions?
-    var status: status?
+    var status: Status?
     
     private enum CodingKeys: String, CodingKey{
         case stops
@@ -417,7 +513,7 @@ struct stopGeosearch: Codable{
 
 struct stopResposeById: Codable{
     var stop: StopDetails?
-    var status: status?
+    var status: Status?
     private enum CodingKeys: String, CodingKey{
         case stop
         case status
@@ -463,7 +559,7 @@ struct StopDetails: Codable{
 struct stopsOnRouteResponse {
     var stops: [stopOnRoute]?
 //    var disruptions
-    var status: status?
+    var status: Status?
 }
 
 struct stopOnRoute: Codable {
