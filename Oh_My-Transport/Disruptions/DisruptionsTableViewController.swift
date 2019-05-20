@@ -16,6 +16,8 @@ class DisruptionsTableViewController: UITableViewController {
     
     var disruptions: [Disruption] = []
     
+    var url = URL(string: disruptionAll())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,7 +28,6 @@ class DisruptionsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         // Loading disruption data from PTV
-        let url = URL(string: disruptionAll());
         
         let task = URLSession.shared.dataTask(with: url!){(data, response, error) in
             if let error = error{
