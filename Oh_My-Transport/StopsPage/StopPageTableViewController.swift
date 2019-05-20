@@ -290,8 +290,12 @@ class StopPageTableViewController: UITableViewController {
         if minutes <= 90{
             return "\(minutes) mins"
         }
+        if minutes > 2880{
+            let day = minutes / 1440
+            return "\(day) days"
+        }
         if minutes > 1440{
-            return "> 1 day"
+            return "1 day"
         } else if minutes > 90 {
             let mydateformat = DateFormatter()
             mydateformat.dateFormat = "hh:mm a"
