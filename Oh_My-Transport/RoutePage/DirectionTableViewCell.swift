@@ -9,6 +9,17 @@
 import UIKit
 
 class DirectionTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var directionNameLabel: UILabel!
+    @IBOutlet weak var nearStopLabel: UILabel!
+    
+    @IBOutlet weak var departure0Time: UILabel!
+    @IBOutlet weak var departure0Countdown: UILabel!
+    @IBOutlet weak var departure1Time: UILabel!
+    @IBOutlet weak var departure1Countdown: UILabel!
+    @IBOutlet weak var departure2Time: UILabel!
+    @IBOutlet weak var departure2Countdown: UILabel!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
