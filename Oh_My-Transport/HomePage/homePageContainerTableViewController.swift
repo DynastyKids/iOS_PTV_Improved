@@ -335,7 +335,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                             
                             DispatchQueue.main.async {
                                 if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3){
-                                    let str: String = self.nextRouteInfo1!.GtfsId!
+                                    let str: String = self.nextRouteInfo2!.GtfsId!
                                     let start = str.index(str.startIndex, offsetBy: 2)
                                     cell.departure2Route.text = String(str[start...])
                                 } else {
