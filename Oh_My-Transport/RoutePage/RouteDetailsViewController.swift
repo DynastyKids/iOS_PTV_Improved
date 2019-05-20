@@ -18,14 +18,11 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     var myRouteType: Int = 0
     var myRunId: Int = 0
     var myRouteId: Int = 0
-    
-    var vehiclePos: [VehiclePosition] = []
-//    var routesInfo:
+
     // MARK: - Receiving data from whole array carrying all necessary data
     var disruptiondata: [Disruption] = []
     var departsData: [Departure] = []
-    
-    var stopName: [String] = []
+    var stopInfo: [StopDetails] = []
     
     @IBOutlet weak var routeMapView: MKMapView!
     @IBOutlet weak var routeTableView: UITableView!
@@ -47,6 +44,9 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        DispatchQueue.main.async {
+            self.locationManager.startUpdatingLocation()
+        }
 
 
         _ = URLSession.shared.dataTask(with: URL(string: showPatternonRoute(runId: myRunId, routeType: myRouteType))!){(data, response, error) in
@@ -62,33 +62,33 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 if((patternData.departures?.count)!>0){
                     self.departsData = patternData.departures!
-                }
-                for each in self.departsData{
-                    _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: each.stopsId!, routeType: self.myRouteType))!){(data, response, error) in
-                    if error != nil{
-                        print("Pattern fetch failed")
-                        return
+                    var count = 0
+                    for each in patternData.departures!{
+                        let stopInfoURL = URL(string: showStopsInfo(stopId: each.stopsId!, routeType: self.myRouteType))
+                        _ = URLSession.shared.dataTask(with: stopInfoURL!){(data, response, error) in
+                            if error != nil{
+                                print("Pattern fetch failed")
+                                return
+                            }
+                            do{
+                                let stopData = try JSONDecoder().decode(stopResposeById.self, from: data!)
+                                self.stopInfo.append(stopData.stop!)
+                                DispatchQueue.main.async {
+                                    print("Reload table view")
+                                    self.routeTableView.reloadData()
+                                }
+                            }catch{
+                                print(error)
+                            }
+                            }.resume()
+                        count += 1
                     }
-                    do{
-                        let stopInfoData = try JSONDecoder().decode(stopResposeById.self, from: data!)
-                        self.stopName.append((stopInfoData.stop?.stopName)!)
-                        
-                        DispatchQueue.main.async {
-                            self.locationManager.startUpdatingLocation()
-                            self.routeTableView.reloadData()
-                        }
-                    } catch {
-                        print("Error:\(error)")
-                    }
-                    }.resume()
                 }
             } catch {
                 print("Error:\(error)")
             }
         }.resume()
     }
-    
-
     /*
     // MARK: - Navigation
 
@@ -112,17 +112,17 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
             return 0
         }
-        return departsData.count
+        return stopInfo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //Section 0
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeDisruption", for: indexPath) as! RoutesDisruptionsTableViewCell
             cell.disruptionInfoLabel.text = "\(disruptiondata.count) Disruptions in effect, Tap to see details"
             print("Disruptions: \(disruptiondata.count)")
             return cell
         }
-        // Section 1
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
         // Fetch all pettern stops 在地图中创建大头钉，用户点击Cell后跳转到对应车站
         let departuredata = departsData[indexPath.row]
@@ -130,20 +130,34 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
 //        let cellRouteId = departuredata.routesId
 //        let cellRunId = departuredata.runId
 //        let cellDirectionId = departuredata.directionId
-        let cellDepartureTime = departuredata.estimatedDepartureUTC ?? departuredata.scheduledDepartureUTC
-        let cellFlag = departuredata.flags
+        let cellDepartureTime = departuredata.estimatedDepartureUTC ?? departuredata.scheduledDepartureUTC ?? nil!
+//        let cellFlag = departuredata.flags
         
         // Fetching Stop name
-        cell.routeStopNameLabel.text = stopName[indexPath.row]
-        cell.routeStopTimeLabel.text = iso8601DateConvert(iso8601Date: cellDepartureTime ?? "nil")
+        print(stopInfo[indexPath.row].stopName)
+        cell.routeStopNameLabel.text = stopInfo[indexPath.row].stopName
+        cell.routeStopTimeLabel.text = iso8601DateConvert(iso8601Date: cellDepartureTime)
+        
+        let latitude:Double = (stopInfo[indexPath.row].stopLocation?.gps?.latitude)!
+        let longitude:Double = (stopInfo[indexPath.row].stopLocation?.gps?.longitude)!
+//        Showing Annotation on Map View
+        let stopPatterns = MKPointAnnotation()
+        stopPatterns.title = stopInfo[indexPath.row].stopName
+        stopPatterns.subtitle = "Stop ID:\(stopInfo[indexPath.row].stopId!)"
+        stopPatterns.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        DispatchQueue.main.async {
+            self.routeMapView.addAnnotation(stopPatterns)
+        }
         return cell
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        locationManager.startUpdatingLocation()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        locationManager.stopUpdatingLocation()
     }
     
     // MARK: - Functions for MapView
@@ -151,8 +165,8 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         self.locationManager.stopUpdatingLocation()
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
         // 先尝试Fetch车辆位置，不可用后使用用户中心
-        var myLatitude = locations[0].coordinate.latitude
-        var myLongtitude = locations[0].coordinate.longitude
+        let myLatitude = locations[0].coordinate.latitude
+        let myLongtitude = locations[0].coordinate.longitude
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: myLatitude, longitude: myLongtitude), span: currentLocationSpan)
         self.routeMapView.setRegion(region, animated: true)
     }
