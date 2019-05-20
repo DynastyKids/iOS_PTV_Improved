@@ -250,7 +250,7 @@ public func showRouteInfo(routeId: Int) -> String{
 
 // Stops
 public func showStopsInfo(stopId: Int, routeType: Int) -> String{
-    let request: String = "/v3/stops/\(stopId)/route_type/\(routeType)?devid="+HARDCODEDDEVID
+    let request: String = "/v3/stops/\(stopId)/route_type/\(routeType)?stop_location=true&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 

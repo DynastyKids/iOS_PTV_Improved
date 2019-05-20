@@ -546,7 +546,7 @@ struct StopDetails: Codable{
     var stationType: String?   // (string, optional): Type of metropolitan train station (i.e. "Premium", "Host" or "Unstaffed" station); returns null for V/Line train ,
     var stationDescription: String?    // (string, optional): The definition applicable to the station_type; returns null for V/Line train ,
     var routeType: Int?    // (integer, optional): Transport mode identifier ,
-//    var stop_location (V3.StopLocation, optional): Location details of the stop ,
+    var stopLocation: StopLocation? //(V3.StopLocation, optional): Location details of the stop ,
 //    var stop_amenities (V3.StopAmenityDetails, optional): Amenity and facility details at the stop ,
 //    var stop_accessibility (V3.StopAccessibility, optional): Facilities relating to the accessibility of the stop ,
 //    var stop_staffing (V3.StopStaffing, optional): Staffing details for the stop ,
@@ -558,6 +558,7 @@ struct StopDetails: Codable{
         case stationType = "station_type"
         case stationDescription = "station_description"
         case routeType = "route_type"
+        case stopLocation = "stop_location"
         case stopId = "stop_id"
         case stopName = "stop_name"
     }
@@ -568,8 +569,34 @@ struct StopDetails: Codable{
         self.stationType = try? container.decode(String.self, forKey: .stationType)
         self.stationDescription = try? container.decode(String.self, forKey: .stationDescription)
         self.routeType = try? container.decode(Int.self, forKey: .routeType)
+        self.stopLocation = try? container.decode(StopLocation.self, forKey: .stopLocation)
         self.stopId = try? container.decode(Int.self, forKey: .stopId)
         self.stopName = try? container.decode(String.self, forKey: .stopName)
+    }
+}
+
+struct StopLocation: Codable{
+    var gps: Gps?
+    private enum CodingKeys: String, CodingKey{
+        case gps
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.gps = try? container.decode(Gps.self, forKey: .gps)
+    }
+}
+
+struct Gps: Codable{
+    var latitude: Double?
+    var longitude: Double?
+    private enum CodingKeys: String, CodingKey{
+        case latitude
+        case longitude
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.latitude = try? container.decode(Double.self, forKey: .latitude)
+        self.longitude = try? container.decode(Double.self, forKey: .longitude)
     }
 }
 
@@ -614,3 +641,6 @@ struct stopOnRoute: Codable {
         self.stopSequence = try? container.decode(Int.self, forKey: .stopSequence)
     }
 }
+
+
+//Stops on Pattern
