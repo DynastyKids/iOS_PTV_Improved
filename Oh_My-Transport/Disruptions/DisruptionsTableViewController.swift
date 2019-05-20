@@ -14,7 +14,7 @@ import CommonCrypto
 
 class DisruptionsTableViewController: UITableViewController {
     
-    var disruptions: [disruption] = []
+    var disruptions: [Disruption] = []
     
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
     let hardcodedDevID:String = "3001122"
@@ -41,7 +41,7 @@ class DisruptionsTableViewController: UITableViewController {
             do{
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
-                let disruptionData = try decoder.decode(disruptionsResponse.self, from: data!)
+                let disruptionData = try decoder.decode(DisruptionsResponse.self, from: data!)
                 self.disruptions = (disruptionData.disruptions?.metroTrain)!
                 self.disruptions += (disruptionData.disruptions?.metroTram)!
                 self.disruptions += (disruptionData.disruptions?.metroBus)!

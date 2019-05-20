@@ -23,7 +23,7 @@ class StopPageTableViewController: UITableViewController {
     var stopName: String = ""
     var stopSuburb: String = ""
     
-    var departureData: [departure] = []
+    var departureData: [Departure] = []
     var routeInfo: [RouteWithStatus] = []
 
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
@@ -62,7 +62,7 @@ class StopPageTableViewController: UITableViewController {
             }
             do {
                 // Data recieved.  Decode it from JSON.
-                let showDeparture = try JSONDecoder().decode(departuresResponse.self, from: data!)
+                let showDeparture = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                 self.departureData = showDeparture.departures
                 DispatchQueue.main.async {
                     self.tableView.reloadData() // Details data will be loaded when loading cell
@@ -119,7 +119,7 @@ class StopPageTableViewController: UITableViewController {
                 return
             }
             do{
-                let showRoute = try JSONDecoder().decode(routeResponse.self, from: data!)
+                let showRoute = try JSONDecoder().decode(RouteResponse.self, from: data!)
                 DispatchQueue.main.async {
                     if(showRoute.route?.routeType == 0 || showRoute.route?.routeType == 3){
                         let str: String = showRoute.route!.GtfsId!
@@ -140,7 +140,7 @@ class StopPageTableViewController: UITableViewController {
                 return
             }
             do{
-                let showDirection = try JSONDecoder().decode(directionsResponse.self, from: data!)
+                let showDirection = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
                 print("\(indexPath.row), Destination:\(showDirection.directions![0].directionName!)")
                 DispatchQueue.main.async {
                     cell.routeDestinationLabel.text = showDirection.directions![0].directionName!

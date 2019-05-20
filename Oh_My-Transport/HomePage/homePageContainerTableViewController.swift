@@ -20,7 +20,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     
     // MARK: - Nearby Stops property
     var nearbyStops: [stopGeosearch] = []
-    var departureSequence: [departure] = []      // Departure data:Store all excesss data
+    var departureSequence: [Departure] = []      // Departure data:Store all excesss data
     
     // MARK: - Saved Stops property
     var stopId: [Int] = []
@@ -69,7 +69,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             }
             do{
                 let decoder = JSONDecoder()
-                let nearbyData = try decoder.decode(stopResponseByLocation.self, from: data!)
+                let nearbyData = try decoder.decode(StopResponseByLocation.self, from: data!)
                 self.nearbyStops = nearbyData.stops!
                 
                 print(self.nearbyStops.count)   // Fetching time for next depart
@@ -146,7 +146,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                     return
                 }
                 do{
-                    let nextDepartureData = try JSONDecoder().decode(departuresResponse.self, from: data!)
+                    let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                     self.departureSequence = nextDepartureData.departures
                     DispatchQueue.main.async {
                         cell.departure0Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
@@ -163,7 +163,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         do{
                             let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(routeResponse.self, from: data!)
+                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo0 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
@@ -189,7 +189,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         do{
                             let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(routeResponse.self, from: data!)
+                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo1 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
@@ -215,7 +215,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         do{
                             let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(routeResponse.self, from: data!)
+                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo2 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
@@ -261,7 +261,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                     return
                 }
                 do{
-                    let nextDepartureData = try JSONDecoder().decode(departuresResponse.self, from: data!)
+                    let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                     self.departureSequence = nextDepartureData.departures
                     DispatchQueue.main.async {
                         cell.departure0Time.text = self.iso8601toRemainDate(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
@@ -278,7 +278,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         do{
                             let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(routeResponse.self, from: data!)
+                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo0 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
@@ -304,7 +304,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         do{
                             let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(routeResponse.self, from: data!)
+                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo1 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
@@ -330,7 +330,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         do{
                             let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(routeResponse.self, from: data!)
+                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo2 = nextRouteData.route!
                             
                             DispatchQueue.main.async {

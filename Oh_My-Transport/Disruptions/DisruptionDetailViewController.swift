@@ -10,8 +10,8 @@ import UIKit
 import Foundation
 
 struct disruptionByIdResponse: Codable{
-    var disruption: disruption?
-    var status: status?
+    var disruption: Disruption?
+    var status: Status?
     
     private enum CodingKeys: String, CodingKey{
         case disruption
@@ -69,7 +69,7 @@ class DisruptionDetailViewController: UIViewController {
     }
     */
     
-    func updateScreen(disruption:disruption){
+    func updateScreen(disruption:Disruption){
         self.disruptionTitleLabel.text = disruption.title
         self.disruptionPublishDateLabel.text = "Publish Date: " +  iso8601DateConvert(iso8601Date: disruption.publishDate ?? "Nil", withTime: false)
         self.disruptionStartDateLabel.text = "Effect From: " + iso8601DateConvert(iso8601Date: disruption.startDate ?? "Nil", withTime: true)
