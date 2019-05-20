@@ -8,8 +8,8 @@
 
 import UIKit
 
-class RouteDetailsViewController: UIViewController {
-
+class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,5 +26,23 @@ class RouteDetailsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "routeDisruption", for: indexPath) as! RoutesDisruptionsTableViewCell
+            
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
+        
+        return cell
+    }
 }

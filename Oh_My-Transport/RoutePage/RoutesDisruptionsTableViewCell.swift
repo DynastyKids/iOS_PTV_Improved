@@ -9,6 +9,8 @@
 import UIKit
 
 class RoutesDisruptionsTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var disruptionInfoLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

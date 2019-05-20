@@ -9,6 +9,9 @@
 import UIKit
 
 class RoutesStopTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var routeStopNameLabel: UILabel!
+    @IBOutlet weak var routeStopTimeLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
