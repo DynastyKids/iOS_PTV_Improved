@@ -564,6 +564,9 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             mydateformat.dateFormat = "hh:mm a"
             return mydateformat.string(from: date)
         }
+        if minutes == 0{
+            return "Now"
+        }
         if minutes == 1{
             return "1 min"
         }
