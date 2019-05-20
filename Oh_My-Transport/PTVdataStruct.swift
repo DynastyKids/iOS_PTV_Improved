@@ -255,6 +255,71 @@ struct disruptionStop: Codable{
 
 
 /*
+    Patterns
+ 
+    GET /v3/pattern/run/{run_id}/route_type/{route_type}
+ */
+struct stoppingPattern: Codable {
+    var disruptions: [disruption]?
+    var departures: patternDepartures?
+//    var stops:
+//    var routes:
+//    var directions:
+    var status: status
+    
+    private enum CodingKeys: String, CodingKey{
+        case disruptions
+        case departures
+//        case stops
+//        case routes
+//        case directions
+        case status
+    }
+}
+
+struct patternDepartures: Codable {
+    var stopId: Int?
+    var routeId: Int?
+    var runId: Int?
+    var directionId: Int?
+    var disruptionIds: [Int]?
+    var scheduledDepartureUTC: String?
+    var estimatedDepartureUTC: String?
+    var atPlatform: Bool?
+    var platormNumber: String?
+    var flags: String?
+    var departureSequence: Int?
+    private enum CodingKeys: String, CodingKey{
+        case stopId = "stop_id"
+        case routeId = "route_id"
+        case runId = "run_id"
+        case directionId = "direction_id"
+        case disruptionIds = "disruption_ids"
+        case scheduledDepartureUTC = "scheduled_departure_utc"
+        case estimatedDepartureUTC = "estimated_departure_utc"
+        case atPlatform = "at_platform"
+        case platormNumber = "platform_number"
+        case flags
+        case departureSequence = "departure_sequence"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.stopId = try? container.decode(Int.self, forKey: .stopId)
+        self.routeId = try? container.decode(Int.self, forKey: .routeId)
+        self.runId = try? container.decode(Int.self, forKey: .runId)
+        self.directionId = try? container.decode(Int.self, forKey: .directionId)
+        self.disruptionIds = try? container.decode([Int].self, forKey: .disruptionIds)
+        self.scheduledDepartureUTC = try? container.decode(String.self, forKey: .scheduledDepartureUTC)
+        self.estimatedDepartureUTC = try? container.decode(String.self, forKey: .estimatedDepartureUTC)
+        self.atPlatform = try? container.decode(Bool.self, forKey: .atPlatform)
+        self.platormNumber = try? container.decode(String.self, forKey: .platormNumber)
+        self.flags = try? container.decode(String.self, forKey: .flags)
+        self.departureSequence = try? container.decode(Int.self, forKey: .departureSequence)
+    }
+}
+
+
+/*
     Routes
  
     GET /v3/Routes
@@ -394,3 +459,44 @@ struct StopDetails: Codable{
     }
 }
 
+/*
+ Stops on specific route response
+ */
+
+struct stopsOnRouteResponse {
+    var stops: [stopOnRoute]?
+//    var disruptions
+    var status: status?
+}
+
+struct stopOnRoute: Codable {
+//    var disruptionIds
+    var stopSuburb: String?
+    var stopName: String?
+    var stopId: String?
+    var routeType: Int?
+    var stopLatitude: Double?
+    var stopLongtitude: Double?
+    var stopSequence: Int?
+    
+    private enum CodingKeys: String, CodingKey{
+        case stopSuburb = "stop_suburb"
+        case stopName = "stop_name"
+        case stopId = "stop_id"
+        case routeType = "route_type"
+        case stopLatitude = "stop_latitude"
+        case stopLongtitude = "stop_longitude"
+        case stopSequence = "stop_sequence"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.stopSuburb = try? container.decode(String.self, forKey: .stopSuburb)
+        self.stopName = try? container.decode(String.self, forKey: .stopName)
+        self.stopId = try? container.decode(String.self, forKey: .stopId)
+        self.routeType = try? container.decode(Int.self, forKey: .routeType)
+        self.stopLatitude = try? container.decode(Double.self, forKey: .stopLatitude)
+        self.stopLongtitude = try? container.decode(Double.self, forKey: .stopLongtitude)
+        self.stopSequence = try? container.decode(Int.self, forKey: .stopSequence)
+    }
+}
