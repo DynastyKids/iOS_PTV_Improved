@@ -577,12 +577,15 @@ struct StopDetails: Codable{
 
 struct StopLocation: Codable{
     var gps: Gps?
+    var suburb: String?
     private enum CodingKeys: String, CodingKey{
         case gps
+        case suburb
     }
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.gps = try? container.decode(Gps.self, forKey: .gps)
+        self.suburb = try? container.decode(String.self, forKey: .suburb)
     }
 }
 
