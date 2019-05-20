@@ -259,7 +259,7 @@ struct DisruptionStop: Codable{
  
     GET /v3/pattern/run/{run_id}/route_type/{route_type}
  */
-struct StoppingPattern: Codable {
+struct PatternResponse: Codable {
     var disruptions: [Disruption]?
     var departures: [Departure]?
     var stops: [stopGeosearch]?
