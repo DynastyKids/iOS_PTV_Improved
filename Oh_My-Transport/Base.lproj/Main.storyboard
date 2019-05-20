@@ -365,6 +365,12 @@
                                             <segue destination="Ssc-zo-9BZ" kind="show" id="o4R-qP-3pf"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="KcF-m2-Dev"/>
+                                    <barButtonItem title="Test" id="g4y-QY-zyw">
+                                        <connections>
+                                            <segue destination="flj-A7-HCJ" kind="show" id="Rtg-8B-y4f"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="BmJ-WA-GA6"/>
                                     <barButtonItem image="warningIcon" id="153-JH-FdT">
                                         <connections>
@@ -619,7 +625,7 @@
             <objects>
                 <tableViewController title="Disruptions" id="Rur-ig-BSX" customClass="DisruptionsTableViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="keO-bi-SBr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -675,7 +681,7 @@
             <objects>
                 <viewController title="Disruptions Detail" id="BJB-We-4jd" customClass="DisruptionDetailViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z3Y-kl-n6r">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption Information is now loading, please wait" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pF-0J-bJ9" userLabel="disruptionTitle">
@@ -751,28 +757,28 @@
             <objects>
                 <viewController title="Loading Route" id="flj-A7-HCJ" userLabel="routeDirections" customClass="DirectionsViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cNa-c6-cyd">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QLv-EP-TIh">
-                                <rect key="frame" x="0.0" y="20" width="414" height="300"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QLv-EP-TIh">
+                                <rect key="frame" x="0.0" y="64" width="414" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="XKV-mr-d6T"/>
                                 </constraints>
                             </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HDL-jb-K2B">
-                                <rect key="frame" x="0.0" y="320" width="414" height="308"/>
+                                <rect key="frame" x="0.0" y="364" width="414" height="372"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="disruption" rowHeight="67" id="ky1-OA-agk" customClass="directionDisruptionsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="disruption" rowHeight="67" id="ky1-OA-agk" customClass="directionDisruptionsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ky1-OA-agk" id="rKB-0t-fZ6">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="66.666666666666671"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="66.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of disruptions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kmS-0X-NQ7">
-                                                    <rect key="frame" x="139" y="0.0" width="184" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* disruptions in effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kmS-0X-NQ7">
+                                                    <rect key="frame" x="139" y="0.0" width="177" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -783,11 +789,9 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J98-MG-UX2">
-                                                    <rect key="frame" x="20" y="21" width="314" height="36"/>
-                                                    <string key="text">Informaiton of disruptions is fetching
-Please Wait</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Tap to see more details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J98-MG-UX2">
+                                                    <rect key="frame" x="20" y="21" width="348" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -816,14 +820,14 @@ Please Wait</string>
                                             <rect key="frame" x="0.0" y="0.0" width="376" height="113.66666666666667"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terminal Stop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKX-cC-t7p">
-                                                    <rect key="frame" x="112" y="10.999999999999998" width="113" height="20.333333333333329"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Service to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqj-iX-noi">
+                                                    <rect key="frame" x="20" y="11" width="88" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Service to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqj-iX-noi">
-                                                    <rect key="frame" x="20" y="11" width="88" height="20.333333333333329"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terminal Stop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKX-cC-t7p">
+                                                    <rect key="frame" x="112" y="10.999999999999998" width="113" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -835,8 +839,8 @@ Please Wait</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Stop Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Et-mW-cWv">
-                                                    <rect key="frame" x="106" y="35.333333333333336" width="86" height="20.333333333333336"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="106" y="37.333333333333336" width="86" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -912,7 +916,7 @@ Please Wait</string>
                                             <constraints>
                                                 <constraint firstItem="CKX-cC-t7p" firstAttribute="top" secondItem="AF9-3W-AgF" secondAttribute="topMargin" id="0Bz-Yl-N28"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="gjU-IZ-MYE" secondAttribute="bottom" id="1HO-6u-tR5"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="4Et-mW-cWv" secondAttribute="trailing" constant="4" id="ALh-MV-LI2"/>
+                                                <constraint firstAttribute="trailing" secondItem="4Et-mW-cWv" secondAttribute="trailing" constant="184" id="ALh-MV-LI2"/>
                                                 <constraint firstItem="JpV-Cf-Z6E" firstAttribute="top" secondItem="nqj-iX-noi" secondAttribute="bottom" constant="4" id="BH2-7D-XDv"/>
                                                 <constraint firstItem="nqj-iX-noi" firstAttribute="top" secondItem="AF9-3W-AgF" secondAttribute="topMargin" id="HN7-ga-0bA"/>
                                                 <constraint firstItem="4Et-mW-cWv" firstAttribute="leading" secondItem="JpV-Cf-Z6E" secondAttribute="trailing" constant="8" id="KnS-5g-8sn"/>
@@ -922,10 +926,18 @@ Please Wait</string>
                                                 <constraint firstAttribute="trailingMargin" secondItem="gjU-IZ-MYE" secondAttribute="trailing" constant="16" id="cKZ-Os-dEU"/>
                                                 <constraint firstItem="nqj-iX-noi" firstAttribute="leading" secondItem="AF9-3W-AgF" secondAttribute="leadingMargin" id="cri-ub-uEc"/>
                                                 <constraint firstItem="gjU-IZ-MYE" firstAttribute="top" secondItem="JpV-Cf-Z6E" secondAttribute="bottom" constant="4" id="q8k-bs-Nz4"/>
-                                                <constraint firstItem="4Et-mW-cWv" firstAttribute="top" secondItem="CKX-cC-t7p" secondAttribute="bottom" constant="4" id="sSK-HR-Nhy"/>
+                                                <constraint firstItem="4Et-mW-cWv" firstAttribute="top" secondItem="CKX-cC-t7p" secondAttribute="bottom" constant="6" id="sSK-HR-Nhy"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="departure0Countdown" destination="gcR-jy-gmh" id="02x-MT-vbb"/>
+                                            <outlet property="departure0Time" destination="AK9-zj-tT1" id="Ukd-me-lMf"/>
+                                            <outlet property="departure1Countdown" destination="rc6-Dl-6pK" id="po2-ZA-o2v"/>
+                                            <outlet property="departure1Time" destination="ssQ-jq-kiy" id="goT-2F-TWC"/>
+                                            <outlet property="departure2Countdown" destination="TJ8-lU-Pfl" id="IKB-wc-eLD"/>
+                                            <outlet property="departure2Time" destination="OiH-dm-xSC" id="GWR-w4-2Hw"/>
+                                            <outlet property="directionNameLabel" destination="CKX-cC-t7p" id="WIo-nj-rXO"/>
+                                            <outlet property="nearStopLabel" destination="4Et-mW-cWv" id="IdW-8K-qAN"/>
                                             <segue destination="f1e-ej-sol" kind="show" id="yOe-TH-pVY"/>
                                         </connections>
                                     </tableViewCell>
@@ -944,6 +956,10 @@ Please Wait</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WG3-gq-hbd"/>
                     </view>
+                    <connections>
+                        <outlet property="directionsTableView" destination="HDL-jb-K2B" id="eNb-51-mZH"/>
+                        <outlet property="routeMapView" destination="QLv-EP-TIh" id="RwV-3J-aCW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCD-an-QFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -953,19 +969,19 @@ Please Wait</string>
         <scene sceneID="Xup-Ie-CLy">
             <objects>
                 <viewController title="Loading Data" id="f1e-ej-sol" userLabel="routeWithStopDetails" customClass="RouteDetailsViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2l4-aZ-7CA">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="2l4-aZ-7CA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" scrollEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
                                 <rect key="frame" x="0.0" y="64" width="414" height="230"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="eZG-Wq-bdQ" secondAttribute="height" multiplier="75:46" id="0Cq-aF-Uyd"/>
                                     <constraint firstAttribute="height" constant="230" id="w8p-Jz-FGK"/>
                                 </constraints>
                             </mapView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
-                                <rect key="frame" x="0.0" y="317" width="414" height="311"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
+                                <rect key="frame" x="0.0" y="294" width="414" height="442"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="routeDisruption" id="EvG-tZ-TWP" customClass="RoutesDisruptionsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
@@ -1034,36 +1050,23 @@ Please Wait</string>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uha-mA-Wgg">
-                                <rect key="frame" x="2" y="296" width="45" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="to Destination" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rem-OS-ICz">
-                                <rect key="frame" x="51.000000000000007" y="296" width="106.66666666666669" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Uha-mA-Wgg" firstAttribute="top" secondItem="eZG-Wq-bdQ" secondAttribute="bottom" constant="2" id="BTc-Bh-ymd"/>
                             <constraint firstItem="w7W-g9-U6i" firstAttribute="trailing" secondItem="nR1-cB-9wW" secondAttribute="trailing" id="Kuz-8F-i9i"/>
                             <constraint firstItem="nR1-cB-9wW" firstAttribute="bottom" secondItem="w7W-g9-U6i" secondAttribute="bottom" id="Sel-Un-7Vr"/>
                             <constraint firstItem="eZG-Wq-bdQ" firstAttribute="top" secondItem="nR1-cB-9wW" secondAttribute="top" id="Tzu-S6-Lht"/>
-                            <constraint firstItem="Uha-mA-Wgg" firstAttribute="leading" secondItem="nR1-cB-9wW" secondAttribute="leading" constant="2" id="V5k-lU-O6n"/>
                             <constraint firstItem="w7W-g9-U6i" firstAttribute="leading" secondItem="nR1-cB-9wW" secondAttribute="leading" id="ZCA-Gy-NQf"/>
+                            <constraint firstItem="w7W-g9-U6i" firstAttribute="top" secondItem="eZG-Wq-bdQ" secondAttribute="bottom" id="ZlG-MD-AMK"/>
                             <constraint firstItem="eZG-Wq-bdQ" firstAttribute="leading" secondItem="nR1-cB-9wW" secondAttribute="leading" id="byo-Rh-yrm"/>
-                            <constraint firstItem="Rem-OS-ICz" firstAttribute="leading" secondItem="Uha-mA-Wgg" secondAttribute="trailing" constant="4" id="eHw-Fg-vTZ"/>
                             <constraint firstItem="nR1-cB-9wW" firstAttribute="trailing" secondItem="eZG-Wq-bdQ" secondAttribute="trailing" id="gS1-9W-da3"/>
-                            <constraint firstItem="Rem-OS-ICz" firstAttribute="top" secondItem="eZG-Wq-bdQ" secondAttribute="bottom" constant="2" id="k7J-6g-V0K"/>
-                            <constraint firstItem="w7W-g9-U6i" firstAttribute="top" secondItem="Uha-mA-Wgg" secondAttribute="bottom" id="sOm-TA-cJz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nR1-cB-9wW"/>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="routeTableView" destination="w7W-g9-U6i" id="Cch-me-VsU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNW-0c-J6P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1147,7 +1150,7 @@ To obtain a key:
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTB-G5-rs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-446" y="2334"/>
+            <point key="canvasLocation" x="-446" y="2351"/>
         </scene>
     </scenes>
     <resources>
@@ -1159,6 +1162,7 @@ To obtain a key:
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yOe-TH-pVY"/>
+        <segue reference="Rtg-8B-y4f"/>
         <segue reference="uPl-tE-DDw"/>
         <segue reference="3Ii-7b-a41"/>
     </inferredMetricsTieBreakers>
