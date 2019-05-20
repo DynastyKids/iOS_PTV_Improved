@@ -24,13 +24,17 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     var departsData: [Departure] = []
     var stopInfo: [StopDetails] = []
     
+    var navigationTitle: String = ""
+    
     @IBOutlet weak var routeMapView: MKMapView!
     @IBOutlet weak var routeTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = navigationTitle
         routeTableView.delegate = self
         routeTableView.dataSource = self
+        
 
         print("Route type:\(myRouteType); Run Id:\(myRunId); RouteId:\(myRouteId)")
         
@@ -98,15 +102,26 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
         }.resume()
     }
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showStopFromPatternPage" {
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+            page2.stopURL = showStopsInfo(stopId: stopInfo[routeTableView.indexPathForSelectedRow!.row].stopId! , routeType: myRouteType)
+            page2.routeType = myRouteType
+            page2.stopId = stopInfo[routeTableView.indexPathForSelectedRow!.row].stopId!
+            page2.stopSuburb = stopInfo[routeTableView.indexPathForSelectedRow!.row].stopLocation!.suburb ?? ""
+            page2.stopName = stopInfo[routeTableView.indexPathForSelectedRow!.row].stopName!
+            page2.managedContext = CoreDataStack().managedContext
+        }
+        if segue.identifier == "showRouteDisruption"{
+            let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
+            page2.url = URL(string: disruptionByRoute(routeId: myRouteId))
+        }
     }
-    */
+
     
     // MARK: - Table view data source
     

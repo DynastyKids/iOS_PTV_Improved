@@ -26,6 +26,8 @@ class StopPageTableViewController: UITableViewController {
     var departureData: [Departure] = []
     var routeInfo: [RouteWithStatus] = []
     
+    var routeName:[String] = []
+    
     var currentLoopCount = 0
     var fetchingLimit = 200
     
@@ -123,6 +125,7 @@ class StopPageTableViewController: UITableViewController {
                     } else {
                         cell.routeSignLabel.text = showRoute.route?.routeNumber // All other service using existing route numbers
                     }
+                    self.routeName.append(cell.routeSignLabel.text!)
                     cell.routeSignLabel.textColor = UIColor.white
                 }
             } catch{
@@ -185,7 +188,7 @@ class StopPageTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Click on Disruptions Button
         if segue.identifier == "showStopDisruptions"{
-            
+            let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
         }
         // Click on Route Cell
         if segue.identifier == "showRouteDetails" {
@@ -193,6 +196,7 @@ class StopPageTableViewController: UITableViewController {
             page2.myRunId = departureData[tableView.indexPathForSelectedRow!.row].runId!
             page2.myRouteId = departureData[tableView.indexPathForSelectedRow!.row].routesId!
             page2.myRouteType = routeType
+            page2.navigationTitle = "Route: \(routeName[tableView.indexPathForSelectedRow!.row])"
         }
     }
 }
