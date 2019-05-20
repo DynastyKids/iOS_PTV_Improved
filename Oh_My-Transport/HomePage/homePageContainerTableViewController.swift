@@ -47,10 +47,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     var latitude: Double = 0.0
     var longtitude: Double = 0.0
     
-//    let hardcodedURL:String = "http://timetableapi.ptv.vic.gov.au"
-//    let hardcodedDevID:String = "3001122"
-//    let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
-//
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -383,41 +379,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         return sectionName
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -444,6 +405,10 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         }
         if segue.identifier == "busRouteSegue"{
             
+        }
+        if segue.identifier == "showAllDisruptions"{
+            let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
+            page2.url = URL(string: disruptionAll())
         }
     }
 
