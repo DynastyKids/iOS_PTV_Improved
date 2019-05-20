@@ -261,7 +261,7 @@ struct disruptionStop: Codable{
  */
 struct stoppingPattern: Codable {
     var disruptions: [disruption]?
-    var departures: patternDepartures?
+    var departures: [patternDepartures]?
 //    var stops:
 //    var routes:
 //    var directions:
@@ -270,9 +270,6 @@ struct stoppingPattern: Codable {
     private enum CodingKeys: String, CodingKey{
         case disruptions
         case departures
-//        case stops
-//        case routes
-//        case directions
         case status
     }
 }
