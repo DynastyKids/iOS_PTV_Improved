@@ -75,12 +75,11 @@ class StopPageTableViewController: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: Any) {
-            let stop = FavStop(context: managedContext)
-            stop.routeType = Int32(routeType)
-            stop.stopId = Int32(stopId)
-            stop.stopName = stopName
-            stop.stopSuburb = stopSuburb
-            print("saving data")
+        let stop = FavStop(context: managedContext)
+        stop.routeType = Int32(routeType)
+        stop.stopId = Int32(stopId)
+        stop.stopName = stopName
+        stop.stopSuburb = stopSuburb
 
         do {
             try managedContext?.save()
@@ -151,7 +150,6 @@ class StopPageTableViewController: UITableViewController {
             }
             }.resume()
         
-        
         cell.routeSignLabel.backgroundColor = getStopTypeColour(routeType: routeType)
 //        cell.routeDestinationLabel.text = routesDest[indexPath.row]
         cell.routeDetailslabel.text = "Temporary Empty"
@@ -159,7 +157,7 @@ class StopPageTableViewController: UITableViewController {
         cell.routeDueTimeLabel.text = iso8601toRemainTime(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!)
         if departureData[indexPath.row].estimatedDepartureUTC == nil {
             cell.routeStatusLabel.text = "Scheduled"
-            cell.routeStatusLabel.textColor = UIColor.black
+            cell.routeStatusLabel.textColor = UIColor.gray
         }else {
             let mintes = iso8601toStatus(iso8601DateSchedule: departureData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departureData[indexPath.row].estimatedDepartureUTC!)
             if mintes > 1 {
@@ -177,7 +175,7 @@ class StopPageTableViewController: UITableViewController {
             } else if mintes < -1 {
                 let min = mintes * -1
                 cell.routeStatusLabel.text = "Early \(min) mins"
-                cell.routeStatusLabel.textColor = UIColor.yellow
+                cell.routeStatusLabel.textColor = UIColor.brown
             }
         }
         return cell

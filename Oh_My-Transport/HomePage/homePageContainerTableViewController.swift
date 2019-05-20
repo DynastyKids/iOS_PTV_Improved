@@ -25,9 +25,9 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     var nextRouteInfo2: RouteWithStatus? = nil       // Route data: data to be present
     var nextRouteCount: Int = 0
     
+    let coreDataStack = CoreDataStack()
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
-    let coreDataStack = CoreDataStack()
     var filteredRoutes: [FavRoute] = []
     var filteredStops: [FavStop] = []
     
@@ -81,7 +81,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
         // Initalize Core Data fetch
         stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        stopFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
+//        stopFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
         do {
             try stopFetchedResultsController.performFetch()
         } catch{
@@ -228,14 +228,16 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             return cell
         }
         if indexPath.section == 1 {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "savedStopsCell", for: indexPath) as! savedStopsTableViewCell
-        let savedStop = stopFetchedResultsController.object(at: indexPath)
-        cell.stopNameLabel.text = savedStop.stopName
-        cell.stopSuburbLabel.text = savedStop.stopSuburb
-        return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "savedStopsCell", for: indexPath) as! savedStopsTableViewCell
+            let readIndexPath = IndexPath(row: indexPath.row, section: 0)
+            let savedStop = stopFetchedResultsController.object(at: readIndexPath)
+            cell.stopNameLabel.text = savedStop.stopName
+            cell.stopSuburbLabel.text = savedStop.stopSuburb
+            return cell
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "favorRouteCell", for: indexPath) as! savedRouteTableViewCell
-        let savedRoute = routeFetchedResultsController.object(at: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "savedRouteCell", for: indexPath) as! savedRouteTableViewCell
+        let readIndexPath = IndexPath(row: indexPath.row, section: 0)
+        let savedRoute = routeFetchedResultsController.object(at: readIndexPath)
         cell.routeNumberLabel.text = savedRoute.routeNumber
         cell.routeNameLabel.text = savedRoute.routeName
 //        cell.routeTypeImage = savedRoute.routeType
