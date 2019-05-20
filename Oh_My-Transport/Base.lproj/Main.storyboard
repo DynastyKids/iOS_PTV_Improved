@@ -833,13 +833,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Near Stop:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpV-Cf-Z6E">
-                                                    <rect key="frame" x="20" y="35.333333333333336" width="82" height="20.333333333333336"/>
+                                                    <rect key="frame" x="20" y="35.333333333333329" width="90" height="20.333333333333336"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="90" id="Lty-WV-gwv"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Stop Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Et-mW-cWv">
-                                                    <rect key="frame" x="106" y="37.333333333333336" width="86" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Et-mW-cWv">
+                                                    <rect key="frame" x="118" y="37.333333333333336" width="242" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -916,7 +919,7 @@
                                             <constraints>
                                                 <constraint firstItem="CKX-cC-t7p" firstAttribute="top" secondItem="AF9-3W-AgF" secondAttribute="topMargin" id="0Bz-Yl-N28"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="gjU-IZ-MYE" secondAttribute="bottom" id="1HO-6u-tR5"/>
-                                                <constraint firstAttribute="trailing" secondItem="4Et-mW-cWv" secondAttribute="trailing" constant="184" id="ALh-MV-LI2"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="4Et-mW-cWv" secondAttribute="trailing" constant="8" id="2jb-JF-of3"/>
                                                 <constraint firstItem="JpV-Cf-Z6E" firstAttribute="top" secondItem="nqj-iX-noi" secondAttribute="bottom" constant="4" id="BH2-7D-XDv"/>
                                                 <constraint firstItem="nqj-iX-noi" firstAttribute="top" secondItem="AF9-3W-AgF" secondAttribute="topMargin" id="HN7-ga-0bA"/>
                                                 <constraint firstItem="4Et-mW-cWv" firstAttribute="leading" secondItem="JpV-Cf-Z6E" secondAttribute="trailing" constant="8" id="KnS-5g-8sn"/>
@@ -1162,9 +1165,9 @@ To obtain a key:
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g3m-8j-J5E"/>
+        <segue reference="yOe-TH-pVY"/>
         <segue reference="Rtg-8B-y4f"/>
-        <segue reference="uPl-tE-DDw"/>
+        <segue reference="zXA-WO-h7o"/>
         <segue reference="3Ii-7b-a41"/>
     </inferredMetricsTieBreakers>
 </document>
