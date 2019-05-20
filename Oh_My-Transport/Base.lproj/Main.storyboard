@@ -313,7 +313,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W0j-yX-91J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="789.85507246376812" y="1478.804347826087"/>
+            <point key="canvasLocation" x="1093" y="1590"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JIr-nC-hE8">
@@ -357,7 +357,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="BmJ-WA-GA6"/>
                                     <barButtonItem image="warningIcon" id="153-JH-FdT">
                                         <connections>
-                                            <segue destination="Rur-ig-BSX" kind="show" id="yW6-4j-AAm"/>
+                                            <segue destination="Rur-ig-BSX" kind="show" identifier="showAllDisruptions" id="yW6-4j-AAm"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="5Ty-OD-UZ0"/>
@@ -421,14 +421,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dLM-RB-9fj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="790" y="849"/>
+            <point key="canvasLocation" x="390" y="1166"/>
         </scene>
         <!--Stop Page Table View Controller-->
         <scene sceneID="hGK-NI-1dn">
             <objects>
                 <tableViewController id="VfA-ee-rv5" customClass="StopPageTableViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kce-Ou-bUL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -601,14 +601,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFg-s9-rrz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2389.8550724637685" y="1209.7826086956522"/>
+            <point key="canvasLocation" x="2000" y="1166"/>
         </scene>
         <!--Disruptions-->
         <scene sceneID="yBL-5K-daD">
             <objects>
                 <tableViewController title="Disruptions" id="Rur-ig-BSX" customClass="DisruptionsTableViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="keO-bi-SBr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -657,14 +657,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ulh-n4-WKG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3662" y="1546"/>
+            <point key="canvasLocation" x="2357" y="2349"/>
         </scene>
         <!--Disruptions Detail-->
         <scene sceneID="f2n-yQ-vOF">
             <objects>
                 <viewController title="Disruptions Detail" id="BJB-We-4jd" customClass="DisruptionDetailViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z3Y-kl-n6r">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disruption Information is now loading, please wait" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pF-0J-bJ9" userLabel="disruptionTitle">
@@ -733,7 +733,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFK-3t-LTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4552" y="1546"/>
+            <point key="canvasLocation" x="3052" y="1590"/>
         </scene>
         <!--routeDirections-->
         <scene sceneID="BSU-PV-x07">
@@ -949,14 +949,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCD-an-QFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791" y="2402"/>
+            <point key="canvasLocation" x="436" y="2306"/>
         </scene>
         <!--routeWithStopDetails-->
         <scene sceneID="Xup-Ie-CLy">
             <objects>
                 <viewController title="Loading Data" id="f1e-ej-sol" userLabel="routeWithStopDetails" customClass="RouteDetailsViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" ambiguous="YES" id="2l4-aZ-7CA">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="628"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
@@ -967,28 +967,28 @@
                                 </constraints>
                             </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
-                                <rect key="frame" x="0.0" y="294" width="414" height="334"/>
+                                <rect key="frame" x="0.0" y="294" width="414" height="442"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="routeDisruption" id="EvG-tZ-TWP" customClass="RoutesDisruptionsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="routeDisruption" id="EvG-tZ-TWP" customClass="RoutesDisruptionsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EvG-tZ-TWP" id="893-ey-OeZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N Disruptions in effect, Tap to see details" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqW-8Q-7rJ">
-                                                    <rect key="frame" x="20" y="0.0" width="314" height="43.666666666666664"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="N Disruptions in effect, Tap to see details" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqW-8Q-7rJ">
+                                                    <rect key="frame" x="20" y="0.0" width="314" height="44"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="pqW-8Q-7rJ" secondAttribute="bottom" id="33L-bx-5tF"/>
-                                                <constraint firstAttribute="trailing" secondItem="pqW-8Q-7rJ" secondAttribute="trailing" constant="8" id="CmT-dS-2qx"/>
-                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="leading" secondItem="893-ey-OeZ" secondAttribute="leadingMargin" id="bqX-Ac-EnP"/>
-                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="top" secondItem="893-ey-OeZ" secondAttribute="top" id="ve9-BD-Z9j"/>
+                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="centerY" secondItem="893-ey-OeZ" secondAttribute="centerY" id="KaY-8e-E3L"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="pqW-8Q-7rJ" secondAttribute="trailing" constant="5" id="ZzS-UI-bKY"/>
+                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="leading" secondItem="893-ey-OeZ" secondAttribute="leadingMargin" id="oWT-Hg-mEX"/>
+                                                <constraint firstItem="pqW-8Q-7rJ" firstAttribute="top" secondItem="893-ey-OeZ" secondAttribute="top" id="ub6-l0-eU6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -1035,6 +1035,7 @@
                                         <connections>
                                             <outlet property="routeStopNameLabel" destination="O40-Jw-kEk" id="kGY-8b-rQH"/>
                                             <outlet property="routeStopTimeLabel" destination="qog-Ue-GAc" id="wwy-vW-DgW"/>
+                                            <segue destination="VfA-ee-rv5" kind="show" identifier="showStopFromPatternPage" id="f6c-JH-5Uy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1060,7 +1061,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNW-0c-J6P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2390" y="2402"/>
+            <point key="canvasLocation" x="1414" y="2349"/>
         </scene>
         <!--About-->
         <scene sceneID="53E-v8-JuN">
@@ -1154,6 +1155,6 @@ To obtain a key:
         <segue reference="g3m-8j-J5E"/>
         <segue reference="ZJJ-uA-5pS"/>
         <segue reference="uPl-tE-DDw"/>
-        <segue reference="xEA-b9-YN6"/>
+        <segue reference="f6c-JH-5Uy"/>
     </inferredMetricsTieBreakers>
 </document>
