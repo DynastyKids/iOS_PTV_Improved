@@ -25,9 +25,9 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     var nextRouteInfo2: RouteWithStatus? = nil       // Route data: data to be present
     var nextRouteCount: Int = 0
     
+    let coreDataStack = CoreDataStack()
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
-    let coreDataStack = CoreDataStack()
     var filteredRoutes: [FavRoute] = []
     var filteredStops: [FavStop] = []
     
