@@ -141,9 +141,12 @@ class StopPageTableViewController: UITableViewController {
             }
             do{
                 let showDirection = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
-                print("\(indexPath.row), Destination:\(showDirection.directions![0].directionName!)")
                 DispatchQueue.main.async {
-                    cell.routeDestinationLabel.text = showDirection.directions![0].directionName!
+                    var count = 0
+                    while self.departureData[indexPath.row].directionId != showDirection.directions![count].directionId {
+                        count += 1
+                    }
+                    cell.routeDestinationLabel.text = showDirection.directions![count].directionName!
                 }
             }catch{
                 print(error)
@@ -181,15 +184,21 @@ class StopPageTableViewController: UITableViewController {
         return cell
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Click on Disruptions Button
+        if segue.identifier == "showStopDisruptions"{
+            
+        }
+        // Click on Route Cell
+        if segue.identifier == "showRouteDetails" {
+            let page2:RouteDetailsViewController = segue.destination as! RouteDetailsViewController
+            page2.myRunId = departureData[tableView.indexPathForSelectedRow!.row].runId!
+            page2.myRouteType = routeType
+        }
     }
-    */
     
     /*
      // MARK: - Self defined reuseable functions
