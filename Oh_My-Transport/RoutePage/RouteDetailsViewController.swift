@@ -75,7 +75,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                                 return
                             }
                             do{
-                                let stopData = try JSONDecoder().decode(stopResposeById.self, from: data!)
+                                let stopData = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
                                 self.stopInfo.append(stopData.stop!)
                                 // Showing All Stops Annotation on Map View
                                 let latitude:Double = (stopData.stop?.stopLocation?.gps?.latitude)!

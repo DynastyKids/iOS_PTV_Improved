@@ -491,7 +491,9 @@ struct VechicleDescriptor: Codable{
 
 /*
     Stops
-
+ 
+    GET /v3/stops/{stop_id}/route_type/{route_type}
+    GET /v3/stops/route/{route_id}/route_type/{route_type}
     GET /v3/stops/location/{latitude},{longitude}
 */
 
@@ -538,7 +540,7 @@ struct stopGeosearch: Codable{
     }
 }
 
-struct stopResposeById: Codable{
+struct stopResposeByStopId: Codable{
     var stop: StopDetails?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
@@ -607,12 +609,7 @@ struct Gps: Codable{
     }
 }
 
-
-/*
- Stops on specific route response
- */
-
-struct stopsOnRouteResponse: Codable {
+struct StopsResponseByRouteId: Codable {
     var stops: [stopOnRoute]?
 //    var disruptions
     var status: Status?

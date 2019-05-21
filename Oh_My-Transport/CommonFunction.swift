@@ -133,6 +133,13 @@ public func changeColorByRouteType(routeType: Int) -> UIColor {
 
 //  MARK: - Generate PTV Request Address
 
+/*
+ All data from Public Transport Victoria - V3 API
+ 
+ Created by Public Transport Victoria
+ See more at http://ptv.vic.gov.au/digital
+ */
+
 public func extractedFunc(_ request: String) -> String {
     let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: HARDCODEDKEY)
     let requestAddress: String = HARDCODEDURL+request+"&signature="+signature
@@ -142,67 +149,78 @@ public func extractedFunc(_ request: String) -> String {
 }
 
 // Departures
-public func showDepartureOnStop(routeType: Int, stopId: Int, routeId: Int) -> String{
+public func showDepartureOnStop(routeType: Int, stopId: Int, routeId: Int) -> String{       // View departures for a specific route from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
-public func nextr3DepartureFromStop(routeType: Int, stopId: Int) -> String{
+public func nextr3DepartureFromStop(routeType: Int, stopId: Int) -> String{     // (Showing next 3 departures) View departures for all routes from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=3&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
-public func nextDepartureURL(routeType: Int, stopId: Int) -> String{
+public func nextDepartureURL(routeType: Int, stopId: Int) -> String{            // View departures for all routes from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=200&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
 // Disruptions
-public func disruptionAll() -> String{
+public func disruptionAll() -> String{      // View all disruptions for all route types
     let request: String = "/v3/disruptions?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
-public func disruptionByRoute(routeId: Int) -> String {
+public func disruptionByRoute(routeId: Int) -> String {     // View all disruptions for a particular route
     let request: String = "/v3/disruptions/route/\(routeId)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
-public func disruptionByStop(stopID: Int) -> String{
+public func disruptionByStop(stopID: Int) -> String{        // View all disruptions for a particular stop
     let request: String = "/v3/disruptions/stop/"+String(stopID)+"?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
-public func disruptionById(disruptionId: Int) -> String{
+public func disruptionById(disruptionId: Int) -> String{    // View a specific disruption
     let request: String = "/v3/disruptions/"+String(disruptionId)+"?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
 // Directions
-public func showDirectionsOnRoute(routeId: Int) -> String{
+public func showDirectionsOnRoute(routeId: Int) -> String{  // View directions that a route travels in
     let request: String = "/v3/directions/route/\(routeId)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
 // Patterns
-public func showPatternonRoute(runId: Int, routeType:Int) -> String{
+public func showPatternonRoute(runId: Int, routeType:Int) -> String{    // View the stopping pattern for a specific trip/service run
     let request: String = "/v3/pattern/run/\(runId)/route_type/\(routeType)?expand=all&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
 // Routes
-public func showRouteInfo(routeId: Int) -> String{
+public func showRouteInfo(routeId: Int) -> String{                      // View route name and number for specific route ID
     let request: String = "/v3/routes/\(routeId)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
+// Search
+public func showSearchResults(searchTerm: String) -> String{            // View stops, routes and myki ticket outlets that match the search term
+    let request: String = "/v3/search/\(searchTerm)?devid="+HARDCODEDDEVID
+    return extractedFunc(request)
+}
+
 // Stops
-public func showStopsInfo(stopId: Int, routeType: Int) -> String{
+public func showStopsInfo(stopId: Int, routeType: Int) -> String{       // View facilities at a specific stop (Metro and V/Line stations only)
     let request: String = "/v3/stops/\(stopId)/route_type/\(routeType)?stop_location=true&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
-public func nearByStops(latitude: Double, longtitude: Double) -> String{
+public func showRoutesStop(routeId: Int, routeType: Int) -> String{     // View all stops on a specific route
+    let request: String = "/v3/stops/route/\(routeId)/route_type/\(routeType)?devid="+HARDCODEDDEVID
+    return extractedFunc(request)
+}
+
+public func nearByStops(latitude: Double, longtitude: Double) -> String{    // View all stops near a specific location
     let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=3&max_distance=1500&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }

@@ -40,7 +40,7 @@ class StopPageTableViewController: UITableViewController {
                 return
             }
             do {    // Data recieved.  Decode it from JSON.
-                let stopDetail = try JSONDecoder().decode(stopResposeById.self, from: data!)
+                let stopDetail = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
                 DispatchQueue.main.async {
                     self.stopName = (stopDetail.stop?.stopName)!
                 }
