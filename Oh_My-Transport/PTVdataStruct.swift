@@ -619,7 +619,7 @@ struct stopOnRoute: Codable {
 //    var disruptionIds
     var stopSuburb: String?
     var stopName: String?
-    var stopId: String?
+    var stopId: Int?
     var routeType: Int?
     var stopLatitude: Double?
     var stopLongtitude: Double?
@@ -639,7 +639,7 @@ struct stopOnRoute: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.stopSuburb = try? container.decode(String.self, forKey: .stopSuburb)
         self.stopName = try? container.decode(String.self, forKey: .stopName)
-        self.stopId = try? container.decode(String.self, forKey: .stopId)
+        self.stopId = try? container.decode(Int.self, forKey: .stopId)
         self.routeType = try? container.decode(Int.self, forKey: .routeType)
         self.stopLatitude = try? container.decode(Double.self, forKey: .stopLatitude)
         self.stopLongtitude = try? container.decode(Double.self, forKey: .stopLongtitude)

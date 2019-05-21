@@ -149,11 +149,14 @@ public func extractedFunc(_ request: String) -> String {
 }
 
 // Departures
-public func showDepartureOnStop(routeType: Int, stopId: Int, routeId: Int) -> String{       // View departures for a specific route from a stop
+public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int) -> String{       // View departures for a specific route from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
-
+public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int, directionId: Int) -> String{      // View departures for a specific route from a stop (With Direction condition)
+    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&devid="+HARDCODEDDEVID
+    return extractedFunc(request)
+}
 public func nextr3DepartureFromStop(routeType: Int, stopId: Int) -> String{     // (Showing next 3 departures) View departures for all routes from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=3&devid="+HARDCODEDDEVID
     return extractedFunc(request)
@@ -200,6 +203,17 @@ public func showPatternonRoute(runId: Int, routeType:Int) -> String{    // View 
 // Routes
 public func showRouteInfo(routeId: Int) -> String{                      // View route name and number for specific route ID
     let request: String = "/v3/routes/\(routeId)?devid="+HARDCODEDDEVID
+    return extractedFunc(request)
+}
+
+//Runs
+public func showRoutesRun(routeId: Int, routeType: Int) -> String{      //View all trip/service runs for a specific route ID and route type
+    let request: String = "/v3/runs/route/\(routeId)/route_type/\(routeType)?devid="+HARDCODEDDEVID
+    return extractedFunc(request)
+}
+
+public func showRunInfo(runId: Int, routeType: Int) -> String{          // View the trip/service run for a specific run ID and route type
+    let request: String = "/v3/runs/\(runId)/route_type/\(routeType)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
