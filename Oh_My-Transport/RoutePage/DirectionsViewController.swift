@@ -49,32 +49,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             self.locationManager.startUpdatingLocation()
         }
         
-        // Check route disruptions
-        _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: routeId))!){(data, response, error) in
-            if error != nil{
-                print("Route disruptions information fetch failed")
-            }
-            do{
-                let disruptionsData = try JSONDecoder().decode(DisruptionsResponse.self, from: data!)
-                if (disruptionsData.disruptions?.general?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.general!}
-                if (disruptionsData.disruptions?.metroTrain?.count)! > 0 { self.disruptiondata += disruptionsData.disruptions!.metroTrain!}
-                if (disruptionsData.disruptions?.metroTram?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.metroTram!}
-                if (disruptionsData.disruptions?.metroBus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.metroBus!}
-                if (disruptionsData.disruptions?.regionalBus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.regionalBus!}
-                if (disruptionsData.disruptions?.vlineTrain?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.vlineTrain!}
-                if (disruptionsData.disruptions?.vlineCoach?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.vlineCoach!}
-                if (disruptionsData.disruptions?.schoolBus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.schoolBus!}
-                if (disruptionsData.disruptions?.telebus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.telebus!}
-                if (disruptionsData.disruptions?.nightbus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.nightbus!}
-                if (disruptionsData.disruptions?.ferry?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.ferry!}
-                if (disruptionsData.disruptions?.interstate?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.interstate!}
-                if (disruptionsData.disruptions?.skybus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.skybus!}
-                if (disruptionsData.disruptions?.taxi?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.taxi!}
-            } catch {
-                print("Error:\(error)")
-            }
-        }.resume()
-        
         //Check Route directions
         _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: routeId))!){ (data, response, error) in
             if error != nil {
@@ -84,6 +58,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             do{
                 let directionData = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
                 self.directions = directionData.directions!
+                // Get nearest Stop on route
+                
+                // Get next departure time on this stop
                 
                 DispatchQueue.main.async {
                     self.navigationItem.title = self.routeName
@@ -102,8 +79,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 return
             }
             do{
-                let decoder = JSONDecoder()
-                let disruptionData = try decoder.decode(DisruptionsResponse.self, from: data!)
+                let disruptionData = try JSONDecoder().decode(DisruptionsResponse.self, from: data!)
                 if (self.routeType == 0 && (disruptionData.disruptions?.metroTrain?.count)!>0) {
                     self.disruptiondata += (disruptionData.disruptions?.metroTrain)!
                 } else if (self.routeType == 1 && (disruptionData.disruptions?.metroTram?.count)!>0){
