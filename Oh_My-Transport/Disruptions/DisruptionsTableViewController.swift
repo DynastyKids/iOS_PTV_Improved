@@ -78,7 +78,7 @@ class DisruptionsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "disruptions", for: indexPath) as! disruptionTableViewCell
         let disruption = disruptions[indexPath.row]
         cell.disruptionTitleLabel.text = disruption.title
-        cell.disruptionPublishDateLabel.text = "Last Update: " + iso8601DateConvert(iso8601Date: disruption.updateDate ?? "nil", withTime: true)
+        cell.disruptionPublishDateLabel.text = "Last Update: " + Iso8601toString(iso8601Date: disruption.updateDate ?? "nil", withTime: true, withDate: true)
         
         return cell
     }

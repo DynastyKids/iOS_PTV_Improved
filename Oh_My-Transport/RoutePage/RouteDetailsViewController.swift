@@ -162,7 +162,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 cell.routeStopNameLabel.text = each.stopName    // Due to retrieve data unordered, match data to be present
             }
         }
-        cell.routeStopTimeLabel.text = iso8601DateConvert(iso8601Date: cellDepartureTime)
+        cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
         return cell
     }
     
@@ -188,25 +188,5 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
-    }
-    
-    // MARK: - ISO8601 date conversion
-    func iso8601DateConvert(iso8601Date: String) -> String{
-        if iso8601Date == "nil"{
-            return ""
-        }
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        let date = formatter.date(from: iso8601Date)
-        
-        var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
-        
-        let mydateformat = DateFormatter()
-        mydateformat.dateFormat = "hh:mm a"
-        return mydateformat.string(from: date!)
     }
 }

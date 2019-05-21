@@ -15,7 +15,7 @@ public let HARDCODEDKEY:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
 
 
 // Countdown Conversion
-public func iso8601toRemainDate(iso8601Date: String) -> String {
+public func Iso8601Countdown(iso8601Date: String) -> String {
     if iso8601Date == "nil"{
         fatalError()
     }
@@ -56,7 +56,7 @@ public func iso8601toRemainDate(iso8601Date: String) -> String {
     return ""
 }
 
-public func iso8601toDate(iso8601Date: String) -> Date {
+public func Iso8601toDate(iso8601Date: String) -> Date {
     if iso8601Date == "nil"{
         fatalError()
     }
@@ -70,7 +70,7 @@ public func iso8601toDate(iso8601Date: String) -> Date {
     return date
 }
 
-public func iso8601DateConvert(iso8601Date: String, withTime: Bool?) -> String{
+public func Iso8601toString(iso8601Date: String, withTime: Bool?, withDate: Bool?) -> String{
     if iso8601Date == "nil"{
         return ""
     }
@@ -81,73 +81,19 @@ public func iso8601DateConvert(iso8601Date: String, withTime: Bool?) -> String{
     
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     let date = formatter.date(from: iso8601Date)
-    
     var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
-    
     let mydateformat = DateFormatter()
+    mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
     if withTime == false {
         mydateformat.dateFormat = "EEE dd MMM yyyy"
-    }else{
-        mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
+    }
+    if withDate == false{
+        mydateformat.dateFormat = "hh:mm a"
     }
     return mydateformat.string(from: date!)
 }
 
-public func timeRemainCalculate(date: Date) -> String{
-    let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
-    let minutes = differences.minute ?? 0
-    
-    if minutes < 0 {
-        let mydateformat = DateFormatter()
-        mydateformat.dateFormat = "hh:mm a"
-        return mydateformat.string(from: date)
-    }
-    if minutes == 0{
-        return "Now"
-    }
-    if minutes == 1{
-        return "1 min"
-    }
-    if minutes <= 90{
-        return "\(minutes) mins"
-    }
-    if minutes > 2880{
-        return "\(minutes/1440) days"
-    }
-    if minutes > 1440{
-        return "1 day"
-    } else if minutes > 90 {
-        let mydateformat = DateFormatter()
-        mydateformat.dateFormat = "hh:mm a"
-        return mydateformat.string(from: date)
-    }
-    return ""
-}
-
-public func iso8601DateConvert(iso8601Date: String, withDate: Bool?) -> String{
-    if iso8601Date == "nil"{
-        return ""
-    }
-    let formatter = DateFormatter()
-    formatter.calendar = Calendar(identifier: .iso8601)
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-    let date = formatter.date(from: iso8601Date)
-    
-    var secondsFromUTC: Int{ return TimeZone.current.secondsFromGMT()}
-    
-    let mydateformat = DateFormatter()
-    if withDate == false {
-        mydateformat.dateFormat = "hh:mm a"
-    }else{
-        mydateformat.dateFormat = "EEE dd MMM yyyy  hh:mm a"
-    }
-    return mydateformat.string(from: date!)
-}
-
-public func iso8601toStatus(iso8601DateSchedule: String, iso8601DateActual: String) -> Int {
+public func Iso8601toStatus(iso8601DateSchedule: String, iso8601DateActual: String) -> Int {
     let formatter = DateFormatter()
     formatter.calendar = Calendar(identifier: .iso8601)
     formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -163,6 +109,7 @@ public func iso8601toStatus(iso8601DateSchedule: String, iso8601DateActual: Stri
 }
 
 
+//  MARK: - PTV's different color type
 
 public func changeColorByRouteType(routeType: Int) -> UIColor {
     // Changeing color after stop info loaded, set the background color theme as transport types
@@ -185,6 +132,7 @@ public func changeColorByRouteType(routeType: Int) -> UIColor {
 
 
 //  MARK: - Generate PTV Request Address
+
 public func extractedFunc(_ request: String) -> String {
     let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: HARDCODEDKEY)
     let requestAddress: String = HARDCODEDURL+request+"&signature="+signature

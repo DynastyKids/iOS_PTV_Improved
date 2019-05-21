@@ -155,12 +155,12 @@ class StopPageTableViewController: UITableViewController {
 //        cell.routeDestinationLabel.text = routesDest[indexPath.row]
         cell.routeDetailslabel.text = "Temporary Empty"
         
-        cell.routeDueTimeLabel.text = iso8601toRemainDate(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!)
+        cell.routeDueTimeLabel.text = Iso8601Countdown(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!)
         if departureData[indexPath.row].estimatedDepartureUTC == nil {
             cell.routeStatusLabel.text = "Scheduled"
             cell.routeStatusLabel.textColor = UIColor.gray
         }else {
-            let mintes = iso8601toStatus(iso8601DateSchedule: departureData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departureData[indexPath.row].estimatedDepartureUTC!)
+            let mintes = Iso8601toStatus(iso8601DateSchedule: departureData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departureData[indexPath.row].estimatedDepartureUTC!)
             if mintes > 1 {
                 cell.routeStatusLabel.text = "Late \(mintes) mins"
                 cell.routeStatusLabel.textColor = UIColor.red
