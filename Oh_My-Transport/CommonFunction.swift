@@ -258,8 +258,3 @@ public func nearByStops(latitude: Double, longtitude: Double) -> String{
     let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=3&max_distance=1500&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
-
-
-
-
-

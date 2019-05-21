@@ -10,8 +10,10 @@ import UIKit
 
 class RoutesDisruptionsTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var disruptionIcon: UIImageView!
     @IBOutlet weak var disruptionInfoLabel: UILabel!
-
+    @IBOutlet weak var disruptionSubtitleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

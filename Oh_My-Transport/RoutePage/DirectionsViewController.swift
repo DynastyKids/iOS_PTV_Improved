@@ -28,11 +28,15 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet weak var directionsTableView: UITableView!
     @IBOutlet weak var routeMapView: MKMapView!
+    @IBOutlet weak var saveRouteButton: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         directionsTableView.delegate = self
         directionsTableView.dataSource = self
+        
+        //Check Route disruptions
 
         _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: routeId))!){ (data, response, error) in
             if error != nil {
