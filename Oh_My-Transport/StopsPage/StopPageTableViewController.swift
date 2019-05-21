@@ -189,6 +189,7 @@ class StopPageTableViewController: UITableViewController {
         // Click on Disruptions Button
         if segue.identifier == "showStopDisruptions"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
+            page2.url = URL(string: disruptionByStop(stopID: stopId))
         }
         // Click on Route Cell
         if segue.identifier == "showRouteDetails" {
