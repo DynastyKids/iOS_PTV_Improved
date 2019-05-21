@@ -9,6 +9,10 @@
 import UIKit
 
 class directionDisruptionsTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var disruptionIcon: UIImageView!
+    @IBOutlet weak var disruptionTitleLabel: UILabel!
+    @IBOutlet weak var disruptionSubtitleLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

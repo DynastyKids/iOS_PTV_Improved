@@ -49,16 +49,40 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             self.locationManager.startUpdatingLocation()
         }
         
-        //Check Route disruptions
-
-        _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: myRouteId))!){ (data, response, error) in
+        // Check route disruptions
+        _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: routeId))!){(data, response, error) in
+            if error != nil{
+                print("Route disruptions information fetch failed")
+            }
+            do{
+                let disruptionsData = try JSONDecoder().decode(DisruptionsResponse.self, from: data!)
+                if (disruptionsData.disruptions?.general?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.general!}
+                if (disruptionsData.disruptions?.metroTrain?.count)! > 0 { self.disruptiondata += disruptionsData.disruptions!.metroTrain!}
+                if (disruptionsData.disruptions?.metroTram?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.metroTram!}
+                if (disruptionsData.disruptions?.metroBus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.metroBus!}
+                if (disruptionsData.disruptions?.regionalBus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.regionalBus!}
+                if (disruptionsData.disruptions?.vlineTrain?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.vlineTrain!}
+                if (disruptionsData.disruptions?.vlineCoach?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.vlineCoach!}
+                if (disruptionsData.disruptions?.schoolBus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.schoolBus!}
+                if (disruptionsData.disruptions?.telebus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.telebus!}
+                if (disruptionsData.disruptions?.nightbus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.nightbus!}
+                if (disruptionsData.disruptions?.ferry?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.ferry!}
+                if (disruptionsData.disruptions?.interstate?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.interstate!}
+                if (disruptionsData.disruptions?.skybus?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.skybus!}
+                if (disruptionsData.disruptions?.taxi?.count)! > 0 {self.disruptiondata += disruptionsData.disruptions!.taxi!}
+            } catch {
+                print("Error:\(error)")
+            }
+        }.resume()
+        
+        //Check Route directions
+        _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: routeId))!){ (data, response, error) in
             if error != nil {
                 print("Route directions fetch failed")
                 return
             }
             do{
-                let decoder = JSONDecoder()
-                let directionData = try decoder.decode(DirectionsResponse.self, from: data!)
+                let directionData = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
                 self.directions = directionData.directions!
                 
                 DispatchQueue.main.async {
@@ -72,7 +96,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }.resume()
         
         // Checking if having any disruptions affect this route
-        _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: myRouteId))!){ (data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: routeId))!){ (data, response, error) in
             if error != nil {
                 print("Route directions fetch failed")
                 return
@@ -120,7 +144,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         if segue.identifier == "showServiceDisruptions"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
-            page2.url = URL(string: disruptionByRoute(routeId: myRouteId))
+            page2.url = URL(string: disruptionByRoute(routeId: routeId))
         }
     }
     
@@ -132,7 +156,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 1
+            if disruptiondata.count > 0 {
+                return 1
+            }
+            return 0
         }
         return directions.count
     }
@@ -140,11 +167,12 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "disruption", for: indexPath) as! directionDisruptionsTableViewCell
-            // Fetching related disruptions
-            
-            if (disruptiondata.count == 0) {
-                
+            if disruptiondata.count > 1 {
+                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruptions in effect"
+            } else {
+                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruption in effect"
             }
+            cell.disruptionSubtitleLabel.text = "Tap to see more details"
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "directions", for: indexPath) as! DirectionTableViewCell

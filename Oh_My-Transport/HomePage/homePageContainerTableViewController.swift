@@ -407,7 +407,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             let page2:DirectionsViewController = segue.destination as! DirectionsViewController
             let readIndexPath = IndexPath(row: tableView.indexPathForSelectedRow!.row, section: 0)
             let savedRoute = routeFetchedResultsController.object(at: readIndexPath)
-            page2.myRouteId = Int(savedRoute.routeId)
+            page2.routeId = Int(savedRoute.routeId)
             
         }
         if segue.identifier == "showAllDisruptions"{
