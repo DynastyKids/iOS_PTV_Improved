@@ -646,4 +646,20 @@ struct stopOnRoute: Codable {
 }
 
 
-//Stops on Pattern
+/*
+    Error Handling
+ 
+    // High demand fetching may trigger PTV's firewall
+ 
+    Error: 400 - Invalid Request
+    Error: 403 - Access Denied
+ */
+
+struct ErrorResponse: Codable {
+    var message: String?
+    var status: Status?
+    private enum CodingKeys: String, CodingKey{
+        case message
+        case status
+    }
+}
