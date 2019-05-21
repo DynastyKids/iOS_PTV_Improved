@@ -8,7 +8,9 @@
 import Foundation
 
 /*
- Status
+    Status
+ 
+    Attached to every request made
 */
 struct Status: Codable {
     var version: String?    //API Version number
@@ -81,6 +83,8 @@ struct Departure: Codable{
         self.departureSequence = try? container.decode(Int.self, forKey: .departureSequence)
     }
 }
+
+
 /*
     Directions
  
@@ -117,6 +121,7 @@ struct DirectionWithDescription: Codable {
         self.routeType = try? container.decode(Int.self, forKey: .routeType)
     }
 }
+
 
 /*
     Disruptions
@@ -332,6 +337,7 @@ struct PatternResponse: Codable {
     }
 }
 
+
 /*
     Routes
  
@@ -384,6 +390,7 @@ struct RouteServiceStatus: Codable {
         self.timestamp = try? container.decode(String.self, forKey: .timestamp)
     }
 }
+
 
 /*
     Runs
@@ -487,13 +494,14 @@ struct VechicleDescriptor: Codable{
 
     GET /v3/stops/location/{latitude},{longitude}
 */
+
 struct StopResponseByLocation: Codable {
     var stops: [stopGeosearch]?
-    //    var disruptions: disruptions?
+//    var disruptions: disruptions?
     var status: Status?
-    
     private enum CodingKeys: String, CodingKey{
         case stops
+//        case disruptions: disruptions?
         case status
     }
 }
@@ -507,7 +515,6 @@ struct stopGeosearch: Codable{
     var stopLatitude: Double?
     var stopLongitude: Double?
     var stopSequence: Int?
-    
     private enum CodingKeys: String, CodingKey{
         case stopDistance = "stop_distance"
         case stopSuburb = "stop_suburb"
@@ -518,7 +525,6 @@ struct stopGeosearch: Codable{
         case stopLongitude = "stop_longitude"
         case stopSequence = "stop_sequence"
     }
-    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.stopDistance = try? container.decode(Double.self, forKey: .stopDistance)
@@ -552,7 +558,6 @@ struct StopDetails: Codable{
 //    var stop_staffing (V3.StopStaffing, optional): Staffing details for the stop ,
     var stopId: Int?   // (integer, optional): Stop identifier ,
     var stopName: String?  // (string, optional): Name of stop
-    
     private enum CodingKeys: String, CodingKey{
         case disruptionIds = "disruption_ids"
         case stationType = "station_type"
@@ -562,7 +567,6 @@ struct StopDetails: Codable{
         case stopId = "stop_id"
         case stopName = "stop_name"
     }
-    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.disruptionIds = try? container.decode([Int].self, forKey: .disruptionIds)
@@ -602,6 +606,7 @@ struct Gps: Codable{
         self.longitude = try? container.decode(Double.self, forKey: .longitude)
     }
 }
+
 
 /*
  Stops on specific route response
