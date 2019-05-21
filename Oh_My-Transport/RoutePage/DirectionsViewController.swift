@@ -36,9 +36,22 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         directionsTableView.delegate = self
         directionsTableView.dataSource = self
         
+        // Load the MapView
+        if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
+            guard locationManager.location != nil else {
+                return
+            }
+        }
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        DispatchQueue.main.async {
+            self.locationManager.startUpdatingLocation()
+        }
+        
         //Check Route disruptions
 
-        _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: routeId))!){ (data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: myRouteId))!){ (data, response, error) in
             if error != nil {
                 print("Route directions fetch failed")
                 return
@@ -59,7 +72,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }.resume()
         
         // Checking if having any disruptions affect this route
-        _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: routeId))!){ (data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: myRouteId))!){ (data, response, error) in
             if error != nil {
                 print("Route directions fetch failed")
                 return
@@ -95,15 +108,21 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         // Do any additional setup after loading the view.
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showNextService"{
+            let page2:RouteDetailsViewController = segue.destination as! RouteDetailsViewController
+            page2.myRouteType = 0
+            page2.myRunId = 0
+            page2.myRouteId = 0
+        }
+        if segue.identifier == "showServiceDisruptions"{
+            let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
+            page2.url = URL(string: disruptionByRoute(routeId: myRouteId))
+        }
     }
-    */
     
     // MARK: - Table view data source
     
@@ -139,5 +158,29 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         
         
         return cell
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        locationManager.startUpdatingLocation()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        locationManager.stopUpdatingLocation()
+    }
+    
+    // MARK: - Functions for MapView
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.locationManager.stopUpdatingLocation()
+        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        // 使用线路中间车站
+        let myLatitude = locations[0].coordinate.latitude
+        let myLongtitude = locations[0].coordinate.longitude
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: myLatitude, longitude: myLongtitude), span: currentLocationSpan)
+        self.routeMapView.setRegion(region, animated: true)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Unable to access your current location")
     }
 }
