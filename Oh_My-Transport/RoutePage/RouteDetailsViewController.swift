@@ -77,7 +77,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                             do{
                                 let stopData = try JSONDecoder().decode(stopResposeById.self, from: data!)
                                 self.stopInfo.append(stopData.stop!)
-                                //        Showing Annotation on Map View
+                                // Showing All Stops Annotation on Map View
                                 let latitude:Double = (stopData.stop?.stopLocation?.gps?.latitude)!
                                 let longitude:Double = (stopData.stop?.stopLocation?.gps?.longitude)!
                                 let stopPatterns = MKPointAnnotation()
@@ -143,12 +143,11 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         //Section 0
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeDisruption", for: indexPath) as! RoutesDisruptionsTableViewCell
-            cell.disruptionInfoLabel.text = "\(disruptiondata.count) Disruptions in effect, Tap to see details"
+            cell.disruptionInfoLabel.text = "\(disruptiondata.count) Disruptions in effect"
             print("Disruptions: \(disruptiondata.count)")
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
-        // Fetch all pettern stops 在地图中创建大头钉，用户点击Cell后跳转到对应车站
         let departuredata = departsData[indexPath.row]
         let cellStopId = departuredata.stopsId
 //        let cellRouteId = departuredata.routesId
@@ -158,8 +157,11 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
 //        let cellFlag = departuredata.flags
         
         // Fetching Stop name
-        print(stopInfo[indexPath.row].stopName)
-        cell.routeStopNameLabel.text = stopInfo[indexPath.row].stopName
+        for each in stopInfo {
+            if (each.stopId == cellStopId){
+                cell.routeStopNameLabel.text = each.stopName    // Due to retrieve data unordered, match data to be present
+            }
+        }
         cell.routeStopTimeLabel.text = iso8601DateConvert(iso8601Date: cellDepartureTime)
         return cell
     }
