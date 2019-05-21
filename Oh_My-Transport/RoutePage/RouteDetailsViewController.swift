@@ -47,7 +47,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer  // Less battery required
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
