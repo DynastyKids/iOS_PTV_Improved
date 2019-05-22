@@ -793,11 +793,11 @@
                                             <segue destination="Rur-ig-BSX" kind="show" identifier="showServiceDisruptions" id="zXA-WO-h7o"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="directions" rowHeight="143" id="dEc-VW-pJh" customClass="DirectionTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="414" height="143"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="directions" rowHeight="130" id="dEc-VW-pJh" customClass="DirectionTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="414" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dEc-VW-pJh" id="AF9-3W-AgF">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="142.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="129.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nEF-c4-Lmb">
@@ -841,16 +841,19 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="gjU-IZ-MYE">
-                                                    <rect key="frame" x="20" y="52.666666666666686" width="348" height="75.333333333333314"/>
+                                                    <rect key="frame" x="20" y="52.666666666666657" width="348" height="62.333333333333343"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Service:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXE-2r-K86">
-                                                            <rect key="frame" x="0.0" y="0.0" width="101.66666666666667" height="20.333333333333332"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.333333333333332"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="110" id="M7P-eP-yzs"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dh3-Z3-cCK">
-                                                            <rect key="frame" x="123.66666666666664" y="0.0" width="58.333333333333329" height="44.666666666666664"/>
+                                                            <rect key="frame" x="129.33333333333334" y="0.0" width="58.333333333333343" height="44.666666666666664"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AK9-zj-tT1">
                                                                     <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="20.333333333333332"/>
@@ -867,7 +870,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="5BG-32-xXw">
-                                                            <rect key="frame" x="204.33333333333334" y="0.0" width="60.666666666666657" height="44.666666666666664"/>
+                                                            <rect key="frame" x="207" y="0.0" width="60.666666666666686" height="44.666666666666664"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssQ-jq-kiy">
                                                                     <rect key="frame" x="0.0" y="0.0" width="60.666666666666664" height="20.333333333333332"/>
@@ -918,7 +921,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="departure0Countdown" destination="gcR-jy-gmh" id="02x-MT-vbb"/>
-                                            <outlet property="departure0Time" destination="AK9-zj-tT1" id="Ukd-me-lMf"/>
+                                            <outlet property="departure0Time" destination="AK9-zj-tT1" id="NdP-ht-6m3"/>
                                             <outlet property="departure1Countdown" destination="rc6-Dl-6pK" id="po2-ZA-o2v"/>
                                             <outlet property="departure1Time" destination="ssQ-jq-kiy" id="goT-2F-TWC"/>
                                             <outlet property="departure2Countdown" destination="TJ8-lU-Pfl" id="IKB-wc-eLD"/>
@@ -1191,6 +1194,6 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
         <segue reference="yOe-TH-pVY"/>
         <segue reference="ZJJ-uA-5pS"/>
         <segue reference="zXA-WO-h7o"/>
-        <segue reference="THC-3p-pOc"/>
+        <segue reference="f6c-JH-5Uy"/>
     </inferredMetricsTieBreakers>
 </document>
