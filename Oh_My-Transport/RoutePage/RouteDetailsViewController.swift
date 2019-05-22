@@ -43,7 +43,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         routeTableView.delegate = self
         routeTableView.dataSource = self
         
-
         print("Route type:\(myRouteType); Run Id:\(myRunId); RouteId:\(myRouteId)")
         
         // Load the MapView
@@ -139,33 +138,34 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //Section 0
-        if indexPath.section == 0 {
+        if indexPath.section == 0 {     // Section 0 (Disruptions)
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeDisruption", for: indexPath) as! RoutesDisruptionsTableViewCell
             cell.disruptionInfoLabel.text = "\(disruptiondata.count) Disruptions in effect"
             print("Disruptions: \(disruptiondata.count)")
             return cell
         }
-        
-        // Section 1 (Stops)
-        let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
-        let departuredata = departsData[indexPath.row]
-        let cellDepartureTime = departuredata.estimatedDepartureUTC ?? departuredata.scheduledDepartureUTC ?? nil!
-//        let cellFlag = departuredata.flags
-        
-        // Fetching Stop name
-        var count = 0
-        for each in dictonaryStopId {
-            if (each == departuredata.stopsId){     // Due to retrieve data unordered, match data to be present
-                cell.routeStopNameLabel.text = dictonaryStopName[count]
-                let coordinate = Gps(latitude: dictonaryStopLatitude[count], longitude: dictonaryStopLongitude[count])
-                let stopLocation = StopLocation(gps: coordinate, suburb: dictonaryStopSuburb[count])
-                let stops = StopDetails(disruptionIds: nil, stationType: nil, stationDescription: nil, routeType: dictonaryRouteType[count], stopLocation: stopLocation, stopId: dictonaryStopId[count], stopName: dictonaryStopName[count])
-                orderedStop.append(stops)
+        if indexPath.section == 1 {     // Section 1 (Stops)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
+            let departuredata = departsData[indexPath.row]
+            let cellDepartureTime = departuredata.estimatedDepartureUTC ?? departuredata.scheduledDepartureUTC ?? nil!
+            //        let cellFlag = departuredata.flags
+            
+            // Fetching Stop name
+            var count = 0
+            for each in dictonaryStopId {
+                if (each == departuredata.stopsId){     // Due to retrieve data unordered, match data to be present
+                    cell.routeStopNameLabel.text = dictonaryStopName[count]
+                    let coordinate = Gps(latitude: dictonaryStopLatitude[count], longitude: dictonaryStopLongitude[count])
+                    let stopLocation = StopLocation(gps: coordinate, suburb: dictonaryStopSuburb[count])
+                    let stops = StopDetails(disruptionIds: nil, stationType: nil, stationDescription: nil, routeType: dictonaryRouteType[count], stopLocation: stopLocation, stopId: dictonaryStopId[count], stopName: dictonaryStopName[count])
+                    orderedStop.append(stops)
+                }
+                count += 1
             }
-            count += 1
+            cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
+            return cell
         }
-        cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "doesNotExist", for: indexPath) as! RoutesStopTableViewCell
         return cell
     }
     
