@@ -23,6 +23,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     var disruptiondata: [Disruption] = []
     var departsData: [Departure] = []
     var stopInfo: [StopDetails] = []
+    var orderedStop: [StopDetails] = []
     
     var navigationTitle: String = ""
     
@@ -109,11 +110,11 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showStopFromPatternPage" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.stopURL = showStopsInfo(stopId: stopInfo[routeTableView.indexPathForSelectedRow!.row].stopId! , routeType: myRouteType)
+            page2.stopURL = showStopsInfo(stopId: orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId! , routeType: myRouteType)
             page2.routeType = myRouteType
-            page2.stopId = stopInfo[routeTableView.indexPathForSelectedRow!.row].stopId!
-            page2.stopSuburb = stopInfo[routeTableView.indexPathForSelectedRow!.row].stopLocation!.suburb ?? ""
-            page2.stopName = stopInfo[routeTableView.indexPathForSelectedRow!.row].stopName!
+            page2.stopId = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId!
+            page2.stopSuburb = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopLocation!.suburb ?? ""
+            page2.stopName = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopName!
             page2.managedContext = CoreDataStack().managedContext
         }
         if segue.identifier == "showRouteDisruption"{
@@ -149,17 +150,16 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
         let departuredata = departsData[indexPath.row]
-        let cellStopId = departuredata.stopsId
 //        let cellRouteId = departuredata.routesId
 //        let cellRunId = departuredata.runId
-//        let cellDirectionId = departuredata.directionId
         let cellDepartureTime = departuredata.estimatedDepartureUTC ?? departuredata.scheduledDepartureUTC ?? nil!
 //        let cellFlag = departuredata.flags
         
         // Fetching Stop name
         for each in stopInfo {
-            if (each.stopId == cellStopId){
+            if (each.stopId == departuredata.stopsId){
                 cell.routeStopNameLabel.text = each.stopName    // Due to retrieve data unordered, match data to be present
+                orderedStop.append(each)
             }
         }
         cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)

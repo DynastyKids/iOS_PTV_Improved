@@ -33,6 +33,7 @@ class StopPageTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Value Received: StopId:\(stopId), StopName:\(stopName), StopSuburb:\(stopSuburb)StopURL:\(stopURL)")
         //Get the stop name
         _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: stopId, routeType: routeType))!) { (data, response, error) in
             if let error = error {

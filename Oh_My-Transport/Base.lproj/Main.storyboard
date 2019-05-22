@@ -879,13 +879,13 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="aqG-xE-61e">
                                                             <rect key="frame" x="271" y="0.0" width="61" height="44.666666666666664"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Time 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OiH-dm-xSC">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OiH-dm-xSC">
                                                                     <rect key="frame" x="0.0" y="0.0" width="61" height="20.333333333333332"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Count 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJ8-lU-Pfl">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Count 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJ8-lU-Pfl">
                                                                     <rect key="frame" x="0.0" y="24.333333333333336" width="61" height="20.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -1136,15 +1136,16 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="0.0" y="64" width="414" height="534"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.0.0 (Build 96 @ 21 May 2019)
+                                <string key="text">Version 1.0.0 (Build 96 @ 21 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API embedded allows you to lookup the timetable data from Public Transport Victoria, incase if embedded key fails, you can apply an API key by yourselves (usually comes next business day) and input into box below with your own one.
 
+Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
+
 Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.   To obtain a key:
-· Press 'Send mail' button to send a Email to PTV. (Do not change the title of the mail)
-· Once PTV have got your email request, they will send you an API key and a user Id by return email.
-· Fill the User ID and API Key provided in following box.</mutableString>
+Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetable-api/ For more info</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1183,9 +1184,9 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yOe-TH-pVY"/>
+        <segue reference="g3m-8j-J5E"/>
         <segue reference="Rtg-8B-y4f"/>
-        <segue reference="zXA-WO-h7o"/>
+        <segue reference="uPl-tE-DDw"/>
         <segue reference="f6c-JH-5Uy"/>
     </inferredMetricsTieBreakers>
 </document>
