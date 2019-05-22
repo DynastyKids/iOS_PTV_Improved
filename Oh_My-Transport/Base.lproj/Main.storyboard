@@ -823,7 +823,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gGF-XN-Y27">
                                                     <rect key="frame" x="20" y="8" width="348" height="0.0"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Near Stop:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpV-Cf-Z6E">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearest Stop:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpV-Cf-Z6E">
                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="0.0"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="100" id="Lty-WV-gwv"/>
@@ -1188,9 +1188,9 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g3m-8j-J5E"/>
+        <segue reference="yOe-TH-pVY"/>
         <segue reference="ZJJ-uA-5pS"/>
-        <segue reference="kz0-4N-VZF"/>
+        <segue reference="zXA-WO-h7o"/>
         <segue reference="THC-3p-pOc"/>
     </inferredMetricsTieBreakers>
 </document>
