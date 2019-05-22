@@ -19,7 +19,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var runningServices: [Run] = []
     var runningDestinations: [String] = []  // Showing services to different destinations
     var nearStopId: [Int] = []              // Showing nearest stops(id) to get the service for different directions(destinations)
-    var nearStopName: [String] = []              // Showing nearest stops(name) to get the service for different directions(destinations)®
+    var nearStopName: [String] = []              // Showing nearest stops(name) to get the service for different directions(destinations)
+    var directionId: [Int] = []
+    var nextDepartureTime: [String] = []
     
     var directions: [Run] = []
     var disruptiondata: [Disruption] = []
@@ -29,7 +31,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var routeId: Int = 12753                // Testing value, rely on last page passing value to this page
     var routeName: String = ""
     var routeType: Int = 2
-    var directionId: [Int] = []
     var runs: [Run] = []
     
     @IBOutlet weak var directionsTableView: UITableView!
@@ -125,12 +126,35 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                                         count += 1
                                     }
                                     print("Near Stop For Service to:\(eachService.destinationName!), Nearest Stop Id:\(nearStopId),Nearest Stop Name:\(nearStopName), Distance:\(stopDistance)")
+                                    self.directionId.append(eachService.directionId!)
                                     self.nearStopName.append(nearStopName)
                                     self.nearStopId.append(nearStopId)
-                                    DispatchQueue.main.async {
-                                        self.navigationItem.title = self.routeName
-                                        self.directionsTableView.reloadData()
-                                    }
+                                    
+                                    _ = URLSession.shared.dataTask(with: URL(string: showRouteDepartureOnStop(routeType: self.routeType, stopId: nearStopId, routeId: self.routeId, directionId: eachService.directionId!))!){(data, response, error) in
+                                        if error != nil{
+                                            print("next departure fetch failed")
+                                            return
+                                        }
+                                        do{
+                                            let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
+                                            count = 0
+                                            for each in nextDepartureData.departures{
+                                                let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: each.scheduledDepartureUTC!))).minute ?? 0
+                                                if differences >= 0 {
+                                                    self.nextDepartureTime.append(nextDepartureData.departures[count].estimatedDepartureUTC ?? nextDepartureData.departures[count].scheduledDepartureUTC!)
+                                                    self.nextDepartureTime.append(nextDepartureData.departures[count+1].estimatedDepartureUTC ?? nextDepartureData.departures[count+1].scheduledDepartureUTC!)
+                                                    self.nextDepartureTime.append(nextDepartureData.departures[count+2].estimatedDepartureUTC ?? nextDepartureData.departures[count+2].scheduledDepartureUTC!)
+                                                    break
+                                                }
+                                                count += 3
+                                            }
+                                            DispatchQueue.main.async {
+                                                self.directionsTableView.reloadData()
+                                            }
+                                        }catch{
+                                            print("Error\(error)")
+                                        }
+                                        }.resume()
                                 }catch{
                                     print("Error:\(error)")
                                 }
@@ -229,7 +253,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             return 0
         }
-        return nearStopId.count
+        return nextDepartureTime.count/3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -246,41 +270,13 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "directions", for: indexPath) as! DirectionTableViewCell
         cell.directionNameLabel.text = runningDestinations[indexPath.row]
         cell.nearStopLabel.text = nearStopName[indexPath.row]
-//        // Get Stop Name:
-//        _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: nearStopId[indexPath.row], routeType: routeType))!){(data, response, error) in
-//            if error != nil{
-//                print("Stops fetch failed")
-//                return
-//            }
-//            do{
-//                let stopInfo = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
-//                cell.nearStopLabel.text = stopInfo.stop?.stopName
-//            }catch{
-//                print(error)
-//            }
-//        }.resume()
-        // Find next departure on this route
-
-//        _ = URLSession.shared.dataTask(with: URL(string: showRouteDepartureOnStop(routeType: routeType, stopId: nearStopId, routeId: routeId, directionId: directionInfo.directionId!))!){(data, response, error) in
-//            if error != nil{
-//                print("Stops fetch failed")
-//                return
-//            }
-//            do{
-//                let cellNextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-////                DispatchQueue.main.async {
-////                    cell.departure0Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[0].estimatedDepartureUTC ?? cellNextDepartureData.departures[0].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
-////                    cell.departure1Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[1].estimatedDepartureUTC ?? cellNextDepartureData.departures[1].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
-////                    cell.departure2Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[2].estimatedDepartureUTC ?? cellNextDepartureData.departures[2].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
-////
-////                    cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[0].estimatedDepartureUTC ?? cellNextDepartureData.departures[0].scheduledDepartureUTC!)
-////                    cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[1].estimatedDepartureUTC ?? cellNextDepartureData.departures[1].scheduledDepartureUTC!)
-////                    cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[2].estimatedDepartureUTC ?? cellNextDepartureData.departures[2].scheduledDepartureUTC!)
-////                }
-//            }catch{
-//                print("Error\(error)")
-//            }
-//        }.resume()
+        
+        cell.departure0Time.text = Iso8601toString(iso8601Date: nextDepartureTime[indexPath.row*3], withTime: true, withDate: false)
+        cell.departure1Time.text = Iso8601toString(iso8601Date: nextDepartureTime[indexPath.row*3+1], withTime: true, withDate: false)
+        cell.departure2Time.text = Iso8601toString(iso8601Date: nextDepartureTime[indexPath.row*3+2], withTime: true, withDate: false)
+        cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: nextDepartureTime[indexPath.row*3], status: true)
+        cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: nextDepartureTime[indexPath.row*3+1], status: true)
+        cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: nextDepartureTime[indexPath.row*3+2], status: true)
         
         return cell
     }
