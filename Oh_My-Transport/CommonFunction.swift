@@ -15,7 +15,7 @@ public let HARDCODEDKEY:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
 
 
 // Countdown Conversion
-public func Iso8601Countdown(iso8601Date: String) -> String {
+public func Iso8601Countdown(iso8601Date: String, status: Bool?) -> String {
     if iso8601Date == "nil"{
         fatalError()
     }
@@ -23,7 +23,6 @@ public func Iso8601Countdown(iso8601Date: String) -> String {
     formatter.calendar = Calendar(identifier: .iso8601)
     formatter.locale = Locale(identifier: "en_US_POSIX")
     formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     let date:Date = formatter.date(from: iso8601Date)!
     let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
@@ -48,9 +47,13 @@ public func Iso8601Countdown(iso8601Date: String) -> String {
     }
     if minutes > 1440{
         return "1 day"
-    } else if minutes > 90 {
+    }
+    if minutes > 90 && minutes <= 1440{
         let mydateformat = DateFormatter()
         mydateformat.dateFormat = "hh:mm a"
+        if status == true{
+            return "Scheduled"
+        }
         return mydateformat.string(from: date)
     }
     return ""

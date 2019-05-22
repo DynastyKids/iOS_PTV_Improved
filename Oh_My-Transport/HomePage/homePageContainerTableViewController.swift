@@ -145,9 +145,9 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                     self.departureSequence = nextDepartureData.departures
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
-                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!))
-                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!))
+                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                     }
                     
 //                     Fetching Data inside (depart Routes)
@@ -260,9 +260,9 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                     self.departureSequence = nextDepartureData.departures
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!))
-                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!))
-                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!))
+                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                     }
                     
                     //                     Fetching Data inside (depart Routes)
