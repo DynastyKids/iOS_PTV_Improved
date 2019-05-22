@@ -17,7 +17,6 @@ class StopPageTableViewController: UITableViewController {
     var managedContext: NSManagedObjectContext!
     var stops: FavStop?
     
-    var stopURL: String = ""
     var stopId: Int = 0
     var routeType: Int = 0
     var stopName: String = ""
@@ -33,7 +32,7 @@ class StopPageTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Value Received: StopId:\(stopId), StopName:\(stopName), StopSuburb:\(stopSuburb)StopURL:\(stopURL)")
+        print("Value Received: StopId:\(stopId), StopName:\(stopName), StopSuburb:\(stopSuburb)")
         //Get the stop name
         _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: stopId, routeType: routeType))!) { (data, response, error) in
             if let error = error {
