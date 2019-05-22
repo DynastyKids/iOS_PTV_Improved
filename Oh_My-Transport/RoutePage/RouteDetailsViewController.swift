@@ -27,6 +27,14 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     var navigationTitle: String = ""
     
+    var patternAllStops: NSDictionary = [:]
+    var dictonaryStopId: [Int] = []
+    var dictonaryStopName: [String] = []
+    var dictonaryStopSuburb: [String] = []
+    var dictonaryStopLatitude: [Double] = []
+    var dictonaryStopLongitude: [Double] = []
+    var dictonaryRouteType: [Int] = []
+    
     @IBOutlet weak var routeMapView: MKMapView!
     @IBOutlet weak var routeTableView: UITableView!
     
@@ -53,7 +61,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             self.locationManager.startUpdatingLocation()
         }
 
-
         _ = URLSession.shared.dataTask(with: URL(string: showPatternonRoute(runId: myRunId, routeType: myRouteType))!){(data, response, error) in
             if error != nil{
                 print("Pattern fetch failed")
@@ -67,36 +74,32 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 if((patternData.departures?.count)!>0){
                     self.departsData = patternData.departures!
-                    var count = 0
-                    for each in patternData.departures!{
-                        let stopInfoURL = URL(string: showStopsInfo(stopId: each.stopsId!, routeType: self.myRouteType))
-                        _ = URLSession.shared.dataTask(with: stopInfoURL!){(data, response, error) in
-                            if error != nil{
-                                print("Pattern fetch failed")
-                                return
+                }
+                let jsonString: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary      // Alternative method by NSDictonary to fetching all stops data
+                self.patternAllStops = jsonString.value(forKey: "stops") as! NSDictionary
+                for (key, value) in self.patternAllStops{
+                    //  key = stopId, Value = Stop Dictonary
+                    let stopDetailsData: NSDictionary = value as! NSDictionary
+                        for (key2,value2) in stopDetailsData{
+                            // Poping values into array
+                            if "\(key2)" == "stop_id"{
+                                self.dictonaryStopId.append(Int("\(value2)")!)
+                            } else if "\(key2)" == "stop_name"{
+                                self.dictonaryStopName.append("\(value2)")
+                            } else if "\(key2)" == "stop_suburb"{
+                                self.dictonaryStopSuburb.append("\(value2)")
+                            } else if "\(key2)" == "stop_latitude"{
+                                self.dictonaryStopLatitude.append(Double("\(value2)")!)
+                            } else if "\(key2)" == "stop_longitude"{
+                                self.dictonaryStopLongitude.append(Double("\(value2)")!)
+                            } else if "\(key2)" == "route_type"{
+                                self.dictonaryRouteType.append(Int("\(value2)")!)
                             }
-                            do{
-                                let stopData = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
-                                self.stopInfo.append(stopData.stop!)
-                                // Showing All Stops Annotation on Map View
-                                let latitude:Double = (stopData.stop?.stopLocation?.gps?.latitude)!
-                                let longitude:Double = (stopData.stop?.stopLocation?.gps?.longitude)!
-                                let stopPatterns = MKPointAnnotation()
-                                stopPatterns.title = stopData.stop!.stopName
-                                stopPatterns.subtitle = "Stop ID:\(stopData.stop!.stopId!)"
-                                stopPatterns.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                                self.routeMapView.addAnnotation(stopPatterns)
-                                
-                                DispatchQueue.main.async {
-                                    print("Reload table view")
-                                    self.routeTableView.reloadData()
-                                }
-                            }catch{
-                                print(error)
-                            }
-                            }.resume()
-                        count += 1
-                    }
+                        }
+                }
+                DispatchQueue.main.async {
+                    print("Reload table view")
+                    self.routeTableView.reloadData()
                 }
             } catch {
                 print("Error:\(error)")
@@ -137,7 +140,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
             return 0
         }
-        return stopInfo.count
+        return dictonaryStopId.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -148,6 +151,8 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             print("Disruptions: \(disruptiondata.count)")
             return cell
         }
+        
+        // Section 1 (Stops)
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
         let departuredata = departsData[indexPath.row]
 //        let cellRouteId = departuredata.routesId
@@ -156,11 +161,16 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
 //        let cellFlag = departuredata.flags
         
         // Fetching Stop name
-        for each in stopInfo {
-            if (each.stopId == departuredata.stopsId){
-                cell.routeStopNameLabel.text = each.stopName    // Due to retrieve data unordered, match data to be present
-                orderedStop.append(each)
+        var count = 0
+        for each in dictonaryStopId {
+            if (each == departuredata.stopsId){     // Due to retrieve data unordered, match data to be present
+                cell.routeStopNameLabel.text = dictonaryStopName[count]
+                let coordinate = Gps(latitude: dictonaryStopLatitude[count], longitude: dictonaryStopLongitude[count])
+                let stopLocation = StopLocation(gps: coordinate, suburb: dictonaryStopSuburb[count])
+                let stops = StopDetails(disruptionIds: nil, stationType: nil, stationDescription: nil, routeType: dictonaryRouteType[count], stopLocation: stopLocation, stopId: dictonaryStopId[count], stopName: dictonaryStopName[count])
+                orderedStop.append(stops)
             }
+            count += 1
         }
         cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
         return cell

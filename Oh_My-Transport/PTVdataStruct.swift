@@ -579,6 +579,16 @@ struct StopDetails: Codable{
         self.stopId = try? container.decode(Int.self, forKey: .stopId)
         self.stopName = try? container.decode(String.self, forKey: .stopName)
     }
+    
+    init(disruptionIds:[Int]?, stationType:String?, stationDescription: String?, routeType: Int?, stopLocation: StopLocation?, stopId: Int?, stopName: String?) {
+        self.disruptionIds = disruptionIds
+        self.stationType = stationType
+        self.stationDescription = stationDescription
+        self.routeType = routeType
+        self.stopLocation = stopLocation
+        self.stopId = stopId
+        self.stopName = stopName
+    }
 }
 
 struct StopLocation: Codable{
@@ -593,6 +603,11 @@ struct StopLocation: Codable{
         self.gps = try? container.decode(Gps.self, forKey: .gps)
         self.suburb = try? container.decode(String.self, forKey: .suburb)
     }
+    
+    init(gps: Gps?, suburb: String?) {
+        self.gps = gps
+        self.suburb = suburb
+    }
 }
 
 struct Gps: Codable{
@@ -606,6 +621,10 @@ struct Gps: Codable{
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.latitude = try? container.decode(Double.self, forKey: .latitude)
         self.longitude = try? container.decode(Double.self, forKey: .longitude)
+    }
+    init(latitude: Double?, longitude: Double?) {
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }
 

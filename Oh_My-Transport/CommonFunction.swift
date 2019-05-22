@@ -144,7 +144,7 @@ public func extractedFunc(_ request: String) -> String {
     let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: HARDCODEDKEY)
     let requestAddress: String = HARDCODEDURL+request+"&signature="+signature
     
-    print(requestAddress)
+    print("Request: \(requestAddress)")
     return requestAddress
 }
 
