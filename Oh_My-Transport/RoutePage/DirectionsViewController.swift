@@ -229,10 +229,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showNextService"{
-            let page2:RouteDetailsViewController = segue.destination as! RouteDetailsViewController
-            page2.myRouteType = 0
-            page2.myRunId = 0
-            page2.myRouteId = 0
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+            page2.routeType = routeType
+            page2.routeId = routeId
+            page2.stopId = nearStopId[(directionsTableView.indexPathForSelectedRow?.row)!]
         }
         if segue.identifier == "showServiceDisruptions"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
