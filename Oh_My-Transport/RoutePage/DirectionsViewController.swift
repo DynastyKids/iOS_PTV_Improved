@@ -16,18 +16,21 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var nslock = NSLock()
     var currentLocation:CLLocation!
     
-    var routeId: Int = 12753
-    var directions: [DirectionWithDescription] = []
+    var runningServices: [Run] = []
+    var runningDestinations: [String] = []  // Showing services to different destinations
+    var nearStopId: [Int] = []              // Showing nearest stops(id) to get the service for different directions(destinations)
+    var nearStopName: [String] = []              // Showing nearest stops(name) to get the service for different directions(destinations)®
+    
+    var directions: [Run] = []
     var disruptiondata: [Disruption] = []
     var allstopsdata: [stopOnRoute] = []
     var userPosition = CLLocation(latitude: 0.00, longitude: 0.00)
     
+    var routeId: Int = 12753                // Testing value, rely on last page passing value to this page
     var routeName: String = ""
     var routeType: Int = 2
     var directionId: [Int] = []
-    
     var runs: [Run] = []
-    var selectedRuns: [Run] = []
     
     @IBOutlet weak var directionsTableView: UITableView!
     @IBOutlet weak var routeMapView: MKMapView!
@@ -47,57 +50,98 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-        DispatchQueue.main.async {
-            self.locationManager.startUpdatingLocation()
-        }
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        self.locationManager.startUpdatingLocation()
         
-        //Get all Route directions
-        _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: routeId))!){ (data, response, error) in
-            if error != nil {
-                print("Route directions fetch failed")
+        // Checking Runs(Destination may different) - Using runid to check stop patterns - using pattern's stop to find nearest stops
+        _ = URLSession.shared.dataTask(with: URL(string: showRouteRuns(routeId: routeId))!){ (data, response, error) in
+            if error != nil{
+                print("Route running data fetch failed")
                 return
             }
             do{
-                let directionData = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
-                self.directions = directionData.directions!
-                
-//                // Fetching all running service on this route
-//                _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: self.routeId))!){ (data, response, error) in
-//                    if error != nil {
-//                        print("Route directions fetch failed")
-//                        return
-//                    }
-//                    do{
-//                        let allServices = try JSONDecoder().decode(RunsResponse.self, from: data!)
-//                        self.runs = allServices.runs!
-//                        for each in self.directions{
-//                            var count = 0
-//                            for i in self.runs{
-//                                if i.directionId == each.directionId{
-//                                    self.selectedRuns.append(i)
-//                                }
-//                                if count == 2{
-//                                    break
-//                                }
-//                                count += 1
-//                            }
-//                        }
-                        DispatchQueue.main.async {
-                            self.navigationItem.title = self.routeName
-                            self.directionsTableView.reloadData()
+                let runsdata = try JSONDecoder().decode(RunsResponse.self, from: data!)
+                self.runningServices = runsdata.runs!
+                for eachService in self.runningServices{
+                    var flag = true
+                    for eachName in self.runningDestinations{
+                        if eachName == eachService.destinationName{
+                            flag = false
                         }
-//                    }catch{
-//                        print("Error\(error)")
-//                    }
-//                    }.resume()
-                
-                
-            }
-            catch{
+                    }
+                    if flag == true{
+                        self.runningDestinations.append(eachService.destinationName!)
+                    }
+                }
+                // 有n个方向的车，每种方向都读出Pattern上所有的车站，然后对比用户当前位置找到最近车站
+                for eachPattern in self.runningDestinations{
+                    var flag = false //填充这个方向车子的数据，如果填充过了，则Flag=true，后续相同service的填充则跳过
+                    for eachService in self.runningServices{
+                        if flag == true{
+                            break
+                        }
+                        var dictonaryStopId: [Int] = []
+                        var dictonaryStopName: [String] = []
+                        var dictonaryStopLatitude: [Double] = []
+                        var dictonaryStopLongitude: [Double] = []
+                        var count = 0
+                        var nearStopId = 0
+                        var nearStopName: String = ""
+                        var stopDistance:Double = 99999999
+                        if eachService.destinationName == eachPattern{
+                            flag = true
+                            self.directions.append(eachService)
+                            _ = URLSession.shared.dataTask(with: URL(string: showPatternonRoute(runId: eachService.runId!, routeType: eachService.routeType!))!){(data, response, error) in
+                                if error != nil{
+                                    print("Pattern fetch failed")
+                                    return
+                                }
+                                do{
+                                    let jsonString: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+                                    let patternAllStops = jsonString.value(forKey: "stops") as! NSDictionary
+                                    for (_, value) in patternAllStops{       //  key = stopId, Value = Stop Dictonary
+                                        let stopDetailsData: NSDictionary = value as! NSDictionary
+                                        for (key2,value2) in stopDetailsData{   // Poping values into array
+                                            if "\(key2)" == "stop_id"{
+                                                dictonaryStopId.append(Int("\(value2)")!)
+                                            } else if "\(key2)" == "stop_name"{
+                                                dictonaryStopName.append("\(value2)")
+                                            } else if "\(key2)" == "stop_latitude"{
+                                                dictonaryStopLatitude.append(Double("\(value2)")!)
+                                            } else if "\(key2)" == "stop_longitude"{
+                                                dictonaryStopLongitude.append(Double("\(value2)")!)
+                                            }
+                                        }
+                                    }
+                                    // Comparing with stops pattern and user location to find the nearest stop
+                                    for _ in dictonaryStopId{
+                                        print("User Location:\(self.userPosition.coordinate.latitude),\(self.userPosition.coordinate.longitude)")
+                                        let resultDistance = self.userPosition.distance(from: CLLocation(latitude: dictonaryStopLatitude[count], longitude: dictonaryStopLongitude[count]))
+                                        if (Double(resultDistance) < Double(stopDistance)) {
+                                            nearStopId = dictonaryStopId[count]
+                                            stopDistance = resultDistance
+                                            nearStopName = dictonaryStopName[count]
+                                        }
+                                        count += 1
+                                    }
+                                    print("Near Stop For Service to:\(eachService.destinationName!), Nearest Stop Id:\(nearStopId),Nearest Stop Name:\(nearStopName), Distance:\(stopDistance)")
+                                    self.nearStopName.append(nearStopName)
+                                    self.nearStopId.append(nearStopId)
+                                    DispatchQueue.main.async {
+                                        self.navigationItem.title = self.routeName
+                                        self.directionsTableView.reloadData()
+                                    }
+                                }catch{
+                                    print("Error:\(error)")
+                                }
+                            }.resume()
+                        }
+                    }
+                }
+            }catch{
                 print("Error:\(error)")
             }
-            }.resume()
+        }.resume()
         
         // Fetching all Stops on MapView
         _ = URLSession.shared.dataTask(with: URL(string: showRoutesStop(routeId: routeId, routeType: routeType))!){(data, response, error) in
@@ -145,7 +189,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 } else if (self.routeType == 4 && (disruptionData.disruptions?.nightbus?.count)! > 0){
                     self.disruptiondata = (disruptionData.disruptions?.nightbus)!
                 }
-                
                 DispatchQueue.main.async {
                     self.navigationItem.title = self.routeName
                     self.directionsTableView.reloadData()
@@ -186,7 +229,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             return 0
         }
-        return directions.count
+        return nearStopId.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -201,23 +244,23 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "directions", for: indexPath) as! DirectionTableViewCell
-        // Fetching all directions
-        let directionInfo = directions[indexPath.row]
-        cell.directionNameLabel.text = directionInfo.directionName
-        
-        
-//        var stopDistance:Double = 999990000
-//        var nearStopId = 0
-//        for each in allstopsdata{
-//            let stopCoordinates = CLLocation(latitude: each.stopLatitude!, longitude: each.stopLongtitude!)
-//            let resultDistance = userPosition.distance(from: stopCoordinates)
-//            if stopDistance > resultDistance {
-//                print("Near Stop:\(each.stopName), Distance:\(stopDistance)")
-//                cell.nearStopLabel.text = each.stopName
-//                nearStopId = each.stopId ?? 0
+        cell.directionNameLabel.text = runningDestinations[indexPath.row]
+        cell.nearStopLabel.text = nearStopName[indexPath.row]
+//        // Get Stop Name:
+//        _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: nearStopId[indexPath.row], routeType: routeType))!){(data, response, error) in
+//            if error != nil{
+//                print("Stops fetch failed")
+//                return
 //            }
-//        }
+//            do{
+//                let stopInfo = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
+//                cell.nearStopLabel.text = stopInfo.stop?.stopName
+//            }catch{
+//                print(error)
+//            }
+//        }.resume()
         // Find next departure on this route
+
 //        _ = URLSession.shared.dataTask(with: URL(string: showRouteDepartureOnStop(routeType: routeType, stopId: nearStopId, routeId: routeId, directionId: directionInfo.directionId!))!){(data, response, error) in
 //            if error != nil{
 //                print("Stops fetch failed")
@@ -225,15 +268,15 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
 //            }
 //            do{
 //                let cellNextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-//                DispatchQueue.main.async {
-//                    cell.departure0Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[0].estimatedDepartureUTC ?? cellNextDepartureData.departures[0].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
-//                    cell.departure1Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[1].estimatedDepartureUTC ?? cellNextDepartureData.departures[1].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
-//                    cell.departure2Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[2].estimatedDepartureUTC ?? cellNextDepartureData.departures[2].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
-//
-//                    cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[0].estimatedDepartureUTC ?? cellNextDepartureData.departures[0].scheduledDepartureUTC!)
-//                    cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[1].estimatedDepartureUTC ?? cellNextDepartureData.departures[1].scheduledDepartureUTC!)
-//                    cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[2].estimatedDepartureUTC ?? cellNextDepartureData.departures[2].scheduledDepartureUTC!)
-//                }
+////                DispatchQueue.main.async {
+////                    cell.departure0Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[0].estimatedDepartureUTC ?? cellNextDepartureData.departures[0].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
+////                    cell.departure1Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[1].estimatedDepartureUTC ?? cellNextDepartureData.departures[1].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
+////                    cell.departure2Time.text = Iso8601toString(iso8601Date: cellNextDepartureData.departures[2].estimatedDepartureUTC ?? cellNextDepartureData.departures[2].scheduledDepartureUTC ?? nil, withTime: true, withDate: false)
+////
+////                    cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[0].estimatedDepartureUTC ?? cellNextDepartureData.departures[0].scheduledDepartureUTC!)
+////                    cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[1].estimatedDepartureUTC ?? cellNextDepartureData.departures[1].scheduledDepartureUTC!)
+////                    cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: cellNextDepartureData.departures[2].estimatedDepartureUTC ?? cellNextDepartureData.departures[2].scheduledDepartureUTC!)
+////                }
 //            }catch{
 //                print("Error\(error)")
 //            }
@@ -244,7 +287,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        locationManager.startUpdatingLocation()
+//        locationManager.startUpdatingLocation()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -261,6 +304,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongtitude), span: currentLocationSpan)
         userPosition = CLLocation(latitude: currentLatitude, longitude: currentLongtitude)
         self.routeMapView.setRegion(region, animated: true)
+        print("Currnet Location = \(currentLatitude),\(currentLongtitude)")
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
