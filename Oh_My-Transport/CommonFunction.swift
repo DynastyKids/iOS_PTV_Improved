@@ -207,6 +207,11 @@ public func showRouteInfo(routeId: Int) -> String{                      // View 
 }
 
 //Runs
+public func showRouteRuns(routeId: Int) -> String{      //View all trip/service runs for a specific route ID and route type
+    let request: String = "/v3/runs/route/\(routeId)?devid="+HARDCODEDDEVID
+    return extractedFunc(request)
+}
+
 public func showRoutesRun(routeId: Int, routeType: Int) -> String{      //View all trip/service runs for a specific route ID and route type
     let request: String = "/v3/runs/route/\(routeId)/route_type/\(routeType)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
