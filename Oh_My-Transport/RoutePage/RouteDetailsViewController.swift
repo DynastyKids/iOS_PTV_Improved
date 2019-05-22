@@ -22,7 +22,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - Receiving data from whole array carrying all necessary data
     var disruptiondata: [Disruption] = []
     var departsData: [Departure] = []
-    var stopInfo: [StopDetails] = []
     var orderedStop: [StopDetails] = []
     
     var navigationTitle: String = ""
@@ -48,15 +47,13 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         print("Route type:\(myRouteType); Run Id:\(myRunId); RouteId:\(myRouteId)")
         
         // Load the MapView
-        if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
+        if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse || CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
             guard locationManager.location != nil else {
                 return
             }
         }
-        
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer  // Less battery required
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters  // Less battery required
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
@@ -77,11 +74,9 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 let jsonString: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary      // Alternative method by NSDictonary to fetching all stops data
                 self.patternAllStops = jsonString.value(forKey: "stops") as! NSDictionary
-                for (key, value) in self.patternAllStops{
-                    //  key = stopId, Value = Stop Dictonary
+                for (key, value) in self.patternAllStops{       //  key = stopId, Value = Stop Dictonary
                     let stopDetailsData: NSDictionary = value as! NSDictionary
-                        for (key2,value2) in stopDetailsData{
-                            // Poping values into array
+                        for (key2,value2) in stopDetailsData{   // Poping values into array
                             if "\(key2)" == "stop_id"{
                                 self.dictonaryStopId.append(Int("\(value2)")!)
                             } else if "\(key2)" == "stop_name"{
@@ -155,8 +150,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         // Section 1 (Stops)
         let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
         let departuredata = departsData[indexPath.row]
-//        let cellRouteId = departuredata.routesId
-//        let cellRunId = departuredata.runId
         let cellDepartureTime = departuredata.estimatedDepartureUTC ?? departuredata.scheduledDepartureUTC ?? nil!
 //        let cellFlag = departuredata.flags
         
