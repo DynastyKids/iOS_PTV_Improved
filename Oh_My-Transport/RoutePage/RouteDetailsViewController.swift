@@ -91,6 +91,16 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                             }
                         }
                 }
+                
+                var count = 0
+                for each in self.dictonaryStopId{    // Adding stop annotation
+                    let stopPatterns = MKPointAnnotation()
+                    stopPatterns.title = self.dictonaryStopName[count]
+                    stopPatterns.subtitle = self.dictonaryStopSuburb[count]
+                    stopPatterns.coordinate = CLLocationCoordinate2D(latitude: self.dictonaryStopLatitude[count], longitude: self.dictonaryStopLongitude[count])
+                    self.routeMapView.addAnnotation(stopPatterns)
+                    count += 1
+                }
                 DispatchQueue.main.async {
                     print("Reload table view")
                     self.routeTableView.reloadData()
@@ -107,12 +117,14 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showStopFromPatternPage" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.stopURL = showStopsInfo(stopId: orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId! , routeType: myRouteType)
             page2.routeType = myRouteType
             page2.stopId = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId!
             page2.stopSuburb = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopLocation!.suburb ?? ""
             page2.stopName = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopName!
             page2.managedContext = CoreDataStack().managedContext
+            print(routeTableView.indexPathForSelectedRow!.row)
+            //车站cell和跳转结果不同 22May
+            print("stopId:\(orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId!),StopName:\(orderedStop[routeTableView.indexPathForSelectedRow!.row].stopName!)")
         }
         if segue.identifier == "showRouteDisruption"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
