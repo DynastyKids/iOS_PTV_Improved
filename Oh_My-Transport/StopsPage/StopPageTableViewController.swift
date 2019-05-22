@@ -21,6 +21,7 @@ class StopPageTableViewController: UITableViewController {
     var routeType: Int = 0
     var stopName: String = ""
     var stopSuburb: String = ""
+    var routeId: Int = -1
     
     var departureData: [Departure] = []
     var routeInfo: [RouteWithStatus] = []
@@ -49,10 +50,12 @@ class StopPageTableViewController: UITableViewController {
             }
             }.resume()
         
-
-        print("Next Depart URL:\(nextDepartureURL(routeType: routeType, stopId: stopId))")
-        
-        _ = URLSession.shared.dataTask(with: URL(string: nextDepartureURL(routeType: routeType, stopId: stopId))!) { (data, response, error) in
+        var nextDepart = nextDepartureURL(routeType: routeType, stopId: stopId)
+        if routeId != -1 {
+            nextDepart = showRouteDepartureOnStop(routeType: routeType, stopId: stopId, routeId: routeId)
+            routeId = -1
+        }
+        _ = URLSession.shared.dataTask(with: URL(string: nextDepart)!) { (data, response, error) in
             if let error = error {
                 print("Download failed: \(String(describing: error))")
                 return
