@@ -386,7 +386,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         // Pass the selected object to the new view controller.
         if segue.identifier == "showNearByStop" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.stopURL = showStopsInfo(stopId: (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId! , routeType: (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType! )
             page2.routeType = (nearbyStops[tableView.indexPathForSelectedRow!.row]).routeType!
             page2.stopId = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId!
             page2.stopSuburb = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopSuburb!
@@ -395,7 +394,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         }
         if segue.identifier == "showSavedStop"{
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.stopURL = showStopsInfo(stopId: (stopId[(tableView.indexPathForSelectedRow!.row)]), routeType: (routeType[(tableView.indexPathForSelectedRow!.row)]))
             page2.routeType = (routeType[(tableView.indexPathForSelectedRow!.row)])
             page2.stopId = (stopId[(tableView.indexPathForSelectedRow!.row)])
             page2.stopSuburb = stopSuburb[(tableView.indexPathForSelectedRow?.row)!]
