@@ -88,7 +88,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
         // Initalize Core Data fetch
         stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
-//        stopFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
+        stopFetchedResultsController.delegate = self
         do {
             try stopFetchedResultsController.performFetch()
         } catch{
@@ -100,7 +100,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
         routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
         routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        routeFetchedResultsController.delegate = self as? NSFetchedResultsControllerDelegate
+        routeFetchedResultsController.delegate = self
         do {
             try routeFetchedResultsController.performFetch()
         } catch {
@@ -164,7 +164,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                             
                             DispatchQueue.main.async {
                                 if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3){
-                                    let str: String = self.nextRouteInfo0!.GtfsId!
+                                    let str: String = self.nextRouteInfo0!.GtfsId ?? (self.nextRouteInfo0?.routeName)!
                                     let start = str.index(str.startIndex, offsetBy: 2)
                                     cell.departure0Route.text = String(str[start...])
                                 } else {
@@ -190,7 +190,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                             
                             DispatchQueue.main.async {
                                 if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3){
-                                    let str: String = self.nextRouteInfo1!.GtfsId!
+                                    let str: String = self.nextRouteInfo1!.GtfsId ?? (self.nextRouteInfo1?.routeName)!
                                     let start = str.index(str.startIndex, offsetBy: 2)
                                     cell.departure1Route.text = String(str[start...])
                                 } else {
@@ -216,7 +216,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                             
                             DispatchQueue.main.async {
                                 if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3){
-                                    let str: String = self.nextRouteInfo1!.GtfsId!
+                                    let str: String = self.nextRouteInfo2!.GtfsId ?? (self.nextRouteInfo2?.routeName)!
                                     let start = str.index(str.startIndex, offsetBy: 2)
                                     cell.departure2Route.text = String(str[start...])
                                 } else {
@@ -378,6 +378,45 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
         }
         return sectionName
     }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.section == 1{
+            let action = UIContextualAction(style: .destructive, title: "Remove"){(action, view, completion) in
+                print("indexPath = \(indexPath)")
+                let OverrideIndexPath = IndexPath(row: indexPath.row, section: 0)
+                let item = self.stopFetchedResultsController.object(at: OverrideIndexPath)
+                self.stopFetchedResultsController.managedObjectContext.delete(item)
+                do{
+                    try self.stopFetchedResultsController.managedObjectContext.save()
+                    completion(true)
+                } catch{
+                    print("Delete failed:\(error)")
+                }
+            }
+            action.backgroundColor = UIColor.red
+            return UISwipeActionsConfiguration(actions: [action])
+        }
+        if indexPath.section == 2{
+            let action = UIContextualAction(style: .destructive, title: "Remove"){(action, view, completion) in
+                let OverrideIndexPath = IndexPath(row: indexPath.row, section: 0)
+                let item = self.routeFetchedResultsController.object(at: OverrideIndexPath)
+                self.routeFetchedResultsController.managedObjectContext.delete(item)
+                do{
+                    try self.routeFetchedResultsController.managedObjectContext.save()
+                    completion(true)
+                } catch{
+                    print("Delete failed:\(error)")
+                }
+            }
+            action.backgroundColor = UIColor.red
+            return UISwipeActionsConfiguration(actions: [action])
+        }
+        
+        let action = UIContextualAction(style: .destructive, title: "Nothing", handler:{_, _, completion in
+            completion(true)
+        })
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -390,7 +429,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             page2.stopId = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopId!
             page2.stopSuburb = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopSuburb!
             page2.stopName = (nearbyStops[tableView.indexPathForSelectedRow!.row]).stopName!
-            page2.managedContext = coreDataStack.managedContext
+            page2.managedContext = stopFetchedResultsController.managedObjectContext
         }
         if segue.identifier == "showSavedStop"{
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
@@ -398,7 +437,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             page2.stopId = (stopId[(tableView.indexPathForSelectedRow!.row)])
             page2.stopSuburb = stopSuburb[(tableView.indexPathForSelectedRow?.row)!]
             page2.stopName = stopName[(tableView.indexPathForSelectedRow?.row)!]
-            page2.managedContext = coreDataStack.managedContext
+            page2.managedContext = stopFetchedResultsController.managedObjectContext
             page2.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         if segue.identifier == "routeDirectionSegue"{
@@ -425,5 +464,46 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error while get user location:\(error)")
+    }
+}
+
+extension homePageContainerTableViewController: NSFetchedResultsControllerDelegate{
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                print("Insert at:\(indexPath)")
+                var overrideIndexPath = indexPath
+                if controller == stopFetchedResultsController{
+                     overrideIndexPath = IndexPath(row: indexPath.row, section: 1)
+                }
+                if controller == routeFetchedResultsController{
+                    overrideIndexPath = IndexPath(row: indexPath.row, section: 2)
+                }
+                tableView.insertRows(at: [overrideIndexPath], with: .automatic)
+            }
+        case .delete:
+            if let indexPath = indexPath {
+                print("Delete at:\(indexPath)")
+                var overrideIndexPath = indexPath
+                if controller == stopFetchedResultsController{
+                    overrideIndexPath = IndexPath(row: indexPath.row, section: 1)
+                }
+                if controller == routeFetchedResultsController{
+                    overrideIndexPath = IndexPath(row: indexPath.row, section: 2)
+                }
+                tableView.deleteRows(at: [overrideIndexPath], with: .automatic)
+            }
+        default:
+            break
+        }
     }
 }
