@@ -488,6 +488,116 @@ struct VechicleDescriptor: Codable{
     }
 }
 
+/*
+    Search
+ 
+    GET /v3/search/{search_term}        View stops, routes and myki ticket outlets that match the search term
+ */
+struct SearchResult: Codable {
+    var stops: ResultStop?
+    var routes: ResultRoute?
+    var outlets: ResultOutlet?
+    var status: Status?
+    private enum CodingKeys: String, CodingKey{
+        case stops
+        case routes
+        case outlets
+        case status
+    }
+}
+
+struct ResultStop: Codable {
+    var stopDistance: Int?
+    var stopSuburb: String?
+    var stopName: String?
+    var stopId: Int?
+    var routeType: Int?
+    var stopLatitude: Double?
+    var stopLongitude: Double?
+    var stopSequence: Int?
+    private enum CodingKeys: String, CodingKey{
+        case stopDistance = "stop_distance"
+        case stopSuburb = "stop_suburb"
+        case stopName = "stop_name"
+        case stopId = "stop_id"
+        case routeType = "route_type"
+        case stopLatitude = "stop_latitude"
+        case stopLongitude = "stop_longitude"
+        case stopSequence = "stop_sequence"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.stopDistance = try? container.decode(Int.self, forKey: .stopDistance)
+        self.stopSuburb = try? container.decode(String.self, forKey: .stopSuburb)
+        self.stopName = try? container.decode(String.self, forKey: .stopName)
+        self.stopId = try? container.decode(Int.self, forKey: .stopId)
+        self.routeType = try? container.decode(Int.self, forKey: .routeType)
+        self.stopLatitude = try? container.decode(Double.self, forKey: .stopLatitude)
+        self.stopLongitude = try? container.decode(Double.self, forKey: .stopLongitude)
+        self.stopSequence = try? container.decode(Int.self, forKey: .stopSequence)
+    }
+}
+
+struct ResultRoute: Codable {
+    var routeName: String?
+    var routeNumber: String?
+    var routeType: Int?
+    var routeId: Int?
+    var routeGtfsId: String?
+    var routeServiceStatus: RouteServiceStatus?
+    private enum CodingKeys: String, CodingKey{
+        case routeName = "route_name"
+        case routeNumber = "route_number"
+        case routeType = "route_type"
+        case routeId = "route_id"
+        case routeGtfsId = "route_gtfs_id"
+        case routeServiceStatus = "route_service_status"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.routeName = try? container.decode(String.self, forKey: .routeName)
+        self.routeNumber = try? container.decode(String.self, forKey: .routeNumber)
+        self.routeType = try? container.decode(Int.self, forKey: .routeType)
+        self.routeId = try? container.decode(Int.self, forKey: .routeId)
+        self.routeGtfsId = try? container.decode(String.self, forKey: .routeGtfsId)
+        self.routeServiceStatus = try? container.decode(RouteServiceStatus.self, forKey: .routeServiceStatus)
+    }
+}
+
+struct ResultOutlet: Codable{
+    var outletDistance: Double?
+    var outletSlidSpid: String?
+    var outletName: String?
+    var outeletBusiness: String?
+    var outletLatitude: Double?
+    var outletLongitude: Double?
+    var outletSuburb: String?
+    var outletPostcode: Int?
+    var outletNotes: String?
+    private enum CodingKeys: String, CodingKey{
+        case outletDistance = "outlet_distance"
+        case outletSlidSpid = "outlet_slid_spid"
+        case outletName = "outlet_name"
+        case outeletBusiness = "outelet_business"
+        case outletLatitude = "outlet_latitude"
+        case outletLongitude = "outlet_longitude"
+        case outletSuburb = "outlet_suburb"
+        case outletPostcode = "outlet_postcode"
+        case outletNotes = "outlet_.notes"
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.outletDistance = try? container.decode(Double.self, forKey: .outletDistance)
+        self.outletSlidSpid = try? container.decode(String.self, forKey: .outletSlidSpid)
+        self.outletName = try? container.decode(String.self, forKey: .outletName)
+        self.outeletBusiness = try? container.decode(String.self, forKey: .outeletBusiness)
+        self.outletLatitude = try? container.decode(Double.self, forKey: .outletLatitude)
+        self.outletLongitude = try? container.decode(Double.self, forKey: .outletLongitude)
+        self.outletSuburb = try? container.decode(String.self, forKey: .outletSuburb)
+        self.outletPostcode = try? container.decode(Int.self, forKey: .outletPostcode)
+        self.outletNotes = try? container.decode(String.self, forKey: .outletNotes)
+    }
+}
 
 /*
     Stops
@@ -550,16 +660,16 @@ struct stopResposeByStopId: Codable{
 }
 
 struct StopDetails: Codable{
-    var disruptionIds: [Int]?  // (Array[integer], optional): Disruption information identifier(s) ,
-    var stationType: String?   // (string, optional): Type of metropolitan train station (i.e. "Premium", "Host" or "Unstaffed" station); returns null for V/Line train ,
-    var stationDescription: String?    // (string, optional): The definition applicable to the station_type; returns null for V/Line train ,
-    var routeType: Int?    // (integer, optional): Transport mode identifier ,
-    var stopLocation: StopLocation? //(V3.StopLocation, optional): Location details of the stop ,
-//    var stop_amenities (V3.StopAmenityDetails, optional): Amenity and facility details at the stop ,
+    var disruptionIds: [Int]?       // (Array[integer], optional): Disruption information identifier(s) ,
+    var stationType: String?        // (string, optional): Type of metropolitan train station (i.e. "Premium", "Host" or "Unstaffed" station); returns null for V/Line
+    var stationDescription: String?                 // (string, optional): The definition applicable to the station_type; returns null for V/Line train ,
+    var routeType: Int?             // (integer, optional): Transport mode identifier ,
+    var stopLocation: StopLocation?                 //(V3.StopLocation, optional): Location details of the stop ,
+    var stop_amenities: StopAmenityDetails?         //(V3.StopAmenityDetails, optional): Amenity and facility details at the stop ,
 //    var stop_accessibility (V3.StopAccessibility, optional): Facilities relating to the accessibility of the stop ,
 //    var stop_staffing (V3.StopStaffing, optional): Staffing details for the stop ,
-    var stopId: Int?   // (integer, optional): Stop identifier ,
-    var stopName: String?  // (string, optional): Name of stop
+    var stopId: Int?                // (integer, optional): Stop identifier ,
+    var stopName: String?           // (string, optional): Name of stop
     private enum CodingKeys: String, CodingKey{
         case disruptionIds = "disruption_ids"
         case stationType = "station_type"
@@ -588,6 +698,19 @@ struct StopDetails: Codable{
         self.stopLocation = stopLocation
         self.stopId = stopId
         self.stopName = stopName
+    }
+}
+
+struct StopAmenityDetails: Codable{
+    var toliet: Bool?
+    var taxiRank: Bool?
+    var carParking: String?
+    var cctv: Bool?
+    private enum CodingKeys: String, CodingKey{
+        case toliet
+        case taxiRank = "taxi_rank"
+        case carParking = "car_parking"
+        case cctv
     }
 }
 
@@ -643,7 +766,6 @@ struct stopOnRoute: Codable {
     var stopLatitude: Double?
     var stopLongtitude: Double?
     var stopSequence: Int?
-    
     private enum CodingKeys: String, CodingKey{
         case stopSuburb = "stop_suburb"
         case stopName = "stop_name"
@@ -653,7 +775,6 @@ struct stopOnRoute: Codable {
         case stopLongtitude = "stop_longitude"
         case stopSequence = "stop_sequence"
     }
-    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.stopSuburb = try? container.decode(String.self, forKey: .stopSuburb)
