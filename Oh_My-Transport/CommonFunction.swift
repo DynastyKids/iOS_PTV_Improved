@@ -160,11 +160,6 @@ public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int, 
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
-public func nextr3DepartureFromStop(routeType: Int, stopId: Int) -> String{     // (Showing next 3 departures) View departures for all routes from a stop
-    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=3&devid="+HARDCODEDDEVID
-    return extractedFunc(request)
-}
-
 public func nextDepartureURL(routeType: Int, stopId: Int) -> String{            // View departures for all routes from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=200&devid="+HARDCODEDDEVID
     return extractedFunc(request)
