@@ -137,16 +137,17 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                                         }
                                         do{
                                             let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
+                                            let allDepartures = nextDepartureData.departures
                                             count = 0
-                                            for each in nextDepartureData.departures{
-                                                let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: each.scheduledDepartureUTC!))).minute ?? 0
+                                            for each in allDepartures{
+                                                let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (allDepartures[count].estimatedDepartureUTC ?? (allDepartures[count].scheduledDepartureUTC ?? nil)!)))).minute ?? 0
                                                 if differences >= 0 {
-                                                    self.nextDepartureTime.append(nextDepartureData.departures[count].estimatedDepartureUTC ?? nextDepartureData.departures[count].scheduledDepartureUTC!)
-                                                    self.nextDepartureTime.append(nextDepartureData.departures[count+1].estimatedDepartureUTC ?? nextDepartureData.departures[count+1].scheduledDepartureUTC!)
-                                                    self.nextDepartureTime.append(nextDepartureData.departures[count+2].estimatedDepartureUTC ?? nextDepartureData.departures[count+2].scheduledDepartureUTC!)
+                                                    self.nextDepartureTime.append(allDepartures[count].estimatedDepartureUTC ?? (allDepartures[count].scheduledDepartureUTC ?? nil)!)
+                                                    self.nextDepartureTime.append(allDepartures[count+1].estimatedDepartureUTC ?? (allDepartures[count+1].scheduledDepartureUTC ?? nil)!)
+                                                    self.nextDepartureTime.append(allDepartures[count+2].estimatedDepartureUTC ?? (allDepartures[count+2].scheduledDepartureUTC ?? nil)!)
                                                     break
                                                 }
-                                                count += 3
+                                                count += 1
                                             }
                                             DispatchQueue.main.async {
                                                 self.directionsTableView.reloadData()
