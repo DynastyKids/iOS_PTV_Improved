@@ -136,7 +136,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             
             
             // Fetching data inside (Departure time)
-            _ = URLSession.shared.dataTask(with: URL(string: nextr3DepartureFromStop(routeType: nearbystops.routeType!, stopId: nearbystops.stopId!))!){ (data, response, error) in
+            _ = URLSession.shared.dataTask(with: URL(string: nextDepartureURL(routeType: nearbystops.routeType!, stopId: nearbystops.stopId!))!){ (data, response, error) in
                 if error != nil {
                     print("Next departure fetch failed:\(error!)")
                     return
@@ -251,7 +251,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
             routeType.append(Int(savedStop.routeType))
             
             // Fetching data inside (Departure time)
-            _ = URLSession.shared.dataTask(with: URL(string: nextr3DepartureFromStop(routeType: Int(savedStopType), stopId: Int(savedStopId)))!){ (data, response, error) in
+            _ = URLSession.shared.dataTask(with: URL(string: nextDepartureURL(routeType: Int(savedStopType), stopId: Int(savedStopId)))!){ (data, response, error) in
                 if error != nil {
                     print("Next departure fetch failed:\(error!)")
                     return
@@ -276,8 +276,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                             let decoder = JSONDecoder()
                             let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo0 = nextRouteData.route!
-                            
-                            DispatchQueue.main.async {
                                 if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3){
                                     let str: String = self.nextRouteInfo0!.GtfsId!
                                     let start = str.index(str.startIndex, offsetBy: 2)
@@ -287,7 +285,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                 }
                                 cell.departure0Route.textColor = UIColor.white
                                 cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo0?.routeType!)!)
-                            }
                         }catch{
                             print("Error:\(error)")
                         }
@@ -302,8 +299,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                             let decoder = JSONDecoder()
                             let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo1 = nextRouteData.route!
-                            
-                            DispatchQueue.main.async {
                                 if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3){
                                     let str: String = self.nextRouteInfo1!.GtfsId!
                                     let start = str.index(str.startIndex, offsetBy: 2)
@@ -313,7 +308,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                 }
                                 cell.departure1Route.textColor = UIColor.white
                                 cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo1?.routeType!)!)
-                            }
                         }catch{
                             print("Error:\(error)")
                         }
@@ -328,8 +322,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                             let decoder = JSONDecoder()
                             let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo2 = nextRouteData.route!
-                            
-                            DispatchQueue.main.async {
                                 if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3){
                                     let str: String = self.nextRouteInfo2!.GtfsId!
                                     let start = str.index(str.startIndex, offsetBy: 2)
@@ -339,7 +331,6 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                                 }
                                 cell.departure2Route.textColor = UIColor.white
                                 cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo2?.routeType!)!)
-                            }
                         }catch{
                             print("Error:\(error)")
                         }
