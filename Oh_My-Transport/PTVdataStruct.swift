@@ -124,6 +124,13 @@ struct DirectionWithDescription: Codable {
         self.routeId = try? container.decode(Int.self, forKey: .routeId)
         self.routeType = try? container.decode(Int.self, forKey: .routeType)
     }
+    init(routeDirectionDescription: String?, directionId: Int?, directionName: String?, routeId: Int?, routeType: Int?) {
+        self.routeDirectionDescription = routeDirectionDescription
+        self.directionId = directionId
+        self.directionName = directionName
+        self.routeId = routeId
+        self.routeType = routeType
+    }
 }
 
 
@@ -244,6 +251,24 @@ struct Disruption: Codable{
         self.colour = try? container.decode(String.self, forKey: .colour)
         self.displayOnBoard = try? container.decode(Bool.self, forKey: .displayOnBoard)
         self.displayStatus = try? container.decode(Bool.self, forKey: .displayStatus)
+    }
+    
+    init(disruptionId: Int?,title: String?, url: String?, description: String?, disruptionStatus: String?, disruptionType: String?, publishDate:String?, updateDate: String?, startDate: String?, endDate:String?) {
+        self.disruptionId = disruptionId
+        self.title = title
+        self.url = url
+        self.description = description
+        self.disruptionStatus = disruptionStatus
+        self.disruptionType = disruptionType
+        self.publishDate = publishDate
+        self.updateDate = updateDate
+        self.startDate = startDate
+        self.endDate = endDate
+        self.routes = nil
+        self.stops = nil
+        self.colour = nil
+        self.displayOnBoard = nil
+        self.displayStatus = nil
     }
 }
 struct DisruptionRoute: Codable{
