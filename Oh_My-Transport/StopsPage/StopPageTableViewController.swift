@@ -17,8 +17,8 @@ class StopPageTableViewController: UITableViewController {
     var managedContext: NSManagedObjectContext!
     var stops: FavStop?
     
-    var stopId: Int = 0
-    var routeType: Int = 0
+    var stopId: Int = 0             // This value require passed from last segue
+    var routeType: Int = 0          // This value require passed from last segue
     var stopName: String = ""
     var stopSuburb: String = ""
     var routeId: Int = -1
@@ -34,9 +34,7 @@ class StopPageTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Value Received: StopId:\(stopId), StopName:\(stopName), StopSuburb:\(stopSuburb)")
-        //Get the stop name
-        _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: stopId, routeType: routeType))!) { (data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: stopId, routeType: routeType))!) { (data, response, error) in    //Get the stop name, stop suburb
             if let error = error {
                 print("Download failed: \(String(describing: error))")
                 return
@@ -45,6 +43,9 @@ class StopPageTableViewController: UITableViewController {
                 let stopDetail = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
                 DispatchQueue.main.async {
                     self.stopName = (stopDetail.stop?.stopName)!
+                    self.stopSuburb = stopDetail.stop?.stopLocation?.suburb ?? ""
+                    print("Value Received: StopId:\(self.stopId), StopName:\(self.stopName), StopSuburb:\(self.stopSuburb)")
+                    self.tableView.reloadData()
                 }
             } catch {
                 print("Error:"+error.localizedDescription)

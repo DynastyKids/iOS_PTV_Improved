@@ -340,7 +340,7 @@ struct PatternResponse: Codable {
     var departures: [Departure]?
 //    var stops: [StopGeosearch]?
 //    var routes: [RouteWithStatus]?
-//    var runs: Run?
+//    var runs: [Run]?
 //    var directions: [DirectionWithDescription]?
     var status: Status?
     

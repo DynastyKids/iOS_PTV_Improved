@@ -118,9 +118,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         if segue.identifier == "showStopFromPatternPage" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.routeType = myRouteType
-            page2.stopId = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId!
-            page2.stopSuburb = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopLocation!.suburb ?? ""
-            page2.stopName = orderedStop[routeTableView.indexPathForSelectedRow!.row].stopName!
+            page2.stopId = departsData[routeTableView.indexPathForSelectedRow!.row].stopsId!
             page2.managedContext = CoreDataStack().managedContext
             print(routeTableView.indexPathForSelectedRow!.row)
             //车站cell和跳转结果不同 22May
@@ -158,14 +156,13 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
         if indexPath.section == 1 {     // Section 1 (Stops)
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
-            let departuredata = departsData[indexPath.row]
-            let cellDepartureTime = departuredata.estimatedDepartureUTC ?? departuredata.scheduledDepartureUTC ?? nil!
+            let cellDepartureTime = departsData[indexPath.row].estimatedDepartureUTC ?? departsData[indexPath.row].scheduledDepartureUTC ?? nil!
             //        let cellFlag = departuredata.flags
             
             // Fetching Stop name
             var count = 0
             for each in dictonaryStopId {
-                if (each == departuredata.stopsId){     // Due to retrieve data unordered, match data to be present
+                if (each == departsData[indexPath.row].stopsId){     // Due to retrieve data unordered, match data to be present
                     cell.routeStopNameLabel.text = dictonaryStopName[count]
                     let coordinate = Gps(latitude: dictonaryStopLatitude[count], longitude: dictonaryStopLongitude[count])
                     let stopLocation = StopLocation(gps: coordinate, suburb: dictonaryStopSuburb[count])
