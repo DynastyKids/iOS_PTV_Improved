@@ -9,6 +9,11 @@
 import UIKit
 
 class SearchOutletsTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var businessNameLabel: UILabel!
+    @IBOutlet weak var businessAddressLabel: UILabel!
+    @IBOutlet weak var businessSuburbLabel: UILabel!
+    @IBOutlet weak var businessDistanceLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
