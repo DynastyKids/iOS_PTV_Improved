@@ -9,8 +9,13 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class DirectionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate {
+    
+    // MARK: - CoreData Properties
+    var managedContext: NSManagedObjectContext!
+    var stops: FavStop?
     
     let locationManager = CLLocationManager()
     var nslock = NSLock()
@@ -29,13 +34,12 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var userPosition = CLLocation(latitude: 0.00, longitude: 0.00)
     
     var routeId: Int = 12753                // Testing value, rely on last page segue passing value to this page
-    var routeName: String = ""
+    var routeName: String?
     var routeType: Int = 2                  // Testing value, rely on last page segue passing value to this page
     var runs: [Run] = []
     
     @IBOutlet weak var directionsTableView: UITableView!
     @IBOutlet weak var routeMapView: MKMapView!
-    @IBOutlet weak var saveRouteButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -53,6 +57,31 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         self.locationManager.startUpdatingLocation()
+        
+        _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: routeId))!){ (data, response, error) in
+            if error != nil{
+                print("Route running data fetch failed")
+                return
+            }
+            do {
+                let routeData = try JSONDecoder().decode(RouteResponse.self, from: data!)
+                self.routeName = routeData.route?.routeNumber
+                DispatchQueue.main.async {
+                    if self.routeName == nil{
+                        self.routeName = routeData.route?.routeName
+                        if self.routeName == nil {
+                            self.navigationItem.title = ""
+                        }else{
+                            self.navigationItem.title = "Route: \(self.routeName!)"
+                        }
+                    }else{
+                        self.navigationItem.title = "Route: \(self.routeName!)"
+                    }
+                }
+            } catch {
+                print("Error:\(error)")
+            }
+        }.resume()
         
         // Checking Runs(Destination may different) - Using runid to check stop patterns - using pattern's stop to find nearest stops
         _ = URLSession.shared.dataTask(with: URL(string: showRouteRuns(routeId: routeId))!){ (data, response, error) in
@@ -139,7 +168,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                                             let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                                             let allDepartures = nextDepartureData.departures
                                             count = 0
-                                            for each in allDepartures!{
+                                            for _ in allDepartures!{
                                                 let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (allDepartures![count].estimatedDepartureUTC ?? (allDepartures![count].scheduledDepartureUTC ?? nil)!)))).minute ?? 0
                                                 if differences >= 0 {
                                                     self.nextDepartureTime.append(allDepartures![count].estimatedDepartureUTC ?? (allDepartures![count].scheduledDepartureUTC ?? nil)!)
@@ -215,7 +244,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                     self.disruptiondata = (disruptionData.disruptions?.nightbus)!
                 }
                 DispatchQueue.main.async {
-                    self.navigationItem.title = self.routeName
                     self.directionsTableView.reloadData()
                 }
             }
@@ -289,6 +317,18 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         locationManager.stopUpdatingLocation()
+    }
+    
+    @IBAction func saveRoute(_ sender: Any) {
+        let route = FavRoute(context: managedContext)
+        route.routeId = Int32(routeId)
+        route.routeType = Int32(routeType)
+        do {
+            try managedContext?.save()
+            let _ = navigationController?.popViewController(animated: true)
+        } catch {
+            print("Error to save route")
+        }
     }
     
     // MARK: - Functions for MapView

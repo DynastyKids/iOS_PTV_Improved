@@ -351,13 +351,51 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             return cell
             
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "savedRouteCell", for: indexPath) as! savedRouteTableViewCell
-        let readIndexPath = IndexPath(row: indexPath.row, section: 0)
-        let savedRoute = routeFetchedResultsController.object(at: readIndexPath)
-        cell.routeNumberLabel.text = savedRoute.routeNumber
-        cell.routeNameLabel.text = savedRoute.routeName
-        //        cell.routeTypeImage = savedRoute.routeType
-        
+        if indexPath.section == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "savedRouteCell", for: indexPath) as! savedRouteTableViewCell
+            let readIndexPath = IndexPath(row: indexPath.row, section: 0)
+            let savedRoute = routeFetchedResultsController.object(at: readIndexPath)
+            let routeType = Int(savedRoute.routeType)
+            _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: Int(savedRoute.routeId)))!){ (data, response, error) in
+                if error != nil {
+                    print("Next departure fetch failed:\(error!)")
+                    return
+                }
+                do{
+                    let routeInfo = try JSONDecoder().decode(RouteResponse.self, from: data!)
+                    DispatchQueue.main.async {
+                        cell.routeNameLabel.text = routeInfo.route?.routeName
+                        switch routeType{
+                        case 0:
+                            let routeName: String = routeInfo.route?.GtfsId ?? (routeInfo.route?.routeName)!
+                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                            cell.routeNameLabel.text = String(routeName[cuttedName...])
+                            cell.routeTypeImage.image = UIImage(named: "trainIcon_PTVColour")
+                        case 1:
+                            cell.routeNumberLabel.text = routeInfo.route?.routeNumber
+                            cell.routeTypeImage.image = UIImage(named: "tramIcon_PTVColour")
+                        case 2:
+                            cell.routeNumberLabel.text = routeInfo.route?.routeNumber
+                            cell.routeTypeImage.image = UIImage(named: "busIcon_PTVColour")
+                        case 3:
+                            let routeName: String = routeInfo.route?.GtfsId ?? (routeInfo.route?.routeName)!
+                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                            cell.routeNameLabel.text = String(routeName[cuttedName...])
+                            cell.routeTypeImage.image = UIImage(named: "regionalTrainIcon_PTVColour")
+                        case 4:
+                            cell.routeNumberLabel.text = routeInfo.route?.routeNumber
+                            cell.routeTypeImage.image = UIImage(named: "busIcon_PTVColour")
+                        default:
+                            break
+                        }
+                    }
+                } catch {
+                    print("Error:\(error)")
+                }
+            }.resume()
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NotExist", for: indexPath)
         return cell
     }
     
@@ -424,16 +462,12 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.routeType = (nearbyStops[homeTableView.indexPathForSelectedRow!.row]).routeType!
             page2.stopId = (nearbyStops[homeTableView.indexPathForSelectedRow!.row]).stopId!
-            page2.stopSuburb = (nearbyStops[homeTableView.indexPathForSelectedRow!.row]).stopSuburb!
-            page2.stopName = (nearbyStops[homeTableView.indexPathForSelectedRow!.row]).stopName!
             page2.managedContext = stopFetchedResultsController.managedObjectContext
         }
         if segue.identifier == "showSavedStop"{
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.routeType = (routeType[(homeTableView.indexPathForSelectedRow!.row)])
             page2.stopId = (stopId[(homeTableView.indexPathForSelectedRow!.row)])
-            page2.stopSuburb = stopSuburb[(homeTableView.indexPathForSelectedRow?.row)!]
-            page2.stopName = stopName[(homeTableView.indexPathForSelectedRow?.row)!]
             page2.managedContext = stopFetchedResultsController.managedObjectContext
             page2.navigationItem.rightBarButtonItem?.isEnabled = false
         }
@@ -442,6 +476,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             let readIndexPath = IndexPath(row: homeTableView.indexPathForSelectedRow!.row, section: 0)
             let savedRoute = routeFetchedResultsController.object(at: readIndexPath)
             page2.routeId = Int(savedRoute.routeId)
+            page2.managedContext = routeFetchedResultsController.managedObjectContext
             
         }
         if segue.identifier == "showAllDisruptions"{
