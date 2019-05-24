@@ -226,6 +226,10 @@ public func showSearchResults(searchTerm: String) -> String{            // View 
     let request: String = "/v3/search/\(searchTerm)?devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
+public func showSearchResults(searchTerm: String, latitude: Double, longitude: Double) -> String{   // View stops, routes and myki ticket outlets that match the search term
+    let request: String = "/v3/search/\(searchTerm)?latitude=\(latitude)&longitude=\(longitude)&devid="+HARDCODEDDEVID
+    return extractedFunc(request)
+}
 
 // Stops
 public func showStopsInfo(stopId: Int, routeType: Int) -> String{       // View facilities at a specific stop (Metro and V/Line stations only)
