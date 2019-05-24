@@ -33,8 +33,8 @@ struct Status: Codable {
     GET /v3/departures/route_type/{route_type}/stop/{stop_id}
 */
 struct DeparturesResponse: Codable {
-    var departures: [Departure]
-    var status: Status
+    var departures: [Departure]?
+    var status: Status?
     
     private enum CodingKeys: String, CodingKey{
         case departures
@@ -50,7 +50,7 @@ struct Departure: Codable{
     var disruptionIds: [Int]?
     var scheduledDepartureUTC: String?
     var estimatedDepartureUTC: String?
-    var atPlatform: Bool
+    var atPlatform: Bool?
     var platformNumber: String?
     var flags: String?      //    flag indicating special condition for run (e.g. RR Reservations Required, GC Guaranteed Connection, DOO Drop Off Only, PUO Pick Up Only, MO Mondays only, TU Tuesdays only, WE Wednesdays only, TH Thursdays only, FR Fridays only, SS School days only; ignore E flag) ,
     var departureSequence: Int?
@@ -77,7 +77,7 @@ struct Departure: Codable{
         self.disruptionIds = try? container.decode([Int].self, forKey: .disruptionIds)
         self.scheduledDepartureUTC = try? container.decode(String.self, forKey: .scheduledDepartureUTC)
         self.estimatedDepartureUTC = try? container.decode(String.self, forKey: .estimatedDepartureUTC)
-        self.atPlatform = try container.decode(Bool.self, forKey: .atPlatform)
+        self.atPlatform = try? container.decode(Bool.self, forKey: .atPlatform)
         self.platformNumber = try? container.decode(String.self, forKey: .platformNumber)
         self.flags = try? container.decode(String.self, forKey: .flags)
         self.departureSequence = try? container.decode(Int.self, forKey: .departureSequence)

@@ -143,7 +143,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                 }
                 do{
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    self.departureSequence = nextDepartureData.departures
+                    self.departureSequence = nextDepartureData.departures!
                     DispatchQueue.main.async {
                         cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
                         cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
@@ -258,7 +258,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                 }
                 do{
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    self.departureSequence = nextDepartureData.departures
+                    self.departureSequence = nextDepartureData.departures!
                     DispatchQueue.main.async {
                         cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
                         cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)

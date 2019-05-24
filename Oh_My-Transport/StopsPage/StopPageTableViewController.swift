@@ -63,7 +63,7 @@ class StopPageTableViewController: UITableViewController {
             do {
                 // Data recieved.  Decode it from JSON.
                 let showDeparture = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                self.departureData = showDeparture.departures
+                self.departureData = showDeparture.departures!
                 DispatchQueue.main.async {
                     self.tableView.reloadData() // Details data will be loaded when loading cell
                 }
