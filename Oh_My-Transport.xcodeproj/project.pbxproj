@@ -27,6 +27,9 @@
 		5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */; };
 		5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */; };
 		5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */; };
+		5AEEE8792297B8D500EF6D83 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEE8782297B8D500EF6D83 /* SearchTableViewController.swift */; };
+		5AEEE87C2297B95100EF6D83 /* SearchRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEE87B2297B95100EF6D83 /* SearchRouteTableViewCell.swift */; };
+		5AEEE87E2297B96700EF6D83 /* SearchStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEE87D2297B96700EF6D83 /* SearchStopsTableViewCell.swift */; };
 		5AEF7DC3229196A50087C087 /* FavRoute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DBD229196A50087C087 /* FavRoute+CoreDataClass.swift */; };
 		5AEF7DC4229196A50087C087 /* FavRoute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DBE229196A50087C087 /* FavRoute+CoreDataProperties.swift */; };
 		5AEF7DC5229196A50087C087 /* APIInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DBF229196A50087C087 /* APIInfo+CoreDataClass.swift */; };
@@ -65,6 +68,9 @@
 		5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionsTableViewController.swift; sourceTree = "<group>"; };
 		5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionDetailViewController.swift; sourceTree = "<group>"; };
 		5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStopOnMapViewController.swift; sourceTree = "<group>"; };
+		5AEEE8782297B8D500EF6D83 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		5AEEE87B2297B95100EF6D83 /* SearchRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouteTableViewCell.swift; sourceTree = "<group>"; };
+		5AEEE87D2297B96700EF6D83 /* SearchStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStopsTableViewCell.swift; sourceTree = "<group>"; };
 		5AEF7DBD229196A50087C087 /* FavRoute+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5AEF7DBE229196A50087C087 /* FavRoute+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5AEF7DBF229196A50087C087 /* APIInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -110,6 +116,7 @@
 		5A331BF522731FAF00467C8B /* Oh_My-Transport */ = {
 			isa = PBXGroup;
 			children = (
+				5AEEE87A2297B8E300EF6D83 /* SearchPage */,
 				5A85D5B62290845A00E01AD9 /* RoutePage */,
 				5A7B1B0F227F04590012E09C /* HomePage */,
 				5A7B1AF4227EE91D0012E09C /* DataModel */,
@@ -188,6 +195,16 @@
 			path = StopsPage;
 			sourceTree = "<group>";
 		};
+		5AEEE87A2297B8E300EF6D83 /* SearchPage */ = {
+			isa = PBXGroup;
+			children = (
+				5AEEE8782297B8D500EF6D83 /* SearchTableViewController.swift */,
+				5AEEE87B2297B95100EF6D83 /* SearchRouteTableViewCell.swift */,
+				5AEEE87D2297B96700EF6D83 /* SearchStopsTableViewCell.swift */,
+			);
+			path = SearchPage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -260,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AEF7DC6229196A50087C087 /* APIInfo+CoreDataProperties.swift in Sources */,
+				5AEEE87C2297B95100EF6D83 /* SearchRouteTableViewCell.swift in Sources */,
 				5AEF7DD02291C2900087C087 /* savedStopsTableViewCell.swift in Sources */,
 				5A85D5BC2290850100E01AD9 /* RoutesDisruptionsTableViewCell.swift in Sources */,
 				5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */,
@@ -278,6 +296,7 @@
 				5AEF7DCE2291BF590087C087 /* HomepageViewController.swift in Sources */,
 				5A85D5BA229084CD00E01AD9 /* RouteDetailsViewController.swift in Sources */,
 				5A2CB6BD2288254A009A3A13 /* PTVdataStruct.swift in Sources */,
+				5AEEE87E2297B96700EF6D83 /* SearchStopsTableViewCell.swift in Sources */,
 				5AEF7DCA2291AD5A0087C087 /* FavStop+CoreDataProperties.swift in Sources */,
 				5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */,
 				5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */,
@@ -289,6 +308,7 @@
 				5AEF7DD22291C2D10087C087 /* savedRouteTableViewCell.swift in Sources */,
 				5A85D5C02290861300E01AD9 /* DirectionDisruptionsTableViewCell.swift in Sources */,
 				5A85D5C4229086EE00E01AD9 /* DirectionTableViewCell.swift in Sources */,
+				5AEEE8792297B8D500EF6D83 /* SearchTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +474,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = 734WB6TM8F;
 				INFOPLIST_FILE = "Oh_My-Transport/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
