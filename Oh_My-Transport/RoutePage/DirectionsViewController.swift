@@ -40,7 +40,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet weak var directionsTableView: UITableView!
     @IBOutlet weak var routeMapView: MKMapView!
-    
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +77,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                     }else{
                         self.navigationItem.title = "Route: \(self.routeName!)"
                     }
+                    self.saveButton.isEnabled = true
                 }
             } catch {
                 print("Error:\(error)")
@@ -161,7 +162,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                                     
                                     _ = URLSession.shared.dataTask(with: URL(string: showRouteDepartureOnStop(routeType: self.routeType, stopId: nearStopId, routeId: self.routeId, directionId: eachService.directionId!))!){(data, response, error) in
                                         if error != nil{
-                                            print("next departure fetch failed")
+                                            print("Next departure fetch failed")
                                             return
                                         }
                                         do{

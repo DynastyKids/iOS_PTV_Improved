@@ -916,7 +916,7 @@
         <!--routeDirections-->
         <scene sceneID="BSU-PV-x07">
             <objects>
-                <viewController title="Loading Route" id="flj-A7-HCJ" userLabel="routeDirections" customClass="DirectionsViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="flj-A7-HCJ" userLabel="routeDirections" customClass="DirectionsViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cNa-c6-cyd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1113,26 +1113,11 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Wz-yZ-Gmn">
-                                <rect key="frame" x="0.0" y="20" width="414" height="44"/>
-                                <items>
-                                    <navigationItem title="Title" id="8GK-te-Dv3">
-                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="b3L-kr-I7U">
-                                            <connections>
-                                                <action selector="saveRoute:" destination="flj-A7-HCJ" id="iAB-94-fb0"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="QLv-EP-TIh" firstAttribute="leading" secondItem="WG3-gq-hbd" secondAttribute="leading" id="0cF-bf-cZC"/>
-                            <constraint firstItem="7Wz-yZ-Gmn" firstAttribute="leading" secondItem="cNa-c6-cyd" secondAttribute="leading" id="14o-l5-4aT"/>
-                            <constraint firstItem="7Wz-yZ-Gmn" firstAttribute="top" secondItem="cNa-c6-cyd" secondAttribute="top" constant="20" id="1y7-Z3-t9j"/>
                             <constraint firstItem="QLv-EP-TIh" firstAttribute="top" secondItem="WG3-gq-hbd" secondAttribute="top" id="Od9-cv-EK5"/>
-                            <constraint firstAttribute="trailing" secondItem="7Wz-yZ-Gmn" secondAttribute="trailing" id="WsF-Ka-WJz"/>
                             <constraint firstItem="HDL-jb-K2B" firstAttribute="trailing" secondItem="WG3-gq-hbd" secondAttribute="trailing" id="dsb-Fv-AJ9"/>
                             <constraint firstItem="WG3-gq-hbd" firstAttribute="trailing" secondItem="QLv-EP-TIh" secondAttribute="trailing" id="fbm-xO-ufC"/>
                             <constraint firstItem="WG3-gq-hbd" firstAttribute="bottom" secondItem="HDL-jb-K2B" secondAttribute="bottom" id="lDf-PT-kay"/>
@@ -1141,9 +1126,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WG3-gq-hbd"/>
                     </view>
+                    <navigationItem key="navigationItem" id="utb-jF-Fhz">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="plain" systemItem="save" id="xox-Uc-G4r">
+                            <connections>
+                                <action selector="saveRoute:" destination="flj-A7-HCJ" id="Epu-q0-xj7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="directionsTableView" destination="HDL-jb-K2B" id="eNb-51-mZH"/>
                         <outlet property="routeMapView" destination="QLv-EP-TIh" id="RwV-3J-aCW"/>
+                        <outlet property="saveButton" destination="xox-Uc-G4r" id="wQZ-dS-itO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCD-an-QFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1325,13 +1318,13 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="0.0" y="64" width="414" height="534"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Version 1.0.1 (Build 171 @ 21 May 2019)
+                                <mutableString key="text">Version 1.0.1 (Build 210 @ 21 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API embedded allows you to lookup the timetable data from Public Transport Victoria, incase if embedded key fails, you can apply an API key by yourselves (usually comes next business day) and input into box below with your own one.
 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
 
 Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.   To obtain a key:
-Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetable-api/ For more info</string>
+Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetable-api/ For more info</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
