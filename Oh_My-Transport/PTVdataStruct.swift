@@ -34,6 +34,11 @@ struct Status: Codable {
 */
 struct DeparturesResponse: Codable {
     var departures: [Departure]?
+//    var stops: stopGeosearch?                     // Object - decode via dictonary
+//    var routes: RouteWithStatus?                  // Object - decode via dictonary
+//    var runs: Runs?                               // Object - decode via dictonary
+//    var directions: DirectionWithDescription?     // Object - decode via dictonary
+//    var disruptions: Disruption?                  //  Object - decode via dictonary
     var status: Status?
     
     private enum CodingKeys: String, CodingKey{
