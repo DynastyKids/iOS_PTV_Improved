@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 import CoreLocation
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLLocationManagerDelegate {
@@ -19,6 +20,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     let locationManager = CLLocationManager()
     var nslock = NSLock()
     var currentLocation:CLLocation!
+    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
+    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,18 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
+        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
+        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
+        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        stopFetchedResultsController.delegate = self
+        
+        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
+        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
+        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
+        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        routeFetchedResultsController.delegate = self
 
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
@@ -50,9 +65,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         
         indicator.startAnimating()
         indicator.backgroundColor = UIColor.white
+        let replacedText = searchText.replacingOccurrences(of: " ", with: "%20")
+        let requestUrl: String = showSearchResults(searchTerm: replacedText, latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
         
-        let requestURL = URL(string: showSearchResults(searchTerm: searchText, latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325))
-        _ = URLSession.shared.dataTask(with: requestURL!){ (data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: requestUrl)!){ (data, response, error) in
             DispatchQueue.main.async {
                 self.indicator.stopAnimating()
                 self.indicator.hidesWhenStopped = true
@@ -63,13 +79,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             }
             do{
                 let results = try JSONDecoder().decode(SearchResult.self, from: data!)
-                if (results.stops?.count)!>0{
+                if results.stops?.count ?? 0 > 0{
                     self.searchStops = results.stops!
                 }
-                if (results.routes?.count)! > 0{
+                if results.routes?.count ?? 0 > 0{
                     self.searchRoute = results.routes!
                 }
-                if (results.outlets?.count)! > 0{
+                if results.outlets?.count ?? 0 > 0{
                     self.searchOutlets = results.outlets!
                 }
                 
@@ -234,13 +250,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         return sectionName
     }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -251,9 +260,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             let page2:DirectionsViewController = segue.destination as! DirectionsViewController
             page2.routeId = searchRoute[(tableView.indexPathForSelectedRow?.row)!].routeId!
             page2.routeType = searchRoute[(tableView.indexPathForSelectedRow?.row)!].routeType!
+            page2.managedContext = stopFetchedResultsController.managedObjectContext
         }
         if segue.identifier == "searchToStop" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+            page2.stopId = searchStops[(tableView.indexPathForSelectedRow?.row)!].stopId!
+            page2.routeType = searchStops[((tableView.indexPathForSelectedRow?.row)!)].routeType!
+            page2.managedContext = routeFetchedResultsController.managedObjectContext
         }
     }
     
@@ -264,5 +277,17 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         locationManager.stopUpdatingLocation()
+    }
+}
+extension SearchTableViewController: NSFetchedResultsControllerDelegate{
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     }
 }
