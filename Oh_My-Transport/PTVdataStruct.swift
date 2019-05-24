@@ -38,9 +38,8 @@ struct DeparturesResponse: Codable {
 //    var routes: RouteWithStatus?                  // Object - decode via dictonary
 //    var runs: Runs?                               // Object - decode via dictonary
 //    var directions: DirectionWithDescription?     // Object - decode via dictonary
-//    var disruptions: Disruption?                  //  Object - decode via dictonary
+//    var disruptions: Disruption?                  // Object - decode via dictonary
     var status: Status?
-    
     private enum CodingKeys: String, CodingKey{
         case departures
         case status
@@ -381,6 +380,14 @@ struct RouteWithStatus: Codable {
         self.routeNumber = try? container.decode(String.self, forKey: .routeNumber)
         self.GtfsId = try? container.decode(String.self, forKey: .GtfsId)
     }
+    init(routeType: Int?, routeId: Int?, routeName: String?, routeNumber: String?, GtfsId:String?) {
+        self.routeServiceStatus = nil
+        self.routeType = routeType
+        self.routeId = routeId
+        self.routeName = routeName
+        self.routeNumber = routeNumber
+        self.GtfsId = GtfsId
+    }
 }
 struct RouteServiceStatus: Codable {
     var description: String?
@@ -450,6 +457,19 @@ struct Run: Codable {
         self.expressStopCount = try? container.decode(Int.self, forKey: .expressStopCount)
         self.vehiclePosition = try? container.decode(VehiclePosition.self, forKey: .vehiclePosition)
         self.vehicleDescriptor = try? container.decode(VechicleDescriptor.self, forKey: .vehicleDescriptor)
+    }
+    init(runId: Int?, routeId: Int?, routeType: Int?, finalStopId: Int?, destinationName: String?, status: String?, directionId: Int?, runSequence: Int?, expressStopCount: Int?, vehiclePosition: VehiclePosition?, vehicleDescriptor: VechicleDescriptor?) {
+        self.runId = runId
+        self.routeId = routeId
+        self.routeType = routeType
+        self.finalStopId = finalStopId
+        self.destinationName = destinationName
+        self.status = status
+        self.directionId = directionId
+        self.runSequence = runSequence
+        self.expressStopCount = expressStopCount
+        self.vehiclePosition = vehiclePosition
+        self.vehicleDescriptor = vehicleDescriptor
     }
 }
 
@@ -652,6 +672,17 @@ struct stopGeosearch: Codable{
         self.stopLatitude = try? container.decode(Double.self, forKey: .stopLatitude)
         self.stopLongitude = try? container.decode(Double.self, forKey: .stopLongitude)
         self.stopSequence = try? container.decode(Int.self, forKey: .stopSequence)
+    }
+    
+    init(stopDistance: Double?, stopSuburb: String?, stopName: String?, stopId: Int?, routeType: Int?, stopLatitude: Double?, stopLongitude: Double?, stopSequence: Int?) {
+        self.stopDistance = stopDistance
+        self.stopSuburb = stopSuburb
+        self.stopName = stopName
+        self.stopId = stopId
+        self.routeType = routeType
+        self.stopLatitude = stopLatitude
+        self.stopLongitude = stopLongitude
+        self.stopSequence = stopSequence
     }
 }
 
