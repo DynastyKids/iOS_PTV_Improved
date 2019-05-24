@@ -20,7 +20,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
     
     // MARK: - Nearby Stops property
     var nearbyStops: [stopGeosearch] = []
-    var departureSequence: [Departure] = []      // Departure data:Store all excesss data
+    var nearbyStopsDeaprtureSequence: [Departure] = []      // Departure data:Store all excesss data
     
     // MARK: - Saved Stops property
     var stopId: [Int] = []
@@ -143,16 +143,16 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                 }
                 do{
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    self.departureSequence = nextDepartureData.departures!
+                    self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                     }
                     
 //                     Fetching Data inside (depart Routes)
                     // Route 0
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[0].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[0].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -178,7 +178,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         }.resume()
                     // Route 1
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[1].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[1].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -204,7 +204,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         }.resume()
                     // Route 2
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[2].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[2].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -258,16 +258,16 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                 }
                 do{
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    self.departureSequence = nextDepartureData.departures!
+                    self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[0].estimatedDepartureUTC) ?? ((self.departureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[1].estimatedDepartureUTC) ?? ((self.departureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.departureSequence[2].estimatedDepartureUTC) ?? ((self.departureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                     }
                     
                     //                     Fetching Data inside (depart Routes)
                     // Route 0
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[0].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[0].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -290,7 +290,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         }.resume()
                     // Route 1
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[1].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[1].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
@@ -313,7 +313,7 @@ class homePageContainerTableViewController: UITableViewController, CLLocationMan
                         }
                         }.resume()
                     // Route 2
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.departureSequence[2].routesId!))!){ (data, response, error) in
+                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[2].routesId!))!){ (data, response, error) in
                         if error != nil {
                             print("Stop information fetch failed:\(error!)")
                             return
