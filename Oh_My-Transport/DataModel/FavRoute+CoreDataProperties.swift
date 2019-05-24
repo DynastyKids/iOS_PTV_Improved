@@ -18,8 +18,6 @@ extension FavRoute {
     }
 
     @NSManaged public var routeId: Int32
-    @NSManaged public var routeName: String?
-    @NSManaged public var routeNumber: String?
     @NSManaged public var routeType: Int32
 
 }

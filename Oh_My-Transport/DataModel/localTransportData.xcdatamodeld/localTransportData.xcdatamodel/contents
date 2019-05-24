@@ -6,8 +6,6 @@
     </entity>
     <entity name="FavRoute" representedClassName="FavRoute" syncable="YES">
         <attribute name="routeId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="routeName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="routeNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="routeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="FavStop" representedClassName="FavStop" syncable="YES">
@@ -18,7 +16,7 @@
     </entity>
     <elements>
         <element name="APIInfo" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="FavRoute" positionX="-54" positionY="9" width="128" height="105"/>
+        <element name="FavRoute" positionX="-54" positionY="9" width="128" height="75"/>
         <element name="FavStop" positionX="-54" positionY="45" width="128" height="105"/>
     </elements>
 </model>
