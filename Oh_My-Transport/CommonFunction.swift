@@ -154,15 +154,15 @@ public func extractedFunc(_ request: String) -> String {
 
 // Departures
 public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int) -> String{       // View departures for a specific route from a stop
-    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?devid="+HARDCODEDDEVID
+    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?expand=all&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int, directionId: Int) -> String{      // View departures for a specific route from a stop (With Direction condition)
-    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&devid="+HARDCODEDDEVID
+    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&expand=all&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 public func nextDepartureURL(routeType: Int, stopId: Int) -> String{            // View departures for all routes from a stop
-    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=200&devid="+HARDCODEDDEVID
+    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=200&expand=all&devid="+HARDCODEDDEVID
     return extractedFunc(request)
 }
 
