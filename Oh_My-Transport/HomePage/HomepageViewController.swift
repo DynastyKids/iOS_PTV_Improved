@@ -181,8 +181,12 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     DispatchQueue.main.async {
                         cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure0Time.textColor = UIColor.black
                         cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure1Time.textColor = UIColor.black
                         cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure2Time.textColor = UIColor.black
+                        
                         // Route 0
                         let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
                         for each in nextDepartRoutesData{
@@ -287,8 +291,11 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     }
                     DispatchQueue.main.async {
                         cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure0Time.textColor = UIColor.black
                         cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure1Time.textColor = UIColor.black
                         cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                        cell.departure2Time.textColor = UIColor.black
                         // Route 0
                         let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
                         for each in nextDepartRoutesData{
