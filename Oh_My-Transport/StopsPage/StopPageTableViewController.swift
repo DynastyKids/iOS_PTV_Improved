@@ -121,7 +121,7 @@ class StopPageTableViewController: UITableViewController {
             do{
                 let showRoute = try JSONDecoder().decode(RouteResponse.self, from: data!)
                 DispatchQueue.main.async {
-                    if(showRoute.route?.routeType == 0 || showRoute.route?.routeType == 3){
+                    if(showRoute.route?.routeType == 0 || showRoute.route?.routeType == 3 || showRoute.route?.routeNumber == nil){
                         let str: String = showRoute.route!.GtfsId!
                         let start = str.index(str.startIndex, offsetBy: 2)
                         cell.routeSignLabel.text = String(str[start...])      // Metro and vline will using its gtfsid to ident which line's service is running

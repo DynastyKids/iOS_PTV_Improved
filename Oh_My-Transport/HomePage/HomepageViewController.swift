@@ -168,7 +168,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             self.nextRouteInfo0 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
-                                if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3){
+                                if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3 || self.nextRouteInfo0!.routeNumber == nil){
                                     let str: String = self.nextRouteInfo0!.GtfsId ?? (self.nextRouteInfo0?.routeName)!
                                     let start = str.index(str.startIndex, offsetBy: 2)
                                     cell.departure0Route.text = String(str[start...])
@@ -194,7 +194,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             self.nextRouteInfo1 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
-                                if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3){
+                                if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3 || self.nextRouteInfo1!.routeNumber == nil){
                                     let str: String = self.nextRouteInfo1!.GtfsId ?? (self.nextRouteInfo1?.routeName)!
                                     let start = str.index(str.startIndex, offsetBy: 2)
                                     cell.departure1Route.text = String(str[start...])
@@ -220,7 +220,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             self.nextRouteInfo2 = nextRouteData.route!
                             
                             DispatchQueue.main.async {
-                                if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3){
+                                if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3 || self.nextRouteInfo2!.routeNumber == nil){
                                     let str: String = self.nextRouteInfo2!.GtfsId ?? (self.nextRouteInfo2?.routeName)!
                                     let start = str.index(str.startIndex, offsetBy: 2)
                                     cell.departure2Route.text = String(str[start...])
@@ -280,7 +280,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         do{
                             let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo0 = nextRouteData.route!
-                            if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3){
+                            if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3 || self.nextRouteInfo0!.routeNumber == nil){
                                 let str: String = self.nextRouteInfo0!.GtfsId!
                                 let start = str.index(str.startIndex, offsetBy: 2)
                                 cell.departure0Route.text = String(str[start...])
@@ -302,7 +302,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         do{
                             let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo1 = nextRouteData.route!
-                            if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3){
+                            if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3 || self.nextRouteInfo1!.routeNumber == nil){
                                 let str: String = self.nextRouteInfo1!.GtfsId!
                                 let start = str.index(str.startIndex, offsetBy: 2)
                                 cell.departure1Route.text = String(str[start...])
@@ -324,7 +324,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         do{
                             let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo2 = nextRouteData.route!
-                            if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3){
+                            if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3 || self.nextRouteInfo2!.routeNumber == nil){
                                 let str: String = self.nextRouteInfo2!.GtfsId!
                                 let start = str.index(str.startIndex, offsetBy: 2)
                                 cell.departure2Route.text = String(str[start...])
