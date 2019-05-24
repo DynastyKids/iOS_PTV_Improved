@@ -167,8 +167,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             cell.stopNameLabel.text = searchStops[indexPath.row].stopName
             cell.stopSuburbLabel.text = searchStops[indexPath.row].stopSuburb
             if searchStops[indexPath.row].stopDistance != nil{
-                if Int(searchStops[indexPath.row].stopDistance!) >= 1000 {
-                    cell.stopDistanceLabel.text = "Distance: \(Int(searchStops[indexPath.row].stopDistance!)/1000) km"
+                if Double(searchStops[indexPath.row].stopDistance!) >= 1000 {
+                    cell.stopDistanceLabel.text = "Distance: \(String(format:"%.2f",Double(searchStops[indexPath.row].stopDistance!/1000))) km"
                 }
                 cell.stopDistanceLabel.text = "Distance: \(Int(searchStops[indexPath.row].stopDistance!)) m"
             } else {
@@ -176,8 +176,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                 if (searchStops[indexPath.row].stopLatitude != nil && searchStops[indexPath.row].stopLongitude != nil){
                     let userlocation = CLLocation(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
                     let distance = userlocation.distance(from: CLLocation(latitude: searchStops[indexPath.row].stopLatitude!, longitude: searchStops[indexPath.row].stopLongitude!))
-                    if Int(distance) >= 1000{
-                        cell.stopDistanceLabel.text = "Distance: \(Int(distance)/1000) km"
+                    if Double(distance) >= 1000{
+                        cell.stopDistanceLabel.text = "Distance: \(String(format:"%.2f",Double(distance/1000))) km"
                     } else{
                         cell.stopDistanceLabel.text = "Distance: \(Int(distance)) m"
                     }
@@ -209,8 +209,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             if (searchOutlets[indexPath.row].outletLatitude != nil && searchOutlets[indexPath.row].outletLongitude != nil){
                 let userlocation = CLLocation(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
                 let distance = userlocation.distance(from: CLLocation(latitude: searchOutlets[indexPath.row].outletLatitude!, longitude: searchOutlets[indexPath.row].outletLongitude!))
-                if Int(distance) >= 1000{
-                    cell.businessDistanceLabel.text = "Distance: \(Int(distance)/1000) km"
+                if Double(distance) >= 1000{
+                    cell.businessDistanceLabel.text = "Distance: \(String(format:"%.2f",Double(distance/1000))) km"
                 } else{
                     cell.businessDistanceLabel.text = "Distance: \(Int(distance)) m"
                 }
