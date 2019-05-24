@@ -36,7 +36,6 @@
 		5AEF7DC6229196A50087C087 /* APIInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DC0229196A50087C087 /* APIInfo+CoreDataProperties.swift */; };
 		5AEF7DC92291AD5A0087C087 /* FavStop+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DC72291AD5A0087C087 /* FavStop+CoreDataClass.swift */; };
 		5AEF7DCA2291AD5A0087C087 /* FavStop+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DC82291AD5A0087C087 /* FavStop+CoreDataProperties.swift */; };
-		5AEF7DCC2291BED80087C087 /* homePageContainerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DCB2291BED80087C087 /* homePageContainerTableViewController.swift */; };
 		5AEF7DCE2291BF590087C087 /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DCD2291BF590087C087 /* HomepageViewController.swift */; };
 		5AEF7DD02291C2900087C087 /* savedStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DCF2291C2900087C087 /* savedStopsTableViewCell.swift */; };
 		5AEF7DD22291C2D10087C087 /* savedRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DD12291C2D10087C087 /* savedRouteTableViewCell.swift */; };
@@ -77,7 +76,6 @@
 		5AEF7DC0229196A50087C087 /* APIInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5AEF7DC72291AD5A0087C087 /* FavStop+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavStop+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5AEF7DC82291AD5A0087C087 /* FavStop+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavStop+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5AEF7DCB2291BED80087C087 /* homePageContainerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homePageContainerTableViewController.swift; sourceTree = "<group>"; };
 		5AEF7DCD2291BF590087C087 /* HomepageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
 		5AEF7DCF2291C2900087C087 /* savedStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedStopsTableViewCell.swift; sourceTree = "<group>"; };
 		5AEF7DD12291C2D10087C087 /* savedRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedRouteTableViewCell.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 		5A7B1B0F227F04590012E09C /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				5AEF7DCB2291BED80087C087 /* homePageContainerTableViewController.swift */,
 				5AEF7DCD2291BF590087C087 /* HomepageViewController.swift */,
 				5AEF7DCF2291C2900087C087 /* savedStopsTableViewCell.swift */,
 				5AEF7DD12291C2D10087C087 /* savedRouteTableViewCell.swift */,
@@ -300,7 +297,6 @@
 				5AEF7DCA2291AD5A0087C087 /* FavStop+CoreDataProperties.swift in Sources */,
 				5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */,
 				5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */,
-				5AEF7DCC2291BED80087C087 /* homePageContainerTableViewController.swift in Sources */,
 				5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */,
 				5A9B88FE22903DF7005F1C25 /* StopPageTableViewController.swift in Sources */,
 				5A9B89002290411C005F1C25 /* stopInfoTableViewCell.swift in Sources */,
