@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CommonCrypto
 
-public let HARDCODEDURL:String = "http://timetableapi.ptv.vic.gov.au"
+public let HARDCODEDURL:String = "https://timetableapi.ptv.vic.gov.au"
 public let HARDCODEDDEVID:String = "3001122"
 public let HARDCODEDKEY:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
 
