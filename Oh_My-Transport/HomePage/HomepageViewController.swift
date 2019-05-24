@@ -449,10 +449,9 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             return UISwipeActionsConfiguration(actions: [action])
         }
         
-        let action = UIContextualAction(style: .destructive, title: "Nothing", handler:{_, _, completion in
-            completion(true)
-        })
-        return UISwipeActionsConfiguration(actions: [action])
+        let swipeAction = UISwipeActionsConfiguration(actions: [])
+        swipeAction.performsFirstActionWithFullSwipe = false
+        return swipeAction
     }
     
     // MARK: - Navigation
