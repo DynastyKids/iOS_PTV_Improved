@@ -45,7 +45,7 @@ class StopPageTableViewController: UITableViewController {
                 let stopDetail = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
                 self.stopInfo = stopDetail.stop
                 DispatchQueue.main.async {
-                    self.stopName = (stopDetail.stop?.stopName)!
+                    self.stopName = stopDetail.stop?.stopName ?? ""
                     self.stopSuburb = stopDetail.stop?.stopLocation?.suburb ?? ""
                     print("Value Received: StopId:\(self.stopId), StopName:\(self.stopName), StopSuburb:\(self.stopSuburb)")
                     self.tableView.reloadData()
@@ -240,7 +240,8 @@ class StopPageTableViewController: UITableViewController {
 
         do {
             try managedContext?.save()
-            let _ = navigationController?.popViewController(animated: true)
+//            let _ = navigationController?.popViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
         } catch {
             print("Error to save stop")
         }

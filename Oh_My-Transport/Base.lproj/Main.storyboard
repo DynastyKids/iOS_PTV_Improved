@@ -290,46 +290,50 @@
                                             <segue destination="VfA-ee-rv5" kind="show" identifier="showSavedStop" id="ULE-TB-kfM"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="savedRouteCell" id="lgV-TE-cjn" customClass="savedRouteTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="savedRouteCell" id="lgV-TE-cjn" customClass="savedRouteTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="116" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lgV-TE-cjn" id="xjG-y2-QH3">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Kf-B7-4S8">
                                                     <rect key="frame" x="20" y="10.666666666666664" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="0cm-27-R34"/>
+                                                        <constraint firstAttribute="height" constant="30" id="CzP-up-N8l"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Cranbourne" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWF-8z-HAn">
-                                                    <rect key="frame" x="58" y="0.0" width="86" height="43.666666666666664"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Route" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWF-8z-HAn">
+                                                    <rect key="frame" x="58" y="11" width="100" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="HTl-cY-esu"/>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="GwD-ux-xUc"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Directions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9v-Rl-6M8">
-                                                    <rect key="frame" x="152" y="15" width="65.666666666666686" height="14"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Direction" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9v-Rl-6M8">
+                                                    <rect key="frame" x="174" y="11" width="202" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="2Lo-3m-Fbt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="UWF-8z-HAn" secondAttribute="bottom" id="ABL-d6-b38"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="UWF-8z-HAn" secondAttribute="bottom" id="ABL-d6-b38"/>
                                                 <constraint firstItem="1Kf-B7-4S8" firstAttribute="leading" secondItem="xjG-y2-QH3" secondAttribute="leadingMargin" id="KzL-MY-wiS"/>
-                                                <constraint firstItem="UWF-8z-HAn" firstAttribute="leading" secondItem="1Kf-B7-4S8" secondAttribute="trailing" constant="8" id="PxC-Lb-x6g"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Q9v-Rl-6M8" secondAttribute="bottom" constant="4" id="R9M-n7-DTQ"/>
-                                                <constraint firstItem="Q9v-Rl-6M8" firstAttribute="leading" secondItem="UWF-8z-HAn" secondAttribute="trailing" constant="8" id="YNJ-tT-R5v"/>
+                                                <constraint firstItem="UWF-8z-HAn" firstAttribute="leading" secondItem="1Kf-B7-4S8" secondAttribute="trailing" priority="999" constant="8" id="PxC-Lb-x6g"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Q9v-Rl-6M8" secondAttribute="bottom" id="R9M-n7-DTQ"/>
+                                                <constraint firstItem="Q9v-Rl-6M8" firstAttribute="leading" secondItem="UWF-8z-HAn" secondAttribute="trailing" constant="16" id="YNJ-tT-R5v"/>
                                                 <constraint firstAttribute="trailing" secondItem="Q9v-Rl-6M8" secondAttribute="trailing" id="d70-U6-8sr"/>
-                                                <constraint firstItem="1Kf-B7-4S8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xjG-y2-QH3" secondAttribute="top" constant="4" id="dKg-kJ-Kad"/>
-                                                <constraint firstItem="Q9v-Rl-6M8" firstAttribute="top" secondItem="xjG-y2-QH3" secondAttribute="topMargin" constant="4" id="fRs-DF-52z"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1Kf-B7-4S8" secondAttribute="bottom" constant="4" id="tTo-Le-PBR"/>
-                                                <constraint firstItem="UWF-8z-HAn" firstAttribute="top" secondItem="xjG-y2-QH3" secondAttribute="top" id="zqg-J9-H7r"/>
+                                                <constraint firstItem="1Kf-B7-4S8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xjG-y2-QH3" secondAttribute="topMargin" id="dKg-kJ-Kad"/>
+                                                <constraint firstItem="Q9v-Rl-6M8" firstAttribute="top" secondItem="xjG-y2-QH3" secondAttribute="topMargin" id="fRs-DF-52z"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="1Kf-B7-4S8" secondAttribute="bottom" id="tTo-Le-PBR"/>
+                                                <constraint firstItem="UWF-8z-HAn" firstAttribute="top" secondItem="xjG-y2-QH3" secondAttribute="topMargin" id="zqg-J9-H7r"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -1318,13 +1322,13 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="0.0" y="64" width="414" height="534"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.0.1 (Build 210 @ 21 May 2019)
+                                <string key="text">Version 1.0.1 (Build 210 @ 21 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API embedded allows you to lookup the timetable data from Public Transport Victoria, incase if embedded key fails, you can apply an API key by yourselves (usually comes next business day) and input into box below with your own one.
 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
 
 Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.   To obtain a key:
-Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetable-api/ For more info</mutableString>
+Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetable-api/ For more info</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1369,8 +1373,8 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tH8-GN-WaY"/>
-        <segue reference="zXA-WO-h7o"/>
-        <segue reference="evR-un-G8n"/>
+        <segue reference="Rtg-8B-y4f"/>
+        <segue reference="yW6-4j-AAm"/>
+        <segue reference="rUw-3q-bGF"/>
     </inferredMetricsTieBreakers>
 </document>
