@@ -313,7 +313,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -326,7 +326,8 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         route.routeType = Int32(routeType)
         do {
             try managedContext?.save()
-            let _ = navigationController?.popViewController(animated: true)
+//            let _ = navigationController?.popViewController(animated: true)
+            let _ = navigationController?.popToRootViewController(animated: true)
         } catch {
             print("Error to save route")
         }

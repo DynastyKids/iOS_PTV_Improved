@@ -87,7 +87,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         // End of Allocate near by 2 stops
         
         // Allocate saved stops from CoreData
-        // Create Request for CD
+        // Create Request for CoreData
         let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
         let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
         stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
@@ -365,11 +365,13 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     let routeInfo = try JSONDecoder().decode(RouteResponse.self, from: data!)
                     DispatchQueue.main.async {
                         cell.routeNameLabel.text = routeInfo.route?.routeName
+                        cell.routeNumberLabel.backgroundColor = changeColorByRouteType(routeType: routeType)
+                        cell.routeNumberLabel.textColor = UIColor.white
                         switch routeType{
                         case 0:
                             let routeName: String = routeInfo.route?.GtfsId ?? (routeInfo.route?.routeName)!
                             let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                            cell.routeNameLabel.text = String(routeName[cuttedName...])
+                            cell.routeNumberLabel.text = String(routeName[cuttedName...])
                             cell.routeTypeImage.image = UIImage(named: "trainIcon_PTVColour")
                         case 1:
                             cell.routeNumberLabel.text = routeInfo.route?.routeNumber
@@ -380,7 +382,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         case 3:
                             let routeName: String = routeInfo.route?.GtfsId ?? (routeInfo.route?.routeName)!
                             let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                            cell.routeNameLabel.text = String(routeName[cuttedName...])
+                            cell.routeNumberLabel.text = String(routeName[cuttedName...])
                             cell.routeTypeImage.image = UIImage(named: "regionalTrainIcon_PTVColour")
                         case 4:
                             cell.routeNumberLabel.text = routeInfo.route?.routeNumber
@@ -500,6 +502,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        homeTableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

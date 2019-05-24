@@ -45,8 +45,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         routeTableView.delegate = self
         routeTableView.dataSource = self
         
-        print("Route type:\(routeType); Run Id:\(runId); RouteId:\(routeId)")
-        
         // Load the MapView
         if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse || CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
             guard locationManager.location != nil else {
@@ -114,7 +112,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     }
 
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showStopFromPatternPage" {
@@ -123,7 +120,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             page2.stopId = departsData[routeTableView.indexPathForSelectedRow!.row].stopsId!
             page2.managedContext = CoreDataStack().managedContext
             print(routeTableView.indexPathForSelectedRow!.row)
-            //车站cell和跳转结果不同 22May
             print("stopId:\(orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId!),StopName:\(orderedStop[routeTableView.indexPathForSelectedRow!.row].stopName!)")
         }
         if segue.identifier == "showRouteDisruption"{
