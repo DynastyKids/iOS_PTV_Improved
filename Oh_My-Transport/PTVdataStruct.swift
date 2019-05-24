@@ -494,9 +494,9 @@ struct VechicleDescriptor: Codable{
     GET /v3/search/{search_term}        View stops, routes and myki ticket outlets that match the search term
  */
 struct SearchResult: Codable {
-    var stops: ResultStop?
-    var routes: ResultRoute?
-    var outlets: ResultOutlet?
+    var stops: [ResultStop]?
+    var routes: [ResultRoute]?
+    var outlets: [ResultOutlet]?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
         case stops
