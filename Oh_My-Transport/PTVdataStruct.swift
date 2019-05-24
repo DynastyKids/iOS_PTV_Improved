@@ -583,7 +583,7 @@ struct ResultOutlet: Codable{
         case outletLongitude = "outlet_longitude"
         case outletSuburb = "outlet_suburb"
         case outletPostcode = "outlet_postcode"
-        case outletNotes = "outlet_.notes"
+        case outletNotes = "outlet_notes"
     }
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
