@@ -23,6 +23,8 @@ class StopPageTableViewController: UITableViewController {
     var stopSuburb: String = ""
     var routeId: Int = -1
     
+    var stopInfo:StopDetails?
+    
     var departureData: [Departure] = []
     var nextDepartRoutesData: [RouteWithStatus] = []
     var nextDepartRunsInfo: [Run] = []
@@ -41,6 +43,7 @@ class StopPageTableViewController: UITableViewController {
             }
             do {    // Data recieved.  Decode it from JSON.
                 let stopDetail = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
+                self.stopInfo = stopDetail.stop
                 DispatchQueue.main.async {
                     self.stopName = (stopDetail.stop?.stopName)!
                     self.stopSuburb = stopDetail.stop?.stopLocation?.suburb ?? ""
@@ -335,9 +338,10 @@ class StopPageTableViewController: UITableViewController {
         // Click on Route Cell
         if segue.identifier == "showRouteDetails" {
             let page2:RouteDetailsViewController = segue.destination as! RouteDetailsViewController
-            page2.myRunId = departureData[tableView.indexPathForSelectedRow!.row].runId!
-            page2.myRouteId = departureData[tableView.indexPathForSelectedRow!.row].routesId!
-            page2.myRouteType = routeType
+            page2.runId = departureData[tableView.indexPathForSelectedRow!.row].runId!
+            page2.routeId = departureData[tableView.indexPathForSelectedRow!.row].routesId!
+            page2.routeType = routeType
+            page2.stopInfo = stopInfo
         }
     }
 }

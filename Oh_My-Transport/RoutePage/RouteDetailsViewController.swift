@@ -15,9 +15,11 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation!
 
-    var myRouteType: Int = 0
-    var myRunId: Int = 0
-    var myRouteId: Int = 0
+    var routeType: Int = 0
+    var runId: Int = 0          // Required value from last segue
+    var routeId: Int = 0        // Required value from last segue
+    
+    var stopInfo: StopDetails?     // Optional value from last segue
 
     // MARK: - Receiving data from whole array carrying all necessary data
     var disruptiondata: [Disruption] = []
@@ -43,7 +45,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         routeTableView.delegate = self
         routeTableView.dataSource = self
         
-        print("Route type:\(myRouteType); Run Id:\(myRunId); RouteId:\(myRouteId)")
+        print("Route type:\(routeType); Run Id:\(runId); RouteId:\(routeId)")
         
         // Load the MapView
         if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse || CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
@@ -52,12 +54,12 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
         }
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters  // Less battery required
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer  // Less battery required
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
 
-        _ = URLSession.shared.dataTask(with: URL(string: showPatternonRoute(runId: myRunId, routeType: myRouteType))!){(data, response, error) in
+        _ = URLSession.shared.dataTask(with: URL(string: showPatternonRoute(runId: runId, routeType: routeType))!){(data, response, error) in
             if error != nil{
                 print("Pattern fetch failed")
                 return
@@ -73,27 +75,27 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 let routePatternDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary      // Alternative method by NSDictonary to fetching all stops data
                 self.patternAllStops = routePatternDictonary.value(forKey: "stops") as! NSDictionary
-                for (key, value) in self.patternAllStops{       //  key = stopId, Value = Stop Dictonary
-                    let stopDetailsData: NSDictionary = value as! NSDictionary
-                        for (key2,value2) in stopDetailsData{   // Poping values into array
-                            if "\(key2)" == "stop_id"{
-                                self.dictonaryStopId.append(Int("\(value2)")!)
-                            } else if "\(key2)" == "stop_name"{
-                                self.dictonaryStopName.append("\(value2)")
-                            } else if "\(key2)" == "stop_suburb"{
-                                self.dictonaryStopSuburb.append("\(value2)")
-                            } else if "\(key2)" == "stop_latitude"{
-                                self.dictonaryStopLatitude.append(Double("\(value2)")!)
-                            } else if "\(key2)" == "stop_longitude"{
-                                self.dictonaryStopLongitude.append(Double("\(value2)")!)
-                            } else if "\(key2)" == "route_type"{
-                                self.dictonaryRouteType.append(Int("\(value2)")!)
+                for (_, values) in self.patternAllStops{       //  key = stopId, Value = Stop Dictonary
+                    let stopDetailsData: NSDictionary = values as! NSDictionary
+                        for (key,value) in stopDetailsData{   // Poping values into array
+                            if "\(key)" == "stop_id"{
+                                self.dictonaryStopId.append(Int("\(value)")!)
+                            } else if "\(key)" == "stop_name"{
+                                self.dictonaryStopName.append("\(value)")
+                            } else if "\(key)" == "stop_suburb"{
+                                self.dictonaryStopSuburb.append("\(value)")
+                            } else if "\(key)" == "stop_latitude"{
+                                self.dictonaryStopLatitude.append(Double("\(value)")!)
+                            } else if "\(key)" == "stop_longitude"{
+                                self.dictonaryStopLongitude.append(Double("\(value)")!)
+                            } else if "\(key)" == "route_type"{
+                                self.dictonaryRouteType.append(Int("\(value)")!)
                             }
                         }
                 }
                 
                 var count = 0
-                for each in self.dictonaryStopId{    // Adding stop annotation
+                for _ in self.dictonaryStopId{    // Adding stop annotation
                     let stopPatterns = MKPointAnnotation()
                     stopPatterns.title = self.dictonaryStopName[count]
                     stopPatterns.subtitle = self.dictonaryStopSuburb[count]
@@ -117,7 +119,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showStopFromPatternPage" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.routeType = myRouteType
+            page2.routeType = routeType
             page2.stopId = departsData[routeTableView.indexPathForSelectedRow!.row].stopsId!
             page2.managedContext = CoreDataStack().managedContext
             print(routeTableView.indexPathForSelectedRow!.row)
@@ -126,7 +128,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
         if segue.identifier == "showRouteDisruption"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
-            page2.url = URL(string: disruptionByRoute(routeId: myRouteId))
+            page2.url = URL(string: disruptionByRoute(routeId: routeId))
         }
     }
 
@@ -190,10 +192,9 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     // MARK: - Functions for MapView
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
-        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-        // 先尝试Fetch车辆位置，不可用后使用用户中心
-        let myLatitude = locations[0].coordinate.latitude
-        let myLongtitude = locations[0].coordinate.longitude
+        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
+        let myLatitude = stopInfo?.stopLocation?.gps?.latitude ?? locations[0].coordinate.latitude
+        let myLongtitude = stopInfo?.stopLocation?.gps?.longitude ?? locations[0].coordinate.longitude
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: myLatitude, longitude: myLongtitude), span: currentLocationSpan)
         self.routeMapView.setRegion(region, animated: true)
     }
