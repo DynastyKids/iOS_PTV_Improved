@@ -152,7 +152,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {     // Section 0 (Disruptions)
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeDisruption", for: indexPath) as! RoutesDisruptionsTableViewCell
-            cell.disruptionInfoLabel.text = "\(disruptiondata.count) Disruptions in effect"
+            cell.disruptionInfoLabel.text = "\(disruptiondata.count) Disruptions may affect your travel"
             print("Disruptions: \(disruptiondata.count)")
             return cell
         }
