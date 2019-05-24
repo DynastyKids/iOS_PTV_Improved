@@ -188,6 +188,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         for each in nextDepartRoutesData{
                             if searchRouteId0 == each.routeId{
                                 cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                cell.departure0Route.textColor = UIColor.white
                                 if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                     let routeName: String = each.GtfsId ?? each.routeName!
                                     let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
@@ -202,6 +203,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         for each in nextDepartRoutesData{
                             if searchRouteId1 == each.routeId{
                                 cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                cell.departure1Route.textColor = UIColor.white
                                 if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                     let routeName: String = each.GtfsId ?? each.routeName!
                                     let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
@@ -216,6 +218,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         for each in nextDepartRoutesData{
                             if searchRouteId2 == each.routeId{
                                 cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                cell.departure2Route.textColor = UIColor.white
                                 if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                     let routeName: String = each.GtfsId ?? each.routeName!
                                     let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
@@ -241,6 +244,8 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             let savedStopId = savedStop.stopId
             let savedStopType = savedStop.routeType
             
+            var nextDepartRoutesData:[RouteWithStatus] = []
+            
             stopId.append(Int(savedStop.stopId))
             stopName.append(savedStop.stopName ?? "")
             stopSuburb.append(savedStop.stopSuburb ?? "")
@@ -255,80 +260,81 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                 do{
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                     self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
+
+                    let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+                    let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
+                    for(_, value) in nextDepartRoutes{
+                        let nextDepartRouteData: NSDictionary = value as! NSDictionary
+                        var routeGtfsId: String = ""
+                        var routeRouteType: Int = 0
+                        var routeId: Int = 0
+                        var routeName: String = ""
+                        var routeNumber: String = ""
+                        for(key2, value2) in nextDepartRouteData{
+                            if "\(key2)" == "route_gtfs_id"{
+                                routeGtfsId = value2 as! String
+                            }else if "\(key2)" == "route_type"{
+                                routeRouteType = value2 as! Int
+                            }else if "\(key2)" == "route_id"{
+                                routeId = value2 as! Int
+                            }else if "\(key2)" == "route_name"{
+                                routeName = value2 as! String
+                            }else if "\(key2)" == "route_number"{
+                                routeNumber = value2 as! String
+                            }
+                        }
+                        nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
+                    }
                     DispatchQueue.main.async {
                         cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
                         cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
                         cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                        // Route 0
+                        let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
+                        for each in nextDepartRoutesData{
+                            if searchRouteId0 == each.routeId{
+                                cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                cell.departure0Route.textColor = UIColor.white
+                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    let routeName: String = each.GtfsId ?? each.routeName!
+                                    let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                    cell.departure0Route.text = String(routeName[cuttedName...])
+                                }else{
+                                    cell.departure0Route.text = each.routeNumber
+                                }
+                            }
+                        }
+                        // Route 1
+                        let searchRouteId1 = self.nearbyStopsDeaprtureSequence[1].routesId
+                        for each in nextDepartRoutesData{
+                            if searchRouteId1 == each.routeId{
+                                cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                cell.departure1Route.textColor = UIColor.white
+                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    let routeName: String = each.GtfsId ?? each.routeName!
+                                    let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                    cell.departure1Route.text = String(routeName[cuttedName...])
+                                }else{
+                                    cell.departure1Route.text = each.routeNumber
+                                }
+                            }
+                        }
+                        // Route 2
+                        let searchRouteId2 = self.nearbyStopsDeaprtureSequence[2].routesId
+                        for each in nextDepartRoutesData{
+                            if searchRouteId2 == each.routeId{
+                                cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                cell.departure2Route.textColor = UIColor.white
+                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    let routeName: String = each.GtfsId ?? each.routeName!
+                                    let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                    cell.departure2Route.text = String(routeName[cuttedName...])
+                                }else{
+                                    cell.departure2Route.text = each.routeNumber
+                                }
+                            }
+                        }
                     }
-                    
-                    //                     Fetching Data inside (depart Routes)
-                    // Route 0
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[0].routesId!))!){ (data, response, error) in
-                        if error != nil {
-                            print("Stop information fetch failed:\(error!)")
-                            return
-                        }
-                        do{
-                            let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
-                            self.nextRouteInfo0 = nextRouteData.route!
-                            if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3 || self.nextRouteInfo0!.routeNumber == nil){
-                                let str: String = self.nextRouteInfo0!.GtfsId!
-                                let start = str.index(str.startIndex, offsetBy: 2)
-                                cell.departure0Route.text = String(str[start...])
-                            } else {
-                                cell.departure0Route.text = self.nextRouteInfo0!.routeNumber
-                            }
-                            cell.departure0Route.textColor = UIColor.white
-                            cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo0?.routeType!)!)
-                        }catch{
-                            print("Error:\(error)")
-                        }
-                        }.resume()
-                    // Route 1
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[1].routesId!))!){ (data, response, error) in
-                        if error != nil {
-                            print("Stop information fetch failed:\(error!)")
-                            return
-                        }
-                        do{
-                            let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
-                            self.nextRouteInfo1 = nextRouteData.route!
-                            if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3 || self.nextRouteInfo1!.routeNumber == nil){
-                                let str: String = self.nextRouteInfo1!.GtfsId!
-                                let start = str.index(str.startIndex, offsetBy: 2)
-                                cell.departure1Route.text = String(str[start...])
-                            } else {
-                                cell.departure1Route.text = self.nextRouteInfo1!.routeNumber
-                            }
-                            cell.departure1Route.textColor = UIColor.white
-                            cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo1?.routeType!)!)
-                        }catch{
-                            print("Error:\(error)")
-                        }
-                        }.resume()
-                    // Route 2
-                    _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: self.nearbyStopsDeaprtureSequence[2].routesId!))!){ (data, response, error) in
-                        if error != nil {
-                            print("Stop information fetch failed:\(error!)")
-                            return
-                        }
-                        do{
-                            let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
-                            self.nextRouteInfo2 = nextRouteData.route!
-                            if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3 || self.nextRouteInfo2!.routeNumber == nil){
-                                let str: String = self.nextRouteInfo2!.GtfsId!
-                                let start = str.index(str.startIndex, offsetBy: 2)
-                                cell.departure2Route.text = String(str[start...])
-                            } else {
-                                cell.departure2Route.text = self.nextRouteInfo2!.routeNumber
-                            }
-                            cell.departure2Route.textColor = UIColor.white
-                            cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: (self.nextRouteInfo2?.routeType!)!)
-                        }catch{
-                            print("Error:\(error)")
-                        }
-                        }.resume()
-                    
                 }catch{
                     print("Error:\(error)")
                 }
@@ -448,6 +454,14 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error while get user location:\(error)")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
 }
 
