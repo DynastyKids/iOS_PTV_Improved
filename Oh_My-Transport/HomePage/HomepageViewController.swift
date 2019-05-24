@@ -465,6 +465,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             page2.routeType = (nearbyStops[homeTableView.indexPathForSelectedRow!.row]).routeType!
             page2.stopId = (nearbyStops[homeTableView.indexPathForSelectedRow!.row]).stopId!
             page2.managedContext = stopFetchedResultsController.managedObjectContext
+            page2.navigationItem.rightBarButtonItem?.isEnabled = true
         }
         if segue.identifier == "showSavedStop"{
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
@@ -479,7 +480,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             let savedRoute = routeFetchedResultsController.object(at: readIndexPath)
             page2.routeId = Int(savedRoute.routeId)
             page2.managedContext = routeFetchedResultsController.managedObjectContext
-            
+            page2.navigationItem.rightBarButtonItem?.isEnabled = true
         }
         if segue.identifier == "showAllDisruptions"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
@@ -502,24 +503,30 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        homeTableView.reloadData()
+        homeTableView.delegate = self
+        homeTableView.dataSource = self
+        self.homeTableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 }
 
 extension HomepageViewController: NSFetchedResultsControllerDelegate{
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         homeTableView.endUpdates()
     }
     
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    public func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         homeTableView.beginUpdates()
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    public func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
             if let indexPath = newIndexPath {

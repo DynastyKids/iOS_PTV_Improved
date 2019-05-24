@@ -13,9 +13,10 @@ import CoreData
 
 class StopPageTableViewController: UITableViewController {
     
-    // MARK: - CD Properties
+    // MARK: - CoreData Properties
     var managedContext: NSManagedObjectContext!
     var stops: FavStop?
+    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     
     var stopId: Int = 0             // This value require passed from last segue
     var routeType: Int = 0          // This value require passed from last segue
@@ -273,6 +274,7 @@ class StopPageTableViewController: UITableViewController {
                 cell0.disruptionButton.setTitle("\(nextDepartDisruptionInfo.count) Disruptions in effect", for: UIControl.State.normal)
             }
             cell0.backgroundColor = changeColorByRouteType(routeType: routeType)
+            navigationItem.rightBarButtonItem?.isEnabled = true
             return cell0
         }
         if indexPath.section == 1{
@@ -344,5 +346,17 @@ class StopPageTableViewController: UITableViewController {
             page2.routeType = routeType
             page2.stopInfo = stopInfo
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 }

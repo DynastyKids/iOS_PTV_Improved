@@ -31,18 +31,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        
-        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
-        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
-        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
-        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        stopFetchedResultsController.delegate = self
-        
-        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
-        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
-        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
-        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        routeFetchedResultsController.delegate = self
 
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
@@ -272,20 +260,35 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
+        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
+        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
+        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
+        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        stopFetchedResultsController.delegate = self
+        
+        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
+        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
+        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
+        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        routeFetchedResultsController.delegate = self
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         locationManager.stopUpdatingLocation()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
 }
 extension SearchTableViewController: NSFetchedResultsControllerDelegate{
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
     }
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {

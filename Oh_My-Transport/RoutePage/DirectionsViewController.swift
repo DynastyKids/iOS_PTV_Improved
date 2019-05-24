@@ -295,6 +295,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruption may affect your trip"
             }
             cell.disruptionSubtitleLabel.text = "Tap to see more details"
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "directions", for: indexPath) as! DirectionTableViewCell
@@ -318,6 +319,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         locationManager.stopUpdatingLocation()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     @IBAction func saveRoute(_ sender: Any) {

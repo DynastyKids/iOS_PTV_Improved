@@ -774,7 +774,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="121-ZC-Jnn">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="vN3-sy-dWX">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="plain" systemItem="save" id="vN3-sy-dWX">
                             <connections>
                                 <action selector="saveButton:" destination="VfA-ee-rv5" id="vFb-v6-Lc6"/>
                             </connections>
@@ -1151,18 +1151,18 @@
         <scene sceneID="Xup-Ie-CLy">
             <objects>
                 <viewController title="Loading Data" id="f1e-ej-sol" userLabel="routeWithStopDetails" customClass="RouteDetailsViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="2l4-aZ-7CA">
+                    <view key="view" contentMode="scaleToFill" id="2l4-aZ-7CA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
                                 <rect key="frame" x="0.0" y="64" width="414" height="230"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="eZG-Wq-bdQ" secondAttribute="height" multiplier="75:46" id="0Cq-aF-Uyd"/>
                                     <constraint firstAttribute="height" constant="230" id="w8p-Jz-FGK"/>
                                 </constraints>
                             </mapView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
                                 <rect key="frame" x="0.0" y="294" width="414" height="442"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -1374,7 +1374,7 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Rtg-8B-y4f"/>
-        <segue reference="yW6-4j-AAm"/>
-        <segue reference="rUw-3q-bGF"/>
+        <segue reference="zXA-WO-h7o"/>
+        <segue reference="Zt6-QJ-tnR"/>
     </inferredMetricsTieBreakers>
 </document>

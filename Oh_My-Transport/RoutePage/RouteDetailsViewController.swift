@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 import CoreLocation
 
 class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -38,6 +39,9 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var routeMapView: MKMapView!
     @IBOutlet weak var routeTableView: UITableView!
+    
+    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
+    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,13 +123,15 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             page2.routeType = routeType
             page2.stopId = departsData[routeTableView.indexPathForSelectedRow!.row].stopsId!
             page2.managedContext = CoreDataStack().managedContext
-            print(routeTableView.indexPathForSelectedRow!.row)
-            print("stopId:\(orderedStop[routeTableView.indexPathForSelectedRow!.row].stopId!),StopName:\(orderedStop[routeTableView.indexPathForSelectedRow!.row].stopName!)")
         }
         if segue.identifier == "showRouteDisruption"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
             page2.url = URL(string: disruptionByRoute(routeId: routeId))
         }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 
     
@@ -179,6 +185,11 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
+        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
+        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
+        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
+        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        stopFetchedResultsController.delegate = self
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -197,5 +208,15 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
+    }
+}
+extension RouteDetailsViewController: NSFetchedResultsControllerDelegate{
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
+
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
+
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     }
 }
