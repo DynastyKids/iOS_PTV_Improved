@@ -71,8 +71,8 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 if((patternData.departures?.count)!>0){
                     self.departsData = patternData.departures!
                 }
-                let jsonString: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary      // Alternative method by NSDictonary to fetching all stops data
-                self.patternAllStops = jsonString.value(forKey: "stops") as! NSDictionary
+                let routePatternDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary      // Alternative method by NSDictonary to fetching all stops data
+                self.patternAllStops = routePatternDictonary.value(forKey: "stops") as! NSDictionary
                 for (key, value) in self.patternAllStops{       //  key = stopId, Value = Stop Dictonary
                     let stopDetailsData: NSDictionary = value as! NSDictionary
                         for (key2,value2) in stopDetailsData{   // Poping values into array
