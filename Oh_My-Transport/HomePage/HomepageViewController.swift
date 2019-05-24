@@ -278,8 +278,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             return
                         }
                         do{
-                            let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
+                            let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo0 = nextRouteData.route!
                             if (self.nextRouteInfo0!.routeType == 0 || self.nextRouteInfo0!.routeType == 3){
                                 let str: String = self.nextRouteInfo0!.GtfsId!
@@ -301,8 +300,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             return
                         }
                         do{
-                            let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
+                            let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo1 = nextRouteData.route!
                             if (self.nextRouteInfo1!.routeType == 0 || self.nextRouteInfo1!.routeType == 3){
                                 let str: String = self.nextRouteInfo1!.GtfsId!
@@ -324,8 +322,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             return
                         }
                         do{
-                            let decoder = JSONDecoder()
-                            let nextRouteData = try decoder.decode(RouteResponse.self, from: data!)
+                            let nextRouteData = try JSONDecoder().decode(RouteResponse.self, from: data!)
                             self.nextRouteInfo2 = nextRouteData.route!
                             if (self.nextRouteInfo2!.routeType == 0 || self.nextRouteInfo2!.routeType == 3){
                                 let str: String = self.nextRouteInfo2!.GtfsId!
