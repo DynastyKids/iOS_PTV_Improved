@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CommonCrypto
 
 public let HARDCODEDURL:String = "http://timetableapi.ptv.vic.gov.au"
 public let HARDCODEDDEVID:String = "3001122"
@@ -240,4 +241,25 @@ public func showRoutesStop(routeId: Int, routeType: Int) -> String{     // View 
 public func nearByStops(latitude: Double, longtitude: Double) -> String{    // View all stops near a specific location
     let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=3&max_distance=1500&devid="+HARDCODEDDEVID
     return extractedFunc(request)
+}
+
+
+enum CryptoAlgorithm {
+    case MD5, SHA1
+    var HMACAlgorithm: CCHmacAlgorithm {
+        var result: Int = 0
+        switch self {
+        case .MD5:      result = kCCHmacAlgMD5
+        case .SHA1:     result = kCCHmacAlgSHA1
+        }
+        return CCHmacAlgorithm(result)
+    }
+    var digestLength: Int {
+        var result: Int32 = 0
+        switch self {
+        case .MD5:      result = CC_MD5_DIGEST_LENGTH
+        case .SHA1:     result = CC_SHA1_DIGEST_LENGTH
+        }
+        return Int(result)
+    }
 }
