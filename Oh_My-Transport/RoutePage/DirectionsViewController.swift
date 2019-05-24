@@ -28,9 +28,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var allstopsdata: [stopOnRoute] = []
     var userPosition = CLLocation(latitude: 0.00, longitude: 0.00)
     
-    var routeId: Int = 12753                // Testing value, rely on last page passing value to this page
+    var routeId: Int = 12753                // Testing value, rely on last page segue passing value to this page
     var routeName: String = ""
-    var routeType: Int = 2
+    var routeType: Int = 2                  // Testing value, rely on last page segue passing value to this page
     var runs: [Run] = []
     
     @IBOutlet weak var directionsTableView: UITableView!
@@ -261,9 +261,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "disruption", for: indexPath) as! directionDisruptionsTableViewCell
             if disruptiondata.count > 1 {
-                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruptions in effect"
+                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruptions may affect your trip"
             } else {
-                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruption in effect"
+                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruption may affect your trip"
             }
             cell.disruptionSubtitleLabel.text = "Tap to see more details"
             return cell
