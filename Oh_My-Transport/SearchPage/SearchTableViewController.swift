@@ -7,59 +7,232 @@
 //
 
 import UIKit
+import CoreLocation
 
-class SearchTableViewController: UITableViewController {
-
+class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLLocationManagerDelegate {
+    
+    var indicator = UIActivityIndicatorView()
+    var searchRoute: [ResultRoute] = []
+    var searchOutlets: [ResultOutlet] = []
+    var searchStops: [ResultStop] = []
+    
+    let locationManager = CLLocationManager()
+    var nslock = NSLock()
+    var currentLocation:CLLocation!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Get user location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Type a stop / station / route to start"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
+        definesPresentationContext = true
+        indicator.style = UIActivityIndicatorView.Style.gray
+        indicator.center = self.tableView.center
+        self.view.addSubview(indicator)
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, searchText.count > 0 else {
+            return;
+        }
+        
+        indicator.startAnimating()
+        indicator.backgroundColor = UIColor.white
+        
+        let requestURL = URL(string: showSearchResults(searchTerm: searchText, latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325))
+        _ = URLSession.shared.dataTask(with: requestURL!){ (data, response, error) in
+            DispatchQueue.main.async {
+                self.indicator.stopAnimating()
+                self.indicator.hidesWhenStopped = true
+            }
+            if error != nil {
+                print("Error:\(error)")
+                return
+            }
+            do{
+                let results = try JSONDecoder().decode(SearchResult.self, from: data!)
+                if (results.stops?.count)!>0{
+                    self.searchStops = results.stops!
+                }
+                if (results.routes?.count)! > 0{
+                    self.searchRoute = results.routes!
+                }
+                if (results.outlets?.count)! > 0{
+                    self.searchOutlets = results.outlets!
+                }
+                
+                if (results.stops?.count)!>0{       // Bubble sort for stop distance
+                    for sequence in 0 ..< self.searchStops.count {
+                        for eachStops in 0 ..< self.searchStops.count-1-sequence{
+                            let userlocation = CLLocation(latitude: self.locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: self.locationManager.location?.coordinate.longitude ?? 144.9663325)
+                            let distance0 = userlocation.distance(from: CLLocation(latitude: self.searchStops[eachStops].stopLatitude!, longitude: self.searchStops[eachStops].stopLongitude!))
+                            let distance1 = userlocation.distance(from: CLLocation(latitude: self.searchStops[eachStops+1].stopLatitude!, longitude: self.searchStops[eachStops+1].stopLongitude!))
+                            if (distance0 > distance1){
+                                let temp = self.searchStops[eachStops+1]
+                                self.searchStops[eachStops+1] = self.searchStops[eachStops]
+                                self.searchStops[eachStops] = temp
+                            }
+                        }
+                    }
+                }
+                if (results.outlets?.count)! > 0{       // Bubble sort for outlet distance
+                    for sequence in 0 ..< self.searchOutlets.count{
+                        for eachOutlet in 0 ..< self.searchOutlets.count-1-sequence{
+                            let userlocation = CLLocation(latitude: self.locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: self.locationManager.location?.coordinate.longitude ?? 144.9663325)
+                            let distance0 = userlocation.distance(from: CLLocation(latitude: self.searchOutlets[eachOutlet].outletLatitude!, longitude: self.searchOutlets[eachOutlet].outletLongitude!))
+                            let distance1 = userlocation.distance(from: CLLocation(latitude: self.searchOutlets[eachOutlet+1].outletLatitude!, longitude: self.searchOutlets[eachOutlet+1].outletLongitude!))
+                            if (distance0 > distance1){
+                                let temp = self.searchOutlets[eachOutlet+1]
+                                self.searchOutlets[eachOutlet+1] = self.searchOutlets[eachOutlet]
+                                self.searchOutlets[eachOutlet] = temp
+                            }
+                        }
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } catch{
+                print("Search Result Fetch Error:\(error)")
+            }
+        }.resume()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 1
+        if section == 0{
+            return searchRoute.count
+        }
+        if section == 1{
+            return searchStops.count
+        }
+        if section == 2{
+            return searchOutlets.count
+        }
+        return 0
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        if indexPath.section == 0{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "searchRoutes", for: indexPath) as! SearchRouteTableViewCell
+            cell.routeInfoLabel.text = searchRoute[indexPath.row].routeName
+            cell.routeNameLabel.backgroundColor = changeColorByRouteType(routeType: searchRoute[indexPath.row].routeType!)
+            if (searchRoute[indexPath.row].routeType == 0 || searchRoute[indexPath.row].routeType == 3 || searchRoute[indexPath.row].routeNumber == nil) {
+                let str: String = self.searchRoute[indexPath.row].routeGtfsId!
+                let start = str.index(str.startIndex, offsetBy: 2)
+                cell.routeNameLabel.text = String(str[start...])
+            }else{
+                cell.routeNameLabel.text = searchRoute[indexPath.row].routeNumber
+            }
+            switch searchRoute[indexPath.row].routeType{
+            case 0:
+                cell.routeTypeIcon.image = UIImage(named: "trainIcon_PTVColour")
+            case 1:
+                cell.routeTypeIcon.image = UIImage(named: "tramIcon_PTVColour")
+            case 2:
+                cell.routeTypeIcon.image = UIImage(named: "busIcon_PTVColour")
+            case 3:
+                cell.routeTypeIcon.image = UIImage(named: "regionalTrainIcon_PTVColour")
+            case 4:
+                cell.routeTypeIcon.image = UIImage(named: "busIcon_PTVColour")
+            default:
+                break
+            }
+            return cell
+        }
+        if indexPath.section == 1{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "searchStops", for: indexPath) as! SearchStopsTableViewCell
+            cell.stopNameLabel.text = searchStops[indexPath.row].stopName
+            cell.stopSuburbLabel.text = searchStops[indexPath.row].stopSuburb
+            if searchStops[indexPath.row].stopDistance != nil{
+                if Int(searchStops[indexPath.row].stopDistance!) >= 1000 {
+                    cell.stopDistanceLabel.text = "Distance: \(Int(searchStops[indexPath.row].stopDistance!)/1000) km"
+                }
+                cell.stopDistanceLabel.text = "Distance: \(Int(searchStops[indexPath.row].stopDistance!)) m"
+            } else {
+                // Using provided location to calculate
+                if (searchStops[indexPath.row].stopLatitude != nil && searchStops[indexPath.row].stopLongitude != nil){
+                    let userlocation = CLLocation(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
+                    let distance = userlocation.distance(from: CLLocation(latitude: searchStops[indexPath.row].stopLatitude!, longitude: searchStops[indexPath.row].stopLongitude!))
+                    if Int(distance) >= 1000{
+                        cell.stopDistanceLabel.text = "Distance: \(Int(distance)/1000) km"
+                    } else{
+                        cell.stopDistanceLabel.text = "Distance: \(Int(distance)) m"
+                    }
+                }else {
+                    cell.stopDistanceLabel.text = ""
+                }
+            }
+            switch searchStops[indexPath.row].routeType{
+            case 0:
+                cell.stopIcon.image = UIImage(named: "trainIcon_PTVColour")
+            case 1:
+                cell.stopIcon.image = UIImage(named: "tramIcon_PTVColour")
+            case 2:
+                cell.stopIcon.image = UIImage(named: "busIcon_PTVColour")
+            case 3:
+                cell.stopIcon.image = UIImage(named: "regionalTrainIcon_PTVColour")
+            case 4:
+                cell.stopIcon.image = UIImage(named: "busIcon_PTVColour")
+            default:
+                break
+            }
+            return cell
+        }
+        if indexPath.section == 2{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "searchOutlets", for: indexPath) as! SearchOutletsTableViewCell
+            cell.businessNameLabel.text = searchOutlets[indexPath.row].outeletBusiness
+            cell.businessAddressLabel.text = searchOutlets[indexPath.row].outletName
+            cell.businessSuburbLabel.text = searchOutlets[indexPath.row].outletSuburb
+            if (searchOutlets[indexPath.row].outletLatitude != nil && searchOutlets[indexPath.row].outletLongitude != nil){
+                let userlocation = CLLocation(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
+                let distance = userlocation.distance(from: CLLocation(latitude: searchOutlets[indexPath.row].outletLatitude!, longitude: searchOutlets[indexPath.row].outletLongitude!))
+                if Int(distance) >= 1000{
+                    cell.businessDistanceLabel.text = "Distance: \(Int(distance)/1000) km"
+                } else{
+                    cell.businessDistanceLabel.text = "Distance: \(Int(distance)) m"
+                }
+            } else {
+                cell.businessDistanceLabel.text = ""
+            }
+            return cell
+        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Nothing", for: indexPath)
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionName: String
+        switch section {
+        case 0:
+            sectionName = NSLocalizedString("Routes:", comment: "Routes Result")
+        case 1:
+            sectionName = NSLocalizedString("Stops:", comment: "Stops Result")
+        case 2:
+            sectionName = NSLocalizedString("MyKi Outlets:", comment: "MyKi Outlet Result")
+        default:
+            sectionName = ""
+        }
+        return sectionName
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
 
     /*
     // Override to support rearranging the table view.
@@ -68,22 +241,28 @@ class SearchTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "searchToRoute"{
+            let page2:DirectionsViewController = segue.destination as! DirectionsViewController
+            page2.routeId = searchRoute[(tableView.indexPathForSelectedRow?.row)!].routeId!
+            page2.routeType = searchRoute[(tableView.indexPathForSelectedRow?.row)!].routeType!
+        }
+        if segue.identifier == "searchToStop" {
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+        }
     }
-    */
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //        locationManager.startUpdatingLocation()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        locationManager.stopUpdatingLocation()
+    }
 }

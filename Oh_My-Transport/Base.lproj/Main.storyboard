@@ -385,44 +385,45 @@
                                     <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="busIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xnA-zC-qaa">
-                                            <rect key="frame" x="20" y="11" width="40" height="40"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="busIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xnA-zC-qaa">
+                                            <rect key="frame" x="20" y="21" width="30" height="30"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="9c3-fr-Bzd"/>
-                                                <constraint firstAttribute="width" constant="40" id="MUA-30-1pk"/>
+                                                <constraint firstAttribute="height" constant="30" id="9c3-fr-Bzd"/>
+                                                <constraint firstAttribute="width" constant="30" id="MUA-30-1pk"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="553-Bt-CD0">
-                                            <rect key="frame" x="72" y="2" width="89" height="18"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Info" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NeV-ou-9Wa">
-                                            <rect key="frame" x="72" y="24" width="284" height="15.666666666666664"/>
+                                            <rect key="frame" x="62" y="33.333333333333329" width="294" height="15.666666666666664"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Route Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="553-Bt-CD0">
+                                            <rect key="frame" x="62" y="11.333333333333336" width="89" height="18"/>
+                                            <color key="backgroundColor" red="1" green="0.48424340170000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="NeV-ou-9Wa" firstAttribute="top" secondItem="553-Bt-CD0" secondAttribute="bottom" constant="4" id="76B-da-4jS"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="xnA-zC-qaa" secondAttribute="bottom" id="3b8-ce-BkO"/>
+                                        <constraint firstItem="NeV-ou-9Wa" firstAttribute="top" secondItem="553-Bt-CD0" secondAttribute="bottom" constant="4" id="7k0-hD-FIr"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="NeV-ou-9Wa" secondAttribute="trailing" constant="12" id="EKH-Sz-nzm"/>
                                         <constraint firstItem="NeV-ou-9Wa" firstAttribute="leading" secondItem="xnA-zC-qaa" secondAttribute="trailing" constant="12" id="KtU-5l-NDA"/>
-                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="553-Bt-CD0" secondAttribute="trailing" constant="16" id="MvK-mA-3SL"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="553-Bt-CD0" secondAttribute="trailing" constant="32" id="MvK-mA-3SL"/>
                                         <constraint firstItem="xnA-zC-qaa" firstAttribute="leading" secondItem="elW-cA-skg" secondAttribute="leadingMargin" id="OXB-Pu-vE7"/>
                                         <constraint firstItem="553-Bt-CD0" firstAttribute="leading" secondItem="xnA-zC-qaa" secondAttribute="trailing" constant="12" id="UWv-Bs-j7c"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="NeV-ou-9Wa" secondAttribute="bottom" id="ins-Aw-koc"/>
-                                        <constraint firstItem="xnA-zC-qaa" firstAttribute="top" secondItem="elW-cA-skg" secondAttribute="topMargin" id="rfc-FP-tSf"/>
-                                        <constraint firstItem="553-Bt-CD0" firstAttribute="top" secondItem="elW-cA-skg" secondAttribute="top" constant="2" id="sY2-D1-Cot"/>
-                                        <constraint firstItem="xnA-zC-qaa" firstAttribute="bottom" secondItem="elW-cA-skg" secondAttribute="bottomMargin" id="xWI-aY-AyC"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="NeV-ou-9Wa" secondAttribute="bottom" id="hcj-To-13W"/>
+                                        <constraint firstItem="553-Bt-CD0" firstAttribute="top" secondItem="elW-cA-skg" secondAttribute="topMargin" id="nwm-tz-8or"/>
+                                        <constraint firstItem="xnA-zC-qaa" firstAttribute="top" relation="greaterThanOrEqual" secondItem="elW-cA-skg" secondAttribute="topMargin" id="rfc-FP-tSf"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="routeInfoLabel" destination="NeV-ou-9Wa" id="GAa-6i-2eD"/>
                                     <outlet property="routeNameLabel" destination="553-Bt-CD0" id="kIL-e3-Lct"/>
                                     <outlet property="routeTypeIcon" destination="xnA-zC-qaa" id="t54-3d-qtM"/>
-                                    <segue destination="flj-A7-HCJ" kind="show" id="hKS-pF-xub"/>
+                                    <segue destination="flj-A7-HCJ" kind="show" identifier="searchToRoute" id="hKS-pF-xub"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="searchStops" id="8c1-r6-WnY" customClass="SearchStopsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
@@ -433,26 +434,27 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="regionalTrainIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6yB-at-2xh">
-                                            <rect key="frame" x="20" y="11.333333333333336" width="40" height="40"/>
+                                            <rect key="frame" x="20" y="11.333333333333336" width="30" height="40"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="40" id="VRt-Lq-gfz"/>
-                                                <constraint firstAttribute="height" constant="40" id="je3-4d-row"/>
+                                                <constraint firstAttribute="width" constant="30" id="VRt-Lq-gfz"/>
+                                                <constraint firstAttribute="height" constant="30" id="je3-4d-row"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaI-Mu-Tvg">
-                                            <rect key="frame" x="72" y="11.333333333333334" width="296" height="20.333333333333329"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UaI-Mu-Tvg">
+                                            <rect key="frame" x="61.999999999999993" y="11" width="80.333333333333314" height="18"/>
+                                            <color key="backgroundColor" red="1" green="0.48424340170000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Suburb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ng-Rf-sOy">
-                                            <rect key="frame" x="72" y="35.666666666666664" width="164" height="18"/>
+                                            <rect key="frame" x="62" y="33" width="174" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 999 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcN-6l-i3Z">
-                                            <rect key="frame" x="248" y="35.666666666666664" width="120" height="18"/>
+                                            <rect key="frame" x="248" y="33" width="120" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="120" id="neH-od-n39"/>
                                             </constraints>
@@ -462,7 +464,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="UaI-Mu-Tvg" secondAttribute="trailing" id="5yB-ez-954"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="UaI-Mu-Tvg" secondAttribute="trailing" constant="32" id="5yB-ez-954"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="BcN-6l-i3Z" secondAttribute="bottom" id="94w-aI-7vV"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="5ng-Rf-sOy" secondAttribute="bottom" id="Cjo-ly-9Ty"/>
                                         <constraint firstItem="5ng-Rf-sOy" firstAttribute="top" secondItem="UaI-Mu-Tvg" secondAttribute="bottom" constant="4" id="GhB-uF-ZnD"/>
@@ -482,7 +484,75 @@
                                     <outlet property="stopIcon" destination="6yB-at-2xh" id="oSO-7s-i6D"/>
                                     <outlet property="stopNameLabel" destination="UaI-Mu-Tvg" id="AxA-9P-PgA"/>
                                     <outlet property="stopSuburbLabel" destination="5ng-Rf-sOy" id="jsm-Sg-CJF"/>
-                                    <segue destination="VfA-ee-rv5" kind="show" id="Zt6-QJ-tnR"/>
+                                    <segue destination="VfA-ee-rv5" kind="show" identifier="searchToStop" id="Zt6-QJ-tnR"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="searchOutlets" id="CI5-Qk-Yne" customClass="SearchOutletsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="116" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CI5-Qk-Yne" id="xEs-fp-vAp">
+                                    <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ticket_Colour" translatesAutoresizingMaskIntoConstraints="NO" id="ios-Dr-dYK">
+                                            <rect key="frame" x="20" y="11.333333333333336" width="30" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="LUv-u2-kfe"/>
+                                                <constraint firstAttribute="height" constant="30" id="O5Y-1b-V9B"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgS-E7-T8n">
+                                            <rect key="frame" x="62" y="11.000000000000002" width="306" height="20.666666666666671"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outlet Suburb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VR1-IF-2TG">
+                                            <rect key="frame" x="62" y="59.333333333333329" width="174" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 999 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-1M-IiU">
+                                            <rect key="frame" x="248" y="59.333333333333329" width="120" height="17"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="120" id="0Fz-kq-cQy"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business Address" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OS-Tq-ojM">
+                                            <rect key="frame" x="62" y="39.666666666666671" width="306" height="15.666666666666664"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="mgS-E7-T8n" firstAttribute="top" secondItem="xEs-fp-vAp" secondAttribute="topMargin" id="256-V9-wAo"/>
+                                        <constraint firstItem="VR1-IF-2TG" firstAttribute="leading" secondItem="ios-Dr-dYK" secondAttribute="trailing" constant="12" id="5eM-s3-eTd"/>
+                                        <constraint firstItem="EsH-1M-IiU" firstAttribute="top" secondItem="3OS-Tq-ojM" secondAttribute="bottom" constant="4" id="FRP-1h-Qpv"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="mgS-E7-T8n" secondAttribute="trailing" id="IG1-v9-CbL"/>
+                                        <constraint firstItem="3OS-Tq-ojM" firstAttribute="top" secondItem="mgS-E7-T8n" secondAttribute="bottom" constant="8" id="LGQ-Ch-FO7"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="EsH-1M-IiU" secondAttribute="bottom" id="Ygz-BK-Yag"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="ios-Dr-dYK" secondAttribute="bottom" id="cAQ-4u-bvf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="VR1-IF-2TG" secondAttribute="bottom" id="d9U-V7-8ek"/>
+                                        <constraint firstItem="3OS-Tq-ojM" firstAttribute="trailing" secondItem="xEs-fp-vAp" secondAttribute="trailingMargin" id="isY-5O-OjW"/>
+                                        <constraint firstItem="ios-Dr-dYK" firstAttribute="leading" secondItem="xEs-fp-vAp" secondAttribute="leadingMargin" id="k5m-dU-A5g"/>
+                                        <constraint firstItem="EsH-1M-IiU" firstAttribute="leading" secondItem="VR1-IF-2TG" secondAttribute="trailing" constant="12" id="mad-lv-hbb"/>
+                                        <constraint firstItem="mgS-E7-T8n" firstAttribute="leading" secondItem="ios-Dr-dYK" secondAttribute="trailing" constant="12" id="ofV-7w-rJO"/>
+                                        <constraint firstItem="ios-Dr-dYK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xEs-fp-vAp" secondAttribute="topMargin" id="rG8-DZ-EGH"/>
+                                        <constraint firstItem="3OS-Tq-ojM" firstAttribute="leading" secondItem="ios-Dr-dYK" secondAttribute="trailing" constant="12" id="tyx-5x-mG0"/>
+                                        <constraint firstItem="VR1-IF-2TG" firstAttribute="top" secondItem="3OS-Tq-ojM" secondAttribute="bottom" constant="4" id="uyH-Jl-w4S"/>
+                                        <constraint firstItem="EsH-1M-IiU" firstAttribute="trailing" secondItem="xEs-fp-vAp" secondAttribute="trailingMargin" id="xgg-eI-dKc"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="businessAddressLabel" destination="3OS-Tq-ojM" id="s8K-aF-1eE"/>
+                                    <outlet property="businessDistanceLabel" destination="EsH-1M-IiU" id="whd-Rg-iMv"/>
+                                    <outlet property="businessNameLabel" destination="mgS-E7-T8n" id="hmM-AO-Uc1"/>
+                                    <outlet property="businessSuburbLabel" destination="VR1-IF-2TG" id="W16-HV-A0D"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -494,7 +564,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHD-J2-cQr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="994" y="446"/>
+            <point key="canvasLocation" x="992.75362318840587" y="445.92391304347831"/>
         </scene>
         <!--Select a stop-->
         <scene sceneID="3Kk-9l-Hbr">
@@ -1300,12 +1370,13 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
         <image name="regionalTrainIcon" width="25" height="25"/>
         <image name="sateliteIcon_White" width="25" height="25"/>
         <image name="settingIcon" width="25" height="25"/>
+        <image name="ticket_Colour" width="25" height="25"/>
         <image name="warningIcon" width="25" height="25"/>
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tH8-GN-WaY"/>
-        <segue reference="uPl-tE-DDw"/>
-        <segue reference="RMC-Ij-1Re"/>
+        <segue reference="hKS-pF-xub"/>
+        <segue reference="zXA-WO-h7o"/>
+        <segue reference="evR-un-G8n"/>
     </inferredMetricsTieBreakers>
 </document>

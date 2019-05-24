@@ -30,6 +30,7 @@
 		5AEEE8792297B8D500EF6D83 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEE8782297B8D500EF6D83 /* SearchTableViewController.swift */; };
 		5AEEE87C2297B95100EF6D83 /* SearchRouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEE87B2297B95100EF6D83 /* SearchRouteTableViewCell.swift */; };
 		5AEEE87E2297B96700EF6D83 /* SearchStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEE87D2297B96700EF6D83 /* SearchStopsTableViewCell.swift */; };
+		5AEEE8802297E55A00EF6D83 /* SearchOutletsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEEE87F2297E55A00EF6D83 /* SearchOutletsTableViewCell.swift */; };
 		5AEF7DC3229196A50087C087 /* FavRoute+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DBD229196A50087C087 /* FavRoute+CoreDataClass.swift */; };
 		5AEF7DC4229196A50087C087 /* FavRoute+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DBE229196A50087C087 /* FavRoute+CoreDataProperties.swift */; };
 		5AEF7DC5229196A50087C087 /* APIInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DBF229196A50087C087 /* APIInfo+CoreDataClass.swift */; };
@@ -70,6 +71,7 @@
 		5AEEE8782297B8D500EF6D83 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		5AEEE87B2297B95100EF6D83 /* SearchRouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouteTableViewCell.swift; sourceTree = "<group>"; };
 		5AEEE87D2297B96700EF6D83 /* SearchStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStopsTableViewCell.swift; sourceTree = "<group>"; };
+		5AEEE87F2297E55A00EF6D83 /* SearchOutletsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchOutletsTableViewCell.swift; sourceTree = "<group>"; };
 		5AEF7DBD229196A50087C087 /* FavRoute+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataClass.swift"; sourceTree = "<group>"; };
 		5AEF7DBE229196A50087C087 /* FavRoute+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavRoute+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5AEF7DBF229196A50087C087 /* APIInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				5AEEE8782297B8D500EF6D83 /* SearchTableViewController.swift */,
 				5AEEE87B2297B95100EF6D83 /* SearchRouteTableViewCell.swift */,
 				5AEEE87D2297B96700EF6D83 /* SearchStopsTableViewCell.swift */,
+				5AEEE87F2297E55A00EF6D83 /* SearchOutletsTableViewCell.swift */,
 			);
 			path = SearchPage;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				5A85D5C02290861300E01AD9 /* DirectionDisruptionsTableViewCell.swift in Sources */,
 				5A85D5C4229086EE00E01AD9 /* DirectionTableViewCell.swift in Sources */,
 				5AEEE8792297B8D500EF6D83 /* SearchTableViewController.swift in Sources */,
+				5AEEE8802297E55A00EF6D83 /* SearchOutletsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -578,7 +578,7 @@ struct ResultOutlet: Codable{
         case outletDistance = "outlet_distance"
         case outletSlidSpid = "outlet_slid_spid"
         case outletName = "outlet_name"
-        case outeletBusiness = "outelet_business"
+        case outeletBusiness = "outlet_business"
         case outletLatitude = "outlet_latitude"
         case outletLongitude = "outlet_longitude"
         case outletSuburb = "outlet_suburb"
