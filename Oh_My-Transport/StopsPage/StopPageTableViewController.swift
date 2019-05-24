@@ -24,12 +24,13 @@ class StopPageTableViewController: UITableViewController {
     var routeId: Int = -1
     
     var departureData: [Departure] = []
-    var routeInfo: [RouteWithStatus] = []
+    var nextDepartRoutesData: [RouteWithStatus] = []
+    var nextDepartRunsInfo: [Run] = []
+    var nextDepartDirectionInfo: [DirectionWithDescription] = []
+    var nextDepartDisruptionInfo: [Disruption] = []
+    var nextDepartStopInfo: [stopGeosearch] = []
     
-    var routeName:[String] = []
-    
-    var currentLoopCount = 0
-    var fetchingLimit = 200
+//    var routeName:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +62,161 @@ class StopPageTableViewController: UITableViewController {
                 return
             }
             do {
-                // Data recieved.  Decode it from JSON.
                 let showDeparture = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                 self.departureData = showDeparture.departures!
+                
+                let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+                let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
+                let nextDepartDisruptions = nextDepartureDictonary.value(forKey: "disruptions") as! NSDictionary
+                let nextDepartRuns = nextDepartureDictonary.value(forKey: "runs") as! NSDictionary
+                let nextDepartStops = nextDepartureDictonary.value(forKey: "stops") as! NSDictionary
+                let nextDepartDirections = nextDepartureDictonary.value(forKey: "directions") as! NSDictionary
+                for(_, value) in nextDepartRoutes{
+                    let nextDepartRouteData: NSDictionary = value as! NSDictionary
+                    var routeGtfsId: String = ""
+                    var routeRouteType: Int = 0
+                    var routeId: Int = 0
+                    var routeName: String = ""
+                    var routeNumber: String = ""
+                    for(key, value2) in nextDepartRouteData{
+                        if "\(key)" == "route_gtfs_id"{
+                            routeGtfsId = value2 as! String
+                        }else if "\(key)" == "route_type"{
+                            routeRouteType = value2 as! Int
+                        }else if "\(key)" == "route_id"{
+                            routeId = value2 as! Int
+                        }else if "\(key)" == "route_name"{
+                            routeName = value2 as! String
+                        }else if "\(key)" == "route_number"{
+                            routeNumber = value2 as! String
+                        }
+                    }
+                    self.nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
+                }
+                for (_, values) in nextDepartDisruptions{
+                    let nextDisruptionsData: NSDictionary = values as! NSDictionary
+                    var disruptionId: Int = 0
+                    var disruptionTitle: String = ""
+                    var disruptionURL: String = ""
+                    var disruptionDescription: String = ""
+                    var disruptionStatus: String = ""
+                    var disruptionType: String = ""
+                    var disruptionPublishDate: String = ""
+                    var disruptionUpdateDate: String = ""
+                    var disruptionStartDate: String = ""
+                    var disruptionEndDate: String = ""
+                    for(key, value) in nextDisruptionsData{
+                        if "\(key)" == "disruption_id" {
+                            disruptionId = value as! Int
+                        } else if "\(key)" == "title" {
+                            disruptionTitle = value as! String
+                        } else if "\(key)" == "url" {
+                            disruptionURL = value as! String
+                        } else if "\(key)" == "description" {
+                            disruptionDescription = value as! String
+                        } else if "\(key)" == "disruption_status" {
+                            disruptionStatus = value as! String
+                        } else if "\(key)" == "disruption_type" {
+                            disruptionType = value as! String
+                        } else if "\(key)" == "published_on" {
+                            disruptionPublishDate = value as! String
+                        } else if "\(key)" == "last_updateed" {
+                            disruptionUpdateDate = value as! String
+                        } else if "\(key)" == "from_date" {
+                            disruptionStartDate = value as! String
+                        } else if "\(key)" == "to_date" {
+                            disruptionEndDate = value as! String
+                        }
+                    }
+                    self.nextDepartDisruptionInfo.append(Disruption.init(disruptionId: disruptionId, title: disruptionTitle, url: disruptionURL, description: disruptionDescription, disruptionStatus: disruptionStatus, disruptionType: disruptionType, publishDate: disruptionPublishDate, updateDate: disruptionUpdateDate, startDate: disruptionStartDate, endDate: disruptionEndDate))
+                }
+                for(_,values) in nextDepartRuns{
+                    let nextRunsData: NSDictionary = values as! NSDictionary
+                    var runId: Int = 0
+                    var routeId: Int = 0
+                    var routeType: Int = 0
+                    var finalStopId: Int = 0
+                    var destinationName: String = ""
+                    var status: String = ""
+                    var directionId: Int = 0
+                    var runSequence: Int = 0
+                    var expressStopCount: Int = 0
+                    for(key, value) in nextRunsData{
+                        if "\(key)" == "run_id"{
+                            runId = value as! Int
+                        } else if "\(key)" == "route_id"{
+                            routeId = value as! Int
+                        } else if "\(key)" == "route_type"{
+                            routeType = value as! Int
+                        } else if "\(key)" == "final_stop_id"{
+                            finalStopId = value as! Int
+                        } else if "\(key)" == "destination_name"{
+                            destinationName = value as! String
+                        } else if "\(key)" == "status"{
+                            status = value as! String
+                        } else if "\(key)" == "direction_id"{
+                            directionId = value as! Int
+                        } else if "\(key)" == "run_sequence"{
+                            runSequence = value as! Int
+                        } else if "\(key)" == "express_stop_count"{
+                            expressStopCount = value as! Int
+                        }
+                    }
+                    self.nextDepartRunsInfo.append(Run.init(runId: runId, routeId: routeId, routeType: routeType, finalStopId: finalStopId, destinationName: destinationName, status: status, directionId: directionId, runSequence: runSequence, expressStopCount: expressStopCount, vehiclePosition: nil, vehicleDescriptor: nil))
+                }
+                
+                for (_, values) in nextDepartStops{
+                    let nextStopData: NSDictionary = values as! NSDictionary
+                    var stopDistance: Double = 0
+                    var stopSuburb: String = ""
+                    var stopName: String = ""
+                    var stopId: Int = 0
+                    var routeType: Int = 0
+                    var stopLatitude: Double = 0
+                    var stopLongitude: Double = 0
+                    var stopSequence: Int = 0
+                    for (key,value) in nextStopData{
+                        if "\(key)" == "stop_distance"{
+                            stopDistance = value as! Double
+                        } else if "\(key)" == "stop_suburb"{
+                            stopSuburb = value as! String
+                        } else if "\(key)" == "stop_name"{
+                            stopName = value as! String
+                        } else if "\(key)" == "stop_id"{
+                            stopId = value as! Int
+                        } else if "\(key)" == "route_type"{
+                            routeType = value as! Int
+                        } else if "\(key)" == "stop_latitude"{
+                            stopLatitude = value as! Double
+                        } else if "\(key)" == "stop_longitude"{
+                            stopLongitude = value as! Double
+                        } else if "\(key)" == "stop_sequence"{
+                            stopSequence = value as! Int
+                        }
+                    }
+                    self.nextDepartStopInfo.append(stopGeosearch.init(stopDistance: stopDistance, stopSuburb: stopSuburb, stopName: stopName, stopId: stopId, routeType: routeType, stopLatitude: stopLatitude, stopLongitude: stopLongitude, stopSequence: stopSequence))
+                }
+                
+                for(_, values) in nextDepartDirections{
+                    let nextDirectionData: NSDictionary = values as! NSDictionary
+                    var directionId: Int = 0
+                    var directionName: String = ""
+                    var routeId: Int = 0
+                    var routeType: Int = 0
+                    for(key, value) in nextDirectionData{
+                        if "\(key)" == "direction_id"{
+                            directionId = value as! Int
+                        } else if "\(key)" == "direction_name"{
+                            directionName = value as! String
+                        } else if "\(key)" == "route_id"{
+                            routeId = value as! Int
+                        } else if "\(key)" == "route_type"{
+                            routeType = value as! Int
+                        }
+                    }
+                    self.nextDepartDirectionInfo.append(DirectionWithDescription.init(routeDirectionDescription: nil, directionId: directionId, directionName: directionName, routeId: routeId, routeType: routeType))
+                }
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadData() // Details data will be loaded when loading cell
                 }
@@ -107,81 +260,65 @@ class StopPageTableViewController: UITableViewController {
         if indexPath.section == 0{
             let cell0 = tableView.dequeueReusableCell(withIdentifier: "stopInfo", for: indexPath) as! stopInfoTableViewCell
             cell0.stopNameLabel.text = stopName
-            cell0.disruptionButton.setTitle("No Disruptions in effect", for: UIControl.State.normal)
+            if(nextDepartDisruptionInfo.count == 1){
+                cell0.disruptionButton.setTitle("No Disruption, enjoy your trip", for: UIControl.State.normal)
+            }else if(nextDepartDisruptionInfo.count == 1){
+                cell0.disruptionButton.setTitle("1 Disruption may affect your travel", for: UIControl.State.normal)
+            } else {
+                cell0.disruptionButton.setTitle("\(nextDepartDisruptionInfo.count) Disruptions in effect", for: UIControl.State.normal)
+            }
             cell0.backgroundColor = changeColorByRouteType(routeType: routeType)
             return cell0
         }
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nextService", for: indexPath) as! nextServiceTableViewCell
-        cell.routeToLabel.text = " to "
-        _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            do{
-                let showRoute = try JSONDecoder().decode(RouteResponse.self, from: data!)
-                DispatchQueue.main.async {
-                    if(showRoute.route?.routeType == 0 || showRoute.route?.routeType == 3 || showRoute.route?.routeNumber == nil){
-                        let str: String = showRoute.route!.GtfsId!
-                        let start = str.index(str.startIndex, offsetBy: 2)
-                        cell.routeSignLabel.text = String(str[start...])      // Metro and vline will using its gtfsid to ident which line's service is running
-                    } else {
-                        cell.routeSignLabel.text = showRoute.route?.routeNumber // All other service using existing route numbers
+        if indexPath.section == 1{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "nextService", for: indexPath) as! nextServiceTableViewCell
+            let cellData = departureData[indexPath.row]
+            for each in nextDepartRoutesData{
+                if cellData.routesId == each.routeId{
+                    if (each.routeType == 0 || each.routeType == 3 || each.routeNumber == nil){
+                        let routeGTFS = each.GtfsId ?? each.routeNumber!
+                        let cuttedName = routeGTFS.index(routeGTFS.startIndex, offsetBy: 2)
+                        cell.routeSignLabel.text = String(routeGTFS[cuttedName...])
+                    }else{
+                        cell.routeSignLabel.text = each.routeNumber
                     }
-                    self.routeName.append(cell.routeSignLabel.text!)
-                    cell.routeSignLabel.textColor = UIColor.white
+                    cell.routeSignLabel.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
                 }
-            } catch{
-                print("Error on looking up route")
             }
-            }.resume()
-        _ = URLSession.shared.dataTask(with: URL(string: showDirectionsOnRoute(routeId: departureData[indexPath.row].routesId!))!){(data, response, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            do{
-                let showDirection = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
-                DispatchQueue.main.async {
-                    var count = 0
-                    while self.departureData[indexPath.row].directionId != showDirection.directions![count].directionId {
-                        count += 1
-                    }
-                    cell.routeDestinationLabel.text = showDirection.directions![count].directionName!
+            for each in nextDepartDirectionInfo{
+                if cellData.directionId == each.directionId{
+                    cell.routeDestinationLabel.text = each.directionName
                 }
-            }catch{
-                print(error)
             }
-            }.resume()
-        
-        cell.routeSignLabel.backgroundColor = changeColorByRouteType(routeType: routeType)
-//        cell.routeDestinationLabel.text = routesDest[indexPath.row]
-        cell.routeDetailslabel.text = "Temporary Empty"
-        
-        cell.routeDueTimeLabel.text = Iso8601Countdown(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!, status: false)
-        if departureData[indexPath.row].estimatedDepartureUTC == nil {
-            cell.routeStatusLabel.text = "Scheduled"
-            cell.routeStatusLabel.textColor = UIColor.gray
-        }else {
-            let mintes = Iso8601toStatus(iso8601DateSchedule: departureData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departureData[indexPath.row].estimatedDepartureUTC!)
-            if mintes > 1 {
-                cell.routeStatusLabel.text = "Late \(mintes) mins"
-                cell.routeStatusLabel.textColor = UIColor.red
-            } else if mintes == 1{
-                cell.routeStatusLabel.text = "Late 1 min"
-                cell.routeStatusLabel.textColor = UIColor.orange
-            } else if mintes == 0 {
-                cell.routeStatusLabel.text = "On Time"
-                cell.routeStatusLabel.textColor = UIColor.green
-            } else if mintes == -1{
-                cell.routeStatusLabel.text = "Early 1 min"
-                cell.routeStatusLabel.textColor = UIColor.green
-            } else if mintes < -1 {
-                let min = mintes * -1
-                cell.routeStatusLabel.text = "Early \(min) mins"
-                cell.routeStatusLabel.textColor = UIColor.brown
+            cell.routeDueTimeLabel.text = Iso8601Countdown(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!, status: false)
+            if departureData[indexPath.row].estimatedDepartureUTC == nil {
+                cell.routeStatusLabel.text = "Scheduled"
+                cell.routeStatusLabel.textColor = UIColor.gray
+            }else {
+                let mintes = Iso8601toStatus(iso8601DateSchedule: departureData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departureData[indexPath.row].estimatedDepartureUTC!)
+                if mintes > 1 {
+                    cell.routeStatusLabel.text = "Late \(mintes) mins"
+                    cell.routeStatusLabel.textColor = UIColor.red
+                } else if mintes == 1{
+                    cell.routeStatusLabel.text = "Late 1 min"
+                    cell.routeStatusLabel.textColor = UIColor.orange
+                } else if mintes == 0 {
+                    cell.routeStatusLabel.text = "On Time"
+                    cell.routeStatusLabel.textColor = UIColor.green
+                } else if mintes == -1{
+                    cell.routeStatusLabel.text = "Early 1 min"
+                    cell.routeStatusLabel.textColor = UIColor.green
+                } else if mintes < -1 {
+                    let min = mintes * -1
+                    cell.routeStatusLabel.text = "Early \(min) mins"
+                    cell.routeStatusLabel.textColor = UIColor.brown
+                }
             }
+            
+            cell.routeDetailslabel.text = "Vehicle's real time data unavailable."
+            return cell
         }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Nothing", for: indexPath)
         return cell
     }
 
@@ -200,7 +337,6 @@ class StopPageTableViewController: UITableViewController {
             page2.myRunId = departureData[tableView.indexPathForSelectedRow!.row].runId!
             page2.myRouteId = departureData[tableView.indexPathForSelectedRow!.row].routesId!
             page2.myRouteType = routeType
-            page2.navigationTitle = "Route: \(routeName[tableView.indexPathForSelectedRow!.row])"
         }
     }
 }
