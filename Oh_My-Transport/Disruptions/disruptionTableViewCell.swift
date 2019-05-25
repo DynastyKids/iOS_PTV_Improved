@@ -11,6 +11,7 @@ import UIKit
 class disruptionTableViewCell: UITableViewCell {
     @IBOutlet weak var disruptionTitleLabel: UILabel!
     @IBOutlet weak var disruptionPublishDateLabel: UILabel!
+    @IBOutlet weak var disruptionColourLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

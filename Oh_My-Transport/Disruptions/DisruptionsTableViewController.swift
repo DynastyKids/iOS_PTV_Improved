@@ -16,6 +16,12 @@ class DisruptionsTableViewController: UITableViewController {
     
     var disruptions: [Disruption] = []
     
+    var totalDisruptionItems: Int = 0
+    var metroTrainDisruptionItems: Int = 0
+    var metroTramDisruptionItems: Int = 0
+    var metroBusDisruptionItems: Int = 0
+    var vlineDisruptionItems: Int = 0
+    
     var url = URL(string: disruptionAll())
     
     override func viewDidLoad() {
@@ -38,22 +44,52 @@ class DisruptionsTableViewController: UITableViewController {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .iso8601
                 let disruptionData = try decoder.decode(DisruptionsResponse.self, from: data!)
-                self.disruptions = (disruptionData.disruptions?.metroTrain)!
-                self.disruptions += (disruptionData.disruptions?.metroTram)!
-                self.disruptions += (disruptionData.disruptions?.metroBus)!
-                self.disruptions += (disruptionData.disruptions?.vlineTrain)!
-                self.disruptions += (disruptionData.disruptions?.vlineCoach)!
-                self.disruptions += (disruptionData.disruptions?.regionalBus)!
-                self.disruptions += (disruptionData.disruptions?.schoolBus)!
-                self.disruptions += (disruptionData.disruptions?.telebus)!
-                self.disruptions += (disruptionData.disruptions?.nightbus)!
-                self.disruptions += (disruptionData.disruptions?.interstate)!
-                self.disruptions += (disruptionData.disruptions?.skybus)!
-                self.disruptions += (disruptionData.disruptions?.ferry)!
-                self.disruptions += (disruptionData.disruptions?.taxi)!
-//                print(disruptionData.disruptions?.metroTrain?.count)
-                
+                if (disruptionData.disruptions?.metroTrain?.count ?? 0 > 0){
+                    self.disruptions = (disruptionData.disruptions?.metroTrain)!
+                    self.metroTrainDisruptionItems = (disruptionData.disruptions?.metroTrain?.count)!
+                }
+                if (disruptionData.disruptions?.metroTram?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.metroTram)!
+                    self.metroTramDisruptionItems = (disruptionData.disruptions?.metroTram?.count)!
+                }
+                if (disruptionData.disruptions?.metroBus?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.metroBus)!
+                    self.metroBusDisruptionItems = (disruptionData.disruptions?.metroBus?.count)!
+                }
+                if (disruptionData.disruptions?.vlineTrain?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.vlineTrain)!
+                    self.vlineDisruptionItems += (disruptionData.disruptions?.vlineTrain?.count)!
+                }
+                if (disruptionData.disruptions?.vlineCoach?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.vlineCoach)!
+                    self.vlineDisruptionItems += (disruptionData.disruptions?.vlineCoach?.count)!
+                }
+                if (disruptionData.disruptions?.regionalBus?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.regionalBus)!
+                }
+                if (disruptionData.disruptions?.schoolBus?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.schoolBus)!
+                }
+                if (disruptionData.disruptions?.telebus?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.telebus)!
+                }
+                if (disruptionData.disruptions?.nightbus?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.nightbus)!
+                }
+                if (disruptionData.disruptions?.interstate?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.interstate)!
+                }
+                if (disruptionData.disruptions?.skybus?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.skybus)!
+                }
+                if (disruptionData.disruptions?.ferry?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.ferry)!
+                }
+                if (disruptionData.disruptions?.taxi?.count ?? 0 > 0){
+                    self.disruptions += (disruptionData.disruptions?.taxi)!
+                }
                 DispatchQueue.main.async {
+                    self.totalDisruptionItems = self.disruptions.count
                     self.tableView.reloadData()
                 }
             } catch{
@@ -80,6 +116,24 @@ class DisruptionsTableViewController: UITableViewController {
         cell.disruptionTitleLabel.text = disruption.title
         cell.disruptionPublishDateLabel.text = "Last Update: " + Iso8601toString(iso8601Date: disruption.updateDate ?? "nil", withTime: true, withDate: true)
         
+        cell.disruptionColourLabel.backgroundColor = UIColor.white
+        cell.disruptionColourLabel.textColor = UIColor.white
+        if indexPath.row < metroTrainDisruptionItems {
+            cell.disruptionColourLabel.backgroundColor = changeColorByRouteType(routeType: 0)
+            cell.disruptionColourLabel.textColor = changeColorByRouteType(routeType: 0)
+        } else if indexPath.row < metroTrainDisruptionItems+metroTramDisruptionItems {
+            cell.disruptionColourLabel.backgroundColor = changeColorByRouteType(routeType: 1)
+            cell.disruptionColourLabel.textColor = changeColorByRouteType(routeType: 1)
+        } else if indexPath.row < metroTrainDisruptionItems+metroTramDisruptionItems+metroBusDisruptionItems {
+            cell.disruptionColourLabel.backgroundColor = changeColorByRouteType(routeType: 2)
+            cell.disruptionColourLabel.textColor = changeColorByRouteType(routeType: 2)
+        } else if indexPath.row < metroTrainDisruptionItems+metroTramDisruptionItems+metroBusDisruptionItems+vlineDisruptionItems {
+            cell.disruptionColourLabel.backgroundColor = changeColorByRouteType(routeType: 3)
+            cell.disruptionColourLabel.textColor = changeColorByRouteType(routeType: 3)
+        } else if indexPath.row < disruptions.count {
+            cell.disruptionColourLabel.backgroundColor = changeColorByRouteType(routeType: 2)
+            cell.disruptionColourLabel.textColor = changeColorByRouteType(routeType: 2)
+        }
         return cell
     }
 
