@@ -67,18 +67,11 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 let routeData = try JSONDecoder().decode(RouteResponse.self, from: data!)
                 if routeData.route?.routeNumber != nil{
                     self.routeName = routeData.route?.routeNumber
+                } else{
+                    self.routeName = routeData.route?.routeName
                 }
                 DispatchQueue.main.async {
-                    if self.routeName == nil{
-                        self.routeName = routeData.route?.routeName
-                        if self.routeName == nil {
-                            self.navigationItem.title = ""
-                        }else{
-                            self.navigationItem.title = "Route: \(self.routeName!)"
-                        }
-                    }else{
-                        self.navigationItem.title = "Route: \(self.routeName!)"
-                    }
+                    self.navigationItem.title = "Route: \(self.routeName!)"
                     self.saveButton.isEnabled = true
                 }
             } catch {

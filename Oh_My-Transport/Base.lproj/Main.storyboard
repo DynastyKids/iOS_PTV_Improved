@@ -609,9 +609,9 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zta-KU-1a2">
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zta-KU-1a2">
                                                 <rect key="frame" x="191.66666666666663" y="0.0" width="190.33333333333337" height="30"/>
-                                                <state key="normal" title="Navigate me to there"/>
+                                                <state key="normal" title="Navigate me"/>
                                             </button>
                                         </subviews>
                                     </stackView>

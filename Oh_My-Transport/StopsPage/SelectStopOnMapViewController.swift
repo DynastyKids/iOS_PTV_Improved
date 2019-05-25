@@ -10,62 +10,6 @@ import UIKit
 import MapKit
 import CoreLocation
 
-struct findStopByGPSRoot: Codable {
-    var stops: StopGeosearch?
-//    var disruptions: disruptions?
-    var status: findStopByGPSstatus?
-    
-    private enum CodingKeys: String, CodingKey{
-        case stops
-        case status
-    }
-}
-
-struct StopGeosearch: Codable{
-    var stopDistance: Double?
-    var stopSuburb: String?
-    var stopName: String?
-    var stopId: Int?
-    var routeType: Int?
-    var stopLatitude: Double?
-    var stopLongitude: Double?
-    var stopSequence: Int?
-    
-    private enum CodingKeys: String, CodingKey{
-        case stopDistance = "stop_distance"
-        case stopSuburb = "stop_suburb"
-        case stopName = "stop_name"
-        case stopId = "stop_id"
-        case routeType = "route_type"
-        case stopLatitude = "stop_latitude"
-        case stopLongitude = "stop_longitude"
-        case stopSequence = "stop_sequence"
-    }
-}
-
-struct findStopByGPSstatus: Codable {
-    var version: String?
-    var health: Int?
-    private enum CodingKeys: String, CodingKey{
-        case version
-        case health
-    }
-}
-
-final class BusStopAnnotation: NSObject, MKAnnotation{
-    var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var subtitle: String?
-    
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String?){
-        self.coordinate = coordinate
-        self.title = title
-        self.subtitle = subtitle
-//        添加车站图标
-        super.init()
-    }
-}
-
 class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
@@ -87,7 +31,6 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             }
         }
         
-        self.mainMapView = MKMapView(frame:self.view.frame)
         self.view.addSubview(self.mainMapView)
         mainMapView.showsUserLocation = true
         
