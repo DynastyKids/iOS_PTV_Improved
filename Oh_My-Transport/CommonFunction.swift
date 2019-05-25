@@ -31,10 +31,16 @@ public func Iso8601Countdown(iso8601Date: String, status: Bool?) -> String {
     let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: date)
     let minutes = differences.minute ?? 0
     
-    if minutes < 0 {
+    if minutes < -10 {
         let mydateformat = DateFormatter()
         mydateformat.dateFormat = "hh:mm a"
         return mydateformat.string(from: date)
+    }
+    if minutes < -1{
+        return "\(minutes*(-1))m ago"
+    }
+    if minutes == -1{
+        return "1m ago"
     }
     if minutes == 0{
         return "Now"

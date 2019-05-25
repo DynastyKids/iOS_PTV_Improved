@@ -244,6 +244,14 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                         let departureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
                         let departures = departureData.departures
+                        var count = 0
+                        for _ in departures!{
+                            let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (departures![count].estimatedDepartureUTC ?? (departures![count].scheduledDepartureUTC ?? nil)!)))).minute ?? 0
+                            if differences >= -5{
+                                break
+                            }
+                            count += 1
+                        }
                         if flag == true && departures?.count != 0{
                             DispatchQueue.main.async {
                                 cell.departure0Time.text = ""
@@ -252,17 +260,17 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                                 cell.departure0Countdown.text = ""
                                 cell.departure1Countdown.text = ""
                                 cell.departure2Countdown.text = ""
-                                if departures?[0].scheduledDepartureUTC != nil {
-                                    cell.departure0Time.text = Iso8601toString(iso8601Date: departures?[0].estimatedDepartureUTC ?? (departures?[0].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                    cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: departures?[0].estimatedDepartureUTC ?? (departures?[0].scheduledDepartureUTC)!, status: true)
+                                if departures?[count].scheduledDepartureUTC != nil {
+                                    cell.departure0Time.text = Iso8601toString(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                                    cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, status: true)
                                 }
-                                if departures?[1].scheduledDepartureUTC != nil {
-                                    cell.departure1Time.text = Iso8601toString(iso8601Date: departures?[1].estimatedDepartureUTC ?? (departures?[1].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                    cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: departures?[1].estimatedDepartureUTC ?? (departures?[1].scheduledDepartureUTC)!, status: true)
+                                if departures?[count+1].scheduledDepartureUTC != nil {
+                                    cell.departure1Time.text = Iso8601toString(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                                    cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, status: true)
                                 }
                                 if departures?[2].scheduledDepartureUTC != nil {
-                                    cell.departure2Time.text = Iso8601toString(iso8601Date: departures?[2].estimatedDepartureUTC ?? (departures?[2].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                    cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: departures?[2].estimatedDepartureUTC ?? (departures?[2].scheduledDepartureUTC)!, status: true)
+                                    cell.departure2Time.text = Iso8601toString(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                                    cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, status: true)
                                 }
                             }
                         }

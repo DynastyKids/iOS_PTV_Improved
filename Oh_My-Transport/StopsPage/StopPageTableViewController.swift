@@ -68,7 +68,16 @@ class StopPageTableViewController: UITableViewController {
             }
             do {
                 let showDeparture = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                self.departureData = showDeparture.departures!
+                guard showDeparture.departures != nil else{
+                    return
+                }
+                for each in showDeparture.departures!{
+                    let departureTime = each.estimatedDepartureUTC ?? each.scheduledDepartureUTC!
+                    let difference = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: departureTime))
+                    if difference.minute! > -10 {
+                        self.departureData.append(each)
+                    }
+                }
                 
                 let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                 let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
@@ -297,12 +306,12 @@ class StopPageTableViewController: UITableViewController {
                     cell.routeDestinationLabel.text = each.directionName
                 }
             }
-            cell.routeDueTimeLabel.text = Iso8601Countdown(iso8601Date: departureData[indexPath.row].estimatedDepartureUTC ?? departureData[indexPath.row].scheduledDepartureUTC!, status: false)
-            if departureData[indexPath.row].estimatedDepartureUTC == nil {
+            cell.routeDueTimeLabel.text = Iso8601Countdown(iso8601Date: cellData.estimatedDepartureUTC ?? cellData.scheduledDepartureUTC!, status: false)
+            if cellData.estimatedDepartureUTC == nil {
                 cell.routeStatusLabel.text = "Scheduled"
                 cell.routeStatusLabel.textColor = UIColor.gray
             }else {
-                let mintes = Iso8601toStatus(iso8601DateSchedule: departureData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departureData[indexPath.row].estimatedDepartureUTC!)
+                let mintes = Iso8601toStatus(iso8601DateSchedule: cellData.scheduledDepartureUTC!, iso8601DateActual: cellData.estimatedDepartureUTC!)
                 if mintes > 1 {
                     cell.routeStatusLabel.text = "Late \(mintes) mins"
                     cell.routeStatusLabel.textColor = UIColor.red
@@ -321,8 +330,11 @@ class StopPageTableViewController: UITableViewController {
                     cell.routeStatusLabel.textColor = UIColor.brown
                 }
             }
-            
-            cell.routeDetailslabel.text = "Vehicle's real time data unavailable."
+            if (cell.routeStatusLabel.text == "Scheduled") {
+                cell.routeDetailslabel.text = "Real time data unavailable."
+            } else{
+                cell.routeDetailslabel.text = "Vehicle location data uplinked."
+            }
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "Nothing", for: indexPath)
