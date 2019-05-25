@@ -71,7 +71,11 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                     self.searchStops = results.stops!
                 }
                 if results.routes?.count ?? 0 > 0{
-                    self.searchRoute = results.routes!
+                    for each in results.routes!{
+                        if (each.routeType == 2 && (each.routeNumber?.contains("combined") == true)) {continue}// Filter with repeat results
+                        if (each.routeType == 3){continue}      // Vline using different data
+                        self.searchRoute.append(each)
+                    }
                 }
                 if results.outlets?.count ?? 0 > 0{
                     self.searchOutlets = results.outlets!

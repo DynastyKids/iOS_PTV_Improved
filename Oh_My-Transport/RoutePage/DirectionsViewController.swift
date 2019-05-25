@@ -67,7 +67,15 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                     self.routeName = routeData.route?.routeName
                 }
                 DispatchQueue.main.async {
-                    self.navigationItem.title = "Route: \(self.routeName!)"
+                    if self.routeType == 0 {
+                        self.navigationItem.title = "\(self.routeName!) Line"
+                    } else if self.routeType == 1{
+                        self.navigationItem.title = "Tram \(self.routeName!)"
+                    } else if self.routeType == 2 || self.routeType == 4{
+                        self.navigationItem.title = "Bus \(self.routeName!)"
+                    } else {
+                        self.navigationItem.title = "Route: \(self.routeName!)"
+                    }
                     self.saveButton.isEnabled = true
                 }
             } catch {
@@ -247,7 +255,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         var count = 0
                         for _ in departures!{
                             let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (departures![count].estimatedDepartureUTC ?? (departures![count].scheduledDepartureUTC ?? nil)!)))).minute ?? 0
-                            if differences >= -5{
+                            if differences >= -1{
                                 break
                             }
                             count += 1

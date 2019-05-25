@@ -275,9 +275,9 @@ class StopPageTableViewController: UITableViewController {
         if indexPath.section == 0{
             let cell0 = tableView.dequeueReusableCell(withIdentifier: "stopInfo", for: indexPath) as! stopInfoTableViewCell
             cell0.stopNameLabel.text = stopName
-            if(nextDepartDisruptionInfo.count == 1){
+            if (nextDepartDisruptionInfo.count == 0){
                 cell0.disruptionButton.setTitle("No Disruption, enjoy your trip", for: UIControl.State.normal)
-            }else if(nextDepartDisruptionInfo.count == 1){
+            } else if (nextDepartDisruptionInfo.count == 1){
                 cell0.disruptionButton.setTitle("1 Disruption may affect your travel", for: UIControl.State.normal)
             } else {
                 cell0.disruptionButton.setTitle("\(nextDepartDisruptionInfo.count) Disruptions in effect", for: UIControl.State.normal)
