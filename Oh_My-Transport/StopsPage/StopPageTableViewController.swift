@@ -71,20 +71,13 @@ class StopPageTableViewController: UITableViewController {
                 guard showDeparture.departures != nil else{
                     return
                 }
-                for each in showDeparture.departures!{
-                    let departureTime = each.estimatedDepartureUTC ?? each.scheduledDepartureUTC!
-                    let difference = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: departureTime))
-                    if difference.minute! > -10 {
-                        self.departureData.append(each)
-                    }
-                }
-                
                 let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                 let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
                 let nextDepartDisruptions = nextDepartureDictonary.value(forKey: "disruptions") as! NSDictionary
                 let nextDepartRuns = nextDepartureDictonary.value(forKey: "runs") as! NSDictionary
                 let nextDepartStops = nextDepartureDictonary.value(forKey: "stops") as! NSDictionary
                 let nextDepartDirections = nextDepartureDictonary.value(forKey: "directions") as! NSDictionary
+                var avoidRoutes:[Int] = []      // Skipping fetching routes with "combined" sign
                 for(_, value) in nextDepartRoutes{
                     let nextDepartRouteData: NSDictionary = value as! NSDictionary
                     var routeGtfsId: String = ""
@@ -104,6 +97,9 @@ class StopPageTableViewController: UITableViewController {
                         }else if "\(key)" == "route_number"{
                             routeNumber = value2 as! String
                         }
+                    }
+                    if routeNumber.contains("combined") == true {
+                        avoidRoutes.append(routeId)
                     }
                     self.nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
                 }
@@ -229,6 +225,23 @@ class StopPageTableViewController: UITableViewController {
                         }
                     }
                     self.nextDepartDirectionInfo.append(DirectionWithDescription.init(routeDirectionDescription: nil, directionId: directionId, directionName: directionName, routeId: routeId, routeType: routeType))
+                }
+                
+                for each in showDeparture.departures!{
+                    let departureTime = each.estimatedDepartureUTC ?? each.scheduledDepartureUTC!
+                    let difference = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: departureTime))
+                    if difference.minute! > -10 {
+                        var appendFlag = true
+                        for eachId in avoidRoutes{
+                            if eachId == each.routesId{
+                                appendFlag = false
+                            }
+                            break
+                        }
+                        if appendFlag == true {
+                            self.departureData.append(each)
+                        }
+                    }
                 }
                 
                 DispatchQueue.main.async {

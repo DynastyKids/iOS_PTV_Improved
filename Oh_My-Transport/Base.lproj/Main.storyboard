@@ -890,17 +890,17 @@
                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="RsK-qR-KUu">
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RsK-qR-KUu">
                                             <rect key="frame" x="330" y="11" width="80" height="22"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdm-Ht-X6c">
-                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="5.666666666666667"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdm-Ht-X6c">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="11"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zuy-8y-hFE" userLabel="status">
-                                                    <rect key="frame" x="0.0" y="7.6666666666666687" width="80" height="14.333333333333336"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zuy-8y-hFE" userLabel="status">
+                                                    <rect key="frame" x="0.0" y="11" width="80" height="11"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="uNV-N3-WVe"/>
                                                     </constraints>
@@ -922,7 +922,7 @@
                                         <constraint firstItem="LcA-J5-Kx0" firstAttribute="top" secondItem="kZP-3Z-Q7o" secondAttribute="topMargin" id="YPd-KQ-FUI"/>
                                         <constraint firstItem="LcA-J5-Kx0" firstAttribute="leading" secondItem="kZP-3Z-Q7o" secondAttribute="leadingMargin" id="aKk-Jt-R0N"/>
                                         <constraint firstItem="zZV-4l-38e" firstAttribute="leading" secondItem="LcA-J5-Kx0" secondAttribute="trailing" constant="8" id="bPw-Ck-lxu"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="glf-yh-2Y2" secondAttribute="bottom" constant="4" id="f3U-Cp-Hx7"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="glf-yh-2Y2" secondAttribute="bottom" id="f3U-Cp-Hx7"/>
                                         <constraint firstItem="RsK-qR-KUu" firstAttribute="leadingMargin" secondItem="glf-yh-2Y2" secondAttribute="trailing" constant="24" id="fpu-Gt-7bf"/>
                                         <constraint firstItem="oLX-Jt-fIN" firstAttribute="top" secondItem="kZP-3Z-Q7o" secondAttribute="topMargin" constant="2" id="mvZ-Tv-3qX"/>
                                         <constraint firstItem="oLX-Jt-fIN" firstAttribute="leading" secondItem="zZV-4l-38e" secondAttribute="trailing" constant="8" id="yPQ-dk-hfw"/>
@@ -1194,7 +1194,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gGF-XN-Y27">
-                                                    <rect key="frame" x="20" y="28.333333333333336" width="314" height="20.333333333333336"/>
+                                                    <rect key="frame" x="20" y="28.333333333333332" width="314" height="20.333333333333339"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearest Stop:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpV-Cf-Z6E">
                                                             <rect key="frame" x="0.0" y="0.0" width="120" height="20.333333333333332"/>
@@ -1558,7 +1558,7 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="hKS-pF-xub"/>
-        <segue reference="zXA-WO-h7o"/>
+        <segue reference="kz0-4N-VZF"/>
         <segue reference="evR-un-G8n"/>
     </inferredMetricsTieBreakers>
 </document>
