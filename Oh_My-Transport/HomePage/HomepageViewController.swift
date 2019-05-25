@@ -149,7 +149,9 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 do{
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
+                    if nextDepartureData.departures?.count ?? 0 > 0 {
+                        self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
+                    }
                     // using JSON Dictonary to fetch Route data
                     let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                     let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
@@ -180,12 +182,14 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
                     }
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure0Time.textColor = UIColor.black
-                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure1Time.textColor = UIColor.black
-                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure2Time.textColor = UIColor.black
+                        if nextDepartureData.departures?.count ?? 0 > 0 {
+                            cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure0Time.textColor = UIColor.black
+                            cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure1Time.textColor = UIColor.black
+                            cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure2Time.textColor = UIColor.black
+                        }
                         
                         // Route 0
                         let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
@@ -263,7 +267,9 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 do{
                     let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
+                    if nextDepartureData.departures != nil{
+                        self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
+                    }
 
                     let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                     let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
@@ -290,12 +296,14 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
                     }
                     DispatchQueue.main.async {
-                        cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure0Time.textColor = UIColor.black
-                        cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure1Time.textColor = UIColor.black
-                        cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
-                        cell.departure2Time.textColor = UIColor.black
+                        if nextDepartureData.departures != nil{
+                            cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure0Time.textColor = UIColor.black
+                            cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure1Time.textColor = UIColor.black
+                            cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure2Time.textColor = UIColor.black
+                        }
                         // Route 0
                         let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
                         for each in nextDepartRoutesData{
@@ -505,6 +513,10 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         homeTableView.delegate = self
         homeTableView.dataSource = self
         self.homeTableView.reloadData()
+        DispatchQueue.main.async {
+            self.homeTableView.beginUpdates()
+            self.homeTableView.endUpdates()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

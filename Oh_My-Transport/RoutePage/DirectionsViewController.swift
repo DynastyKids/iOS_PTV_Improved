@@ -65,7 +65,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do {
                 let routeData = try JSONDecoder().decode(RouteResponse.self, from: data!)
-                self.routeName = routeData.route?.routeNumber
+                if routeData.route?.routeNumber != nil{
+                    self.routeName = routeData.route?.routeNumber
+                }
                 DispatchQueue.main.async {
                     if self.routeName == nil{
                         self.routeName = routeData.route?.routeName
@@ -92,7 +94,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do{
                 let runsdata = try JSONDecoder().decode(RunsResponse.self, from: data!)
-                self.runningServices = runsdata.runs!
+                if runsdata.runs != nil {
+                    self.runningServices = runsdata.runs!
+                }
                 for eachService in self.runningServices{
                     var flag = true
                     for eachName in self.runningDestinations{
@@ -167,17 +171,19 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                                         }
                                         do{
                                             let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                                            let allDepartures = nextDepartureData.departures
-                                            count = 0
-                                            for _ in allDepartures!{
-                                                let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (allDepartures![count].estimatedDepartureUTC ?? (allDepartures![count].scheduledDepartureUTC ?? nil)!)))).minute ?? 0
-                                                if differences >= 0 {
-                                                    self.nextDepartureTime.append(allDepartures![count].estimatedDepartureUTC ?? (allDepartures![count].scheduledDepartureUTC ?? nil)!)
-                                                    self.nextDepartureTime.append(allDepartures![count+1].estimatedDepartureUTC ?? (allDepartures![count+1].scheduledDepartureUTC ?? nil)!)
-                                                    self.nextDepartureTime.append(allDepartures![count+2].estimatedDepartureUTC ?? (allDepartures![count+2].scheduledDepartureUTC ?? nil)!)
-                                                    break
+                                            if nextDepartureData.departures != nil{
+                                                let allDepartures = nextDepartureData.departures
+                                                count = 0
+                                                for _ in allDepartures!{
+                                                    let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (allDepartures![count].estimatedDepartureUTC ?? (allDepartures![count].scheduledDepartureUTC ?? nil)!)))).minute ?? 0
+                                                    if differences >= 0 {
+                                                        self.nextDepartureTime.append(allDepartures![count].estimatedDepartureUTC ?? (allDepartures![count].scheduledDepartureUTC ?? nil)!)
+                                                        self.nextDepartureTime.append(allDepartures![count+1].estimatedDepartureUTC ?? (allDepartures![count+1].scheduledDepartureUTC ?? nil)!)
+                                                        self.nextDepartureTime.append(allDepartures![count+2].estimatedDepartureUTC ?? (allDepartures![count+2].scheduledDepartureUTC ?? nil)!)
+                                                        break
+                                                    }
+                                                    count += 1
                                                 }
-                                                count += 1
                                             }
                                             DispatchQueue.main.async {
                                                 self.directionsTableView.reloadData()
@@ -206,16 +212,18 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do{
                 let stopsdata = try JSONDecoder().decode(StopsResponseByRouteId.self, from: data!)
-                self.allstopsdata = stopsdata.stops!
-                for each in self.allstopsdata{
-                    let latitude:Double = each.stopLatitude ?? 0.0
-                    let longitude:Double = each.stopLongtitude ?? 0.0
-                    print("\(latitude),\(longitude)")
-                    let stopPatterns = MKPointAnnotation()
-                    stopPatterns.title = each.stopName
-                    stopPatterns.subtitle = each.stopSuburb
-                    stopPatterns.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                    self.routeMapView.addAnnotation(stopPatterns)
+                if stopsdata.stops != nil{
+                    self.allstopsdata = stopsdata.stops!
+                    for each in self.allstopsdata{
+                        let latitude:Double = each.stopLatitude ?? 0.0
+                        let longitude:Double = each.stopLongtitude ?? 0.0
+                        print("\(latitude),\(longitude)")
+                        let stopPatterns = MKPointAnnotation()
+                        stopPatterns.title = each.stopName
+                        stopPatterns.subtitle = each.stopSuburb
+                        stopPatterns.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        self.routeMapView.addAnnotation(stopPatterns)
+                    }
                 }
             } catch{
                 print("Error:\(error)")
