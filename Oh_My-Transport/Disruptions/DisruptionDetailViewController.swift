@@ -28,6 +28,7 @@ class DisruptionDetailViewController: UIViewController {
     @IBOutlet weak var disruptionDetailLabel: UILabel!
 
     var fetchAddress: String = ""
+    var routeType: Int = 0
     
     @IBAction func viewInWebKit(_ sender: Any) {
         UIApplication.shared.openURL(URL(string: fetchAddress)!)
@@ -71,12 +72,13 @@ class DisruptionDetailViewController: UIViewController {
     
     func updateScreen(disruption:Disruption){
         self.disruptionTitleLabel.text = disruption.title
-        self.disruptionPublishDateLabel.text = "Publish Date: " +  iso8601DateConvert(iso8601Date: disruption.publishDate ?? "Nil", withTime: false)
-        self.disruptionStartDateLabel.text = "Effect From: " + iso8601DateConvert(iso8601Date: disruption.startDate ?? "Nil", withTime: true)
+        self.disruptionTitleLabel.textColor = changeColorByRouteType(routeType: routeType)
+        self.disruptionPublishDateLabel.text = "Publish Date: \(Iso8601toString(iso8601Date: disruption.publishDate ?? "Nil", withTime: false, withDate: true))"
+        self.disruptionStartDateLabel.text = "Effect From: \(Iso8601toString(iso8601Date: disruption.startDate ?? "Nil", withTime: false, withDate: true))"
         if disruption.endDate == nil{
             self.disruptionEndDateLabel.text = ""
         }else{
-            self.disruptionEndDateLabel.text = "Effect Until: " + iso8601DateConvert(iso8601Date: disruption.endDate ?? "Nil", withTime: true)
+            self.disruptionEndDateLabel.text = "Effect Until: \(Iso8601toString(iso8601Date: disruption.endDate ?? "Nil", withTime: false, withDate: true))"
         }
         self.disruptionDetailLabel.text = disruption.description
         self.fetchAddress = (disruption.url)!
