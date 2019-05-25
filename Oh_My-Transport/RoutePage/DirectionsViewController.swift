@@ -299,8 +299,8 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         route.routeType = Int32(routeType)
         do {
             try managedContext?.save()
-//            let _ = navigationController?.popViewController(animated: true)
-            let _ = navigationController?.popToRootViewController(animated: true)
+            let _ = navigationController?.popViewController(animated: true)
+//            let _ = navigationController?.popToRootViewController(animated: true)
         } catch {
             print("Error to save route")
         }
