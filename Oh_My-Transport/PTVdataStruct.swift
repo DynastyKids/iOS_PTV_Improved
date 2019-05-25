@@ -623,6 +623,13 @@ struct ResultOutlet: Codable{
     var outletLongitude: Double?
     var outletSuburb: String?
     var outletPostcode: Int?
+    var outletBusinessHourMon: String?
+    var outletBusinessHourTue: String?
+    var outletBusinessHourWed: String?
+    var outletBusinessHourThur: String?
+    var outletBusinessHourFri: String?
+    var outletBusinessHourSat: String?
+    var outletBusinessHourSun: String?
     var outletNotes: String?
     private enum CodingKeys: String, CodingKey{
         case outletDistance = "outlet_distance"
@@ -633,6 +640,13 @@ struct ResultOutlet: Codable{
         case outletLongitude = "outlet_longitude"
         case outletSuburb = "outlet_suburb"
         case outletPostcode = "outlet_postcode"
+        case outletBusinessHourMon = "outlet_business_hour_mon"
+        case outletBusinessHourTue = "outlet_business_hour_tue"
+        case outletBusinessHourWed = "outlet_business_hour_wed"
+        case outletBusinessHourThur = "outlet_business_hour_thur"
+        case outletBusinessHourFri = "outlet_business_hour_fri"
+        case outletBusinessHourSat = "outlet_business_hour_sat"
+        case outletBusinessHourSun = "outlet_business_hour_sun"
         case outletNotes = "outlet_notes"
     }
     init(from decoder: Decoder) throws {
@@ -645,6 +659,13 @@ struct ResultOutlet: Codable{
         self.outletLongitude = try? container.decode(Double.self, forKey: .outletLongitude)
         self.outletSuburb = try? container.decode(String.self, forKey: .outletSuburb)
         self.outletPostcode = try? container.decode(Int.self, forKey: .outletPostcode)
+        self.outletBusinessHourMon = try? container.decode(String.self, forKey: .outletBusinessHourMon)
+        self.outletBusinessHourTue = try? container.decode(String.self, forKey: .outletBusinessHourTue)
+        self.outletBusinessHourWed = try? container.decode(String.self, forKey: .outletBusinessHourWed)
+        self.outletBusinessHourThur = try? container.decode(String.self, forKey: .outletBusinessHourThur)
+        self.outletBusinessHourFri = try? container.decode(String.self, forKey: .outletBusinessHourFri)
+        self.outletBusinessHourSat = try? container.decode(String.self, forKey: .outletBusinessHourSat)
+        self.outletBusinessHourSun = try? container.decode(String.self, forKey: .outletBusinessHourSun)
         self.outletNotes = try? container.decode(String.self, forKey: .outletNotes)
     }
 }

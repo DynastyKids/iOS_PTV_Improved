@@ -256,6 +256,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             page2.routeType = searchStops[((tableView.indexPathForSelectedRow?.row)!)].routeType!
             page2.managedContext = routeFetchedResultsController.managedObjectContext
         }
+        if segue.identifier == "showOutlet"{
+            let page2:MyKiOutletViewController = segue.destination as! MyKiOutletViewController
+            page2.outlet = searchOutlets[(tableView.indexPathForSelectedRow?.row)!]
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
