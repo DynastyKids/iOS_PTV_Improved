@@ -254,13 +254,14 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         let departures = departureData.departures
                         var count = 0
                         for _ in departures!{
-                            let differences = (Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (departures![count].estimatedDepartureUTC ?? (departures![count].scheduledDepartureUTC ?? nil)!)))).minute ?? 0
-                            if differences >= -1{
+                            let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (departures![count].estimatedDepartureUTC ?? (departures![count].scheduledDepartureUTC ?? nil)!)))
+                            print("Time Difference:\(differences.minute)")
+                            if differences.minute! >= -1{
                                 break
                             }
                             count += 1
                         }
-                        if flag == true && departures?.count != 0{
+                        if flag == true && departures?.count != 0 && count < (departures?.count)!-3{
                             DispatchQueue.main.async {
                                 cell.departure0Time.text = ""
                                 cell.departure1Time.text = ""
