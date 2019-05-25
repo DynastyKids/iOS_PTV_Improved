@@ -51,7 +51,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.startUpdatingLocation()
         
         _ = URLSession.shared.dataTask(with: URL(string: showRouteInfo(routeId: routeId))!){ (data, response, error) in
@@ -223,7 +223,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.directionNameLabel.text = routeDirections[indexPath.row].directionName
             cell.nearStopLabel.text = allstopsdata[indexPath.row].stopName
             var availableStop: [stopOnRoute] = []
-            var loopTimes = 10
+            var loopTimes = 5
             if allstopsdata.count < loopTimes{
                 loopTimes = allstopsdata.count
             }

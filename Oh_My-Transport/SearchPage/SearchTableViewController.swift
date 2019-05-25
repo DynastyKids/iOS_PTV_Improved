@@ -67,6 +67,9 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             }
             do{
                 let results = try JSONDecoder().decode(SearchResult.self, from: data!)
+                self.searchStops.removeAll()
+                self.searchRoute.removeAll()
+                self.searchOutlets.removeAll()
                 if results.stops?.count ?? 0 > 0{
                     self.searchStops = results.stops!
                 }
@@ -169,6 +172,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         if indexPath.section == 1{
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchStops", for: indexPath) as! SearchStopsTableViewCell
             cell.stopNameLabel.text = searchStops[indexPath.row].stopName
+            cell.stopNameLabel.backgroundColor = changeColorByRouteType(routeType: searchStops[indexPath.row].routeType!)
             cell.stopSuburbLabel.text = searchStops[indexPath.row].stopSuburb
             if searchStops[indexPath.row].stopDistance != nil{
                 if Double(searchStops[indexPath.row].stopDistance!) >= 1000 {

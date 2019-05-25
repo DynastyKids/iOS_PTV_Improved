@@ -56,7 +56,13 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
             businessAddressLabel.text = "\((outlet?.outletName) ?? ""), \((outlet?.outletSuburb) ?? ""), VIC \((outlet?.outletPostcode)!)"
         }
 //        businessAddressButton
-        businessDistanceLabel.text = "m Away"
+        let userlocation = CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
+        let distance = userlocation.distance(from: CLLocation(latitude: outlet!.outletLatitude!, longitude: outlet!.outletLongitude!))
+        if Double(distance) >= 1000{
+            businessDistanceLabel.text = "Distance: \(String(format:"%.2f",Double(distance/1000))) km"
+        } else{
+            businessDistanceLabel.text = "Distance: \(Int(distance)) m"
+        }
         if outlet?.outletNotes != nil {
             outletNotesLabel.text = outlet?.outletNotes!
         } else{
