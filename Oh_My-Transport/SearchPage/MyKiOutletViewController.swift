@@ -16,6 +16,7 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation!
     @IBOutlet weak var outletMapView: MKMapView!
+    @IBOutlet weak var navigateButton: UIButton!
     
     @IBOutlet weak var businessNameLabel: UILabel!
     @IBOutlet weak var businessAddressLabel: UILabel!
@@ -124,6 +125,7 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
             outletAnnotation.title = outlet?.outeletBusiness
             outletAnnotation.subtitle = outlet?.outletSuburb
             self.outletMapView.addAnnotation(outletAnnotation)
+            navigateButton.isEnabled = true
         }
     }
     
@@ -151,4 +153,17 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func navigateMeButton(_ sender: Any) {    // Reference: https://www.youtube.com/watch?v=INfCmCxLC0o
+        let locationDistance = CLLocationCoordinate2DMake(CLLocationDegrees((outlet?.outletLatitude)!), CLLocationDegrees((outlet?.outletLongitude)!))
+        let regionSpan = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: (outlet?.outletLatitude)!, longitude: (outlet?.outletLongitude)!), latitudinalMeters: CLLocationDistance(1000), longitudinalMeters: CLLocationDistance(1000))
+        
+        let options = [MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center), MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)]
+        let placeMark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: (outlet?.outletLatitude)!, longitude: (outlet?.outletLongitude)!))
+        let mapItem = MKMapItem(placemark: placeMark)
+        
+        mapItem.name = outlet?.outeletBusiness
+        mapItem.openInMaps(launchOptions: options)
+    }
+    
 }
