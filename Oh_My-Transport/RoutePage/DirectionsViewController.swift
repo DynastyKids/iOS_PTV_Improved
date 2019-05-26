@@ -27,8 +27,8 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var selectedId: [Int] = []              // Using for passing segue to next page
     var userPosition = CLLocation(latitude: 0.00, longitude: 0.00)
     
-    var routeId: Int = 12753                // Testing value, rely on last page segue passing value to this page
-    var routeType: Int = 2                  // Testing value, rely on last page segue passing value to this page
+    var routeId: Int = 0                // Testing value, rely on last page segue passing value to this page
+    var routeType: Int = 0                  // Testing value, rely on last page segue passing value to this page
     var routeName: String?
     var runs: [Run] = []
     
