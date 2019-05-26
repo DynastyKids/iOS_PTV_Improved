@@ -243,7 +243,7 @@ public func showSearchResults(searchTerm: String) -> String{            // View 
     return extractedFunc(request)
 }
 public func showSearchResults(searchTerm: String, latitude: Double, longitude: Double) -> String{   // View stops, routes and myki ticket outlets that match the search term
-    let request: String = "/v3/search/\(searchTerm)?latitude=\(latitude)&longitude=\(longitude)&max_distance=10000&devid="+PrimaryDevId
+    let request: String = "/v3/search/\(searchTerm)?latitude=\(latitude)&longitude=\(longitude)&devid="+PrimaryDevId
     return extractedFunc(request)
 }
 

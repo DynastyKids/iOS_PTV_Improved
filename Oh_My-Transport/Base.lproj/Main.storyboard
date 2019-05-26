@@ -1599,9 +1599,8 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g3m-8j-J5E"/>
         <segue reference="hKS-pF-xub"/>
-        <segue reference="kz0-4N-VZF"/>
-        <segue reference="RMC-Ij-1Re"/>
+        <segue reference="zXA-WO-h7o"/>
+        <segue reference="evR-un-G8n"/>
     </inferredMetricsTieBreakers>
 </document>

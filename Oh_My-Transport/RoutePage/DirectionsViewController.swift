@@ -337,4 +337,18 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
     }
+    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "item")
+//        if annotationView != nil{
+//            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "item")
+//        }
+//        annotationView?.annotation = annotation
+//        annotationView?.image = UIImage(named: "category_1")
+//        annotationView?.centerOffset = CGPoint(x: 0, y: 0)
+//        annotationView?.canShowCallout = false
+//        
+//        annotationView?.isDraggable = false
+//        return annotationView
+//    }
 }
