@@ -11,7 +11,23 @@ import MapKit
 import CoreLocation
 import CoreData
 
-class DirectionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate {
+struct multiStopsDepartures: Codable{
+    var stopId: Int?
+    var stopName: String?
+    var nextDepartures: [Departure]?
+    private enum CodingKeys: String, CodingKey{
+        case stopId
+        case stopName
+        case nextDepartures
+    }
+    init(stopId: Int?, stopName: String?, nextDepartures: [Departure]?) {
+        self.stopId = stopId
+        self.stopName = stopName
+        self.nextDepartures = nextDepartures
+    }
+}
+
+class BackupDirectionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate {
     
     // MARK: - CoreData Properties
     var managedContext: NSManagedObjectContext!
@@ -31,6 +47,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var routeType: Int = 2                  // Testing value, rely on last page segue passing value to this page
     var routeName: String?
     var runs: [Run] = []
+    var nextDepartures: [multiStopsDepartures] = []
     
     var routeDirections: [DirectionWithDescription] = []
     
@@ -81,7 +98,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             } catch {
                 print("Error:\(error)")
             }
-        }.resume()
+            }.resume()
         
         // Fetching all Stops on MapView
         _ = URLSession.shared.dataTask(with: URL(string: showRoutesStop(routeId: routeId, routeType: routeType))!){(data, response, error) in
@@ -105,7 +122,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         self.routeMapView.addAnnotation(stopPatterns)
                         distance.append(userLocation.distance(from: CLLocation(latitude: each.stopLatitude!, longitude: each.stopLongtitude!)))
                     }
-                    for sequence in 0 ..< self.allstopsdata.count{  // Bubble sorting for stops
+                    for sequence in 0 ..< self.allstopsdata.count{  // Bubble sorting for stops by stopDistance
                         for eachStops in 0 ..< self.allstopsdata.count-1-sequence{
                             if distance[eachStops] > distance[eachStops+1]{
                                 let temp = self.allstopsdata[eachStops+1]
@@ -126,7 +143,27 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                         do{
                             let directionData = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
+                            guard (directionData.directions?.count)! > 0 else{
+                                return
+                            }
                             self.routeDirections = directionData.directions!
+                            for eachDirection in directionData.directions!{     // Looping all directions
+                                for eachStops in 0 ..< 5{                       // fetch stopId
+                                    let url = URL(string: showRouteDepartureOnStop(routeType: self.routeType, stopId: self.allstopsdata[eachStops].stopId!, routeId: self.routeId, directionId: eachDirection.directionId!))
+                                    _ = URLSession.shared.dataTask(with: url!){ (data, response, error) in
+                                        if error != nil{
+                                            print("Stops fetch failed")
+                                            return
+                                        }
+                                        do{
+                                            let departureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
+                                            self.nextDepartures.append(multiStopsDepartures.init(stopId: self.allstopsdata[eachStops].stopId!, stopName: self.allstopsdata[eachStops].stopName, nextDepartures: departureData.departures))
+                                        } catch {
+                                            print("Error:\(error)")
+                                        }
+                                        }.resume()
+                                }
+                            }
                             DispatchQueue.main.async {
                                 self.directionsTableView.reloadData()
                             }
@@ -140,7 +177,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             } catch{
                 print("Error:\(error)")
             }
-        }.resume()
+            }.resume()
         
         // Checking if having any disruptions affect this route
         _ = URLSession.shared.dataTask(with: URL(string: disruptionByRoute(routeId: routeId))!){ (data, response, error) in
@@ -175,7 +212,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showNextService"{
@@ -214,98 +251,136 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             } else {
                 cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruption may affect your trip"
             }
-            cell.disruptionSubtitleLabel.text = "Tap to see more details"
+            cell.disruptionSubtitleLabel.text = "Tap to see details"
             self.navigationItem.rightBarButtonItem?.isEnabled = true
             return cell
         }
         if indexPath.section == 1{
             let cell = tableView.dequeueReusableCell(withIdentifier: "directions", for: indexPath) as! DirectionTableViewCell
             cell.directionNameLabel.text = routeDirections[indexPath.row].directionName
-            var availableStop: [stopOnRoute] = []
-            var loopTimes = 5
-            if allstopsdata.count < loopTimes{
-                loopTimes = allstopsdata.count
-            }
-            for each in 0 ..< loopTimes{
-                var flag = false
-                let url = URL(string: showRouteDepartureOnStop(routeType: routeType, stopId: allstopsdata[each].stopId!, routeId: routeId, directionId: routeDirections[indexPath.row].directionId!))
-                _ = URLSession.shared.dataTask(with: url!){ (data, response, error) in
-                    if error != nil{
-                        print("Stops fetch failed")
-                        return
+            let cellDirectionId = routeDirections[indexPath.row].directionId
+            cell.departure0Time.text = ""
+            cell.departure1Time.text = ""
+            cell.departure2Time.text = ""
+            cell.departure0Countdown.text = ""
+            cell.departure1Countdown.text = ""
+            cell.departure2Countdown.text = ""
+            print("Require direction:\(cellDirectionId)")
+            for each in nextDepartures{
+                print("Service qty: \(each.nextDepartures?.count), currentDirection:\(each.nextDepartures?[0].directionId)")
+                if (each.nextDepartures?.count)! > 0 && each.nextDepartures?[0].directionId == cellDirectionId {
+                    cell.nearStopLabel.text = each.stopName
+                    if each.nextDepartures?.count ?? 0 > 2{
+                        cell.departure2Time.text = Iso8601toString(iso8601Date: each.nextDepartures![2].estimatedDepartureUTC ?? (each.nextDepartures![2].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                        cell.departure2Countdown.text = ""
                     }
-                    do{
-                        let departureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
-                        let directions = departureDictonary.value(forKey: "directions") as! NSDictionary
-                        if directions.count != 0{
-                            flag = true
-                            availableStop.append(self.allstopsdata[each])
-                            self.selectedId.append(-1)
-                            if (self.selectedId[indexPath.row] == -1){
-                                self.selectedId[indexPath.row] = each
-                            }
-                            DispatchQueue.main.async {
-                                cell.nearStopLabel.text = availableStop[0].stopName
-                            }
-                            
-                        }
-                        let departureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                        let departures = departureData.departures
-                        var count = 0
-                        for _ in departures!{
-                            let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (departures![count].estimatedDepartureUTC ?? (departures![count].scheduledDepartureUTC ?? nil)!)))
-                            print("Time Difference:\(String(describing: differences.minute))")
-                            if differences.minute! >= -1{ break }
-                            count += 1
-                        }
-                        if flag == true && departures?.count != 0{
-                            DispatchQueue.main.async {
-                                cell.departure0Time.text = ""
-                                cell.departure1Time.text = ""
-                                cell.departure2Time.text = ""
-                                cell.departure0Countdown.text = ""
-                                cell.departure1Countdown.text = ""
-                                cell.departure2Countdown.text = ""
-                                if count < (departures?.count)!{
-                                    if departures?[count].scheduledDepartureUTC != nil {
-                                        cell.departure0Time.text = Iso8601toString(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                        cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, status: true)
-                                    }
-                                }
-                                if count+1 < (departures?.count)!{
-                                    if departures?[count+1].scheduledDepartureUTC != nil {
-                                        cell.departure1Time.text = Iso8601toString(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                        cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, status: true)
-                                    }
-                                }
-                                if count+2 < (departures?.count)!{
-                                    if departures?[2].scheduledDepartureUTC != nil {
-                                        cell.departure2Time.text = Iso8601toString(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                        cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, status: true)
-                                    }
-                                }
-                            }
-                        }
-                    }catch{
-                        print("Error:\(error)")
+                    if each.nextDepartures?.count ?? 0 > 1{
+                        cell.departure1Time.text = Iso8601toString(iso8601Date: each.nextDepartures![1].estimatedDepartureUTC ?? (each.nextDepartures![1].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                        cell.departure1Countdown.text = ""
                     }
-                }.resume()
-                if flag == true{
-                    break
+                    if each.nextDepartures?.count ?? 0 > 0{
+                        cell.departure0Time.text = Iso8601toString(iso8601Date: each.nextDepartures![0].estimatedDepartureUTC ?? (each.nextDepartures![0].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                        cell.departure0Countdown.text = ""
+                    } else {
+                        cell.departure0Time.text = "🤦‍♂️"
+                        cell.departure1Time.text = "No Service available"
+                    }
                 }
             }
+            
+            //            cell.departure0Time.text = Iso8601toString(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, withTime: true, withDate: false)
+            //            cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, status: true)
+            
+            //
+            //            var availableStop: [stopOnRoute] = []
+            //            var loopTimes = 5
+            //            if allstopsdata.count < loopTimes{
+            //                loopTimes = allstopsdata.count
+            //            }
+            //            for each in 0 ..< loopTimes{
+            //                var flag = false
+            //                let url = URL(string: showRouteDepartureOnStop(routeType: routeType, stopId: allstopsdata[each].stopId!, routeId: routeId, directionId: routeDirections[indexPath.row].directionId!))
+            //                _ = URLSession.shared.dataTask(with: url!){ (data, response, error) in
+            //                    if error != nil{
+            //                        print("Stops fetch failed")
+            //                        return
+            //                    }
+            //                    do{
+            //                        let departureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
+            //                        let directions = departureDictonary.value(forKey: "directions") as! NSDictionary
+            //                        if directions.count != 0{
+            //                            flag = true
+            //                            availableStop.append(self.allstopsdata[each])
+            //                            self.selectedId.append(-1)
+            //                            if (self.selectedId[indexPath.row] == -1){
+            //                                self.selectedId[indexPath.row] = each
+            //                            }
+            //                            DispatchQueue.main.async {
+            //                                cell.nearStopLabel.text = availableStop[0].stopName
+            //                            }
+            //
+            //                        }
+            //                        let departureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
+            //                        let departures = departureData.departures
+            //                        var count = 0
+            //                        for _ in departures!{
+            //                            let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (departures![count].estimatedDepartureUTC ?? (departures![count].scheduledDepartureUTC ?? nil)!)))
+            //                            print("Time Difference:\(differences.minute)")
+            //                            if differences.minute! >= -1{
+            //                                break
+            //                            }
+            //                            count += 1
+            //                        }
+            //                        if flag == true && departures?.count != 0 && count < (departures?.count)!{
+            //                            DispatchQueue.main.async {
+            //                                cell.departure0Time.text = ""
+            //                                cell.departure1Time.text = ""
+            //                                cell.departure2Time.text = ""
+            //                                cell.departure0Countdown.text = ""
+            //                                cell.departure1Countdown.text = ""
+            //                                cell.departure2Countdown.text = ""
+            //                                if (count < departures!.count && departures?[count].scheduledDepartureUTC != nil) {
+            //                                    cell.departure0Time.text = Iso8601toString(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, withTime: true, withDate: false)
+            //                                    cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, status: true)
+            //                                }
+            //                                if (count+1 < departures!.count && departures?[count+1].scheduledDepartureUTC != nil) {
+            //                                    cell.departure1Time.text = Iso8601toString(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, withTime: true, withDate: false)
+            //                                    cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, status: true)
+            //                                }
+            //                                if (count+2 < departures!.count && departures?[2].scheduledDepartureUTC != nil) {
+            //                                    cell.departure2Time.text = Iso8601toString(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, withTime: true, withDate: false)
+            //                                    cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, status: true)
+            //                                }
+            //                            }
+            //                        }else{
+            //                            DispatchQueue.main.async {
+            //                                cell.departure0Time.text = "🤦‍♂️"
+            //                                cell.departure1Time.text = "No Service available"
+            //                                cell.departure2Time.text = ""
+            //                                cell.departure0Countdown.text = ""
+            //                                cell.departure1Countdown.text = ""
+            //                                cell.departure2Countdown.text = ""
+            //                            }
+            //                        }
+            //                    }catch{
+            //                        print("Error:\(error)")
+            //                    }
+            //                }.resume()
+            //                if flag == true{
+            //                    break
+            //                }
+            //            }
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "nothing", for: indexPath)
         return cell
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
         locationManager.startUpdatingLocation()
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         locationManager.stopUpdatingLocation()
     }
     
@@ -320,7 +395,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         do {
             try managedContext?.save()
             let _ = navigationController?.popViewController(animated: true)
-//            let _ = navigationController?.popToRootViewController(animated: true)
+            //            let _ = navigationController?.popToRootViewController(animated: true)
         } catch {
             print("Error to save route")
         }

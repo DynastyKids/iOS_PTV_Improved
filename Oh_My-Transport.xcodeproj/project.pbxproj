@@ -25,6 +25,7 @@
 		5A9B88FE22903DF7005F1C25 /* StopPageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B88FD22903DF7005F1C25 /* StopPageTableViewController.swift */; };
 		5A9B89002290411C005F1C25 /* stopInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */; };
 		5A9B89022290421A005F1C25 /* nextServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */; };
+		5AC9F3B5229AE0CC00419760 /* BackupDirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */; };
 		5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */; };
 		5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */; };
 		5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */; };
@@ -67,6 +68,7 @@
 		5A9B88FD22903DF7005F1C25 /* StopPageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPageTableViewController.swift; sourceTree = "<group>"; };
 		5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stopInfoTableViewCell.swift; sourceTree = "<group>"; };
 		5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextServiceTableViewCell.swift; sourceTree = "<group>"; };
+		5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDirectionsViewController.swift; sourceTree = "<group>"; };
 		5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionsTableViewController.swift; sourceTree = "<group>"; };
 		5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionDetailViewController.swift; sourceTree = "<group>"; };
 		5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStopOnMapViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				5A85D5BF2290861300E01AD9 /* DirectionDisruptionsTableViewCell.swift */,
 				5A85D5C1229086AE00E01AD9 /* RoutesStopTableViewCell.swift */,
 				5A85D5C3229086EE00E01AD9 /* DirectionTableViewCell.swift */,
+				5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */,
 			);
 			path = RoutePage;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				5AEF7DCE2291BF590087C087 /* HomepageViewController.swift in Sources */,
 				5A85D5BA229084CD00E01AD9 /* RouteDetailsViewController.swift in Sources */,
 				5A93C92122993F120043DDB5 /* MyKiOutletViewController.swift in Sources */,
+				5AC9F3B5229AE0CC00419760 /* BackupDirectionsViewController.swift in Sources */,
 				5A2CB6BD2288254A009A3A13 /* PTVdataStruct.swift in Sources */,
 				5AEEE87E2297B96700EF6D83 /* SearchStopsTableViewCell.swift in Sources */,
 				5AEF7DCA2291AD5A0087C087 /* FavStop+CoreDataProperties.swift in Sources */,
