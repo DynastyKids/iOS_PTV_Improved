@@ -80,17 +80,17 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 for (_, values) in self.patternAllStops{       //  key = stopId, Value = Stop Dictonary
                     let stopDetailsData: NSDictionary = values as! NSDictionary
                         for (key,value) in stopDetailsData{   // Poping values into array
-                            if "\(key)" == "stop_id"{
+                            if "\(key)" == "stop_id" && (value is NSNull) == false{
                                 self.dictonaryStopId.append(Int("\(value)")!)
-                            } else if "\(key)" == "stop_name"{
+                            } else if "\(key)" == "stop_name" && (value is NSNull) == false{
                                 self.dictonaryStopName.append("\(value)")
-                            } else if "\(key)" == "stop_suburb"{
+                            } else if "\(key)" == "stop_suburb" && (value is NSNull) == false{
                                 self.dictonaryStopSuburb.append("\(value)")
-                            } else if "\(key)" == "stop_latitude"{
+                            } else if "\(key)" == "stop_latitude" && (value is NSNull) == false{
                                 self.dictonaryStopLatitude.append(Double("\(value)")!)
-                            } else if "\(key)" == "stop_longitude"{
+                            } else if "\(key)" == "stop_longitude" && (value is NSNull) == false{
                                 self.dictonaryStopLongitude.append(Double("\(value)")!)
-                            } else if "\(key)" == "route_type"{
+                            } else if "\(key)" == "route_type" && (value is NSNull) == false{
                                 self.dictonaryRouteType.append(Int("\(value)")!)
                             }
                         }

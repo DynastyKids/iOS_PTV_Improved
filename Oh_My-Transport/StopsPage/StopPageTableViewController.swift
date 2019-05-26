@@ -86,15 +86,15 @@ class StopPageTableViewController: UITableViewController {
                     var routeName: String = ""
                     var routeNumber: String = ""
                     for(key, value2) in nextDepartRouteData{
-                        if "\(key)" == "route_gtfs_id"{
+                        if "\(key)" == "route_gtfs_id" && (value2 is NSNull) == false{
                             routeGtfsId = value2 as! String
-                        }else if "\(key)" == "route_type"{
+                        }else if "\(key)" == "route_type" && (value2 is NSNull) == false{
                             routeRouteType = value2 as! Int
-                        }else if "\(key)" == "route_id"{
+                        }else if "\(key)" == "route_id" && (value2 is NSNull) == false{
                             routeId = value2 as! Int
-                        }else if "\(key)" == "route_name"{
+                        }else if "\(key)" == "route_name" && (value2 is NSNull) == false{
                             routeName = value2 as! String
-                        }else if "\(key)" == "route_number"{
+                        }else if "\(key)" == "route_number" && (value2 is NSNull) == false{
                             routeNumber = value2 as! String
                         }
                     }
@@ -116,25 +116,25 @@ class StopPageTableViewController: UITableViewController {
                     var disruptionStartDate: String = ""
                     var disruptionEndDate: String = ""
                     for(key, value) in nextDisruptionsData{
-                        if "\(key)" == "disruption_id" {
+                        if "\(key)" == "disruption_id" && (value is NSNull) == false{
                             disruptionId = value as! Int
-                        } else if "\(key)" == "title" {
+                        } else if "\(key)" == "title" && (value is NSNull) == false{
                             disruptionTitle = value as! String
-                        } else if "\(key)" == "url" {
+                        } else if "\(key)" == "url" && (value is NSNull) == false{
                             disruptionURL = value as! String
-                        } else if "\(key)" == "description" {
+                        } else if "\(key)" == "description" && (value is NSNull) == false{
                             disruptionDescription = value as! String
-                        } else if "\(key)" == "disruption_status" {
+                        } else if "\(key)" == "disruption_status" && (value is NSNull) == false{
                             disruptionStatus = value as! String
-                        } else if "\(key)" == "disruption_type" {
+                        } else if "\(key)" == "disruption_type" && (value is NSNull) == false{
                             disruptionType = value as! String
-                        } else if "\(key)" == "published_on" {
+                        } else if "\(key)" == "published_on" && (value is NSNull) == false{
                             disruptionPublishDate = value as! String
-                        } else if "\(key)" == "last_updateed" {
+                        } else if "\(key)" == "last_updateed" && (value is NSNull) == false{
                             disruptionUpdateDate = value as! String
-                        } else if "\(key)" == "from_date" {
+                        } else if "\(key)" == "from_date" && (value is NSNull) == false{
                             disruptionStartDate = value as! String
-                        } else if "\(key)" == "to_date" {
+                        } else if "\(key)" == "to_date" && (value is NSNull) == false{
                             disruptionEndDate = value as! String
                         }
                     }
@@ -152,23 +152,23 @@ class StopPageTableViewController: UITableViewController {
                     var runSequence: Int = 0
                     var expressStopCount: Int = 0
                     for(key, value) in nextRunsData{
-                        if "\(key)" == "run_id"{
+                        if "\(key)" == "run_id" && (value is NSNull) == false{
                             runId = value as! Int
-                        } else if "\(key)" == "route_id"{
+                        } else if "\(key)" == "route_id" && (value is NSNull) == false{
                             routeId = value as! Int
-                        } else if "\(key)" == "route_type"{
+                        } else if "\(key)" == "route_type" && (value is NSNull) == false{
                             routeType = value as! Int
-                        } else if "\(key)" == "final_stop_id"{
+                        } else if "\(key)" == "final_stop_id" && (value is NSNull) == false{
                             finalStopId = value as! Int
-                        } else if "\(key)" == "destination_name"{
+                        } else if "\(key)" == "destination_name" && (value is NSNull) == false{
                             destinationName = value as! String
-                        } else if "\(key)" == "status"{
+                        } else if "\(key)" == "status" && (value is NSNull) == false{
                             status = value as! String
-                        } else if "\(key)" == "direction_id"{
+                        } else if "\(key)" == "direction_id" && (value is NSNull) == false{
                             directionId = value as! Int
-                        } else if "\(key)" == "run_sequence"{
+                        } else if "\(key)" == "run_sequence" && (value is NSNull) == false{
                             runSequence = value as! Int
-                        } else if "\(key)" == "express_stop_count"{
+                        } else if "\(key)" == "express_stop_count" && (value is NSNull) == false{
                             expressStopCount = value as! Int
                         }
                     }
@@ -186,21 +186,21 @@ class StopPageTableViewController: UITableViewController {
                     var stopLongitude: Double = 0
                     var stopSequence: Int = 0
                     for (key,value) in nextStopData{
-                        if "\(key)" == "stop_distance"{
+                        if "\(key)" == "stop_distance" && (value is NSNull) == false{
                             stopDistance = value as! Double
-                        } else if "\(key)" == "stop_suburb"{
+                        } else if "\(key)" == "stop_suburb" && (value is NSNull) == false{
                             stopSuburb = value as! String
-                        } else if "\(key)" == "stop_name"{
+                        } else if "\(key)" == "stop_name" && (value is NSNull) == false{
                             stopName = value as! String
-                        } else if "\(key)" == "stop_id"{
+                        } else if "\(key)" == "stop_id" && (value is NSNull) == false{
                             stopId = value as! Int
-                        } else if "\(key)" == "route_type"{
+                        } else if "\(key)" == "route_type" && (value is NSNull) == false{
                             routeType = value as! Int
-                        } else if "\(key)" == "stop_latitude"{
+                        } else if "\(key)" == "stop_latitude" && (value is NSNull) == false{
                             stopLatitude = value as! Double
-                        } else if "\(key)" == "stop_longitude"{
+                        } else if "\(key)" == "stop_longitude" && (value is NSNull) == false{
                             stopLongitude = value as! Double
-                        } else if "\(key)" == "stop_sequence"{
+                        } else if "\(key)" == "stop_sequence" && (value is NSNull) == false{
                             stopSequence = value as! Int
                         }
                     }
@@ -214,13 +214,13 @@ class StopPageTableViewController: UITableViewController {
                     var routeId: Int = 0
                     var routeType: Int = 0
                     for(key, value) in nextDirectionData{
-                        if "\(key)" == "direction_id"{
+                        if "\(key)" == "direction_id" && (value is NSNull) == false{
                             directionId = value as! Int
-                        } else if "\(key)" == "direction_name"{
+                        } else if "\(key)" == "direction_name" && (value is NSNull) == false{
                             directionName = value as! String
-                        } else if "\(key)" == "route_id"{
+                        } else if "\(key)" == "route_id" && (value is NSNull) == false{
                             routeId = value as! Int
-                        } else if "\(key)" == "route_type"{
+                        } else if "\(key)" == "route_type" && (value is NSNull) == false{
                             routeType = value as! Int
                         }
                     }

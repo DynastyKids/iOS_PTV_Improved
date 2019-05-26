@@ -142,16 +142,16 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                         var routeName: String = ""
                         var routeNumber: String = ""
                         for(key2, value2) in nextDepartRouteData{
-                            if "\(key2)" == "route_gtfs_id"{
+                            if "\(key2)" == "route_gtfs_id" && (value2 is NSNull) == false{
                                 routeGtfsId = value2 as! String
-                            }else if "\(key2)" == "route_type"{
+                            }else if "\(key2)" == "route_type" && (value2 is NSNull) == false{
                                 routeRouteType = value2 as! Int
-                            }else if "\(key2)" == "route_id"{
+                            }else if "\(key2)" == "route_id" && (value2 is NSNull) == false{
                                 routeId = value2 as! Int
-                            }else if "\(key2)" == "route_name"{
+                            }else if "\(key2)" == "route_name" && (value2 is NSNull) == false{
                                 routeName = value2 as! String
-                            }else if "\(key2)" == "route_number"{
-                                routeNumber = value2 as! String
+                            }else if "\(key2)" == "route_number" && (value2 is NSNull) == false{
+                                    routeNumber = value2 as! String
                             }
                         }
                         nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
