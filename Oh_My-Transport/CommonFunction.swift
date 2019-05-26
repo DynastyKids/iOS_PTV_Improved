@@ -11,11 +11,19 @@ import UIKit
 import CommonCrypto
 
 private let HARDCODEDURL: String = "https://timetableapi.ptv.vic.gov.au"
-private let PrimaryDevId: String = "3001122"
-private let PrimaryKey: String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
-private let AlternativeDevId: String = "3001136"
-private let AlternativeKey: String = "5d246d05-f36d-4606-96df-829d509a4e60"
 
+private var PrimaryDevId: String = "3001122"
+private var PrimaryKey: String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
+
+private var AlternativeDevId: String = "3001136"
+private var AlternativeKey: String = "5d246d05-f36d-4606-96df-829d509a4e60"
+
+public func changeIdnKey(DeveloperId: String, DeveloperKey: String){
+    PrimaryDevId = DeveloperId
+    PrimaryKey = DeveloperId
+    AlternativeDevId = DeveloperId
+    AlternativeKey = DeveloperKey
+}
 
 // Countdown Conversion
 public func Iso8601Countdown(iso8601Date: String, status: Bool?) -> String {

@@ -15,8 +15,13 @@ class AboutViewController: UIViewController, UINavigationControllerDelegate, MFM
     @IBOutlet weak var apiKeyTextField: UITextField!
     
     @IBAction func updateKey(_ sender: Any) {
-        _ = userIdTextField.text
-        _ = apiKeyTextField.text
+        guard let newDeveloperId = userIdTextField.text, let netDeveloperKey = apiKeyTextField.text, (userIdTextField.text?.count)! > 0, (apiKeyTextField.text?.count)! > 0 else {
+            let alertController = UIAlertController(title: "Error", message: "please enter correct developer id and key from PTV", preferredStyle: UIAlertController.Style.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
+        changeIdnKey(DeveloperId: newDeveloperId, DeveloperKey: netDeveloperKey)
     }
     
     @IBAction func sendMail(_ sender: Any) {
