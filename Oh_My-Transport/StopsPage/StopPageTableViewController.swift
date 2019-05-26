@@ -343,10 +343,8 @@ class StopPageTableViewController: UITableViewController {
                     cell.routeStatusLabel.textColor = UIColor.brown
                 }
             }
-            if (cell.routeStatusLabel.text == "Scheduled") {
-                cell.routeDetailslabel.text = "Real time data unavailable."
-            } else{
-                cell.routeDetailslabel.text = "Vehicle location data uplinked."
+            if (cell.routeStatusLabel.text != "Scheduled") {
+                cell.routeDetailslabel.text = "Real time data uplinked."
             }
             return cell
         }
