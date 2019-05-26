@@ -323,8 +323,10 @@ class StopPageTableViewController: UITableViewController {
             if cellData.estimatedDepartureUTC == nil {
                 cell.routeStatusLabel.text = "Scheduled"
                 cell.routeStatusLabel.textColor = UIColor.gray
+                cell.routeDetailslabel.text = ""
             }else {
                 let mintes = Iso8601toStatus(iso8601DateSchedule: cellData.scheduledDepartureUTC!, iso8601DateActual: cellData.estimatedDepartureUTC!)
+                cell.routeDetailslabel.text = "Real time data uplinked."
                 if mintes > 1 {
                     cell.routeStatusLabel.text = "Late \(mintes) mins"
                     cell.routeStatusLabel.textColor = UIColor.red
@@ -342,9 +344,6 @@ class StopPageTableViewController: UITableViewController {
                     cell.routeStatusLabel.text = "Early \(min) mins"
                     cell.routeStatusLabel.textColor = UIColor.brown
                 }
-            }
-            if (cell.routeStatusLabel.text != "Scheduled") {
-                cell.routeDetailslabel.text = "Real time data uplinked."
             }
             return cell
         }
