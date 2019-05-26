@@ -266,23 +266,18 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                                 cell.departure0Countdown.text = ""
                                 cell.departure1Countdown.text = ""
                                 cell.departure2Countdown.text = ""
-                                if count < (departures?.count)!{
-                                    if departures?[count].scheduledDepartureUTC != nil {
-                                        cell.departure0Time.text = Iso8601toString(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                        cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, status: true)
-                                    }
+                                if count < (departures?.count)! && departures?[count].scheduledDepartureUTC != nil {
+                                    cell.departure0Time.text = Iso8601toString(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                                    cell.departure0Countdown.text = Iso8601Countdown(iso8601Date: departures?[count].estimatedDepartureUTC ?? (departures?[count].scheduledDepartureUTC)!, status: true)
                                 }
-                                if count+1 < (departures?.count)!{
-                                    if departures?[count+1].scheduledDepartureUTC != nil {
-                                        cell.departure1Time.text = Iso8601toString(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                        cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, status: true)
-                                    }
+                                
+                                if count+1 < (departures?.count)! && departures?[count+1].scheduledDepartureUTC != nil {
+                                    cell.departure1Time.text = Iso8601toString(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                                    cell.departure1Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+1].estimatedDepartureUTC ?? (departures?[count+1].scheduledDepartureUTC)!, status: true)
                                 }
-                                if count+2 < (departures?.count)!{
-                                    if departures?[2].scheduledDepartureUTC != nil {
-                                        cell.departure2Time.text = Iso8601toString(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, withTime: true, withDate: false)
-                                        cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, status: true)
-                                    }
+                                if count+2 < (departures?.count)! && departures?[2].scheduledDepartureUTC != nil{
+                                    cell.departure2Time.text = Iso8601toString(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, withTime: true, withDate: false)
+                                    cell.departure2Countdown.text = Iso8601Countdown(iso8601Date: departures?[count+2].estimatedDepartureUTC ?? (departures?[count+2].scheduledDepartureUTC)!, status: true)
                                 }
                             }
                         }
@@ -300,11 +295,11 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
     }
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         locationManager.stopUpdatingLocation()
     }
