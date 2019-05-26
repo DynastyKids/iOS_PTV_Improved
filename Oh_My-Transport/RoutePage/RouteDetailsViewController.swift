@@ -161,7 +161,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         if indexPath.section == 1 {     // Section 1 (Stops)
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
             let cellDepartureTime = departsData[indexPath.row].estimatedDepartureUTC ?? departsData[indexPath.row].scheduledDepartureUTC ?? nil!
-            //        let cellFlag = departuredata.flags
             
             // Fetching Stop name
             var count = 0
@@ -175,7 +174,60 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 count += 1
             }
+            var flagText: String = ""
+            // Manage Flag
+            if (departsData[indexPath.row].flags?.contains("RR"))!{
+                flagText += "// Reservations Required"
+            }
+            if (departsData[indexPath.row].flags?.contains("GC"))!{
+                flagText += "// Guaranteed Connection"
+            }
+            if (departsData[indexPath.row].flags?.contains("DOO"))!{
+                flagText += "// Set down Only"
+            }
+            if (departsData[indexPath.row].flags?.contains("PUO"))!{
+                flagText += "// Pick up Only"
+            }
+            if (departsData[indexPath.row].flags?.contains("MO"))!{
+                flagText += "// Mondays Only Service"
+            }
+            if (departsData[indexPath.row].flags?.contains("TU"))!{
+                flagText += "// Tuesdays Only Service"
+            }
+            if (departsData[indexPath.row].flags?.contains("WE"))!{
+                flagText += "// Wednesdays Only Service"
+            }
+            if (departsData[indexPath.row].flags?.contains("TH"))!{
+                flagText += "// Thursdays Only Service"
+            }
+            if (departsData[indexPath.row].flags?.contains("FR"))!{
+                flagText += "// Fridays Only Service"
+            }
+            if (departsData[indexPath.row].flags?.contains("SS"))!{
+                flagText += "// SchoolDay Only Service"
+            }
+            cell.routeAdditionInfoLabel.text = flagText
             cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
+            cell.routeStatusLabel.text = "Scheduled"
+            if departsData[indexPath.row].estimatedDepartureUTC != nil {
+                let minutes = Iso8601toStatus(iso8601DateSchedule: departsData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departsData[indexPath.row].estimatedDepartureUTC!)
+                if minutes > 1 {
+                    cell.routeStatusLabel.text = "Late \(minutes) mins"
+                    cell.routeStatusLabel.textColor = UIColor.red
+                } else if minutes == 1{
+                    cell.routeStatusLabel.text = "Late 1 min"
+                    cell.routeStatusLabel.textColor = UIColor.orange
+                } else if minutes == 0 {
+                    cell.routeStatusLabel.text = "On Time"
+                    cell.routeStatusLabel.textColor = UIColor.green
+                } else if minutes == -1{
+                    cell.routeStatusLabel.text = "Early 1 min"
+                    cell.routeStatusLabel.textColor = UIColor.green
+                } else if minutes < -1 {
+                    cell.routeStatusLabel.text = "Early \((minutes * -1)) mins"
+                    cell.routeStatusLabel.textColor = UIColor.brown
+                }
+            }
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "doesNotExist", for: indexPath) as! RoutesStopTableViewCell
