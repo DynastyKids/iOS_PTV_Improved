@@ -84,6 +84,18 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                     self.searchOutlets = results.outlets!
                 }
                 
+                if results.stops?.count ?? 0 > 0{   // Bubble sort for route, ordered by Metro - Tram - Buses - Night Bus
+                    for sequence in 0 ..< self.searchRoute.count {
+                        for eachRoutes in 0 ..< ((self.searchRoute.count)-1-sequence) {
+                            if (self.searchRoute[eachRoutes].routeType)! > (self.searchRoute[eachRoutes+1].routeType)! {
+                                let temp = self.searchRoute[eachRoutes+1]
+                                self.searchRoute[eachRoutes+1] = self.searchRoute[eachRoutes]
+                                self.searchRoute[eachRoutes] = temp
+                            }
+                        }
+                    }
+                }
+                
                 if (results.stops?.count)!>0{       // Bubble sort for stop distance
                     for sequence in 0 ..< self.searchStops.count {
                         for eachStops in 0 ..< self.searchStops.count-1-sequence{
