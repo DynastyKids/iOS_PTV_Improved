@@ -13,17 +13,10 @@ import CommonCrypto
 private let HARDCODEDURL: String = "https://timetableapi.ptv.vic.gov.au"
 
 private var PrimaryDevId: String = "3001122"
-private var PrimaryKey: String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
+private var PrimaryDevKey: String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
 
-private var AlternativeDevId: String = "3001136"
-private var AlternativeKey: String = "5d246d05-f36d-4606-96df-829d509a4e60"
-
-public func changeIdnKey(DeveloperId: String, DeveloperKey: String){
-    PrimaryDevId = DeveloperId
-    PrimaryKey = DeveloperId
-    AlternativeDevId = DeveloperId
-    AlternativeKey = DeveloperKey
-}
+private var SecondaryDevId: String = "3001136"
+private var SecondaryDevKey: String = "5d246d05-f36d-4606-96df-829d509a4e60"
 
 // Countdown Conversion
 public func Iso8601Countdown(iso8601Date: String, status: Bool?) -> String {
@@ -161,7 +154,7 @@ public func changeColorByRouteType(routeType: Int) -> UIColor {
  */
 
 public func extractedFunc(_ request: String) -> String {
-    let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: PrimaryKey)
+    let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: PrimaryDevKey)
     let requestAddress: String = HARDCODEDURL+request+"&signature="+signature
     
     print("Request: \(requestAddress)")
@@ -169,7 +162,7 @@ public func extractedFunc(_ request: String) -> String {
 }
 
 public func alternativeExtractedFunc(_ request: String) -> String {
-    let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: AlternativeKey)
+    let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: SecondaryDevKey)
     let requestAddress: String = HARDCODEDURL+request+"&signature="+signature
     
     print("Request: \(requestAddress)")
@@ -182,7 +175,7 @@ public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int) 
     return extractedFunc(request)
 }
 public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int, directionId: Int) -> String{      // View departures for a specific route from a stop (With Direction condition)
-    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&expand=all&devid="+AlternativeDevId
+    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&expand=all&devid="+SecondaryDevId
     return alternativeExtractedFunc(request)
 }
 public func nextDepartureURL(routeType: Int, stopId: Int) -> String{            // View departures for all routes from a stop

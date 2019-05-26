@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-        
         loadLocation()
         
         return true

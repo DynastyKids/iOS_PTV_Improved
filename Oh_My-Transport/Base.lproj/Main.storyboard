@@ -1517,48 +1517,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="B3q-GT-qhl">
-                                <rect key="frame" x="32" y="690" width="350" height="30"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DHt-0x-QAT">
-                                        <rect key="frame" x="0.0" y="0.0" width="175" height="30"/>
-                                        <state key="normal" title="Send the mail"/>
-                                        <connections>
-                                            <action selector="sendMail:" destination="lo7-bg-DmJ" eventType="touchUpInside" id="Qtb-D3-ezH"/>
-                                            <action selector="updateClick:" destination="lo7-bg-DmJ" eventType="touchUpInside" id="m9D-S4-0zt"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oJD-ty-b8n">
-                                        <rect key="frame" x="175" y="0.0" width="175" height="30"/>
-                                        <state key="normal" title="Update &amp; Save"/>
-                                        <connections>
-                                            <action selector="updateKey:" destination="lo7-bg-DmJ" eventType="touchUpInside" id="kRA-ir-7lS"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your User ID" textAlignment="natural" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="ea3-Gr-SNH">
-                                <rect key="frame" x="8" y="614" width="398" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your PTV API Key" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qk5-33-tdd">
-                                <rect key="frame" x="8" y="652" width="398" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
-                                <rect key="frame" x="0.0" y="64" width="414" height="534"/>
+                                <rect key="frame" x="16" y="80" width="382" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.0.1 (Build 241 @ 21 May 2019)
- This transport app is build in Victoria for all Victorians, with PTV API embedded allows you to lookup the timetable data from Public Transport Victoria, incase if embedded key fails, you can apply an API key by yourselves (usually comes next business day) and input into box below with your own one.
-
+                                <mutableString key="text">Version 1.0.2 (Build 243 @ 21 May 2019)
+ This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
 
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.   To obtain a key:
-Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetable-api/ For more info</mutableString>
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.  </mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1566,30 +1532,17 @@ Visit https://www.ptv.vic.gov.au/footer/data-and-reporting/datasets/ptv-timetabl
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="B3q-GT-qhl" firstAttribute="top" secondItem="qk5-33-tdd" secondAttribute="bottom" constant="8" id="IYv-Tx-H1x"/>
-                            <constraint firstItem="ea3-Gr-SNH" firstAttribute="top" secondItem="Mer-84-M7w" secondAttribute="bottom" constant="16" id="Rfv-dL-orM"/>
-                            <constraint firstItem="Mer-84-M7w" firstAttribute="top" secondItem="720-bc-w1p" secondAttribute="top" id="UtZ-7n-Bk9"/>
-                            <constraint firstItem="qk5-33-tdd" firstAttribute="leading" secondItem="720-bc-w1p" secondAttribute="leading" constant="8" id="ZKx-hm-ewc"/>
-                            <constraint firstItem="720-bc-w1p" firstAttribute="bottom" secondItem="B3q-GT-qhl" secondAttribute="bottom" constant="16" id="aKZ-9X-aRR"/>
-                            <constraint firstItem="ea3-Gr-SNH" firstAttribute="leading" secondItem="720-bc-w1p" secondAttribute="leading" constant="8" id="bqo-PT-Mb8"/>
-                            <constraint firstItem="720-bc-w1p" firstAttribute="trailing" secondItem="B3q-GT-qhl" secondAttribute="trailing" constant="32" id="g7z-Om-6Wt"/>
-                            <constraint firstItem="B3q-GT-qhl" firstAttribute="leading" secondItem="720-bc-w1p" secondAttribute="leading" constant="32" id="gaP-Rk-Pbi"/>
-                            <constraint firstItem="720-bc-w1p" firstAttribute="trailing" secondItem="qk5-33-tdd" secondAttribute="trailing" constant="8" id="hba-ec-EuB"/>
-                            <constraint firstItem="Mer-84-M7w" firstAttribute="leading" secondItem="720-bc-w1p" secondAttribute="leading" id="kRX-is-VpD"/>
-                            <constraint firstItem="720-bc-w1p" firstAttribute="trailing" secondItem="ea3-Gr-SNH" secondAttribute="trailing" constant="8" id="nhE-Go-Z77"/>
-                            <constraint firstItem="qk5-33-tdd" firstAttribute="top" secondItem="ea3-Gr-SNH" secondAttribute="bottom" constant="8" id="qEt-Ym-XcC"/>
-                            <constraint firstItem="Mer-84-M7w" firstAttribute="trailing" secondItem="720-bc-w1p" secondAttribute="trailing" id="vG1-N6-ypE"/>
+                            <constraint firstItem="720-bc-w1p" firstAttribute="bottom" secondItem="Mer-84-M7w" secondAttribute="bottom" constant="16" id="5LM-w6-ID3"/>
+                            <constraint firstItem="Mer-84-M7w" firstAttribute="leading" secondItem="720-bc-w1p" secondAttribute="leading" constant="16" id="Pzz-AM-xGH"/>
+                            <constraint firstItem="720-bc-w1p" firstAttribute="trailing" secondItem="Mer-84-M7w" secondAttribute="trailing" constant="16" id="WnB-NO-UGL"/>
+                            <constraint firstItem="Mer-84-M7w" firstAttribute="top" secondItem="720-bc-w1p" secondAttribute="top" constant="16" id="goT-eB-e2q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="720-bc-w1p"/>
                     </view>
-                    <connections>
-                        <outlet property="apiKeyTextField" destination="qk5-33-tdd" id="q2u-Ci-Mf7"/>
-                        <outlet property="userIdTextField" destination="ea3-Gr-SNH" id="Xdp-PJ-BGE"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTB-G5-rs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1932" y="2388"/>
+            <point key="canvasLocation" x="-1933.3333333333335" y="2387.771739130435"/>
         </scene>
     </scenes>
     <resources>
