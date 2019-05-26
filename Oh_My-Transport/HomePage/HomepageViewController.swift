@@ -61,31 +61,6 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        // Allocate near by stops
-        let nearbyStopurl = URL(string: nearByStops(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longtitude: locationManager.location?.coordinate.longitude ?? 144.9663325)) // If value is null, default will set at City.
-        _ = URLSession.shared.dataTask(with: nearbyStopurl!){ (data, response, error) in
-            if error != nil {
-                print("Nearby stop fetch failed")
-                return
-            }
-            do{
-                let decoder = JSONDecoder()
-                let nearbyData = try decoder.decode(StopResponseByLocation.self, from: data!)
-                self.nearbyStops = nearbyData.stops!
-                
-                print(self.nearbyStops.count)   // Fetching time for next depart
-                
-                DispatchQueue.main.async {
-                    self.navigationItem.title = "Oh My Transport"
-                    self.homeTableView.reloadData()
-                }
-            }
-            catch{
-                print("Error:\(error)")
-            }
-            }.resume()
-        // End of Allocate near by 2 stops
-        
         // Allocate saved stops from CoreData
         // Create Request for CoreData
         let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
@@ -512,19 +487,39 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewWillAppear(animated)
         homeTableView.delegate = self
         homeTableView.dataSource = self
-        self.homeTableView.reloadData()
-        DispatchQueue.main.async {
-            self.homeTableView.beginUpdates()
-            self.homeTableView.endUpdates()
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        // Allocate near by stops
+        let nearbyStopurl = URL(string: nearByStops(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longtitude: locationManager.location?.coordinate.longitude ?? 144.9663325)) // If value is null, default will set at City.
+        _ = URLSession.shared.dataTask(with: nearbyStopurl!){ (data, response, error) in
+            if error != nil {
+                print("Nearby stop fetch failed")
+                return
+            }
+            do{
+                let decoder = JSONDecoder()
+                let nearbyData = try decoder.decode(StopResponseByLocation.self, from: data!)
+                guard nearbyData.status?.health == 1 else{
+                    return
+                }
+                self.nearbyStops = nearbyData.stops!
+                
+                DispatchQueue.main.async {
+                    self.navigationItem.title = "Oh My Transport"
+                    self.homeTableView.reloadData()
+                }
+            }
+            catch{
+                print("Error:\(error)")
+            }
+            }.resume()
+        // End of Allocate near by stops
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
 }
 
