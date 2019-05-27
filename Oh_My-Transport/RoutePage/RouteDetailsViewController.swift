@@ -177,34 +177,34 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             var flagText: String = ""
             // Manage Flag
             if (departsData[indexPath.row].flags?.contains("RR"))!{
-                flagText += "// Reservations Required"
+                flagText += "/ Reservations Required"
             }
             if (departsData[indexPath.row].flags?.contains("GC"))!{
-                flagText += "// Guaranteed Connection"
+                flagText += "/ Guaranteed Connection"
             }
             if (departsData[indexPath.row].flags?.contains("DOO"))!{
-                flagText += "// Set down Only"
+                flagText += "/ Drop-off Only"
             }
             if (departsData[indexPath.row].flags?.contains("PUO"))!{
-                flagText += "// Pick up Only"
+                flagText += "/ Pick-up Only"
             }
             if (departsData[indexPath.row].flags?.contains("MO"))!{
-                flagText += "// Mondays Only Service"
+                flagText += "/ Mondays Only "
             }
             if (departsData[indexPath.row].flags?.contains("TU"))!{
-                flagText += "// Tuesdays Only Service"
+                flagText += "/ Tuesdays Only "
             }
             if (departsData[indexPath.row].flags?.contains("WE"))!{
-                flagText += "// Wednesdays Only Service"
+                flagText += "/ Wednesdays Only "
             }
             if (departsData[indexPath.row].flags?.contains("TH"))!{
-                flagText += "// Thursdays Only Service"
+                flagText += "/ Thursdays Only "
             }
             if (departsData[indexPath.row].flags?.contains("FR"))!{
-                flagText += "// Fridays Only Service"
+                flagText += "/ Fridays Only "
             }
             if (departsData[indexPath.row].flags?.contains("SS"))!{
-                flagText += "// SchoolDay Only Service"
+                flagText += "/ SchoolDay Only "
             }
             cell.routeAdditionInfoLabel.text = flagText
             cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
