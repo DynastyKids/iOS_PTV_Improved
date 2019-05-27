@@ -12,14 +12,15 @@ import CoreLocation
 
 class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
-    let hardcodedURL:String = "https://timetableapi.ptv.vic.gov.au"
-    let hardcodedDevID:String = "3001122"
-    let hardcodedDevKey:String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
-    
     @IBOutlet weak var mainMapView: MKMapView!
 
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation!
+    var mapCenterLatitude: Float = 0
+    var mapCenterLongitude: Float = 0
+    var latitudeDelta: Float = 0
+    var longitudeDelta: Float = 0
+    var resultStops: [StopGeosearch] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,7 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         
         self.view.addSubview(self.mainMapView)
         mainMapView.showsUserLocation = true
+        mainMapView.delegate = self
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -41,13 +43,9 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             self.locationManager.startUpdatingLocation()
         }
         
-        //大头针对象 - 添加车站用
-        let claytonStation = MKPointAnnotation()    //创建一个大头针对象
-        claytonStation.coordinate = CLLocation(latitude: -37.9251671,longitude: 145.120682).coordinate  //设置大头针的显示位置
-        claytonStation.title = "Clayton Station"    //设置点击大头针之后显示的标题
-        claytonStation.subtitle = "Clayton"    //设置点击大头针之后显示的描述
-        self.mainMapView.addAnnotation(claytonStation)  //添加大头针
-        
+        mapCenterLatitude = Float((locationManager.location?.coordinate.latitude)!)
+        mapCenterLongitude = Float((locationManager.location?.coordinate.longitude)!)
+        updateSearchResults()
     }
     
 
@@ -65,7 +63,7 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     //创建一个MKCoordinateSpan对象，设置地图的范围（越小越精确）
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
-        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)
+        let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), span: currentLocationSpan)
         self.mainMapView.setRegion(region, animated: true)
     }
@@ -77,23 +75,6 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    
-    fileprivate func extractedFunc(_ request: String) -> String {
-        let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: hardcodedDevKey)
-        let requestAddress: String = hardcodedURL+request+"&signature="+signature
-        
-        return requestAddress
-    }
-    func findStopByMap(latitude: Double, longitude: Double) -> String {
-        let request: String = "/v3/stops/location/"+String(latitude)+","+String(longitude)+"?max_results=100&devid="+hardcodedDevID
-        return extractedFunc(request)
-    }
-    
-    func findStopWithZoom(latitude: Double, longitude: Double, stopQuantity: Int, distance: Double) -> String{
-        let request: String = "/v3/stops/location/"+String(latitude)+","+String(longitude)+"?max_results="+String(stopQuantity)+"&max_distance"+String(distance)+"&devid="+hardcodedDevID
-        return extractedFunc(request)
     }
     
 //    func StopsAnnotationView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -113,5 +94,45 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        print("latitudeDelta:%f,,longitudeDelta:%f",mapView.region.span.latitudeDelta,mapView.region.span.longitudeDelta)
+        print("Latitude:\(mapView.centerCoordinate.latitude), Longitude:\(mapView.centerCoordinate.longitude)")
+        mapCenterLatitude = Float(mapView.centerCoordinate.latitude)
+        mapCenterLongitude = Float(mapView.centerCoordinate.longitude)
+        print(mapView.region.span)
+        updateSearchResults()
+    }
+    
+    func updateSearchResults(){
+        mainMapView.removeAnnotations(mainMapView.annotations)
+        let url = URL(string: nearByStopsOnSelect(latitude: Double(mapCenterLatitude), longtitude: Double(mapCenterLongitude)))
+        _ = URLSession.shared.dataTask(with: url!){ (data, response, error) in
+            if error != nil {
+                print("Nearby Stops fetch failed:\(error!)")
+                return
+            }
+            do{
+                let mapStop = try JSONDecoder().decode(StopResponseByLocation.self, from: data!)
+                guard (mapStop.stops?.count)!>0 else{
+                    return
+                }
+                self.resultStops = mapStop.stops!
+                DispatchQueue.main.async {
+                    for each in self.resultStops{           // Setting up new annotation
+                        let newStop = MKPointAnnotation()
+                        newStop.coordinate = CLLocation(latitude: each.stopLatitude!,longitude: each.stopLongitude!).coordinate
+                        print("Stop coordinate:\(each.stopLatitude),\(each.stopLongitude)")
+                        newStop.title = each.stopName
+                        newStop.subtitle = each.stopSuburb
+                        self.mainMapView.addAnnotation(newStop)
+                    }
+                }
+            } catch {
+                print("Error:\(error)")
+            }
+            
+            }.resume()
     }
 }

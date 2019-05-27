@@ -264,6 +264,10 @@ public func nearByStops(latitude: Double, longtitude: Double) -> String{    // V
     return extractedFunc(request)
 }
 
+public func nearByStopsOnSelect(latitude: Double, longtitude: Double) -> String{    // View all stops near a specific location
+    let request: String = "/v3/stops/location/\(latitude),\(longtitude)?max_results=100&max_distance=10000&devid="+PrimaryDevId
+    return extractedFunc(request)
+}
 
 enum CryptoAlgorithm {
     case MD5, SHA1
