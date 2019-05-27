@@ -22,6 +22,9 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     var longitudeDelta: Float = 0
     var resultStops: [StopGeosearch] = []
     
+    var senderStopId: Int = 0
+    var senderRouteType: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,6 +108,27 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         updateSearchResults()
     }
     
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("Pin clicked");
+        let annotation = view.annotation
+        guard let subtitleText = (annotation?.subtitle) else {
+            return
+        }
+        let subtitleText = String(((annotation?.subtitle)!)!).components(separatedBy: ",")
+        var subtitleTextElement: [String] = []
+        for eachSubtitle in subtitleText{
+            subtitleTextElement = eachSubtitle.components(separatedBy: ":")
+        }
+        for each in resultStops{
+            if(each.stopName == annotation?.title && each.stopId == Int(subtitleTextElement[1])){
+                // Jump via segue to stop page
+                self.performSegue(withIdentifier: "showStopsFromMap", sender: nil)
+                senderStopId = each.stopId!
+                senderRouteType = each.routeType!
+            }
+        }
+    }
+    
     func updateSearchResults(){
         mainMapView.removeAnnotations(mainMapView.annotations)
         let url = URL(string: nearByStopsOnSelect(latitude: Double(mapCenterLatitude), longtitude: Double(mapCenterLongitude)))
@@ -123,9 +147,7 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                     for each in self.resultStops{           // Setting up new annotation
                         let newStop = MKPointAnnotation()
                         newStop.coordinate = CLLocation(latitude: each.stopLatitude!,longitude: each.stopLongitude!).coordinate
-                        print("Stop coordinate:\(each.stopLatitude),\(each.stopLongitude)")
                         newStop.title = each.stopName
-                        newStop.subtitle = each.stopSuburb
                         self.mainMapView.addAnnotation(newStop)
                     }
                 }
@@ -134,5 +156,14 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             }
             
             }.resume()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showStopsFromMap" {
+            print("Called")
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+            page2.routeType = senderRouteType
+            page2.stopId = senderStopId
+        }
     }
 }

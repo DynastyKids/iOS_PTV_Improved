@@ -764,7 +764,7 @@
                     </view>
                     <connections>
                         <outlet property="mainMapView" destination="I2o-0N-e9Q" id="89V-dm-5fJ"/>
-                        <segue destination="VfA-ee-rv5" kind="show" id="3Ii-7b-a41"/>
+                        <segue destination="VfA-ee-rv5" kind="show" identifier="showStopsFromMap" id="3Ii-7b-a41"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dLM-RB-9fj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -984,9 +984,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Fetching disruption information from PTV" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdB-V3-inX">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Fetching disruption information from PTV" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QdB-V3-inX">
                                             <rect key="frame" x="20" y="8" width="382" height="71.666666666666671"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1185,10 +1185,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nEF-c4-Lmb">
-                                                    <rect key="frame" x="20" y="4" width="348" height="20.666666666666668"/>
+                                                    <rect key="frame" x="20" y="4" width="348" height="20.333333333333332"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqj-iX-noi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.333333333333332"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="110" id="xge-Uj-0Sh"/>
                                                             </constraints>
@@ -1197,7 +1197,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terminal Stop" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKX-cC-t7p">
-                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.666666666666668"/>
+                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1205,10 +1205,10 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gGF-XN-Y27">
-                                                    <rect key="frame" x="20" y="28.666666666666671" width="348" height="20.333333333333329"/>
+                                                    <rect key="frame" x="20" y="28.333333333333329" width="348" height="20.666666666666671"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearest Stop:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpV-Cf-Z6E">
-                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.333333333333332"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.666666666666668"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="110" id="Iuf-Wd-LuG"/>
                                                             </constraints>
@@ -1217,7 +1217,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Et-mW-cWv">
-                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.333333333333332"/>
+                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.666666666666668"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1515,11 +1515,11 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="16" y="80" width="382" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.0.2 (Build 249 @ 21 May 2019)
+                                <string key="text">Version 1.0.2 (Build 249 @ 21 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
 
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.  </mutableString>
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.  </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1553,6 +1553,6 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     <inferredMetricsTieBreakers>
         <segue reference="tH8-GN-WaY"/>
         <segue reference="zXA-WO-h7o"/>
-        <segue reference="evR-un-G8n"/>
+        <segue reference="3Ii-7b-a41"/>
     </inferredMetricsTieBreakers>
 </document>
