@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="anf-1o-1BV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="anf-1o-1BV">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -764,7 +764,7 @@
                     </view>
                     <connections>
                         <outlet property="mainMapView" destination="I2o-0N-e9Q" id="89V-dm-5fJ"/>
-                        <segue destination="VfA-ee-rv5" kind="show" identifier="showStopsFromMap" id="3Ii-7b-a41"/>
+                        <segue destination="VfA-ee-rv5" kind="show" identifier="showStopsFromMap" id="nst-WG-GO8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dLM-RB-9fj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1515,11 +1515,11 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="16" y="80" width="382" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Version 1.0.2 (Build 249 @ 21 May 2019)
+                                <mutableString key="text">Version 1.0.2 (Build 251 @ 21 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
 
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.  </string>
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.  </mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1553,6 +1553,6 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     <inferredMetricsTieBreakers>
         <segue reference="tH8-GN-WaY"/>
         <segue reference="zXA-WO-h7o"/>
-        <segue reference="3Ii-7b-a41"/>
+        <segue reference="nst-WG-GO8"/>
     </inferredMetricsTieBreakers>
 </document>
