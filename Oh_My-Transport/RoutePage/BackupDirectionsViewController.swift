@@ -265,9 +265,9 @@ class BackupDirectionsViewController: UIViewController, UITableViewDelegate, UIT
             cell.departure0Countdown.text = ""
             cell.departure1Countdown.text = ""
             cell.departure2Countdown.text = ""
-            print("Require direction:\(cellDirectionId)")
+            print("Require direction:\(String(describing: cellDirectionId))")
             for each in nextDepartures{
-                print("Service qty: \(each.nextDepartures?.count), currentDirection:\(each.nextDepartures?[0].directionId)")
+                print("Service qty: \(String(describing: each.nextDepartures?.count)), currentDirection:\(String(describing: each.nextDepartures?[0].directionId))")
                 if (each.nextDepartures?.count)! > 0 && each.nextDepartures?[0].directionId == cellDirectionId {
                     cell.nearStopLabel.text = each.stopName
                     if each.nextDepartures?.count ?? 0 > 2{

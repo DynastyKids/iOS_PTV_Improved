@@ -155,7 +155,7 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func navigateMeButton(_ sender: Any) {    // Reference: https://www.youtube.com/watch?v=INfCmCxLC0o
-        let locationDistance = CLLocationCoordinate2DMake(CLLocationDegrees((outlet?.outletLatitude)!), CLLocationDegrees((outlet?.outletLongitude)!))
+        _ = CLLocationCoordinate2DMake(CLLocationDegrees((outlet?.outletLatitude)!), CLLocationDegrees((outlet?.outletLongitude)!))
         let regionSpan = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: (outlet?.outletLatitude)!, longitude: (outlet?.outletLongitude)!), latitudinalMeters: CLLocationDistance(1000), longitudinalMeters: CLLocationDistance(1000))
         
         let options = [MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center), MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)]

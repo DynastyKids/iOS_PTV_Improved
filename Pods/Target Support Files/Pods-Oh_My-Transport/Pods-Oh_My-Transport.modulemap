@@ -1,0 +1,6 @@
+framework module Pods_Oh_My_Transport {
+  umbrella header "Pods-Oh_My-Transport-umbrella.h"
+
+  export *
+  module * { export * }
+}

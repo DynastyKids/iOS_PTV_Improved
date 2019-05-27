@@ -62,7 +62,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                 self.indicator.hidesWhenStopped = true
             }
             if error != nil {
-                print("Error:\(error)")
+                print("Error:\(String(describing: error))")
                 return
             }
             do{

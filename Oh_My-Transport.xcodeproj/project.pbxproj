@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		022E6C3AE2CC8124615F37E3 /* Pods_Oh_My_Transport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 060FD6E7B5DED8B89F8B879A /* Pods_Oh_My_Transport.framework */; };
 		5A2CB6BD2288254A009A3A13 /* PTVdataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2CB6BC2288254A009A3A13 /* PTVdataStruct.swift */; };
 		5A331BF722731FAF00467C8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A331BF622731FAF00467C8B /* AppDelegate.swift */; };
 		5A331BFC22731FAF00467C8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A331BFA22731FAF00467C8B /* Main.storyboard */; };
@@ -31,6 +32,13 @@
 		5A9B89002290411C005F1C25 /* stopInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */; };
 		5A9B89022290421A005F1C25 /* nextServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */; };
 		5AC9F3B5229AE0CC00419760 /* BackupDirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */; };
+		5AE5ECBD229C51F900D65A04 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECBC229C51F900D65A04 /* CoreTelephony.framework */; };
+		5AE5ECBF229C520100D65A04 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECBE229C520100D65A04 /* SystemConfiguration.framework */; };
+		5AE5ECC1229C520B00D65A04 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECC0229C520B00D65A04 /* AudioToolbox.framework */; };
+		5AE5ECC3229C521300D65A04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECC2229C521300D65A04 /* AVFoundation.framework */; };
+		5AE5ECC5229C521A00D65A04 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECC4229C521A00D65A04 /* OpenGLES.framework */; };
+		5AE5ECC7229C522200D65A04 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECC6229C522200D65A04 /* CoreMotion.framework */; };
+		5AE5ECCE229C558100D65A04 /* PgySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECCD229C558100D65A04 /* PgySDK.framework */; };
 		5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */; };
 		5AEA77D4227C67FC005A6A74 /* DisruptionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */; };
 		5AEA77DB227C700D005A6A74 /* SelectStopOnMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */; };
@@ -53,6 +61,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		060FD6E7B5DED8B89F8B879A /* Pods_Oh_My_Transport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Oh_My_Transport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C730D534F0D7E21809482E2 /* Pods-Oh_My-Transport.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Oh_My-Transport.release.xcconfig"; path = "Target Support Files/Pods-Oh_My-Transport/Pods-Oh_My-Transport.release.xcconfig"; sourceTree = "<group>"; };
 		5A2CB6BC2288254A009A3A13 /* PTVdataStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTVdataStruct.swift; sourceTree = "<group>"; };
 		5A331BF322731FAF00467C8B /* Oh_My-Transport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Oh_My-Transport.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A331BF622731FAF00467C8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +89,14 @@
 		5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stopInfoTableViewCell.swift; sourceTree = "<group>"; };
 		5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextServiceTableViewCell.swift; sourceTree = "<group>"; };
 		5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDirectionsViewController.swift; sourceTree = "<group>"; };
+		5AE5ECBC229C51F900D65A04 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		5AE5ECBE229C520100D65A04 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5AE5ECC0229C520B00D65A04 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5AE5ECC2229C521300D65A04 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5AE5ECC4229C521A00D65A04 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		5AE5ECC6229C522200D65A04 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		5AE5ECC9229C53B800D65A04 /* Oh_My-Transport-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Oh_My-Transport-Bridging-Header.h"; sourceTree = "<group>"; };
+		5AE5ECCD229C558100D65A04 /* PgySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PgySDK.framework; path = Pods/Pgyer/PgySDK/sdk/PgySDK.framework; sourceTree = "<group>"; };
 		5AEA77D1227C67D8005A6A74 /* DisruptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionsTableViewController.swift; sourceTree = "<group>"; };
 		5AEA77D3227C67FC005A6A74 /* DisruptionDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisruptionDetailViewController.swift; sourceTree = "<group>"; };
 		5AEA77DA227C700D005A6A74 /* SelectStopOnMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStopOnMapViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +116,7 @@
 		5AEF7DD32291C53F0087C087 /* nearbyStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nearbyStopsTableViewCell.swift; sourceTree = "<group>"; };
 		5AEF7DE32292F1EC0087C087 /* CommonFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunction.swift; sourceTree = "<group>"; };
 		5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = disruptionTableViewCell.swift; sourceTree = "<group>"; };
+		F5D27318FBED26BA25E2DCE2 /* Pods-Oh_My-Transport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Oh_My-Transport.debug.xcconfig"; path = "Target Support Files/Pods-Oh_My-Transport/Pods-Oh_My-Transport.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,17 +124,42 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AE5ECCE229C558100D65A04 /* PgySDK.framework in Frameworks */,
+				5AE5ECC7229C522200D65A04 /* CoreMotion.framework in Frameworks */,
+				5AE5ECC5229C521A00D65A04 /* OpenGLES.framework in Frameworks */,
+				5AE5ECC3229C521300D65A04 /* AVFoundation.framework in Frameworks */,
+				5AE5ECC1229C520B00D65A04 /* AudioToolbox.framework in Frameworks */,
+				5AE5ECBF229C520100D65A04 /* SystemConfiguration.framework in Frameworks */,
+				5AE5ECBD229C51F900D65A04 /* CoreTelephony.framework in Frameworks */,
+				022E6C3AE2CC8124615F37E3 /* Pods_Oh_My_Transport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AB2DC4B8F3221B35BC144CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5AE5ECCD229C558100D65A04 /* PgySDK.framework */,
+				5AE5ECC6229C522200D65A04 /* CoreMotion.framework */,
+				5AE5ECC4229C521A00D65A04 /* OpenGLES.framework */,
+				5AE5ECC2229C521300D65A04 /* AVFoundation.framework */,
+				5AE5ECC0229C520B00D65A04 /* AudioToolbox.framework */,
+				5AE5ECBE229C520100D65A04 /* SystemConfiguration.framework */,
+				5AE5ECBC229C51F900D65A04 /* CoreTelephony.framework */,
+				060FD6E7B5DED8B89F8B879A /* Pods_Oh_My_Transport.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5A331BEA22731FAE00467C8B = {
 			isa = PBXGroup;
 			children = (
 				5A331BF522731FAF00467C8B /* Oh_My-Transport */,
 				5A331BF422731FAF00467C8B /* Products */,
+				B61D76BE5F05497FE23421D4 /* Pods */,
+				1AB2DC4B8F3221B35BC144CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +174,7 @@
 		5A331BF522731FAF00467C8B /* Oh_My-Transport */ = {
 			isa = PBXGroup;
 			children = (
+				5AE5ECC8229C538F00D65A04 /* ObjectCLibrary */,
 				5AEEE87A2297B8E300EF6D83 /* SearchPage */,
 				5A85D5B62290845A00E01AD9 /* RoutePage */,
 				5A7B1B0F227F04590012E09C /* HomePage */,
@@ -193,6 +238,14 @@
 			path = RoutePage;
 			sourceTree = "<group>";
 		};
+		5AE5ECC8229C538F00D65A04 /* ObjectCLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				5AE5ECC9229C53B800D65A04 /* Oh_My-Transport-Bridging-Header.h */,
+			);
+			path = ObjectCLibrary;
+			sourceTree = "<group>";
+		};
 		5AEA77D0227C67A8005A6A74 /* Disruptions */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +279,15 @@
 			path = SearchPage;
 			sourceTree = "<group>";
 		};
+		B61D76BE5F05497FE23421D4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F5D27318FBED26BA25E2DCE2 /* Pods-Oh_My-Transport.debug.xcconfig */,
+				3C730D534F0D7E21809482E2 /* Pods-Oh_My-Transport.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -233,6 +295,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5A331C0822731FB000467C8B /* Build configuration list for PBXNativeTarget "Oh_My-Transport" */;
 			buildPhases = (
+				A25CACF77229FBC53011F6E0 /* [CP] Check Pods Manifest.lock */,
 				5A331BEF22731FAF00467C8B /* Sources */,
 				5A331BF022731FAF00467C8B /* Frameworks */,
 				5A331BF122731FAF00467C8B /* Resources */,
@@ -258,6 +321,7 @@
 				TargetAttributes = {
 					5A331BF222731FAF00467C8B = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -291,6 +355,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A25CACF77229FBC53011F6E0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Oh_My-Transport-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5A331BEF22731FAF00467C8B /* Sources */ = {
@@ -480,11 +569,17 @@
 		};
 		5A331C0922731FB000467C8B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5D27318FBED26BA25E2DCE2 /* Pods-Oh_My-Transport.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 734WB6TM8F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Pgyer/PgySDK/sdk",
+				);
 				INFOPLIST_FILE = "Oh_My-Transport/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -493,6 +588,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.Monash.wgon0001.Oh-My-Transport";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Oh_My-Transport/ObjectCLibrary/Oh_My-Transport-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -500,12 +597,18 @@
 		};
 		5A331C0A22731FB000467C8B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C730D534F0D7E21809482E2 /* Pods-Oh_My-Transport.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				DEVELOPMENT_TEAM = 734WB6TM8F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/Pgyer/PgySDK/sdk",
+				);
 				INFOPLIST_FILE = "Oh_My-Transport/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -514,6 +617,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.Monash.wgon0001.Oh-My-Transport";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Oh_My-Transport/ObjectCLibrary/Oh_My-Transport-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

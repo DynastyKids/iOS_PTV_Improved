@@ -1512,7 +1512,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="16" y="80" width="382" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.1.0 (Build 252 @ 28 May 2019)
+                                <mutableString key="text">Version 1.1.0 (Build 253 @ 28 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
 
@@ -1548,7 +1548,6 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="g3m-8j-J5E"/>
         <segue reference="tH8-GN-WaY"/>
         <segue reference="kz0-4N-VZF"/>
         <segue reference="RMC-Ij-1Re"/>
