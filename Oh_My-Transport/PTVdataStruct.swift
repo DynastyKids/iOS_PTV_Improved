@@ -679,7 +679,7 @@ struct ResultOutlet: Codable{
 */
 
 struct StopResponseByLocation: Codable {
-    var stops: [stopGeosearch]?
+    var stops: [StopGeosearch]?
 //    var disruptions: disruptions?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
@@ -689,7 +689,7 @@ struct StopResponseByLocation: Codable {
     }
 }
 
-struct stopGeosearch: Codable{
+struct StopGeosearch: Codable{
     var stopDistance: Double?
     var stopSuburb: String?
     var stopName: String?

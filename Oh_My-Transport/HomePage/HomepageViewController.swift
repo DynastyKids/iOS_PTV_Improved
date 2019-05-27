@@ -20,7 +20,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     var currentLocation:CLLocation!
     
     // MARK: - Nearby Stops property
-    var nearbyStops: [stopGeosearch] = []
+    var nearbyStops: [StopGeosearch] = []
     var nearbyStopsDeaprtureSequence: [Departure] = []      // Departure data:Store all excesss data
     
     // MARK: - Saved Stops property

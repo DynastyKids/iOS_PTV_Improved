@@ -31,7 +31,7 @@ class StopPageTableViewController: UITableViewController {
     var nextDepartRunsInfo: [Run] = []
     var nextDepartDirectionInfo: [DirectionWithDescription] = []
     var nextDepartDisruptionInfo: [Disruption] = []
-    var nextDepartStopInfo: [stopGeosearch] = []
+    var nextDepartStopInfo: [StopGeosearch] = []
     
 //    var routeName:[String] = []
     
@@ -204,7 +204,7 @@ class StopPageTableViewController: UITableViewController {
                             stopSequence = value as! Int
                         }
                     }
-                    self.nextDepartStopInfo.append(stopGeosearch.init(stopDistance: stopDistance, stopSuburb: stopSuburb, stopName: stopName, stopId: stopId, routeType: routeType, stopLatitude: stopLatitude, stopLongitude: stopLongitude, stopSequence: stopSequence))
+                    self.nextDepartStopInfo.append(StopGeosearch.init(stopDistance: stopDistance, stopSuburb: stopSuburb, stopName: stopName, stopId: stopId, routeType: routeType, stopLatitude: stopLatitude, stopLongitude: stopLongitude, stopSequence: stopSequence))
                 }
                 
                 for(_, values) in nextDepartDirections{
