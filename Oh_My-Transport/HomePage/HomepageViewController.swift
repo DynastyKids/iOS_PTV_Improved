@@ -60,32 +60,6 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-        
-        // Allocate saved stops from CoreData
-        // Create Request for CoreData
-        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
-        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
-        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
-        // Initalize Core Data fetch
-        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        stopFetchedResultsController.delegate = self
-        do {
-            try stopFetchedResultsController.performFetch()
-        } catch{
-            print("Saved Stops Core Data fetching error:\(error)")
-        }
-        
-        // Allocate Saved routes from CoreData
-        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
-        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
-        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
-        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
-        routeFetchedResultsController.delegate = self
-        do {
-            try routeFetchedResultsController.performFetch()
-        } catch {
-            print("Saved Route Core Data fetching error:\(error)")
-        }
     }
     
     // MARK: - Table view data source
@@ -485,8 +459,51 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        locationManager.startUpdatingLocation()
+        
+        // Allocate saved stops from CoreData
+        // Create Request for CoreData
+        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
+        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
+        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
+        // Initalize Core Data fetch
+        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        stopFetchedResultsController.delegate = self
+        do {
+            try stopFetchedResultsController.performFetch()
+        } catch{
+            print("Saved Stops Core Data fetching error:\(error)")
+        }
+        
+        // Allocate Saved routes from CoreData
+        let routesFetchedRequest: NSFetchRequest<FavRoute> = FavRoute.fetchRequest()
+        let routeSortDescriptoprs = NSSortDescriptor(key: "routeId", ascending: true)
+        routesFetchedRequest.sortDescriptors = [routeSortDescriptoprs]
+        routeFetchedResultsController = NSFetchedResultsController(fetchRequest: routesFetchedRequest, managedObjectContext: coreDataStack.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        routeFetchedResultsController.delegate = self
+        do {
+            try routeFetchedResultsController.performFetch()
+        } catch {
+            print("Saved Route Core Data fetching error:\(error)")
+        }
+        
         homeTableView.delegate = self
         homeTableView.dataSource = self
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        homeTableView.delegate = nil
+        homeTableView.dataSource = nil
+        homeTableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         // Allocate near by stops
         let nearbyStopurl = URL(string: nearByStops(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longtitude: locationManager.location?.coordinate.longitude ?? 144.9663325)) // If value is null, default will set at City.
         _ = URLSession.shared.dataTask(with: nearbyStopurl!){ (data, response, error) in
@@ -514,12 +531,8 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         // End of Allocate near by stops
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
 }
 

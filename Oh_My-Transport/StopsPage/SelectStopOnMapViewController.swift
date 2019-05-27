@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 import CoreLocation
 
 class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
@@ -25,6 +26,8 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     var senderStopId: Int = 0
     var senderRouteType: Int = 0
     var lastSelectStopId: Int = 0
+    
+    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,19 +55,9 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         updateSearchResults()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    //MARK: - CLLocationManager Delegates
+    //Create a MKCoordinateSpan target for setting scan range
     
-    //MARK:- CLLocationManager Delegates
-    //创建一个MKCoordinateSpan对象，设置地图的范围（越小越精确）
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
@@ -77,20 +70,8 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     }
     
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        super.didReceiveMemoryWarning()     // Dispose of any resources that can be recreated.
     }
-    
-//    func StopsAnnotationView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        if let BusStopAnnotation = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier) as?
-//            MKMarkerAnnotationView{
-//            BusStopAnnotation.animatesWhenAdded = true
-//            BusStopAnnotation.titleVisibility = .adaptive
-//            BusStopAnnotation.subtitleVisibility = .adaptive
-//
-//            return BusStopAnnotation
-//        }
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -164,6 +145,8 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             
             }.resume()
     }
+    
+    // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showStopsFromMap" {
@@ -171,5 +154,25 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             page2.routeType = senderRouteType
             page2.stopId = senderStopId
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
+        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
+        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
+        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        stopFetchedResultsController.delegate = self
+    }
+}
+
+extension SelectStopOnMapViewController: NSFetchedResultsControllerDelegate{
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     }
 }

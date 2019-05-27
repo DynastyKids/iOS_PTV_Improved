@@ -41,7 +41,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var routeTableView: UITableView!
     
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
-    var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -243,6 +242,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
         stopFetchedResultsController.delegate = self
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         locationManager.stopUpdatingLocation()

@@ -263,8 +263,7 @@ class StopPageTableViewController: UITableViewController {
 
         do {
             try managedContext?.save()
-            let _ = navigationController?.popViewController(animated: true)
-//            self.navigationController?.popToRootViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
         } catch {
             print("Error to save stop")
         }

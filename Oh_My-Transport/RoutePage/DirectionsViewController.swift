@@ -16,6 +16,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     // MARK: - CoreData Properties
     var managedContext: NSManagedObjectContext!
     var stops: FavStop?
+    var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     
     let locationManager = CLLocationManager()
     var nslock = NSLock()
@@ -226,6 +227,11 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             if allstopsdata.count < loopTimes{
                 loopTimes = allstopsdata.count
             }
+            for _ in routeDirections{
+                for _ in 0 ..< 6 {
+                    self.selectedId.append(-1)
+                }
+            }
             for each in 0 ..< loopTimes{
                 var flag = false
                 let url = URL(string: showRouteDepartureOnStop(routeType: routeType, stopId: allstopsdata[each].stopId!, routeId: routeId, directionId: routeDirections[indexPath.row].directionId!))
@@ -240,7 +246,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         if directions.count != 0{
                             flag = true
                             availableStop.append(self.allstopsdata[each])
-                            self.selectedId.append(-1)
+
                             if (self.selectedId[indexPath.row] == -1){
                                 self.selectedId[indexPath.row] = each
                             }
@@ -304,6 +310,15 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         locationManager.stopUpdatingLocation()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let stopsFetchedRequest: NSFetchRequest<FavStop> = FavStop.fetchRequest()
+        let stopSortDescriptors = NSSortDescriptor(key: "stopId", ascending: true)
+        stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
+        stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
+        stopFetchedResultsController.delegate = self
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -314,8 +329,8 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         route.routeType = Int32(routeType)
         do {
             try managedContext?.save()
-            let _ = navigationController?.popViewController(animated: true)
-//            let _ = navigationController?.popToRootViewController(animated: true)
+//            let _ = navigationController?.popViewController(animated: true)
+            let _ = navigationController?.popToRootViewController(animated: true)
         } catch {
             print("Error to save route")
         }
@@ -337,18 +352,14 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
     }
+}
+extension DirectionsViewController: NSFetchedResultsControllerDelegate{
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "item")
-//        if annotationView != nil{
-//            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "item")
-//        }
-//        annotationView?.annotation = annotation
-//        annotationView?.image = UIImage(named: "category_1")
-//        annotationView?.centerOffset = CGPoint(x: 0, y: 0)
-//        annotationView?.canShowCallout = false
-//        
-//        annotationView?.isDraggable = false
-//        return annotationView
-//    }
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    }
 }
