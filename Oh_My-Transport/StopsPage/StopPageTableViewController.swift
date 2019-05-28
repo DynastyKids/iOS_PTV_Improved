@@ -295,7 +295,6 @@ class StopPageTableViewController: UITableViewController {
                 cell0.disruptionButton.setTitle("\(nextDepartDisruptionInfo.count) Disruptions in effect", for: UIControl.State.normal)
             }
             cell0.backgroundColor = changeColorByRouteType(routeType: routeType)
-            navigationItem.rightBarButtonItem?.isEnabled = true
             return cell0
         }
         if indexPath.section == 1{

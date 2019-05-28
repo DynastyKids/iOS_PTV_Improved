@@ -268,13 +268,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             let page2:DirectionsViewController = segue.destination as! DirectionsViewController
             page2.routeId = searchRoute[(tableView.indexPathForSelectedRow?.row)!].routeId!
             page2.routeType = searchRoute[(tableView.indexPathForSelectedRow?.row)!].routeType!
-            page2.managedContext = stopFetchedResultsController.managedObjectContext
+            page2.managedContext = routeFetchedResultsController.managedObjectContext
         }
         if segue.identifier == "searchToStop" {
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.stopId = searchStops[(tableView.indexPathForSelectedRow?.row)!].stopId!
             page2.routeType = searchStops[((tableView.indexPathForSelectedRow?.row)!)].routeType!
-            page2.managedContext = routeFetchedResultsController.managedObjectContext
+            page2.managedContext = stopFetchedResultsController.managedObjectContext
         }
         if segue.identifier == "showOutlet"{
             let page2:MyKiOutletViewController = segue.destination as! MyKiOutletViewController
