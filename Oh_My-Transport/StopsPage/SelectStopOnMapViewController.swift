@@ -27,6 +27,8 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     var senderRouteType: Int = 0
     var lastSelectStopId: Int = 0
     
+    var stopsAnnotationView: MKPinAnnotationView?
+    
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     
     override func viewDidLoad() {
@@ -109,11 +111,37 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                     senderRouteType = each.routeType!
                 }
             }
-            guard senderStopId != 0 else{
-                return
+            print("senderStopId:\(senderStopId),lastSelectId:\(lastSelectStopId)")
+            if senderStopId == Int(subtitleTextElement[1]) {
+                self.performSegue(withIdentifier: "showStopsFromMap", sender: nil)
+                break
             }
-            self.performSegue(withIdentifier: "showStopsFromMap", sender: nil)
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if !(annotation is customPointAnnotation){
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "stops")
+        if annotationView == nil{
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "stops")
+        }
+        let customAnnotation = annotation as! customPointAnnotation
+        if customAnnotation.routeType == 0 {
+            annotationView?.image = UIImage(named: "trainStation")
+        } else if customAnnotation.routeType == 1 {
+            annotationView?.image = UIImage(named: "tramStop")
+        } else if customAnnotation.routeType == 2 {
+            annotationView?.image = UIImage(named: "busStop")
+        } else if customAnnotation.routeType == 3 {
+            annotationView?.image = UIImage(named: "vlineStation")
+        } else if customAnnotation.routeType == 4 {
+            annotationView?.image = UIImage(named: "busStop")
+        }
+        
+        return annotationView
     }
     
     func updateSearchResults(){
@@ -132,10 +160,11 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                 self.resultStops = mapStop.stops!
                 DispatchQueue.main.async {
                     for each in self.resultStops{           // Setting up new annotation
-                        let newStop = MKPointAnnotation()
+                        let newStop = customPointAnnotation()
                         newStop.coordinate = CLLocation(latitude: each.stopLatitude!,longitude: each.stopLongitude!).coordinate
                         newStop.title = each.stopName
                         newStop.subtitle = "Stop Id:\(each.stopId!), Suburb:\(each.stopSuburb!)"
+                        newStop.routeType = each.routeType
                         self.mainMapView.addAnnotation(newStop)
                     }
                 }
@@ -175,4 +204,8 @@ extension SelectStopOnMapViewController: NSFetchedResultsControllerDelegate{
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     }
+}
+
+class customPointAnnotation: MKPointAnnotation{
+    var routeType:Int?
 }

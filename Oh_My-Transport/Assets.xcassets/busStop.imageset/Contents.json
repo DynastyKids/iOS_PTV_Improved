@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icons8-tram-25.png",
+      "filename" : "busstop20.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-tram-50.png",
+      "filename" : "busstop40.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-tram-75.png",
+      "filename" : "busstop60.png",
       "scale" : "3x"
     }
   ],

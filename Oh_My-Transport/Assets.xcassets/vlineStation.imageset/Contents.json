@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icons8-高铁-25.png",
+      "filename" : "vline20.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-高铁-50.png",
+      "filename" : "vline40.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-高铁-75.png",
+      "filename" : "vline60.png",
       "scale" : "3x"
     }
   ],

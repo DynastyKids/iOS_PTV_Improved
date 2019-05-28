@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "train25.png",
+      "filename" : "tram20.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-火车-50.png",
+      "filename" : "tram40.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-火车-75.png",
+      "filename" : "tram60.png",
       "scale" : "3x"
     }
   ],

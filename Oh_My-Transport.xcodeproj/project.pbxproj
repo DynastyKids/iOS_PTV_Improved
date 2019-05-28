@@ -58,6 +58,7 @@
 		5AEF7DD42291C53F0087C087 /* nearbyStopsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DD32291C53F0087C087 /* nearbyStopsTableViewCell.swift */; };
 		5AEF7DE42292F1EC0087C087 /* CommonFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF7DE32292F1EC0087C087 /* CommonFunction.swift */; };
 		5AFA5F4E227F445600FAAA1D /* disruptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */; };
+		5AFE927D229CECC5004019BA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AFE927C229CECC5004019BA /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +117,7 @@
 		5AEF7DD32291C53F0087C087 /* nearbyStopsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nearbyStopsTableViewCell.swift; sourceTree = "<group>"; };
 		5AEF7DE32292F1EC0087C087 /* CommonFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunction.swift; sourceTree = "<group>"; };
 		5AFA5F4D227F445600FAAA1D /* disruptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = disruptionTableViewCell.swift; sourceTree = "<group>"; };
+		5AFE927C229CECC5004019BA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F5D27318FBED26BA25E2DCE2 /* Pods-Oh_My-Transport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Oh_My-Transport.debug.xcconfig"; path = "Target Support Files/Pods-Oh_My-Transport/Pods-Oh_My-Transport.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +130,7 @@
 				5AE5ECC7229C522200D65A04 /* CoreMotion.framework in Frameworks */,
 				5AE5ECC5229C521A00D65A04 /* OpenGLES.framework in Frameworks */,
 				5AE5ECC3229C521300D65A04 /* AVFoundation.framework in Frameworks */,
+				5AFE927D229CECC5004019BA /* MapKit.framework in Frameworks */,
 				5AE5ECC1229C520B00D65A04 /* AudioToolbox.framework in Frameworks */,
 				5AE5ECBF229C520100D65A04 /* SystemConfiguration.framework in Frameworks */,
 				5AE5ECBD229C51F900D65A04 /* CoreTelephony.framework in Frameworks */,
@@ -141,6 +144,7 @@
 		1AB2DC4B8F3221B35BC144CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5AFE927C229CECC5004019BA /* MapKit.framework */,
 				5AE5ECCD229C558100D65A04 /* PgySDK.framework */,
 				5AE5ECC6229C522200D65A04 /* CoreMotion.framework */,
 				5AE5ECC4229C521A00D65A04 /* OpenGLES.framework */,
@@ -322,6 +326,11 @@
 					5A331BF222731FAF00467C8B = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

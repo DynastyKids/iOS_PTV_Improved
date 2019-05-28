@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icons8-公交车-25.png",
+      "filename" : "train20.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-公交车-50.png",
+      "filename" : "train40.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-公交车-75.png",
+      "filename" : "train60.png",
       "scale" : "3x"
     }
   ],
