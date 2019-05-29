@@ -78,23 +78,43 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 self.patternAllStops = routePatternDictonary.value(forKey: "stops") as! NSDictionary
                 for (_, values) in self.patternAllStops{       //  key = stopId, Value = Stop Dictonary
                     let stopDetailsData: NSDictionary = values as! NSDictionary
-                        for (key,value) in stopDetailsData{   // Poping values into array
-                            if "\(key)" == "stop_id" && (value is NSNull) == false{
-                                self.dictonaryStopId.append(Int("\(value)")!)
-                            } else if "\(key)" == "stop_name" && (value is NSNull) == false{
-                                self.dictonaryStopName.append("\(value)")
-                            } else if "\(key)" == "stop_suburb" && (value is NSNull) == false{
-                                self.dictonaryStopSuburb.append("\(value)")
-                            } else if "\(key)" == "stop_latitude" && (value is NSNull) == false{
-                                self.dictonaryStopLatitude.append(Double("\(value)")!)
-                            } else if "\(key)" == "stop_longitude" && (value is NSNull) == false{
-                                self.dictonaryStopLongitude.append(Double("\(value)")!)
-                            } else if "\(key)" == "route_type" && (value is NSNull) == false{
-                                self.dictonaryRouteType.append(Int("\(value)")!)
+                    for (key,value) in stopDetailsData{   // Poping values into array
+                        if "\(key)" == "stop_id" && (value is NSNull) == false{
+                            self.dictonaryStopId.append(Int("\(value)")!)
+                        } else if "\(key)" == "stop_name" && (value is NSNull) == false{
+                            self.dictonaryStopName.append("\(value)")
+                        } else if "\(key)" == "stop_suburb" && (value is NSNull) == false{
+                            self.dictonaryStopSuburb.append("\(value)")
+                        } else if "\(key)" == "stop_latitude" && (value is NSNull) == false{
+                            self.dictonaryStopLatitude.append(Double("\(value)")!)
+                        } else if "\(key)" == "stop_longitude" && (value is NSNull) == false{
+                            self.dictonaryStopLongitude.append(Double("\(value)")!)
+                        } else if "\(key)" == "route_type" && (value is NSNull) == false{
+                            self.dictonaryRouteType.append(Int("\(value)")!)
+                        }
+                    }
+                }
+                var serviceDestination: String = ""
+                let runsInfo = routePatternDictonary.value(forKey: "runs") as! NSDictionary
+                for (_, values) in runsInfo{
+                    let routeInfoDetails: NSDictionary = values as! NSDictionary
+                    for (key, value) in routeInfoDetails{
+                        if "\(key)" == "destination_name" && (value is NSNull) == false{
+                            serviceDestination = "\(value)"
+                        }
+                    }
+                }
+                if serviceDestination.count > 15 {
+                    let directionInfo = routePatternDictonary.value(forKey: "directions") as! NSDictionary
+                    for(_,values) in directionInfo{
+                        let directionInfoDetails: NSDictionary = values as! NSDictionary
+                        for(key, value) in directionInfoDetails{
+                            if "\(key)" == "direction_name" && (value is NSNull) == false{
+                                serviceDestination = "\(value)"
                             }
                         }
+                    }
                 }
-                
                 var count = 0
                 for _ in self.dictonaryStopId{    // Adding stop annotation
                     let stopPatterns = MKPointAnnotation()
@@ -107,6 +127,9 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 DispatchQueue.main.async {
                     print("Reload table view")
                     self.routeTableView.reloadData()
+                    if serviceDestination != "" {
+                        self.navigationItem.title = "\(serviceDestination) Service"
+                    }
                 }
             } catch {
                 print("Error:\(error)")
@@ -208,6 +231,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             cell.routeAdditionInfoLabel.text = flagText
             cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
             cell.routeStatusLabel.text = "Scheduled"
+            cell.routeStatusLabel.textColor = UIColor.gray
             if departsData[indexPath.row].estimatedDepartureUTC != nil {
                 let minutes = Iso8601toStatus(iso8601DateSchedule: departsData[indexPath.row].scheduledDepartureUTC!, iso8601DateActual: departsData[indexPath.row].estimatedDepartureUTC!)
                 if minutes > 1 {

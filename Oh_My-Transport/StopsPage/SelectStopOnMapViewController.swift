@@ -161,7 +161,13 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                 DispatchQueue.main.async {
                     for each in self.resultStops{           // Setting up new annotation
                         let newStop = customPointAnnotation()
-                        newStop.coordinate = CLLocation(latitude: each.stopLatitude!,longitude: each.stopLongitude!).coordinate
+                        var stopLatitude = each.stopLatitude!
+                        var stopLongitude = each.stopLongitude!
+                        if each.routeType == 3 || each.routeType == 4{
+                            stopLatitude += 0.0004
+                            stopLongitude += 0.0004
+                        }
+                        newStop.coordinate = CLLocation(latitude: stopLatitude,longitude: stopLongitude).coordinate
                         newStop.title = each.stopName
                         newStop.subtitle = "Stop Id:\(each.stopId!), Suburb:\(each.stopSuburb!)"
                         newStop.routeType = each.routeType
@@ -209,3 +215,4 @@ extension SelectStopOnMapViewController: NSFetchedResultsControllerDelegate{
 class customPointAnnotation: MKPointAnnotation{
     var routeType:Int?
 }
+
