@@ -213,7 +213,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             case 2:
                 cell.stopIcon.image = UIImage(named: "busIcon_PTVColour")
             case 3:
-                cell.stopIcon.image = UIImage(named: "regionalTrainIcon_PTVColour")
+                cell.stopIcon.image = UIImage(named: "vlineIcon_PTVColour")
             case 4:
                 cell.stopIcon.image = UIImage(named: "nightbusIcon_PTVColour")
             default:

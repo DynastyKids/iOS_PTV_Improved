@@ -1180,20 +1180,19 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warningIcon" translatesAutoresizingMaskIntoConstraints="NO" id="S3q-3O-5CE">
-                                                    <rect key="frame" x="20" y="11" width="40" height="40"/>
+                                                    <rect key="frame" x="20" y="11" width="22" height="22"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="WbP-Mz-vYg"/>
-                                                        <constraint firstAttribute="height" constant="40" id="fLM-Gk-Nuo"/>
+                                                        <constraint firstAttribute="width" secondItem="S3q-3O-5CE" secondAttribute="height" multiplier="1:1" id="a1B-qS-Ggy"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* disruptions in effect" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kmS-0X-NQ7">
-                                                    <rect key="frame" x="68" y="11" width="288" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="* disruptions in effect" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kmS-0X-NQ7">
+                                                    <rect key="frame" x="50" y="11" width="306" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to see more details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J98-MG-UX2">
-                                                    <rect key="frame" x="68" y="36" width="312" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Tap to see more details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J98-MG-UX2">
+                                                    <rect key="frame" x="50" y="36" width="330" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1416,11 +1415,10 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warningIcon" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kxw-mo-Pba">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="warningIcon" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kxw-mo-Pba">
                                                     <rect key="frame" x="20" y="11" width="40" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="Fxr-TB-jfQ"/>
-                                                        <constraint firstAttribute="width" constant="40" id="yRa-q9-qiR"/>
+                                                        <constraint firstAttribute="width" secondItem="Kxw-mo-Pba" secondAttribute="height" multiplier="1:1" id="yiQ-Ja-oDM"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Tap to see details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYO-CS-amP">
@@ -1554,7 +1552,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="16" y="80" width="382" height="640"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.1 (Build 259 @ 28 May 2019)
+                                <mutableString key="text">Version 1.2.1 (Build 260 @ 28 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
 
@@ -1591,7 +1589,7 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="hKS-pF-xub"/>
-        <segue reference="kz0-4N-VZF"/>
-        <segue reference="Zt6-QJ-tnR"/>
+        <segue reference="uPl-tE-DDw"/>
+        <segue reference="RMC-Ij-1Re"/>
     </inferredMetricsTieBreakers>
 </document>

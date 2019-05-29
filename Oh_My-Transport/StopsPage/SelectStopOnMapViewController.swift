@@ -25,9 +25,9 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     var senderStopId: Int = 0
     var senderRouteType: Int = 0
-    var lastSelectStopId: Int = 0
     
     var stopsAnnotationView: MKPinAnnotationView?
+    var annotation: MKPointAnnotation!
     
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     
@@ -94,9 +94,12 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let annotation = view.annotation
+        
         guard annotation?.title != nil, annotation?.subtitle != nil else {
             return
         }
+        if annotation?.title != "My Location" {
+        print("\(annotation?.subtitle)")
         var subtitleTextElement: [String] = []
         let subtitleText = String(((annotation?.subtitle)!)!).components(separatedBy: ",")
         for eachSubtitle in subtitleText{
@@ -111,13 +114,19 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                     senderRouteType = each.routeType!
                 }
             }
-            print("senderStopId:\(senderStopId),lastSelectId:\(lastSelectStopId)")
+            print("senderStopId:\(senderStopId)")
             if senderStopId == Int(subtitleTextElement[1]) {
-                self.performSegue(withIdentifier: "showStopsFromMap", sender: nil)
                 break
             }
         }
+        }
     }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        self.performSegue(withIdentifier: "showStopsFromMap", sender: nil)
+    }
+    
+    
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is customPointAnnotation){
@@ -140,6 +149,9 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         } else if customAnnotation.routeType == 4 {
             annotationView?.image = UIImage(named: "busStop")
         }
+        annotationView?.canShowCallout = true
+        let button = UIButton(type: .infoLight)
+        annotationView?.rightCalloutAccessoryView = button
         
         return annotationView
     }
@@ -163,13 +175,15 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                         let newStop = customPointAnnotation()
                         var stopLatitude = each.stopLatitude!
                         var stopLongitude = each.stopLongitude!
+                        let stopId = each.stopId!
+                        let stopSuburb = each.stopSuburb!
                         if each.routeType == 3 || each.routeType == 4{
-                            stopLatitude += 0.0004
-                            stopLongitude += 0.0004
+                            stopLatitude += 0.0003
+                            stopLongitude += 0.0003
                         }
                         newStop.coordinate = CLLocation(latitude: stopLatitude,longitude: stopLongitude).coordinate
                         newStop.title = each.stopName
-                        newStop.subtitle = "Stop Id:\(each.stopId!), Suburb:\(each.stopSuburb!)"
+                        newStop.subtitle = "Stop Id:\(stopId), Suburb:\(stopSuburb)"
                         newStop.routeType = each.routeType
                         self.mainMapView.addAnnotation(newStop)
                     }
