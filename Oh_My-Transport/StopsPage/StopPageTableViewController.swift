@@ -303,9 +303,15 @@ class StopPageTableViewController: UITableViewController {
             for each in nextDepartRoutesData{
                 if cellData.routesId == each.routeId{
                     if (each.routeType == 0 || each.routeType == 3 || each.routeNumber == nil){
-                        let routeGTFS = each.GtfsId ?? each.routeNumber!
-                        let cuttedName = routeGTFS.index(routeGTFS.startIndex, offsetBy: 2)
-                        cell.routeSignLabel.text = String(routeGTFS[cuttedName...])
+                        var routeName: String
+                        if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
+                            routeName = each.routeName!     // City Loop train will having no route gtfsid
+                            cell.routeSignLabel.text = routeName
+                        } else{
+                            routeName = each.GtfsId!
+                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                            cell.routeSignLabel.text = String(routeName[cuttedName...])
+                        }
                     }else{
                         cell.routeSignLabel.text = each.routeNumber
                     }
