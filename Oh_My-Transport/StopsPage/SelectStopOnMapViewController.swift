@@ -99,7 +99,6 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             return
         }
         if annotation?.title != "My Location" {
-        print("\(annotation?.subtitle)")
         var subtitleTextElement: [String] = []
         let subtitleText = String(((annotation?.subtitle)!)!).components(separatedBy: ",")
         for eachSubtitle in subtitleText{
@@ -107,15 +106,9 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             for each in elements{
                 subtitleTextElement.append(each)
             }
-            senderStopId = Int(subtitleTextElement[1])!
-            for each in resultStops{
-                if senderStopId == each.stopId{
-                    print("Routetype:\(each.routeType!),\(senderRouteType)")
-                    senderRouteType = each.routeType!
-                }
-            }
-            print("senderStopId:\(senderStopId)")
-            if senderStopId == Int(subtitleTextElement[1]) {
+            senderRouteType = Int(subtitleTextElement[1])!
+            senderStopId = Int(subtitleTextElement[2])!
+            if senderStopId == Int(subtitleTextElement[2]) {
                 break
             }
         }
@@ -177,13 +170,14 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                         var stopLongitude = each.stopLongitude!
                         let stopId = each.stopId!
                         let stopSuburb = each.stopSuburb!
+                        let routeType = each.routeType!
                         if each.routeType == 3 || each.routeType == 4{
                             stopLatitude += 0.0003
                             stopLongitude += 0.0003
                         }
                         newStop.coordinate = CLLocation(latitude: stopLatitude,longitude: stopLongitude).coordinate
                         newStop.title = each.stopName
-                        newStop.subtitle = "Stop Id:\(stopId), Suburb:\(stopSuburb)"
+                        newStop.subtitle = "Stop Id:\(routeType):\(stopId), Suburb:\(stopSuburb)"
                         newStop.routeType = each.routeType
                         self.mainMapView.addAnnotation(newStop)
                     }
