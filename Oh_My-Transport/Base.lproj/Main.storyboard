@@ -185,17 +185,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kRe-Q0-XCA">
-                                                    <rect key="frame" x="20" y="4" width="262" height="35.666666666666664"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="kRe-Q0-XCA">
+                                                    <rect key="frame" x="20" y="11" width="262" height="28.666666666666671"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Stop Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ou-Mu-dGI" userLabel="stopNameLabel">
-                                                            <rect key="frame" x="0.0" y="0.0" width="262" height="8.3333333333333339"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="262" height="12.666666666666666"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Suburb Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7K9-q5-qaW" userLabel="suburbLabel">
-                                                            <rect key="frame" x="0.0" y="16.333333333333336" width="262" height="19.333333333333336"/>
+                                                            <rect key="frame" x="0.0" y="28.666666666666664" width="262" height="0.0"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -265,10 +265,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="6aI-Ub-KLM" firstAttribute="top" secondItem="Xcj-4Y-ReV" secondAttribute="top" constant="4" id="GN9-bc-afZ"/>
+                                                <constraint firstItem="kRe-Q0-XCA" firstAttribute="top" secondItem="Xcj-4Y-ReV" secondAttribute="topMargin" id="Sha-bt-XAM"/>
                                                 <constraint firstItem="kRe-Q0-XCA" firstAttribute="leading" secondItem="Xcj-4Y-ReV" secondAttribute="leadingMargin" id="cKz-q9-pgn"/>
                                                 <constraint firstAttribute="bottom" secondItem="6aI-Ub-KLM" secondAttribute="bottom" constant="4" id="f4C-1n-vkc"/>
-                                                <constraint firstItem="kRe-Q0-XCA" firstAttribute="top" secondItem="Xcj-4Y-ReV" secondAttribute="top" constant="4" id="fD7-be-RIw"/>
                                                 <constraint firstAttribute="trailing" secondItem="6aI-Ub-KLM" secondAttribute="trailing" constant="2" id="nXe-Ut-wsL"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="kRe-Q0-XCA" secondAttribute="bottom" id="oOk-N0-UVE"/>
                                                 <constraint firstAttribute="bottom" secondItem="kRe-Q0-XCA" secondAttribute="bottom" constant="4" id="y9O-ea-RqL"/>
                                                 <constraint firstItem="6aI-Ub-KLM" firstAttribute="leading" secondItem="kRe-Q0-XCA" secondAttribute="trailing" id="yHX-uG-CE6"/>
                                             </constraints>
@@ -1552,7 +1553,7 @@
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAs-vS-7eU">
                                 <rect key="frame" x="2" y="64" width="408" height="668"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text"># Information we collect and hold
+                                <string key="text"># Information we collect and hold
 
 This application will collect personal information about you via this mobile applications. Personal information that this data may hold including your transport preference, travel route, selected stops and other identifying information you choose to provide. When you use this application, we may also collection information about you in the following general categories.
 
@@ -1566,7 +1567,7 @@ This application will collect personal information about you via this mobile app
 
 
 
-</mutableString>
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1608,11 +1609,11 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.1 (Build 263 @ 31 May 2019)
+                                <string key="text">Version 1.2.1 (Build 263 @ 31 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </mutableString>
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1639,7 +1640,7 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tH8-GN-WaY"/>
-        <segue reference="zXA-WO-h7o"/>
-        <segue reference="evR-un-G8n"/>
+        <segue reference="yW6-4j-AAm"/>
+        <segue reference="rUw-3q-bGF"/>
     </inferredMetricsTieBreakers>
 </document>
