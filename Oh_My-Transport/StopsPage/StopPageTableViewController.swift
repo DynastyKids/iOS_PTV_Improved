@@ -49,6 +49,7 @@ class StopPageTableViewController: UITableViewController {
                     self.stopName = stopDetail.stop?.stopName ?? ""
                     self.stopSuburb = stopDetail.stop?.stopLocation?.suburb ?? ""
                     print("Value Received: StopId:\(self.stopId), StopName:\(self.stopName), StopSuburb:\(self.stopSuburb)")
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
                     self.tableView.reloadData()
                 }
             } catch {

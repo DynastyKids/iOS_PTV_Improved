@@ -140,7 +140,7 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         } else if customAnnotation.routeType == 3 {
             annotationView?.image = UIImage(named: "vlineStation")
         } else if customAnnotation.routeType == 4 {
-            annotationView?.image = UIImage(named: "busStop")
+            annotationView?.image = UIImage(named: "nightbusStop")
         }
         annotationView?.canShowCallout = true
         let button = UIButton(type: .infoLight)
