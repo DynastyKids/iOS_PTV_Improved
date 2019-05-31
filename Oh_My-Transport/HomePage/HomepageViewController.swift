@@ -87,7 +87,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             cell.stopNameLabel.text = nearbystops.stopName
             cell.stopSuburbLabel.text = nearbystops.stopSuburb
             cell.stopSuburbLabel.textColor = UIColor.black
-            cell.nearbyTextLabel.text = "*Near By Stop    Distance:\(Int(nearbystops.stopDistance!))m"
+            cell.nearbyTextLabel.text = "*Near By Stop      Distance:\(Int(nearbystops.stopDistance!))m"
             cell.nearbyTextLabel.textColor = UIColor.gray
             
             // Fetching data inside (Departure time)
@@ -97,17 +97,10 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     return
                 }
                 do{
-                    let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    if nextDepartureData.departures?.count ?? 0 > 0 {
-                        self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
-                    }
                     // using JSON Dictonary to fetch Route data
+                    var avoidRouteList: [Int] = []       // Create a list avoiding fetch route with "combined"
                     let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                     let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
-//                    let nextDepartDisruptions = nextDepartureDictonary.value(forKey: "disruptions") as! NSDictionary
-//                    let nextDepartRuns = nextDepartureDictonary.value(forKey: "runs") as! NSDictionary
-//                    let nextDepartStops = nextDepartureDictonary.value(forKey: "stops") as! NSDictionary
-//                    let nextDepartDirections = nextDepartureDictonary.value(forKey: "directions") as! NSDictionary
                     for(_, value) in nextDepartRoutes{
                         let nextDepartRouteData: NSDictionary = value as! NSDictionary
                         var routeGtfsId: String = ""
@@ -128,8 +121,32 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                     routeNumber = value2 as! String
                             }
                         }
+                        if routeNumber.contains("combined"){
+                            avoidRouteList.append(routeId)
+                        }
                         nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
                     }
+                    
+                    let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
+                    if nextDepartureData.departures?.count ?? 0 > 0 {
+                        if avoidRouteList.count > 0 {
+                            for eachDeparture in nextDepartureData.departures!{
+                                var appendFlag = true
+                                for eachRouteId in avoidRouteList{
+                                    if eachRouteId == eachDeparture.routesId{
+                                        appendFlag = false
+                                        break
+                                    }
+                                }
+                                if appendFlag == true{
+                                    self.nearbyStopsDeaprtureSequence.append(eachDeparture)
+                                }
+                            }
+                        } else {
+                            self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
+                        }
+                    }
+                    
                     DispatchQueue.main.async {
                         if nextDepartureData.departures?.count ?? 0 > 0 {
                             cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)

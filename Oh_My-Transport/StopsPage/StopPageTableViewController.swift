@@ -235,8 +235,8 @@ class StopPageTableViewController: UITableViewController {
                         for eachId in avoidRoutes{
                             if eachId == each.routesId{
                                 appendFlag = false
+                                break
                             }
-                            break
                         }
                         if appendFlag == true {
                             self.departureData.append(each)
