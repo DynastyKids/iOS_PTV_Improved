@@ -814,10 +814,10 @@
             </objects>
             <point key="canvasLocation" x="-528" y="421"/>
         </scene>
-        <!--Stop Page Table View Controller-->
+        <!--Loading Data ...-->
         <scene sceneID="hGK-NI-1dn">
             <objects>
-                <tableViewController id="VfA-ee-rv5" customClass="StopPageTableViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Loading Data ..." id="VfA-ee-rv5" customClass="StopPageTableViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="kce-Ou-bUL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1000,7 +1000,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="121-ZC-Jnn">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" style="plain" systemItem="save" id="vN3-sy-dWX">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="vN3-sy-dWX">
                             <connections>
                                 <action selector="saveButton:" destination="VfA-ee-rv5" id="vFb-v6-Lc6"/>
                             </connections>
@@ -1609,11 +1609,11 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Version 1.2.1 (Build 263 @ 31 May 2019)
+                                <mutableString key="text">Version 1.2.1 (Build 266 @ 31 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </string>
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1640,7 +1640,7 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tH8-GN-WaY"/>
-        <segue reference="yW6-4j-AAm"/>
+        <segue reference="kz0-4N-VZF"/>
         <segue reference="rUw-3q-bGF"/>
     </inferredMetricsTieBreakers>
 </document>

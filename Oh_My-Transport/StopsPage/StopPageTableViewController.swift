@@ -226,7 +226,6 @@ class StopPageTableViewController: UITableViewController {
                     }
                     self.nextDepartDirectionInfo.append(DirectionWithDescription.init(routeDirectionDescription: nil, directionId: directionId, directionName: directionName, routeId: routeId, routeType: routeType))
                 }
-                
                 for each in showDeparture.departures!{
                     let departureTime = each.estimatedDepartureUTC ?? each.scheduledDepartureUTC!
                     let difference = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: departureTime))
@@ -243,9 +242,9 @@ class StopPageTableViewController: UITableViewController {
                         }
                     }
                 }
-                
                 DispatchQueue.main.async {
                     self.tableView.reloadData() // Details data will be loaded when loading cell
+                    self.navigationItem.title = ""
                 }
             } catch {
                 print(error)

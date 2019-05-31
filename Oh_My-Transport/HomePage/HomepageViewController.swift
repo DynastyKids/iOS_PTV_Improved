@@ -250,11 +250,8 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     return
                 }
                 do{
-                    let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
-                    if nextDepartureData.departures != nil{
-                        self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
-                    }
-
+                    var avoidRouteList: [Int] = []
+                    var savedStopsDeaprtureSequence: [Departure] = []
                     let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                     let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
                     for(_, value) in nextDepartRoutes{
@@ -277,19 +274,42 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 routeNumber = value2 as! String
                             }
                         }
+                        if routeNumber.contains("combined"){
+                            avoidRouteList.append(routeId)
+                        }
                         nextDepartRoutesData.append(RouteWithStatus.init(routeType: routeRouteType, routeId: routeId, routeName: routeName, routeNumber: routeNumber, GtfsId: routeGtfsId))
                     }
+                    let nextDepartureData = try JSONDecoder().decode(DeparturesResponse.self, from: data!)
+                    if nextDepartureData.departures?.count ?? 0 > 0 {
+                        if avoidRouteList.count > 0 {
+                            for eachDeparture in nextDepartureData.departures!{
+                                var appendFlag = true
+                                for eachRouteId in avoidRouteList{
+                                    if eachRouteId == eachDeparture.routesId{
+                                        appendFlag = false
+                                        break
+                                    }
+                                }
+                                if appendFlag == true{
+                                    savedStopsDeaprtureSequence.append(eachDeparture)
+                                }
+                            }
+                        } else {
+                            savedStopsDeaprtureSequence = nextDepartureData.departures!
+                        }
+                    }
+
                     DispatchQueue.main.async {
                         if nextDepartureData.departures != nil{
-                            cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure0Time.text = Iso8601Countdown(iso8601Date: (savedStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((savedStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure0Time.textColor = UIColor.black
-                            cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure1Time.text = Iso8601Countdown(iso8601Date: (savedStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((savedStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure1Time.textColor = UIColor.black
-                            cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure2Time.text = Iso8601Countdown(iso8601Date: (savedStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((savedStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure2Time.textColor = UIColor.black
                         }
                         // Route 0
-                        let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
+                        let searchRouteId0 = savedStopsDeaprtureSequence[0].routesId
                         for each in nextDepartRoutesData{
                             if searchRouteId0 == each.routeId{
                                 cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
@@ -304,7 +324,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             }
                         }
                         // Route 1
-                        let searchRouteId1 = self.nearbyStopsDeaprtureSequence[1].routesId
+                        let searchRouteId1 = savedStopsDeaprtureSequence[1].routesId
                         for each in nextDepartRoutesData{
                             if searchRouteId1 == each.routeId{
                                 cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
@@ -319,7 +339,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                             }
                         }
                         // Route 2
-                        let searchRouteId2 = self.nearbyStopsDeaprtureSequence[2].routesId
+                        let searchRouteId2 = savedStopsDeaprtureSequence[2].routesId
                         for each in nextDepartRoutesData{
                             if searchRouteId2 == each.routeId{
                                 cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
@@ -338,10 +358,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     print("Error:\(error)")
                 }
                 }.resume()
-            
-            
             return cell
-            
         }
         if indexPath.section == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "savedRouteCell", for: indexPath) as! savedRouteTableViewCell
@@ -524,21 +541,8 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         
         homeTableView.delegate = self
         homeTableView.dataSource = self
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        homeTableView.delegate = nil
-        homeTableView.dataSource = nil
         homeTableView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
         // Allocate near by stops
         let nearbyStopurl = URL(string: nearByStops(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longtitude: locationManager.location?.coordinate.longitude ?? 144.9663325)) // If value is null, default will set at City.
         _ = URLSession.shared.dataTask(with: nearbyStopurl!){ (data, response, error) in
@@ -566,8 +570,12 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         // End of Allocate near by stops
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
 }
 
