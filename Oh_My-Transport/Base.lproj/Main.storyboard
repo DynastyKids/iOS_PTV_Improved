@@ -51,7 +51,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="5Ty-OD-UZ0"/>
-                                    <barButtonItem title="Item" image="settingIcon" style="plain" id="u4c-8D-6Ro">
+                                    <barButtonItem title="Item" image="AboutIcon" style="plain" id="u4c-8D-6Ro">
                                         <connections>
                                             <segue destination="lo7-bg-DmJ" kind="show" id="l0b-oY-jvf"/>
                                         </connections>
@@ -1076,7 +1076,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ulh-n4-WKG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="419" y="2388"/>
+            <point key="canvasLocation" x="510" y="2245"/>
         </scene>
         <!--Disruptions Detail-->
         <scene sceneID="f2n-yQ-vOF">
@@ -1152,7 +1152,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFK-3t-LTH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1951" y="1906"/>
+            <point key="canvasLocation" x="1593" y="1996"/>
         </scene>
         <!--routeDirections-->
         <scene sceneID="BSU-PV-x07">
@@ -1381,7 +1381,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCD-an-QFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1171" y="2388"/>
+            <point key="canvasLocation" x="-990" y="2138"/>
         </scene>
         <!--routeWithStopDetails-->
         <scene sceneID="Xup-Ie-CLy">
@@ -1541,6 +1541,50 @@
             </objects>
             <point key="canvasLocation" x="1592.753623188406" y="935.86956521739137"/>
         </scene>
+        <!--Data Privacy Policy-->
+        <scene sceneID="YTP-v5-yHH">
+            <objects>
+                <viewController title="Data Privacy Policy" id="BTD-U8-ean" customClass="AboutViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mbD-NH-bAd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAs-vS-7eU">
+                                <rect key="frame" x="2" y="64" width="408" height="668"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <mutableString key="text"># Information we collect and hold
+
+This application will collect personal information about you via this mobile applications. Personal information that this data may hold including your transport preference, travel route, selected stops and other identifying information you choose to provide. When you use this application, we may also collection information about you in the following general categories.
+
+- Location information: If you permit an application to access location services through the permission system on your mobile device, this application may collect the precise location of  your device when the application is running in the foreground or background in order to deliver the latest transit information at your nearest stops
+
+- Usage and preferences: This application collect information about how you interact with our websites or applications including the pages you visit, your preferences and setting that you choose. We may do this through the use of cookies and other similar technology that uniquely identify you.
+
+- Device information: This application may collection information about your mobile device such as the hardware model, operating system, preferred language, unique device identifier and mobile network.
+
+- Other information: This application may also collect and log information such as your IP address, access date and times, browser type and application crash datas.
+
+
+
+</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ZAs-vS-7eU" firstAttribute="leading" secondItem="Q23-eZ-Ez6" secondAttribute="leading" constant="2" id="29a-je-7eg"/>
+                            <constraint firstItem="Q23-eZ-Ez6" firstAttribute="trailing" secondItem="ZAs-vS-7eU" secondAttribute="trailing" constant="4" id="8W1-Zp-Vvz"/>
+                            <constraint firstItem="ZAs-vS-7eU" firstAttribute="top" secondItem="Q23-eZ-Ez6" secondAttribute="top" id="YYd-G5-8Ii"/>
+                            <constraint firstItem="Q23-eZ-Ez6" firstAttribute="bottom" secondItem="ZAs-vS-7eU" secondAttribute="bottom" constant="4" id="op2-98-LZ0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Q23-eZ-Ez6"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tQq-4N-Rhp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1630.4347826086957" y="2137.5"/>
+        </scene>
         <!--About-->
         <scene sceneID="53E-v8-JuN">
             <objects>
@@ -1549,47 +1593,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
-                                <rect key="frame" x="16" y="80" width="382" height="640"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fLQ-R7-P9M">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Data Privacy" id="6Eu-75-WdO">
+                                        <connections>
+                                            <segue destination="BTD-U8-ean" kind="show" id="2sp-sx-Xb0"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
+                                <rect key="frame" x="8" y="62" width="398" height="612"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.1 (Build 261 @ 28 May 2019)
+                                <mutableString key="text">Version 1.2.1 (Build 263 @ 31 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
-
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the buses, trams and trains runnings.  </mutableString>
+ Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="720-bc-w1p" firstAttribute="bottom" secondItem="Mer-84-M7w" secondAttribute="bottom" constant="16" id="5LM-w6-ID3"/>
-                            <constraint firstItem="Mer-84-M7w" firstAttribute="leading" secondItem="720-bc-w1p" secondAttribute="leading" constant="16" id="Pzz-AM-xGH"/>
-                            <constraint firstItem="720-bc-w1p" firstAttribute="trailing" secondItem="Mer-84-M7w" secondAttribute="trailing" constant="16" id="WnB-NO-UGL"/>
-                            <constraint firstItem="Mer-84-M7w" firstAttribute="top" secondItem="720-bc-w1p" secondAttribute="top" constant="16" id="goT-eB-e2q"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="720-bc-w1p"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTB-G5-rs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1933.3333333333335" y="2387.771739130435"/>
+            <point key="canvasLocation" x="-2342.0289855072465" y="1976.9021739130437"/>
         </scene>
     </scenes>
     <resources>
+        <image name="AboutIcon" width="25" height="25"/>
         <image name="busIcon" width="25" height="25"/>
         <image name="mapIcon" width="26" height="26"/>
         <image name="regionalTrainIcon" width="25" height="25"/>
         <image name="sateliteIcon_White" width="25" height="25"/>
-        <image name="settingIcon" width="25" height="25"/>
         <image name="ticket_Colour" width="25" height="25"/>
         <image name="warningIcon" width="25" height="25"/>
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hKS-pF-xub"/>
-        <segue reference="uPl-tE-DDw"/>
-        <segue reference="RMC-Ij-1Re"/>
+        <segue reference="tH8-GN-WaY"/>
+        <segue reference="zXA-WO-h7o"/>
+        <segue reference="evR-un-G8n"/>
     </inferredMetricsTieBreakers>
 </document>
