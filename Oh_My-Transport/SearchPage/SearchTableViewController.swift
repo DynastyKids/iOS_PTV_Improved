@@ -183,7 +183,11 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         }
         if indexPath.section == 1{
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchStops", for: indexPath) as! SearchStopsTableViewCell
-            cell.stopNameLabel.text = searchStops[indexPath.row].stopName
+            if searchStops[indexPath.row].routeType! == 4{
+                cell.stopNameLabel.text = "\(searchStops[indexPath.row].stopName!) (Night Bus)"
+            } else {
+                cell.stopNameLabel.text = searchStops[indexPath.row].stopName
+            }
             cell.stopNameLabel.backgroundColor = changeColorByRouteType(routeType: searchStops[indexPath.row].routeType!)
             cell.stopSuburbLabel.text = searchStops[indexPath.row].stopSuburb
             if searchStops[indexPath.row].stopDistance != nil{
