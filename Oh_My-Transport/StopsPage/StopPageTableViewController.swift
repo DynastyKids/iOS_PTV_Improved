@@ -255,17 +255,33 @@ class StopPageTableViewController: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: Any) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavStop")
+        var saveFlag = true
         let stop = FavStop(context: managedContext)
         stop.routeType = Int32(routeType)
         stop.stopId = Int32(stopId)
         stop.stopName = stopName
         stop.stopSuburb = stopSuburb
-
+        
         do {
-            try managedContext?.save()
-            self.navigationController?.popToRootViewController(animated: true)
+            let result = try managedContext.fetch(request) as! [FavStop]
+            for eachResult in result{
+                if eachResult.stopId == stop.stopId && eachResult.routeType == stop.routeType{
+                    saveFlag = false    // Stop already exists, will not be saved again
+                    self.navigationController?.popToRootViewController(animated: true)
+                    break
+                }
+            }
         } catch {
-            print("Error to save stop")
+            print("Error:\(error)")
+        }
+        if saveFlag == true{
+            do {
+                try managedContext?.save()
+                self.navigationController?.popToRootViewController(animated: true)
+            } catch {
+                print("Error to save stop")
+            }
         }
     }
     

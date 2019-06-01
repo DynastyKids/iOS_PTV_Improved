@@ -324,15 +324,31 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func saveRoute(_ sender: Any) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavRoute")
+        var saveFlag = true
         let route = FavRoute(context: managedContext)
         route.routeId = Int32(routeId)
         route.routeType = Int32(routeType)
+        
         do {
-            try managedContext?.save()
-//            let _ = navigationController?.popViewController(animated: true)
-            let _ = navigationController?.popToRootViewController(animated: true)
+            let result = try managedContext.fetch(request) as! [FavRoute]
+            for eachResult in result{
+                if eachResult.routeId == route.routeId && eachResult.routeType == route.routeType{
+                    saveFlag = false    // Stop already exists, will not be saved again
+                    self.navigationController?.popToRootViewController(animated: true)
+                    break
+                }
+            }
         } catch {
-            print("Error to save route")
+            print("Fetching favroute data error:\(error)")
+        }
+        if saveFlag == true{
+            do {
+                try managedContext?.save()
+                self.navigationController?.popToRootViewController(animated: true)
+            } catch {
+                print("Error to save route")
+            }
         }
     }
     
