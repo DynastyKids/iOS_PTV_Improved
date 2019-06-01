@@ -17,6 +17,7 @@ class StopPageTableViewController: UITableViewController {
     var managedContext: NSManagedObjectContext!
     var stops: FavStop?
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
+    var saveFlag = true
     
     var stopId: Int = 0             // This value require passed from last segue
     var routeType: Int = 0          // This value require passed from last segue
@@ -32,9 +33,7 @@ class StopPageTableViewController: UITableViewController {
     var nextDepartDirectionInfo: [DirectionWithDescription] = []
     var nextDepartDisruptionInfo: [Disruption] = []
     var nextDepartStopInfo: [StopGeosearch] = []
-    
-//    var routeName:[String] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: stopId, routeType: routeType))!) { (data, response, error) in    //Get the stop name, stop suburb
@@ -255,34 +254,20 @@ class StopPageTableViewController: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: Any) {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavStop")
-        var saveFlag = true
-        let stop = FavStop(context: managedContext)
-        stop.routeType = Int32(routeType)
-        stop.stopId = Int32(stopId)
-        stop.stopName = stopName
-        stop.stopSuburb = stopSuburb
-        
-        do {
-            let result = try managedContext.fetch(request) as! [FavStop]
-            for eachResult in result{
-                if eachResult.stopId == stop.stopId && eachResult.routeType == stop.routeType{
-                    saveFlag = false    // Stop already exists, will not be saved again
-                    self.navigationController?.popToRootViewController(animated: true)
-                    break
-                }
-            }
-        } catch {
-            print("Error:\(error)")
-        }
         if saveFlag == true{
+            let stop = FavStop(context: managedContext)
+            stop.routeType = Int32(routeType)
+            stop.stopId = Int32(stopId)
+            stop.stopName = stopName
+            stop.stopSuburb = stopSuburb
             do {
                 try managedContext?.save()
-                self.navigationController?.popToRootViewController(animated: true)
+                print("Saving stops")
             } catch {
                 print("Error to save stop")
             }
         }
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: - Table view data source
@@ -392,6 +377,18 @@ class StopPageTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavStop")
+        do {
+            let result = try managedContext.fetch(request) as! [FavStop]
+            for eachResult in result{
+                if eachResult.stopId == Int32(stopId) && eachResult.routeType == Int32(routeType){
+                    saveFlag = false    // Stop already exists, will not be saved again
+                    break
+                }
+            }
+        } catch {
+            print("Error:\(error)")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

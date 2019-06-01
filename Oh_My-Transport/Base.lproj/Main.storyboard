@@ -1609,7 +1609,7 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.1 (Build 268 @ 31 May 2019)
+                                <mutableString key="text">Version 1.2.2 (Build 269 @ 31 May 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 

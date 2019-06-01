@@ -17,6 +17,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var managedContext: NSManagedObjectContext!
     var stops: FavStop?
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
+    var saveFlag = true
     
     let locationManager = CLLocationManager()
     var nslock = NSLock()
@@ -304,6 +305,18 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavRoute")
+        do {
+            let result = try managedContext.fetch(request) as! [FavRoute]
+            for eachResult in result{
+                if eachResult.routeId == Int32(routeId) && eachResult.routeType == Int32(routeType){
+                    saveFlag = false    // Stop already exists, will not be saved again
+                    break
+                }
+            }
+        } catch {
+            print("Fetching favroute data error:\(error)")
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -324,32 +337,18 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func saveRoute(_ sender: Any) {
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavRoute")
-        var saveFlag = true
         let route = FavRoute(context: managedContext)
         route.routeId = Int32(routeId)
         route.routeType = Int32(routeType)
-        
-        do {
-            let result = try managedContext.fetch(request) as! [FavRoute]
-            for eachResult in result{
-                if eachResult.routeId == route.routeId && eachResult.routeType == route.routeType{
-                    saveFlag = false    // Stop already exists, will not be saved again
-                    self.navigationController?.popToRootViewController(animated: true)
-                    break
-                }
-            }
-        } catch {
-            print("Fetching favroute data error:\(error)")
-        }
         if saveFlag == true{
             do {
                 try managedContext?.save()
-                self.navigationController?.popToRootViewController(animated: true)
+                
             } catch {
                 print("Error to save route")
             }
         }
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: - Functions for MapView
