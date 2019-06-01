@@ -19,7 +19,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     var routeType: Int = 0
     var runId: Int = 0          // Required value from last segue
     var routeId: Int = 0        // Required value from last segue
-    
+    var senderStopId: Int = 0
     var stopInfo: StopDetails?     // Optional value from last segue
 
     // MARK: - Receiving data from whole array carrying all necessary data
@@ -54,6 +54,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 return
             }
         }
+        routeMapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer  // Less battery required
         DispatchQueue.main.async {
@@ -117,10 +118,11 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 }
                 var count = 0
                 for _ in self.dictonaryStopId{    // Adding stop annotation
-                    let stopPatterns = MKPointAnnotation()
+                    let stopPatterns = customPointAnnotation()
                     stopPatterns.title = self.dictonaryStopName[count]
-                    stopPatterns.subtitle = self.dictonaryStopSuburb[count]
+                    stopPatterns.subtitle = "Stop Id:\(self.dictonaryStopId[count]), Suburb:\(self.dictonaryStopSuburb[count])"
                     stopPatterns.coordinate = CLLocationCoordinate2D(latitude: self.dictonaryStopLatitude[count], longitude: self.dictonaryStopLongitude[count])
+                    stopPatterns.routeType = self.dictonaryRouteType[count]
                     self.routeMapView.addAnnotation(stopPatterns)
                     count += 1
                 }
@@ -144,6 +146,12 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.routeType = routeType
             page2.stopId = departsData[routeTableView.indexPathForSelectedRow!.row].stopsId!
+            page2.managedContext = CoreDataStack().managedContext
+        }
+        if segue.identifier == "showStopFromPatternMap"{
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+            page2.routeType = routeType
+            page2.stopId = senderStopId
             page2.managedContext = CoreDataStack().managedContext
         }
         if segue.identifier == "showRouteDisruption"{
@@ -284,6 +292,60 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if !(annotation is customPointAnnotation){
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "stops")
+        if annotationView == nil{
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "stops")
+        }
+        let customAnnotation = annotation as! customPointAnnotation
+        if customAnnotation.routeType == 0 {
+            annotationView?.image = UIImage(named: "trainStation")
+        } else if customAnnotation.routeType == 1 {
+            annotationView?.image = UIImage(named: "tramStop")
+        } else if customAnnotation.routeType == 2 {
+            annotationView?.image = UIImage(named: "busStop")
+        } else if customAnnotation.routeType == 3 {
+            annotationView?.image = UIImage(named: "vlineStation")
+        } else if customAnnotation.routeType == 4 {
+            annotationView?.image = UIImage(named: "nightbusStop")
+        }
+        annotationView?.canShowCallout = true
+        let button = UIButton(type: .infoLight)
+        annotationView?.rightCalloutAccessoryView = button
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let annotation = view.annotation
+        
+        guard annotation?.title != nil, annotation?.subtitle != nil else {
+            return
+        }
+        if annotation?.title != "My Location" {
+            var subtitleTextElement: [String] = []
+            let subtitleText = String(((annotation?.subtitle)!)!).components(separatedBy: ",")
+            for eachSubtitle in subtitleText{
+                let elements = eachSubtitle.components(separatedBy: ":")
+                for each in elements{
+                    subtitleTextElement.append(each)
+                }
+                senderStopId = Int(subtitleTextElement[1])!
+                if senderStopId == Int(subtitleTextElement[1]) {
+                    break
+                }
+            }
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+         self.performSegue(withIdentifier: "showStopFromPatternMap", sender: nil)
     }
 }
 extension RouteDetailsViewController: NSFetchedResultsControllerDelegate{

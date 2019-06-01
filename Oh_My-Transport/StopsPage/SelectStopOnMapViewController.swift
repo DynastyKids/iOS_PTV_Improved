@@ -99,19 +99,19 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             return
         }
         if annotation?.title != "My Location" {
-        var subtitleTextElement: [String] = []
-        let subtitleText = String(((annotation?.subtitle)!)!).components(separatedBy: ",")
-        for eachSubtitle in subtitleText{
-            let elements = eachSubtitle.components(separatedBy: ":")
-            for each in elements{
-                subtitleTextElement.append(each)
+            var subtitleTextElement: [String] = []
+            let subtitleText = String(((annotation?.subtitle)!)!).components(separatedBy: ",")
+            for eachSubtitle in subtitleText{
+                let elements = eachSubtitle.components(separatedBy: ":")
+                for each in elements{
+                    subtitleTextElement.append(each)
+                }
+                senderRouteType = Int(subtitleTextElement[1])!
+                senderStopId = Int(subtitleTextElement[2])!
+                if senderStopId == Int(subtitleTextElement[2]) {
+                    break
+                }
             }
-            senderRouteType = Int(subtitleTextElement[1])!
-            senderStopId = Int(subtitleTextElement[2])!
-            if senderStopId == Int(subtitleTextElement[2]) {
-                break
-            }
-        }
         }
     }
     

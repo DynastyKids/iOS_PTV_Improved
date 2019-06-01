@@ -33,6 +33,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     var routeType: Int = 0                  // Testing value, rely on last page segue passing value to this page
     var routeName: String?
     var runs: [Run] = []
+    var senderStopId: Int = 0
     
     var routeDirections: [DirectionWithDescription] = []
     
@@ -52,6 +53,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 return
             }
         }
+        routeMapView.delegate = self
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.startUpdatingLocation()
@@ -100,10 +102,13 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                     for each in self.allstopsdata{
                         let latitude:Double = each.stopLatitude ?? 0.0
                         let longitude:Double = each.stopLongtitude ?? 0.0
-                        let stopPatterns = MKPointAnnotation()
+                        let stopPatterns = customPointAnnotation()
                         stopPatterns.title = each.stopName
-                        stopPatterns.subtitle = each.stopSuburb
+                        let stopId = each.stopId!
+                        let stopSuburb = each.stopSuburb!
+                        stopPatterns.subtitle = "Stop Id:\(stopId), Suburb:\(stopSuburb)"
                         stopPatterns.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                        stopPatterns.routeType = each.routeType
                         self.routeMapView.addAnnotation(stopPatterns)
                         distance.append(userLocation.distance(from: CLLocation(latitude: each.stopLatitude!, longitude: each.stopLongtitude!)))
                     }
@@ -185,6 +190,14 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             page2.routeType = routeType
             page2.routeId = routeId
             page2.stopId = allstopsdata[selectedId[(directionsTableView.indexPathForSelectedRow?.row)!]].stopId!
+            page2.managedContext = managedContext
+        }
+        if segue.identifier == "showServiceFromMap"{
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+            page2.routeType = routeType
+            page2.routeId = routeId
+            page2.stopId = senderStopId
+            page2.managedContext = managedContext
         }
         if segue.identifier == "showServiceDisruptions"{
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
@@ -305,18 +318,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         locationManager.startUpdatingLocation()
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavRoute")
-        do {
-            let result = try managedContext.fetch(request) as! [FavRoute]
-            for eachResult in result{
-                if eachResult.routeId == Int32(routeId) && eachResult.routeType == Int32(routeType){
-                    saveFlag = false    // Stop already exists, will not be saved again
-                    break
-                }
-            }
-        } catch {
-            print("Fetching favroute data error:\(error)")
-        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -330,6 +331,19 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
         stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
         stopFetchedResultsController.delegate = self
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavRoute")
+        do {
+            let result = try managedContext.fetch(request) as! [FavRoute]
+            for eachResult in result{
+                if eachResult.routeId == Int32(routeId) && eachResult.routeType == Int32(routeType){
+                    saveFlag = false    // Stop already exists, will not be saved again
+                    break
+                }
+            }
+        } catch {
+            print("Fetching favroute data error:\(error)")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -352,6 +366,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     // MARK: - Functions for MapView
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
@@ -366,6 +381,60 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if !(annotation is customPointAnnotation){
+            return nil
+        }
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "stops")
+        if annotationView == nil{
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "stops")
+        }
+        let customAnnotation = annotation as! customPointAnnotation
+        if customAnnotation.routeType == 0 {
+            annotationView?.image = UIImage(named: "trainStation")
+        } else if customAnnotation.routeType == 1 {
+            annotationView?.image = UIImage(named: "tramStop")
+        } else if customAnnotation.routeType == 2 {
+            annotationView?.image = UIImage(named: "busStop")
+        } else if customAnnotation.routeType == 3 {
+            annotationView?.image = UIImage(named: "vlineStation")
+        } else if customAnnotation.routeType == 4 {
+            annotationView?.image = UIImage(named: "nightbusStop")
+        }
+        annotationView?.canShowCallout = true
+        let button = UIButton(type: .infoLight)
+        annotationView?.rightCalloutAccessoryView = button
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        self.performSegue(withIdentifier: "showServiceFromMap", sender: nil)
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let annotation = view.annotation
+        
+        guard annotation?.title != nil, annotation?.subtitle != nil else {
+            return
+        }
+        if annotation?.title != "My Location" {
+            var subtitleTextElement: [String] = []
+            let subtitleText = String(((annotation?.subtitle)!)!).components(separatedBy: ",")
+            for eachSubtitle in subtitleText{
+                let elements = eachSubtitle.components(separatedBy: ":")
+                for each in elements{
+                    subtitleTextElement.append(each)
+                }
+                senderStopId = Int(subtitleTextElement[1])!
+                if senderStopId == Int(subtitleTextElement[1]) {
+                    break
+                }
+            }
+        }
     }
 }
 extension DirectionsViewController: NSFetchedResultsControllerDelegate{

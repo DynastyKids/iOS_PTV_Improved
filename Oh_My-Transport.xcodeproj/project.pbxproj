@@ -31,7 +31,6 @@
 		5A9B88FE22903DF7005F1C25 /* StopPageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B88FD22903DF7005F1C25 /* StopPageTableViewController.swift */; };
 		5A9B89002290411C005F1C25 /* stopInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */; };
 		5A9B89022290421A005F1C25 /* nextServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */; };
-		5AC9F3B5229AE0CC00419760 /* BackupDirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */; };
 		5AE5ECBD229C51F900D65A04 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECBC229C51F900D65A04 /* CoreTelephony.framework */; };
 		5AE5ECBF229C520100D65A04 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECBE229C520100D65A04 /* SystemConfiguration.framework */; };
 		5AE5ECC1229C520B00D65A04 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE5ECC0229C520B00D65A04 /* AudioToolbox.framework */; };
@@ -89,7 +88,6 @@
 		5A9B88FD22903DF7005F1C25 /* StopPageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopPageTableViewController.swift; sourceTree = "<group>"; };
 		5A9B88FF2290411C005F1C25 /* stopInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stopInfoTableViewCell.swift; sourceTree = "<group>"; };
 		5A9B89012290421A005F1C25 /* nextServiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nextServiceTableViewCell.swift; sourceTree = "<group>"; };
-		5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDirectionsViewController.swift; sourceTree = "<group>"; };
 		5AE5ECBC229C51F900D65A04 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5AE5ECBE229C520100D65A04 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5AE5ECC0229C520B00D65A04 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -237,7 +235,6 @@
 				5A85D5BF2290861300E01AD9 /* DirectionDisruptionsTableViewCell.swift */,
 				5A85D5C1229086AE00E01AD9 /* RoutesStopTableViewCell.swift */,
 				5A85D5C3229086EE00E01AD9 /* DirectionTableViewCell.swift */,
-				5AC9F3B4229AE0CC00419760 /* BackupDirectionsViewController.swift */,
 			);
 			path = RoutePage;
 			sourceTree = "<group>";
@@ -418,7 +415,6 @@
 				5AEF7DCE2291BF590087C087 /* HomepageViewController.swift in Sources */,
 				5A85D5BA229084CD00E01AD9 /* RouteDetailsViewController.swift in Sources */,
 				5A93C92122993F120043DDB5 /* MyKiOutletViewController.swift in Sources */,
-				5AC9F3B5229AE0CC00419760 /* BackupDirectionsViewController.swift in Sources */,
 				5A2CB6BD2288254A009A3A13 /* PTVdataStruct.swift in Sources */,
 				5A570FD1229C3B6400569007 /* DatabaseProtocol.swift in Sources */,
 				5AEEE87E2297B96700EF6D83 /* SearchStopsTableViewCell.swift in Sources */,

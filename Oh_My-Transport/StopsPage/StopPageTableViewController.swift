@@ -377,6 +377,14 @@ class StopPageTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "FavStop")
         do {
             let result = try managedContext.fetch(request) as! [FavStop]
@@ -389,10 +397,6 @@ class StopPageTableViewController: UITableViewController {
         } catch {
             print("Error:\(error)")
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
     }
     
     override func didReceiveMemoryWarning() {

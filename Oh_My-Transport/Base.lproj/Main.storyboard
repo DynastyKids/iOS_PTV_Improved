@@ -1378,6 +1378,7 @@
                         <outlet property="directionsTableView" destination="HDL-jb-K2B" id="eNb-51-mZH"/>
                         <outlet property="routeMapView" destination="QLv-EP-TIh" id="RwV-3J-aCW"/>
                         <outlet property="saveButton" destination="xox-Uc-G4r" id="wQZ-dS-itO"/>
+                        <segue destination="VfA-ee-rv5" kind="show" identifier="showServiceFromMap" id="dZU-h6-GDi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCD-an-QFe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1388,19 +1389,18 @@
         <scene sceneID="Xup-Ie-CLy">
             <objects>
                 <viewController title="Loading Data" id="f1e-ej-sol" userLabel="routeWithStopDetails" customClass="RouteDetailsViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="2l4-aZ-7CA">
+                    <view key="view" contentMode="scaleToFill" id="2l4-aZ-7CA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
-                                <rect key="frame" x="0.0" y="64" width="414" height="230"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsBuildings="NO" showsScale="YES" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZG-Wq-bdQ">
+                                <rect key="frame" x="0.0" y="64" width="414" height="250"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="eZG-Wq-bdQ" secondAttribute="height" multiplier="75:46" id="0Cq-aF-Uyd"/>
-                                    <constraint firstAttribute="height" constant="230" id="w8p-Jz-FGK"/>
+                                    <constraint firstAttribute="height" constant="250" id="w8p-Jz-FGK"/>
                                 </constraints>
                             </mapView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
-                                <rect key="frame" x="0.0" y="294" width="414" height="442"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7W-g9-U6i">
+                                <rect key="frame" x="0.0" y="314" width="414" height="422"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="routeDisruption" id="EvG-tZ-TWP" customClass="RoutesDisruptionsTableViewCell" customModule="Oh_My_Transport" customModuleProvider="target">
@@ -1536,11 +1536,12 @@
                     <connections>
                         <outlet property="routeMapView" destination="eZG-Wq-bdQ" id="AvY-5w-ukq"/>
                         <outlet property="routeTableView" destination="w7W-g9-U6i" id="Cch-me-VsU"/>
+                        <segue destination="VfA-ee-rv5" kind="show" identifier="showStopFromPatternMap" id="WHu-uG-tuI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HNW-0c-J6P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1592.753623188406" y="935.86956521739137"/>
+            <point key="canvasLocation" x="1593" y="880"/>
         </scene>
         <!--Data Privacy Policy-->
         <scene sceneID="YTP-v5-yHH">
@@ -1609,7 +1610,7 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.2 (Build 269 @ 31 May 2019)
+                                <mutableString key="text">Version 1.2.3 (Build 270 @ 1 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
@@ -1640,7 +1641,7 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tH8-GN-WaY"/>
-        <segue reference="kz0-4N-VZF"/>
-        <segue reference="rUw-3q-bGF"/>
+        <segue reference="zXA-WO-h7o"/>
+        <segue reference="dZU-h6-GDi"/>
     </inferredMetricsTieBreakers>
 </document>
