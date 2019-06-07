@@ -13,6 +13,7 @@ import CoreLocation
 
 class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    var managedContext: NSManagedObjectContext!
     @IBOutlet weak var mainMapView: MKMapView!
 
     let locationManager = CLLocationManager()
@@ -196,6 +197,7 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
             page2.routeType = senderRouteType
             page2.stopId = senderStopId
+            page2.managedContext = managedContext
         }
     }
     

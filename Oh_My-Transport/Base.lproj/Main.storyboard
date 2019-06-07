@@ -40,7 +40,7 @@
                                 <items>
                                     <barButtonItem title="Item" image="mapIcon" id="DrZ-sa-rHL">
                                         <connections>
-                                            <segue destination="Ssc-zo-9BZ" kind="show" id="o4R-qP-3pf"/>
+                                            <segue destination="Ssc-zo-9BZ" kind="show" identifier="showMap" id="o4R-qP-3pf"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="KcF-m2-Dev"/>
@@ -1610,11 +1610,11 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.3 (Build 270 @ 1 June 2019)
+                                <string key="text">Version 1.2.3 (Build 270 @ 1 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </mutableString>
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1641,7 +1641,7 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tH8-GN-WaY"/>
-        <segue reference="zXA-WO-h7o"/>
+        <segue reference="yW6-4j-AAm"/>
         <segue reference="dZU-h6-GDi"/>
     </inferredMetricsTieBreakers>
 </document>

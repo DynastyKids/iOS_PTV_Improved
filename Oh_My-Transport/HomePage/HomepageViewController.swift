@@ -494,6 +494,10 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             let page2:DisruptionsTableViewController = segue.destination as! DisruptionsTableViewController
             page2.url = URL(string: disruptionAll())
         }
+        if segue.identifier == "showMap"{
+            let page2:SelectStopOnMapViewController = segue.destination as! SelectStopOnMapViewController
+            page2.managedContext = stopFetchedResultsController.managedObjectContext
+        }
     }
     
     // Location functions

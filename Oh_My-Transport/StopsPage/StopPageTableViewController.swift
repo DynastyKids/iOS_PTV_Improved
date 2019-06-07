@@ -254,7 +254,7 @@ class StopPageTableViewController: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: Any) {
-        if saveFlag == true{
+        if self.saveFlag == true{
             let stop = FavStop(context: managedContext)
             stop.routeType = Int32(routeType)
             stop.stopId = Int32(stopId)
