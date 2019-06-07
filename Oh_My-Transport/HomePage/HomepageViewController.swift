@@ -411,18 +411,26 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionName: String
         switch section {
         case 0:
-            sectionName = NSLocalizedString("Nearby Stops:", comment: "Nearby stops")
+            if nearbyStops.count == 0 {
+                return NSLocalizedString("", comment: "")
+            }
+            return NSLocalizedString("Nearby Stops:", comment: "Nearby stops")
         case 1:
-            sectionName = NSLocalizedString("Saved Stops:", comment: "Favorite stops:")
+            if stopFetchedResultsController.sections?[0].numberOfObjects == 0{
+                return NSLocalizedString("", comment: "")
+            }
+            return NSLocalizedString("Saved Stops:", comment: "Favorite stops:")
         case 2:
-            sectionName = NSLocalizedString("Saved Routes:", comment: "Favorite Route")
+            if routeFetchedResultsController.sections?[0].numberOfObjects == 0{
+                return NSLocalizedString("", comment: "")
+            }
+            return NSLocalizedString("Saved Routes:", comment: "Favorite Route")
         default:
-            sectionName = ""
+            return NSLocalizedString("", comment: "")
         }
-        return sectionName
+        return NSLocalizedString("", comment: "")
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

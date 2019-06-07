@@ -234,8 +234,8 @@ public func showRoutesRun(routeId: Int, routeType: Int) -> String{      //View a
 }
 
 public func showRunInfo(runId: Int, routeType: Int) -> String{          // View the trip/service run for a specific run ID and route type
-    let request: String = "/v3/runs/\(runId)/route_type/\(routeType)?devid="+PrimaryDevId
-    return extractedFunc(request)
+    let request: String = "/v3/runs/\(runId)/route_type/\(routeType)?devid="+SecondaryDevId
+    return alternativeExtractedFunc(request)
 }
 
 // Search
