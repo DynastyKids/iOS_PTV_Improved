@@ -149,74 +149,73 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     DispatchQueue.main.async {
                         if nextDepartureData.departures?.count ?? 0 > 0 {
+                            // Route 0
                             cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure0Time.textColor = UIColor.black
+                            let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
+                            for each in nextDepartRoutesData{
+                                if searchRouteId0 == each.routeId{
+                                    cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                    cell.departure0Route.textColor = UIColor.white
+                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                        var routeName: String
+                                        if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
+                                            routeName = each.routeName!     // City Loop train will having no route gtfsid
+                                            cell.departure0Route.text = routeName
+                                        } else{
+                                            routeName = each.GtfsId!
+                                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                            cell.departure0Route.text = String(routeName[cuttedName...])
+                                        }
+                                    }else{
+                                        cell.departure0Route.text = each.routeNumber
+                                    }
+                                }
+                            }
+                            // Route 1
                             cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure1Time.textColor = UIColor.black
+                            let searchRouteId1 = self.nearbyStopsDeaprtureSequence[1].routesId
+                            for each in nextDepartRoutesData{
+                                if searchRouteId1 == each.routeId{
+                                    cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                    cell.departure1Route.textColor = UIColor.white
+                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                        var routeName: String
+                                        if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
+                                            routeName = each.routeName!     // City Loop train will having no route gtfsid
+                                            cell.departure1Route.text = routeName
+                                        } else{
+                                            routeName = each.GtfsId!
+                                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                            cell.departure1Route.text = String(routeName[cuttedName...])
+                                        }
+                                    }else{
+                                        cell.departure1Route.text = each.routeNumber
+                                    }
+                                }
+                            }
+                            // Route 2
                             cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure2Time.textColor = UIColor.black
-                        }
-                        
-                        // Route 0
-                        let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
-                        for each in nextDepartRoutesData{
-                            if searchRouteId0 == each.routeId{
-                                cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
-                                cell.departure0Route.textColor = UIColor.white
-                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
-                                    var routeName: String
-                                    if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
-                                        routeName = each.routeName!     // City Loop train will having no route gtfsid
-                                        cell.departure0Route.text = routeName
-                                    } else{
-                                        routeName = each.GtfsId!
-                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                                        cell.departure0Route.text = String(routeName[cuttedName...])
+                            let searchRouteId2 = self.nearbyStopsDeaprtureSequence[2].routesId
+                            for each in nextDepartRoutesData{
+                                if searchRouteId2 == each.routeId{
+                                    cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                    cell.departure2Route.textColor = UIColor.white
+                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                        var routeName: String
+                                        if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
+                                            routeName = each.routeName!     // City Loop train will having no route gtfsid
+                                            cell.departure2Route.text = routeName
+                                        } else{
+                                            routeName = each.GtfsId!
+                                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                            cell.departure2Route.text = String(routeName[cuttedName...])
+                                        }
+                                    }else{
+                                        cell.departure2Route.text = each.routeNumber
                                     }
-                                }else{
-                                    cell.departure0Route.text = each.routeNumber
-                                }
-                            }
-                        }
-                        // Route 1
-                        let searchRouteId1 = self.nearbyStopsDeaprtureSequence[1].routesId
-                        for each in nextDepartRoutesData{
-                            if searchRouteId1 == each.routeId{
-                                cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
-                                cell.departure1Route.textColor = UIColor.white
-                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
-                                    var routeName: String
-                                    if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
-                                        routeName = each.routeName!     // City Loop train will having no route gtfsid
-                                        cell.departure1Route.text = routeName
-                                    } else{
-                                        routeName = each.GtfsId!
-                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                                        cell.departure1Route.text = String(routeName[cuttedName...])
-                                    }
-                                }else{
-                                    cell.departure1Route.text = each.routeNumber
-                                }
-                            }
-                        }
-                        // Route 2
-                        let searchRouteId2 = self.nearbyStopsDeaprtureSequence[2].routesId
-                        for each in nextDepartRoutesData{
-                            if searchRouteId2 == each.routeId{
-                                cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
-                                cell.departure2Route.textColor = UIColor.white
-                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
-                                    var routeName: String
-                                    if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
-                                        routeName = each.routeName!     // City Loop train will having no route gtfsid
-                                        cell.departure2Route.text = routeName
-                                    } else{
-                                        routeName = each.GtfsId!
-                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                                        cell.departure2Route.text = String(routeName[cuttedName...])
-                                    }
-                                }else{
-                                    cell.departure2Route.text = each.routeNumber
                                 }
                             }
                         }
@@ -301,55 +300,74 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
 
                     DispatchQueue.main.async {
                         if nextDepartureData.departures != nil{
+                            // Route 0
                             cell.departure0Time.text = Iso8601Countdown(iso8601Date: (savedStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((savedStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure0Time.textColor = UIColor.black
+                            let searchRouteId0 = savedStopsDeaprtureSequence[0].routesId
+                            for each in nextDepartRoutesData{
+                                if searchRouteId0 == each.routeId{
+                                    cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                    cell.departure0Route.textColor = UIColor.white
+                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                        var routeName: String
+                                        if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
+                                            routeName = each.routeName!     // City Loop train will having no route gtfsid
+                                            cell.departure0Route.text = routeName
+                                        } else{
+                                            routeName = each.GtfsId!
+                                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                            cell.departure0Route.text = String(routeName[cuttedName...])
+                                        }
+                                    }else{
+                                        cell.departure0Route.text = each.routeNumber
+                                    }
+                                }
+                            }
+                            // Route 1
                             cell.departure1Time.text = Iso8601Countdown(iso8601Date: (savedStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((savedStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure1Time.textColor = UIColor.black
+                            let searchRouteId1 = savedStopsDeaprtureSequence[1].routesId
+                            for each in nextDepartRoutesData{
+                                if searchRouteId1 == each.routeId{
+                                    cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                    cell.departure1Route.textColor = UIColor.white
+                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                        var routeName: String
+                                        if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
+                                            routeName = each.routeName!     // City Loop train will having no route gtfsid
+                                            cell.departure1Route.text = routeName
+                                        } else{
+                                            routeName = each.GtfsId!
+                                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                            cell.departure1Route.text = String(routeName[cuttedName...])
+                                        }
+                                    }else{
+                                        cell.departure1Route.text = each.routeNumber
+                                    }
+                                }
+                            }
+                            
+                            // Route 2
                             cell.departure2Time.text = Iso8601Countdown(iso8601Date: (savedStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((savedStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure2Time.textColor = UIColor.black
-                        }
-                        // Route 0
-                        let searchRouteId0 = savedStopsDeaprtureSequence[0].routesId
-                        for each in nextDepartRoutesData{
-                            if searchRouteId0 == each.routeId{
-                                cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
-                                cell.departure0Route.textColor = UIColor.white
-                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
-                                    let routeName: String = each.GtfsId ?? each.routeName!
-                                    let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                                    cell.departure0Route.text = String(routeName[cuttedName...])
-                                }else{
-                                    cell.departure0Route.text = each.routeNumber
-                                }
-                            }
-                        }
-                        // Route 1
-                        let searchRouteId1 = savedStopsDeaprtureSequence[1].routesId
-                        for each in nextDepartRoutesData{
-                            if searchRouteId1 == each.routeId{
-                                cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
-                                cell.departure1Route.textColor = UIColor.white
-                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
-                                    let routeName: String = each.GtfsId ?? each.routeName!
-                                    let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                                    cell.departure1Route.text = String(routeName[cuttedName...])
-                                }else{
-                                    cell.departure1Route.text = each.routeNumber
-                                }
-                            }
-                        }
-                        // Route 2
-                        let searchRouteId2 = savedStopsDeaprtureSequence[2].routesId
-                        for each in nextDepartRoutesData{
-                            if searchRouteId2 == each.routeId{
-                                cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
-                                cell.departure2Route.textColor = UIColor.white
-                                if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
-                                    let routeName: String = each.GtfsId ?? each.routeName!
-                                    let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                                    cell.departure2Route.text = String(routeName[cuttedName...])
-                                }else{
-                                    cell.departure2Route.text = each.routeNumber
+                            let searchRouteId2 = savedStopsDeaprtureSequence[2].routesId
+                            for each in nextDepartRoutesData{
+                                if searchRouteId2 == each.routeId{
+                                    cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
+                                    cell.departure2Route.textColor = UIColor.white
+                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                        var routeName: String
+                                        if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
+                                            routeName = each.routeName!     // City Loop train will having no route gtfsid
+                                            cell.departure2Route.text = routeName
+                                        } else{
+                                            routeName = each.GtfsId!
+                                            let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                            cell.departure2Route.text = String(routeName[cuttedName...])
+                                        }
+                                    }else{
+                                        cell.departure2Route.text = each.routeNumber
+                                    }
                                 }
                             }
                         }
@@ -631,5 +649,3 @@ extension HomepageViewController: NSFetchedResultsControllerDelegate{
         }
     }
 }
-
-
