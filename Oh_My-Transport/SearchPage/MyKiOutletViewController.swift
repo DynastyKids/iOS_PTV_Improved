@@ -80,37 +80,37 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
             businessSundayLabel.text = ""
         } else {
             if outlet?.outletBusinessHourMon != nil {
-                businessMondayLabel.text = "Monday :\((outlet?.outletBusinessHourMon!)!)"
+                businessMondayLabel.text = "Mon:\((outlet?.outletBusinessHourMon!)!)"
             } else {
                 businessMondayLabel.text = "Unknown"
             }
             if outlet?.outletBusinessHourTue != nil {
-                businessTuesdayLabel.text = "Tuesday: \((outlet?.outletBusinessHourTue!)!)"
+                businessTuesdayLabel.text = "Tue:\((outlet?.outletBusinessHourTue!)!)"
             } else{
                 businessTuesdayLabel.text = "Unknown"
             }
             if outlet?.outletBusinessHourWed != nil {
-                businessWednesdayLabel.text = "Wednesday: \((outlet?.outletBusinessHourWed!)!)"
+                businessWednesdayLabel.text = "Wed:\((outlet?.outletBusinessHourWed!)!)"
             } else{
                 businessWednesdayLabel.text = "Unknown"
             }
             if outlet?.outletBusinessHourThur != nil {
-                businessThursdayLabel.text = "Thursday: \((outlet?.outletBusinessHourThur!)!)"
+                businessThursdayLabel.text = "Thu:\((outlet?.outletBusinessHourThur!)!)"
             } else{
                 businessThursdayLabel.text = "Unknown"
             }
             if outlet?.outletBusinessHourFri != nil {
-                businessFridayLabel.text = "Friday: \((outlet?.outletBusinessHourFri!)!)"
+                businessFridayLabel.text = "Fri:  \((outlet?.outletBusinessHourFri!)!)"
             } else{
                 businessFridayLabel.text = "Unknown"
             }
             if outlet?.outletBusinessHourSat != nil {
-                businessSaturdayLabel.text = "Saturday: \((outlet?.outletBusinessHourSat!)!)"
+                businessSaturdayLabel.text = "Sat:\((outlet?.outletBusinessHourSat!)!)"
             } else{
                 businessSaturdayLabel.text = "Unknown"
             }
             if outlet?.outletBusinessHourSun != nil{
-                businessSundayLabel.text = "Sunday: \((outlet?.outletBusinessHourSun!)!)"
+                businessSundayLabel.text = "Sun:\((outlet?.outletBusinessHourSun!)!)"
             } else{
                 businessSundayLabel.text = "Unknown"
             }

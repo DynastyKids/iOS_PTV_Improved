@@ -274,7 +274,7 @@ class StopPageTableViewController: UITableViewController {
             if (nextDepartDisruptionInfo.count == 0){
                 cell0.disruptionButton.setTitle("No Disruption, enjoy your trip", for: UIControl.State.normal)
             } else if (nextDepartDisruptionInfo.count == 1){
-                cell0.disruptionButton.setTitle("1 Disruption may affect your travel", for: UIControl.State.normal)
+                cell0.disruptionButton.setTitle("1 Disruption in effect", for: UIControl.State.normal)
             } else {
                 cell0.disruptionButton.setTitle("\(nextDepartDisruptionInfo.count) Disruptions in effect", for: UIControl.State.normal)
             }

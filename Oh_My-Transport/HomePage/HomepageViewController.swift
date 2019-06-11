@@ -73,7 +73,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             cell.stopNameLabel.text = nearbystops.stopName
             cell.stopSuburbLabel.text = nearbystops.stopSuburb
             cell.stopSuburbLabel.textColor = UIColor.black
-            cell.nearbyTextLabel.text = "*Near By Stop      Distance:\(Int(nearbystops.stopDistance!))m"
+            cell.nearbyTextLabel.text = "*Near By Stop, \(Int(nearbystops.stopDistance!))m away"
             cell.nearbyTextLabel.textColor = UIColor.gray
             
             // Fetching data inside (Departure time)

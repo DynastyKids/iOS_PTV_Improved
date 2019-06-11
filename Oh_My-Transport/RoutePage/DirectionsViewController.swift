@@ -72,7 +72,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
                 DispatchQueue.main.async {
                     if self.routeType == 0 {
-                        self.navigationItem.title = "\(self.routeName!) Line"
+                        self.navigationItem.title = "\(self.routeName!)"
                     } else if self.routeType == 1{
                         self.navigationItem.title = "Tram \(self.routeName!)"
                     } else if self.routeType == 2 || self.routeType == 4{
@@ -225,9 +225,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "disruption", for: indexPath) as! directionDisruptionsTableViewCell
             if disruptiondata.count > 1 {
-                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruptions may affect your trip"
+                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruptions may in effect"
             } else {
-                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruption may affect your trip"
+                cell.disruptionTitleLabel.text = "\(disruptiondata.count) disruption may in effect"
             }
             cell.disruptionSubtitleLabel.text = "Tap to see more details"
             self.navigationItem.rightBarButtonItem?.isEnabled = true

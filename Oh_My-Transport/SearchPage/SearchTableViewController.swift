@@ -192,18 +192,18 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             cell.stopSuburbLabel.text = searchStops[indexPath.row].stopSuburb
             if searchStops[indexPath.row].stopDistance != nil{
                 if Double(searchStops[indexPath.row].stopDistance!) >= 1000 {
-                    cell.stopDistanceLabel.text = "Distance: \(String(format:"%.2f",Double(searchStops[indexPath.row].stopDistance!/1000))) km"
+                    cell.stopDistanceLabel.text = "\(String(format:"%.2f",Double(searchStops[indexPath.row].stopDistance!/1000)))km away"
                 }
-                cell.stopDistanceLabel.text = "Distance: \(Int(searchStops[indexPath.row].stopDistance!)) m"
+                cell.stopDistanceLabel.text = "\(Int(searchStops[indexPath.row].stopDistance!))m away"
             } else {
                 // Using provided location to calculate
                 if (searchStops[indexPath.row].stopLatitude != nil && searchStops[indexPath.row].stopLongitude != nil){
                     let userlocation = CLLocation(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
                     let distance = userlocation.distance(from: CLLocation(latitude: searchStops[indexPath.row].stopLatitude!, longitude: searchStops[indexPath.row].stopLongitude!))
                     if Double(distance) >= 1000{
-                        cell.stopDistanceLabel.text = "Distance: \(String(format:"%.2f",Double(distance/1000))) km"
+                        cell.stopDistanceLabel.text = "\(String(format:"%.2f",Double(distance/1000)))km away"
                     } else{
-                        cell.stopDistanceLabel.text = "Distance: \(Int(distance)) m"
+                        cell.stopDistanceLabel.text = "\(Int(distance))m away"
                     }
                 }else {
                     cell.stopDistanceLabel.text = ""
@@ -228,15 +228,15 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         if indexPath.section == 2{
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchOutlets", for: indexPath) as! SearchOutletsTableViewCell
             cell.businessNameLabel.text = searchOutlets[indexPath.row].outeletBusiness
-            cell.businessAddressLabel.text = searchOutlets[indexPath.row].outletName
+            cell.businessAddressLabel.text = "\(searchOutlets[indexPath.row].outletName!), \(searchOutlets[indexPath.row].outletSuburb!)"
             cell.businessSuburbLabel.text = searchOutlets[indexPath.row].outletSuburb
             if (searchOutlets[indexPath.row].outletLatitude != nil && searchOutlets[indexPath.row].outletLongitude != nil){
                 let userlocation = CLLocation(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
                 let distance = userlocation.distance(from: CLLocation(latitude: searchOutlets[indexPath.row].outletLatitude!, longitude: searchOutlets[indexPath.row].outletLongitude!))
                 if Double(distance) >= 1000{
-                    cell.businessDistanceLabel.text = "Distance: \(String(format:"%.2f",Double(distance/1000))) km"
+                    cell.businessDistanceLabel.text = "\(String(format:"%.2f",Double(distance/1000)))km away"
                 } else{
-                    cell.businessDistanceLabel.text = "Distance: \(Int(distance)) m"
+                    cell.businessDistanceLabel.text = "\(Int(distance))m away"
                 }
             } else {
                 cell.businessDistanceLabel.text = ""
