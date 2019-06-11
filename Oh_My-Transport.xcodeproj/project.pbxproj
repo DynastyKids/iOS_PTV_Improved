@@ -20,6 +20,7 @@
 		5A570FD3229C3C0500569007 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A570FD2229C3C0500569007 /* CoreDataController.swift */; };
 		5A570FD5229C3CCC00569007 /* FavStopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A570FD4229C3CCC00569007 /* FavStopData.swift */; };
 		5A570FD7229C3CD500569007 /* FavRouteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A570FD6229C3CD500569007 /* FavRouteData.swift */; };
+		5A77875C22AF7CFE006CFF78 /* JourneyPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A77875B22AF7CFE006CFF78 /* JourneyPlannerViewController.swift */; };
 		5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */; };
 		5A85D5B8229084AA00E01AD9 /* DirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A85D5B7229084AA00E01AD9 /* DirectionsViewController.swift */; };
 		5A85D5BA229084CD00E01AD9 /* RouteDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A85D5B9229084CD00E01AD9 /* RouteDetailsViewController.swift */; };
@@ -77,6 +78,7 @@
 		5A570FD2229C3C0500569007 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		5A570FD4229C3CCC00569007 /* FavStopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStopData.swift; sourceTree = "<group>"; };
 		5A570FD6229C3CD500569007 /* FavRouteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavRouteData.swift; sourceTree = "<group>"; };
+		5A77875B22AF7CFE006CFF78 /* JourneyPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyPlannerViewController.swift; sourceTree = "<group>"; };
 		5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		5A85D5B7229084AA00E01AD9 /* DirectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsViewController.swift; sourceTree = "<group>"; };
 		5A85D5B9229084CD00E01AD9 /* RouteDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailsViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				5A331C0E22732BC000467C8B /* AboutViewController.swift */,
 				5A2CB6BC2288254A009A3A13 /* PTVdataStruct.swift */,
 				5AEF7DE32292F1EC0087C087 /* CommonFunction.swift */,
+				5A77875B22AF7CFE006CFF78 /* JourneyPlannerViewController.swift */,
 			);
 			path = "Oh_My-Transport";
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				5A570FD5229C3CCC00569007 /* FavStopData.swift in Sources */,
 				5A570FD7229C3CD500569007 /* FavRouteData.swift in Sources */,
 				5A85D5B8229084AA00E01AD9 /* DirectionsViewController.swift in Sources */,
+				5A77875C22AF7CFE006CFF78 /* JourneyPlannerViewController.swift in Sources */,
 				5AEF7DD42291C53F0087C087 /* nearbyStopsTableViewCell.swift in Sources */,
 				5AEF7DC92291AD5A0087C087 /* FavStop+CoreDataClass.swift in Sources */,
 				5A9B89022290421A005F1C25 /* nextServiceTableViewCell.swift in Sources */,

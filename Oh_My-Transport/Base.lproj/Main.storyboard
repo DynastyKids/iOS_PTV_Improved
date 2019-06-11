@@ -27,6 +27,41 @@
             </objects>
             <point key="canvasLocation" x="-1484" y="421"/>
         </scene>
+        <!--Journey Planner-->
+        <scene sceneID="Kxn-6e-e8i">
+            <objects>
+                <viewController title="Journey Planner" id="ROT-6e-1kD" customClass="JourneyPlannerViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qNY-Xu-Imr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XTS-UF-X3X">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <dataDetectorTypes key="dataDetectorTypes"/>
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="uTa-jj-Oy1" firstAttribute="trailing" secondItem="XTS-UF-X3X" secondAttribute="trailing" id="0hc-by-Z8o"/>
+                            <constraint firstItem="XTS-UF-X3X" firstAttribute="leading" secondItem="uTa-jj-Oy1" secondAttribute="leading" id="6EH-ye-Nfy"/>
+                            <constraint firstItem="XTS-UF-X3X" firstAttribute="top" secondItem="uTa-jj-Oy1" secondAttribute="top" id="9wp-UX-cgW"/>
+                            <constraint firstItem="uTa-jj-Oy1" firstAttribute="bottom" secondItem="XTS-UF-X3X" secondAttribute="bottom" id="Pjp-cx-WOb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="uTa-jj-Oy1"/>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="XTS-UF-X3X" id="Ca6-tz-Uzi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M50-ph-d6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2342" y="1220"/>
+        </scene>
         <!--Oh My Transport-->
         <scene sceneID="MVb-jZ-OE4">
             <objects>
@@ -41,6 +76,12 @@
                                     <barButtonItem title="Item" image="mapIcon" id="DrZ-sa-rHL">
                                         <connections>
                                             <segue destination="Ssc-zo-9BZ" kind="show" identifier="showMap" id="o4R-qP-3pf"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="7nb-1j-jk3"/>
+                                    <barButtonItem title="Journey" image="plans" id="G5h-yE-Lfh">
+                                        <connections>
+                                            <segue destination="ROT-6e-1kD" kind="show" id="5Lh-Ij-UTJ"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="KcF-m2-Dev"/>
@@ -1610,7 +1651,7 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.4 (Build 275 @ 1 June 2019)
+                                <mutableString key="text">Version 1.2.5 (Build 276 @ 1 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
@@ -1633,6 +1674,7 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
         <image name="AboutIcon" width="25" height="25"/>
         <image name="busIcon" width="25" height="25"/>
         <image name="mapIcon" width="26" height="26"/>
+        <image name="plans" width="25" height="25"/>
         <image name="regionalTrainIcon" width="25" height="25"/>
         <image name="sateliteIcon_White" width="25" height="25"/>
         <image name="ticket_Colour" width="25" height="25"/>
@@ -1642,6 +1684,6 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
     <inferredMetricsTieBreakers>
         <segue reference="tH8-GN-WaY"/>
         <segue reference="yW6-4j-AAm"/>
-        <segue reference="dZU-h6-GDi"/>
+        <segue reference="rUw-3q-bGF"/>
     </inferredMetricsTieBreakers>
 </document>

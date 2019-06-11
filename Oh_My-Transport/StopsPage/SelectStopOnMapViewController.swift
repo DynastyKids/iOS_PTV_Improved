@@ -178,6 +178,9 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
                         }
                         newStop.coordinate = CLLocation(latitude: stopLatitude,longitude: stopLongitude).coordinate
                         newStop.title = each.stopName
+                        if each.routeType == 4 {
+                            newStop.title = "\(each.stopName!) (Night Bus)"
+                        }
                         newStop.subtitle = "Stop Id:\(routeType):\(stopId), Suburb:\(stopSuburb)"
                         newStop.routeType = each.routeType
                         self.mainMapView.addAnnotation(newStop)
