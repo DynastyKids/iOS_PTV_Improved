@@ -512,20 +512,17 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="e95-AU-Ppd">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="e95-AU-Ppd">
                                                             <rect key="frame" x="0.0" y="5" width="306" height="17"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Suburb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ng-Rf-sOy">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="174" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="147" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 999 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcN-6l-i3Z">
-                                                                    <rect key="frame" x="186" y="0.0" width="120" height="17"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="120" id="neH-od-n39"/>
-                                                                    </constraints>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 99.99 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcN-6l-i3Z">
+                                                                    <rect key="frame" x="159" y="0.0" width="147" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -577,58 +574,58 @@
                                     <rect key="frame" x="0.0" y="0.0" width="376" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="ticket_Colour" translatesAutoresizingMaskIntoConstraints="NO" id="ios-Dr-dYK">
-                                            <rect key="frame" x="20" y="11.333333333333336" width="30" height="40"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="LUv-u2-kfe"/>
-                                                <constraint firstAttribute="height" constant="30" id="O5Y-1b-V9B"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgS-E7-T8n">
-                                            <rect key="frame" x="62" y="11.000000000000002" width="306" height="20.666666666666671"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outlet Suburb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VR1-IF-2TG">
-                                            <rect key="frame" x="62" y="59.333333333333329" width="174" height="17"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 999 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-1M-IiU">
-                                            <rect key="frame" x="248" y="59.333333333333329" width="120" height="17"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="120" id="0Fz-kq-cQy"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business Address" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OS-Tq-ojM">
-                                            <rect key="frame" x="62" y="39.666666666666671" width="306" height="15.666666666666664"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="oVK-MA-Zsg">
+                                            <rect key="frame" x="20" y="11" width="348" height="22"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ticket_Colour" translatesAutoresizingMaskIntoConstraints="NO" id="ios-Dr-dYK">
+                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="LUv-u2-kfe"/>
+                                                        <constraint firstAttribute="height" constant="30" id="O5Y-1b-V9B"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="R9d-Fm-zlb">
+                                                    <rect key="frame" x="42" y="0.0" width="306" height="22"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgS-E7-T8n">
+                                                            <rect key="frame" x="0.0" y="0.0" width="306" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Business Address" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OS-Tq-ojM">
+                                                            <rect key="frame" x="0.0" y="6" width="306" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1ng-Bn-Y0G">
+                                                            <rect key="frame" x="0.0" y="12" width="306" height="10"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outlet Suburb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VR1-IF-2TG">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="147" height="10"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 999 km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EsH-1M-IiU">
+                                                                    <rect key="frame" x="159" y="0.0" width="147" height="10"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="mgS-E7-T8n" firstAttribute="top" secondItem="xEs-fp-vAp" secondAttribute="topMargin" id="256-V9-wAo"/>
-                                        <constraint firstItem="VR1-IF-2TG" firstAttribute="leading" secondItem="ios-Dr-dYK" secondAttribute="trailing" constant="12" id="5eM-s3-eTd"/>
-                                        <constraint firstItem="EsH-1M-IiU" firstAttribute="top" secondItem="3OS-Tq-ojM" secondAttribute="bottom" constant="4" id="FRP-1h-Qpv"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="mgS-E7-T8n" secondAttribute="trailing" id="IG1-v9-CbL"/>
-                                        <constraint firstItem="3OS-Tq-ojM" firstAttribute="top" secondItem="mgS-E7-T8n" secondAttribute="bottom" constant="8" id="LGQ-Ch-FO7"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="EsH-1M-IiU" secondAttribute="bottom" id="Ygz-BK-Yag"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="ios-Dr-dYK" secondAttribute="bottom" id="cAQ-4u-bvf"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="VR1-IF-2TG" secondAttribute="bottom" id="d9U-V7-8ek"/>
-                                        <constraint firstItem="3OS-Tq-ojM" firstAttribute="trailing" secondItem="xEs-fp-vAp" secondAttribute="trailingMargin" id="isY-5O-OjW"/>
-                                        <constraint firstItem="ios-Dr-dYK" firstAttribute="leading" secondItem="xEs-fp-vAp" secondAttribute="leadingMargin" id="k5m-dU-A5g"/>
-                                        <constraint firstItem="EsH-1M-IiU" firstAttribute="leading" secondItem="VR1-IF-2TG" secondAttribute="trailing" constant="12" id="mad-lv-hbb"/>
-                                        <constraint firstItem="mgS-E7-T8n" firstAttribute="leading" secondItem="ios-Dr-dYK" secondAttribute="trailing" constant="12" id="ofV-7w-rJO"/>
-                                        <constraint firstItem="ios-Dr-dYK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xEs-fp-vAp" secondAttribute="topMargin" id="rG8-DZ-EGH"/>
-                                        <constraint firstItem="3OS-Tq-ojM" firstAttribute="leading" secondItem="ios-Dr-dYK" secondAttribute="trailing" constant="12" id="tyx-5x-mG0"/>
-                                        <constraint firstItem="VR1-IF-2TG" firstAttribute="top" secondItem="3OS-Tq-ojM" secondAttribute="bottom" constant="4" id="uyH-Jl-w4S"/>
-                                        <constraint firstItem="EsH-1M-IiU" firstAttribute="trailing" secondItem="xEs-fp-vAp" secondAttribute="trailingMargin" id="xgg-eI-dKc"/>
+                                        <constraint firstItem="oVK-MA-Zsg" firstAttribute="leading" secondItem="xEs-fp-vAp" secondAttribute="leadingMargin" id="0My-KO-adc"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="oVK-MA-Zsg" secondAttribute="trailing" id="4jt-DE-pO2"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="oVK-MA-Zsg" secondAttribute="bottom" id="PXd-A7-rtj"/>
+                                        <constraint firstItem="oVK-MA-Zsg" firstAttribute="top" secondItem="xEs-fp-vAp" secondAttribute="topMargin" id="Rkl-Lc-7kL"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1650,7 +1647,7 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.5 (Build 277 @ 1 June 2019)
+                                <mutableString key="text">Version 1.2.5 (Build 278 @ 1 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
@@ -1681,8 +1678,8 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tH8-GN-WaY"/>
+        <segue reference="hKS-pF-xub"/>
         <segue reference="yW6-4j-AAm"/>
-        <segue reference="rUw-3q-bGF"/>
+        <segue reference="Zt6-QJ-tnR"/>
     </inferredMetricsTieBreakers>
 </document>

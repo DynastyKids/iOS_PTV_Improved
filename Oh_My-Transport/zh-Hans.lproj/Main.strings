@@ -1,0 +1,258 @@
+
+/* Class = "UILabel"; text = "Disruption Information is now loading, please wait"; ObjectID = "0pF-0J-bJ9"; */
+"0pF-0J-bJ9.text" = "Disruption Information is now loading, please wait";
+
+/* Class = "UILabel"; text = "Business distance"; ObjectID = "2Da-tH-Fdh"; */
+"2Da-tH-Fdh.text" = "Business distance";
+
+/* Class = "UITableViewController"; title = "Search"; ObjectID = "3Cl-YF-8nc"; */
+"3Cl-YF-8nc.title" = "Search";
+
+/* Class = "UILabel"; text = "Route 1"; ObjectID = "3Ds-XT-OGf"; */
+"3Ds-XT-OGf.text" = "Route 1";
+
+/* Class = "UILabel"; text = "Route 3"; ObjectID = "3H0-UH-RBr"; */
+"3H0-UH-RBr.text" = "Route 3";
+
+/* Class = "UILabel"; text = "  "; ObjectID = "3Ma-xr-tYV"; */
+"3Ma-xr-tYV.text" = "  ";
+
+/* Class = "UILabel"; text = "Business Address"; ObjectID = "3OS-Tq-ojM"; */
+"3OS-Tq-ojM.text" = "Business Address";
+
+/* Class = "UILabel"; text = "Stop Name"; ObjectID = "4Et-mW-cWv"; */
+"4Et-mW-cWv.text" = "Stop Name";
+
+/* Class = "UILabel"; text = "Route Name"; ObjectID = "553-Bt-CD0"; */
+"553-Bt-CD0.text" = "Route Name";
+
+/* Class = "UILabel"; text = "*Near By Stop    Distance"; ObjectID = "57e-sG-5WX"; */
+"57e-sG-5WX.text" = "*Near By Stop    Distance";
+
+/* Class = "UILabel"; text = "Stop Name"; ObjectID = "5Ou-Mu-dGI"; */
+"5Ou-Mu-dGI.text" = "Stop Name";
+
+/* Class = "UILabel"; text = "Stop Suburb"; ObjectID = "5ng-Rf-sOy"; */
+"5ng-Rf-sOy.text" = "Stop Suburb";
+
+/* Class = "UILabel"; text = "Time 2"; ObjectID = "68l-yf-7jk"; */
+"68l-yf-7jk.text" = "Time 2";
+
+/* Class = "UIBarButtonItem"; title = "Data Privacy"; ObjectID = "6Eu-75-WdO"; */
+"6Eu-75-WdO.title" = "Data Privacy";
+
+/* Class = "UILabel"; text = "Suburb Name"; ObjectID = "7K9-q5-qaW"; */
+"7K9-q5-qaW.text" = "Suburb Name";
+
+/* Class = "UILabel"; text = "Thursday"; ObjectID = "7Ou-jO-Z76"; */
+"7Ou-jO-Z76.text" = "Thursday";
+
+/* Class = "UILabel"; text = "Time 1"; ObjectID = "7Wa-7b-EqL"; */
+"7Wa-7b-EqL.text" = "Time 1";
+
+/* Class = "UILabel"; text = "Time 1"; ObjectID = "AK9-zj-tT1"; */
+"AK9-zj-tT1.text" = "Time 1";
+
+/* Class = "UILabel"; text = "Suburb Name"; ObjectID = "ASA-51-Z9X"; */
+"ASA-51-Z9X.text" = "Suburb Name";
+
+/* Class = "UILabel"; text = "Business Hours"; ObjectID = "AYI-bD-n5Z"; */
+"AYI-bD-n5Z.text" = "Business Hours";
+
+/* Class = "UIViewController"; title = "Disruptions Detail"; ObjectID = "BJB-We-4jd"; */
+"BJB-We-4jd.title" = "Disruptions Detail";
+
+/* Class = "UIViewController"; title = "Data Privacy Policy"; ObjectID = "BTD-U8-ean"; */
+"BTD-U8-ean.title" = "Data Privacy Policy";
+
+/* Class = "UILabel"; text = "Distance: 999 km"; ObjectID = "BcN-6l-i3Z"; */
+"BcN-6l-i3Z.text" = "Distance: 999 km";
+
+/* Class = "UILabel"; text = "Time 2"; ObjectID = "C9I-SJ-q8X"; */
+"C9I-SJ-q8X.text" = "Time 2";
+
+/* Class = "UILabel"; text = "Terminal Stop"; ObjectID = "CKX-cC-t7p"; */
+"CKX-cC-t7p.text" = "Terminal Stop";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "DrZ-sa-rHL"; */
+"DrZ-sa-rHL.title" = "Item";
+
+/* Class = "UILabel"; text = "Distance: 999 km"; ObjectID = "EsH-1M-IiU"; */
+"EsH-1M-IiU.text" = "Distance: 999 km";
+
+/* Class = "UILabel"; text = "Published on: "; ObjectID = "EwJ-XQ-Dz1"; */
+"EwJ-XQ-Dz1.text" = "Published on: ";
+
+/* Class = "UIBarButtonItem"; title = "Journey"; ObjectID = "G5h-yE-Lfh"; */
+"G5h-yE-Lfh.title" = "Journey";
+
+/* Class = "UILabel"; text = "Notes:"; ObjectID = "GWB-Za-0Ie"; */
+"GWB-Za-0Ie.text" = "Notes:";
+
+/* Class = "UILabel"; text = "Sunday"; ObjectID = "HWb-lv-L8N"; */
+"HWb-lv-L8N.text" = "Sunday";
+
+/* Class = "UILabel"; text = "Route 1"; ObjectID = "Hg9-j9-bUU"; */
+"Hg9-j9-bUU.text" = "Route 1";
+
+/* Class = "UILabel"; text = "Route 2"; ObjectID = "HhN-6b-R34"; */
+"HhN-6b-R34.text" = "Route 2";
+
+/* Class = "UILabel"; text = "Monday"; ObjectID = "ISm-w4-IC4"; */
+"ISm-w4-IC4.text" = "Monday";
+
+/* Class = "UILabel"; text = "Tap to see more details"; ObjectID = "J98-MG-UX2"; */
+"J98-MG-UX2.text" = "Tap to see more details";
+
+/* Class = "UILabel"; text = "Nearest Stop:"; ObjectID = "JpV-Cf-Z6E"; */
+"JpV-Cf-Z6E.text" = "Nearest Stop:";
+
+/* Class = "UITextView"; text = "Version 1.2.5 (Build 277 @ 1 June 2019)\n This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. \nTimetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.\n Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. \nDisclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  "; ObjectID = "Mer-84-M7w"; */
+"Mer-84-M7w.text" = "Version 1.2.5 (Build 277 @ 1 June 2019)\n This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. \nTimetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.\n Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. \nDisclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  ";
+
+/* Class = "UILabel"; text = "Business Address"; ObjectID = "NDU-zW-Zk2"; */
+"NDU-zW-Zk2.text" = "Business Address";
+
+/* Class = "UILabel"; text = "Disruption detail loading"; ObjectID = "NXc-xP-6Gt"; */
+"NXc-xP-6Gt.text" = "Disruption detail loading";
+
+/* Class = "UILabel"; text = "Route Info"; ObjectID = "NeV-ou-9Wa"; */
+"NeV-ou-9Wa.text" = "Route Info";
+
+/* Class = "UILabel"; text = "Loading Stops ..."; ObjectID = "O40-Jw-kEk"; */
+"O40-Jw-kEk.text" = "Loading Stops ...";
+
+/* Class = "UILabel"; text = "Route 2"; ObjectID = "Oak-NS-3Yy"; */
+"Oak-NS-3Yy.text" = "Route 2";
+
+/* Class = "UILabel"; text = "Time 3"; ObjectID = "OiH-dm-xSC"; */
+"OiH-dm-xSC.text" = "Time 3";
+
+/* Class = "UILabel"; text = "Direction"; ObjectID = "Q9v-Rl-6M8"; */
+"Q9v-Rl-6M8.text" = "Direction";
+
+/* Class = "UILabel"; text = "Fetching disruption information from PTV"; ObjectID = "QdB-V3-inX"; */
+"QdB-V3-inX.text" = "Fetching disruption information from PTV";
+
+/* Class = "UILabel"; text = "Friday"; ObjectID = "R9s-ch-P1t"; */
+"R9s-ch-P1t.text" = "Friday";
+
+/* Class = "UIViewController"; title = "Journey Planner"; ObjectID = "ROT-6e-1kD"; */
+"ROT-6e-1kD.title" = "Journey Planner";
+
+/* Class = "UITableViewController"; title = "Disruptions"; ObjectID = "Rur-ig-BSX"; */
+"Rur-ig-BSX.title" = "Disruptions";
+
+/* Class = "UILabel"; text = "Time 3"; ObjectID = "Sha-sj-TAw"; */
+"Sha-sj-TAw.text" = "Time 3";
+
+/* Class = "UIViewController"; title = "Select a stop"; ObjectID = "Ssc-zo-9BZ"; */
+"Ssc-zo-9BZ.title" = "Select a stop";
+
+/* Class = "UILabel"; text = "Count 3"; ObjectID = "TJ8-lU-Pfl"; */
+"TJ8-lU-Pfl.text" = "Count 3";
+
+/* Class = "UILabel"; text = "Next Service:"; ObjectID = "TXE-2r-K86"; */
+"TXE-2r-K86.text" = "Next Service:";
+
+/* Class = "UILabel"; text = "Route"; ObjectID = "UWF-8z-HAn"; */
+"UWF-8z-HAn.text" = "Route";
+
+/* Class = "UILabel"; text = "Stop Name"; ObjectID = "UaI-Mu-Tvg"; */
+"UaI-Mu-Tvg.text" = "Stop Name";
+
+/* Class = "UILabel"; text = "Outlet Suburb"; ObjectID = "VR1-IF-2TG"; */
+"VR1-IF-2TG.text" = "Outlet Suburb";
+
+/* Class = "UITableViewController"; title = "Loading Data ..."; ObjectID = "VfA-ee-rv5"; */
+"VfA-ee-rv5.title" = "Loading Data ...";
+
+/* Class = "UITextView"; text = "Information we collect and hold:\nThis application will collect personal information about you via this mobile applications. Personal information that this data may hold including your transport preference, travel route, selected stops and other identifying information you choose to provide. When you use this application, we may also collection information about you in the following general categories.\n\n- Location information: If you permit an application to access location services through the permission system on your mobile device, this application may collect the precise location of  your device when the application is running in the foreground or background in order to deliver the latest transit information at your nearest stops\n\n- Usage and preferences: This application collect information about how you interact with our websites or applications including the pages you visit, your preferences and setting that you choose. We may do this through the use of cookies and other similar technology that uniquely identify you.\n\n- Device information: This application may collection information about your mobile device such as the hardware model, operating system, preferred language, unique device identifier and mobile network.\n\n- Other information: This application may also collect and log information such as your IP address, access date and times, browser type and application crash datas.\n\n\n\n"; ObjectID = "ZAs-vS-7eU"; */
+"ZAs-vS-7eU.text" = "Information we collect and hold:\nThis application will collect personal information about you via this mobile applications. Personal information that this data may hold including your transport preference, travel route, selected stops and other identifying information you choose to provide. When you use this application, we may also collection information about you in the following general categories.\n\n- Location information: If you permit an application to access location services through the permission system on your mobile device, this application may collect the precise location of  your device when the application is running in the foreground or background in order to deliver the latest transit information at your nearest stops\n\n- Usage and preferences: This application collect information about how you interact with our websites or applications including the pages you visit, your preferences and setting that you choose. We may do this through the use of cookies and other similar technology that uniquely identify you.\n\n- Device information: This application may collection information about your mobile device such as the hardware model, operating system, preferred language, unique device identifier and mobile network.\n\n- Other information: This application may also collect and log information such as your IP address, access date and times, browser type and application crash datas.\n\n\n\n";
+
+/* Class = "UILabel"; text = "Disruption ends:"; ObjectID = "ZF2-Hp-AOh"; */
+"ZF2-Hp-AOh.text" = "Disruption ends:";
+
+/* Class = "UILabel"; text = "Wednesday"; ObjectID = "drl-4F-jM1"; */
+"drl-4F-jM1.text" = "Wednesday";
+
+/* Class = "UILabel"; text = "Time 1"; ObjectID = "emQ-6k-mam"; */
+"emQ-6k-mam.text" = "Time 1";
+
+/* Class = "UIViewController"; title = "Loading Data"; ObjectID = "f1e-ej-sol"; */
+"f1e-ej-sol.title" = "Loading Data";
+
+/* Class = "UILabel"; text = "Disruption from: "; ObjectID = "fF4-AZ-dl4"; */
+"fF4-AZ-dl4.text" = "Disruption from: ";
+
+/* Class = "UIButton"; normalTitle = "Tap to see more"; ObjectID = "gIS-fU-4av"; */
+"gIS-fU-4av.normalTitle" = "Tap to see more";
+
+/* Class = "UILabel"; text = "Saturday"; ObjectID = "gLI-zI-dJX"; */
+"gLI-zI-dJX.text" = "Saturday";
+
+/* Class = "UILabel"; text = "Tap to see details"; ObjectID = "gYO-CS-amP"; */
+"gYO-CS-amP.text" = "Tap to see details";
+
+/* Class = "UILabel"; text = "Count 1"; ObjectID = "gcR-jy-gmh"; */
+"gcR-jy-gmh.text" = "Count 1";
+
+/* Class = "UILabel"; text = "Business Name"; ObjectID = "gjH-JW-y3t"; */
+"gjH-JW-y3t.text" = "Business Name";
+
+/* Class = "UIViewController"; title = "Myki Outlet Details"; ObjectID = "hgb-es-j82"; */
+"hgb-es-j82.title" = "Myki Outlet Details";
+
+/* Class = "UILabel"; text = "Time 3"; ObjectID = "iDx-ma-27s"; */
+"iDx-ma-27s.text" = "Time 3";
+
+/* Class = "UILabel"; text = "* disruptions in effect"; ObjectID = "kmS-0X-NQ7"; */
+"kmS-0X-NQ7.text" = "* disruptions in effect";
+
+/* Class = "UIViewController"; title = "About"; ObjectID = "lo7-bg-DmJ"; */
+"lo7-bg-DmJ.title" = "About";
+
+/* Class = "UILabel"; text = "Business Name"; ObjectID = "mgS-E7-T8n"; */
+"mgS-E7-T8n.text" = "Business Name";
+
+/* Class = "UINavigationItem"; title = "Oh My Transport"; ObjectID = "nav-A9-W8a"; */
+"nav-A9-W8a.title" = "Oh My Transport";
+
+/* Class = "UILabel"; text = "Service to:"; ObjectID = "nqj-iX-noi"; */
+"nqj-iX-noi.text" = "Service to:";
+
+/* Class = "UILabel"; text = "Loading"; ObjectID = "oLX-Jt-fIN"; */
+"oLX-Jt-fIN.text" = "Loading";
+
+/* Class = "UILabel"; text = "Stop Name"; ObjectID = "oSv-YL-s5g"; */
+"oSv-YL-s5g.text" = "Stop Name";
+
+/* Class = "UILabel"; text = "Published On: "; ObjectID = "obq-KO-wUx"; */
+"obq-KO-wUx.text" = "Published On: ";
+
+/* Class = "UILabel"; text = "N Disruptions in effect "; ObjectID = "pqW-8Q-7rJ"; */
+"pqW-8Q-7rJ.text" = "N Disruptions in effect ";
+
+/* Class = "UILabel"; text = "Count 2"; ObjectID = "rc6-Dl-6pK"; */
+"rc6-Dl-6pK.text" = "Count 2";
+
+/* Class = "UILabel"; text = "Time 2"; ObjectID = "ssQ-jq-kiy"; */
+"ssQ-jq-kiy.text" = "Time 2";
+
+/* Class = "UILabel"; text = "Tuesday"; ObjectID = "tBB-aO-9md"; */
+"tBB-aO-9md.text" = "Tuesday";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "u4c-8D-6Ro"; */
+"u4c-8D-6Ro.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "View details on PTV website"; ObjectID = "xK6-yp-hYI"; */
+"xK6-yp-hYI.normalTitle" = "View details on PTV website";
+
+/* Class = "UILabel"; text = "Route 3"; ObjectID = "xqa-Eb-Ojl"; */
+"xqa-Eb-Ojl.text" = "Route 3";
+
+/* Class = "UILabel"; text = "to"; ObjectID = "zZV-4l-38e"; */
+"zZV-4l-38e.text" = "to";
+
+/* Class = "UIButton"; normalTitle = "Navigate me"; ObjectID = "zta-KU-1a2"; */
+"zta-KU-1a2.normalTitle" = "Navigate me";
