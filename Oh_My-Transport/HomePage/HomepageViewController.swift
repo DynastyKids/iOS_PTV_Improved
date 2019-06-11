@@ -21,7 +21,6 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Nearby Stops property
     var nearbyStops: [StopGeosearch] = []
-    var nearbyStopsDeaprtureSequence: [Departure] = []      // Departure data:Store all excesss data
     
     // MARK: - Saved Stops property
     var stopId: [Int] = []
@@ -29,25 +28,13 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     var routeType: [Int] = []
     var stopSuburb: [String] = []
     
-    // MARK: - Properties reused by stops cell
-    var nextRouteInfo0: RouteWithStatus? = nil       // Route data: data to be present
-    var nextRouteInfo1: RouteWithStatus? = nil       // Route data: data to be present
-    var nextRouteInfo2: RouteWithStatus? = nil       // Route data: data to be present
-    var nextRouteCount: Int = 0
-    
     // MARK: - Properties used by routes cell
-    
     let coreDataStack = CoreDataStack()
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
-    var filteredRoutes: [FavRoute] = []
-    var filteredStops: [FavStop] = []
-    
-    var lookupRouteName: Bool = true
     
     var latitude: Double = 0.0
     var longtitude: Double = 0.0
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,8 +69,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "nearbyStopsCell", for: indexPath) as! nearbyStopsTableViewCell
             let nearbystops = nearbyStops[indexPath.row];
-            var nextDepartRoutesData:[RouteWithStatus] = []
-            
+            var nearbyStopsDeaprtureSequence: [Departure] = []      // Departure data:Store all excesss data
             cell.stopNameLabel.text = nearbystops.stopName
             cell.stopSuburbLabel.text = nearbystops.stopSuburb
             cell.stopSuburbLabel.textColor = UIColor.black
@@ -101,6 +87,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     var avoidRouteList: [Int] = []       // Create a list avoiding fetch route with "combined"
                     let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                     let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
+                    var nextDepartRoutesData:[RouteWithStatus] = []
                     for(_, value) in nextDepartRoutes{
                         let nextDepartRouteData: NSDictionary = value as! NSDictionary
                         var routeGtfsId: String = ""
@@ -139,20 +126,20 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                     }
                                 }
                                 if appendFlag == true{
-                                    self.nearbyStopsDeaprtureSequence.append(eachDeparture)
+                                    nearbyStopsDeaprtureSequence.append(eachDeparture)
                                 }
                             }
                         } else {
-                            self.nearbyStopsDeaprtureSequence = nextDepartureData.departures!
+                            nearbyStopsDeaprtureSequence = nextDepartureData.departures!
                         }
                     }
                     
                     DispatchQueue.main.async {
                         if nextDepartureData.departures?.count ?? 0 > 0 {
                             // Route 0
-                            cell.departure0Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure0Time.text = Iso8601Countdown(iso8601Date: (nearbyStopsDeaprtureSequence[0].estimatedDepartureUTC) ?? ((nearbyStopsDeaprtureSequence[0].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure0Time.textColor = UIColor.black
-                            let searchRouteId0 = self.nearbyStopsDeaprtureSequence[0].routesId
+                            let searchRouteId0 = nearbyStopsDeaprtureSequence[0].routesId
                             for each in nextDepartRoutesData{
                                 if searchRouteId0 == each.routeId{
                                     cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
@@ -173,9 +160,9 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 }
                             }
                             // Route 1
-                            cell.departure1Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure1Time.text = Iso8601Countdown(iso8601Date: (nearbyStopsDeaprtureSequence[1].estimatedDepartureUTC) ?? ((nearbyStopsDeaprtureSequence[1].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure1Time.textColor = UIColor.black
-                            let searchRouteId1 = self.nearbyStopsDeaprtureSequence[1].routesId
+                            let searchRouteId1 = nearbyStopsDeaprtureSequence[1].routesId
                             for each in nextDepartRoutesData{
                                 if searchRouteId1 == each.routeId{
                                     cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
@@ -196,9 +183,9 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 }
                             }
                             // Route 2
-                            cell.departure2Time.text = Iso8601Countdown(iso8601Date: (self.nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((self.nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
+                            cell.departure2Time.text = Iso8601Countdown(iso8601Date: (nearbyStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((nearbyStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure2Time.textColor = UIColor.black
-                            let searchRouteId2 = self.nearbyStopsDeaprtureSequence[2].routesId
+                            let searchRouteId2 = nearbyStopsDeaprtureSequence[2].routesId
                             for each in nextDepartRoutesData{
                                 if searchRouteId2 == each.routeId{
                                     cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
@@ -235,8 +222,6 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             let savedStopId = savedStop.stopId
             let savedStopType = savedStop.routeType
             
-            var nextDepartRoutesData:[RouteWithStatus] = []
-            
             stopId.append(Int(savedStop.stopId))
             stopName.append(savedStop.stopName ?? "")
             stopSuburb.append(savedStop.stopSuburb ?? "")
@@ -253,6 +238,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                     var savedStopsDeaprtureSequence: [Departure] = []
                     let nextDepartureDictonary: NSDictionary = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! NSDictionary
                     let nextDepartRoutes = nextDepartureDictonary.value(forKey: "routes") as! NSDictionary
+                    var nextDepartRoutesData:[RouteWithStatus] = []
                     for(_, value) in nextDepartRoutes{
                         let nextDepartRouteData: NSDictionary = value as! NSDictionary
                         var routeGtfsId: String = ""

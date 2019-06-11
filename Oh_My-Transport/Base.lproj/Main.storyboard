@@ -39,7 +39,7 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
-                                    <dataDetectorTypes key="dataDetectorTypes"/>
+                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
@@ -60,7 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M50-ph-d6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2342" y="1220"/>
+            <point key="canvasLocation" x="-2404" y="1238"/>
         </scene>
         <!--Oh My Transport-->
         <scene sceneID="MVb-jZ-OE4">
@@ -91,7 +91,7 @@
                                             <segue destination="Rur-ig-BSX" kind="show" identifier="showAllDisruptions" id="yW6-4j-AAm"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="5Ty-OD-UZ0"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="5Ty-OD-UZ0"/>
                                     <barButtonItem title="Item" image="AboutIcon" style="plain" id="u4c-8D-6Ro">
                                         <connections>
                                             <segue destination="lo7-bg-DmJ" kind="show" id="l0b-oY-jvf"/>
@@ -1595,8 +1595,7 @@
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAs-vS-7eU">
                                 <rect key="frame" x="2" y="64" width="408" height="668"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text"># Information we collect and hold
-
+                                <mutableString key="text">Information we collect and hold:
 This application will collect personal information about you via this mobile applications. Personal information that this data may hold including your transport preference, travel route, selected stops and other identifying information you choose to provide. When you use this application, we may also collection information about you in the following general categories.
 
 - Location information: If you permit an application to access location services through the permission system on your mobile device, this application may collect the precise location of  your device when the application is running in the foreground or background in order to deliver the latest transit information at your nearest stops
@@ -1609,7 +1608,7 @@ This application will collect personal information about you via this mobile app
 
 
 
-</string>
+</mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1651,7 +1650,7 @@ This application will collect personal information about you via this mobile app
                                 <rect key="frame" x="8" y="62" width="398" height="612"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.5 (Build 276 @ 1 June 2019)
+                                <mutableString key="text">Version 1.2.5 (Build 277 @ 1 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
@@ -1667,7 +1666,7 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTB-G5-rs9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2342.0289855072465" y="1976.9021739130437"/>
+            <point key="canvasLocation" x="-2403" y="2138"/>
         </scene>
     </scenes>
     <resources>

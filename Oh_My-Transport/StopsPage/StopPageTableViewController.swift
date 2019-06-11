@@ -36,26 +36,6 @@ class StopPageTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        _ = URLSession.shared.dataTask(with: URL(string: showStopsInfo(stopId: stopId, routeType: routeType))!) { (data, response, error) in    //Get the stop name, stop suburb
-            if let error = error {
-                print("Download failed: \(String(describing: error))")
-                return
-            }
-            do {    // Data recieved.  Decode it from JSON.
-                let stopDetail = try JSONDecoder().decode(stopResposeByStopId.self, from: data!)
-                self.stopInfo = stopDetail.stop
-                DispatchQueue.main.async {
-                    self.stopName = stopDetail.stop?.stopName ?? ""
-                    self.stopSuburb = stopDetail.stop?.stopLocation?.suburb ?? ""
-                    print("Value Received: StopId:\(self.stopId), StopName:\(self.stopName), StopSuburb:\(self.stopSuburb)")
-                    self.navigationItem.rightBarButtonItem?.isEnabled = true
-                    self.tableView.reloadData()
-                }
-            } catch {
-                print("Error:"+error.localizedDescription)
-            }
-            }.resume()
-        
         var nextDepart = nextDepartureURL(routeType: routeType, stopId: stopId)
         if routeId != -1 {
             nextDepart = showRouteDepartureOnStop(routeType: routeType, stopId: stopId, routeId: routeId)
@@ -190,8 +170,10 @@ class StopPageTableViewController: UITableViewController {
                             stopDistance = value as! Double
                         } else if "\(key)" == "stop_suburb" && (value is NSNull) == false{
                             stopSuburb = value as! String
+                            self.stopSuburb = value as! String
                         } else if "\(key)" == "stop_name" && (value is NSNull) == false{
                             stopName = value as! String
+                            self.stopName = value as! String
                         } else if "\(key)" == "stop_id" && (value is NSNull) == false{
                             stopId = value as! Int
                         } else if "\(key)" == "route_type" && (value is NSNull) == false{
@@ -245,6 +227,7 @@ class StopPageTableViewController: UITableViewController {
                 DispatchQueue.main.async {
                     self.tableView.reloadData() // Details data will be loaded when loading cell
                     self.navigationItem.title = ""
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
                 }
             } catch {
                 print(error)
