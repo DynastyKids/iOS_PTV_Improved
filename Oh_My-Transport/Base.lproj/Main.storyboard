@@ -1272,10 +1272,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nEF-c4-Lmb">
-                                                    <rect key="frame" x="20" y="4" width="348" height="20.333333333333332"/>
+                                                    <rect key="frame" x="20" y="4" width="348" height="20.666666666666668"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqj-iX-noi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.333333333333332"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.666666666666668"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="110" id="xge-Uj-0Sh"/>
                                                             </constraints>
@@ -1284,7 +1284,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terminal Stop" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKX-cC-t7p">
-                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.333333333333332"/>
+                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.666666666666668"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1292,10 +1292,10 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gGF-XN-Y27">
-                                                    <rect key="frame" x="20" y="28.333333333333329" width="348" height="20.666666666666671"/>
+                                                    <rect key="frame" x="20" y="28.666666666666671" width="348" height="20.333333333333329"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearest Stop:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpV-Cf-Z6E">
-                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.333333333333332"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="110" id="Iuf-Wd-LuG"/>
                                                             </constraints>
@@ -1304,7 +1304,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Et-mW-cWv">
-                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.666666666666668"/>
+                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1599,7 +1599,7 @@
                             <textView clipsSubviews="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAs-vS-7eU">
                                 <rect key="frame" x="2" y="64" width="408" height="668"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Information we collect and hold:
+                                <string key="text">Information we collect and hold:
 This application will collect personal information about you via this mobile applications. Personal information that this data may hold including your transport preference, travel route, selected stops and other identifying information you choose to provide. When you use this application, we may also collection information about you in the following general categories.
 
 - Location information: If you permit an application to access location services through the permission system on your mobile device, this application may collect the precise location of  your device when the application is running in the foreground or background in order to deliver the latest transit information at your nearest stops
@@ -1612,7 +1612,7 @@ This application will collect personal information about you via this mobile app
 
 
 
-</mutableString>
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1642,7 +1642,7 @@ This application will collect personal information about you via this mobile app
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="4" y="68" width="406" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.5 (Build 279 @ 1 June 2019)
+                                <mutableString key="text">Version 1.2.5 (Build 280 @ 1 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
@@ -1692,8 +1692,8 @@ Disclamier:  This application is build by Wenkai Gong for Assessment purpose F
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tH8-GN-WaY"/>
+        <segue reference="hKS-pF-xub"/>
         <segue reference="yW6-4j-AAm"/>
-        <segue reference="ULE-TB-kfM"/>
+        <segue reference="Zt6-QJ-tnR"/>
     </inferredMetricsTieBreakers>
 </document>

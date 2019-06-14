@@ -17,9 +17,12 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     var searchOutlets: [ResultOutlet] = []
     var searchStops: [ResultStop] = []
     
+    // MARK: - Location Data Property
     let locationManager = CLLocationManager()
     var nslock = NSLock()
     var currentLocation:CLLocation!
+    
+    // MARK: - Core Data Property
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     var routeFetchedResultsController: NSFetchedResultsController<FavRoute>!
     
@@ -31,11 +34,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-
+        
+        // MARK: - Search Bar creation
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Type a stop / station / route to start"
+        searchController.searchBar.keyboardType = UIKeyboardType.asciiCapable
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -43,14 +48,13 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         indicator.style = UIActivityIndicatorView.Style.gray
         indicator.center = self.tableView.center
         self.view.addSubview(indicator)
-
     }
     
+    // MARK: - Search Bar  source
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, searchText.count > 0 else {
             return;
         }
-        
         indicator.startAnimating()
         indicator.backgroundColor = UIColor.white
         let replacedText = searchText.replacingOccurrences(of: " ", with: "%20")
@@ -67,24 +71,25 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             }
             do{
                 let results = try JSONDecoder().decode(SearchResult.self, from: data!)
-                self.searchStops.removeAll()
+                self.searchStops.removeAll()    // Remove all existing data in array
                 self.searchRoute.removeAll()
                 self.searchOutlets.removeAll()
-                if results.stops?.count ?? 0 > 0{
+                if results.stops?.count ?? 0 > 0 {   // Fill stops array when > 0
                     self.searchStops = results.stops!
                 }
-                if results.routes?.count ?? 0 > 0{
+                if results.routes?.count ?? 0 > 0 {  // Fill routes when array >0
                     for each in results.routes!{
-                        if (each.routeType == 2 && (each.routeNumber?.contains("combined") == true)) {continue}// Filter with repeat results
-                        if (each.routeType == 3){continue}      // Vline using different data
+                        if ((each.routeType == 2 && (each.routeNumber?.contains("combined") == true)) || each.routeType == 3) {
+                            continue    // exclude repeat results
+                        }
                         self.searchRoute.append(each)
                     }
                 }
-                if results.outlets?.count ?? 0 > 0{
+                if results.outlets?.count ?? 0 > 0 { // Fill nearest myki Outlets
                     self.searchOutlets = results.outlets!
                 }
                 
-                if results.stops?.count ?? 0 > 0{   // Bubble sort for route, ordered by Metro - Tram - Buses - Night Bus
+                if results.stops?.count ?? 0 > 0 {   // Bubble sort for route, ordered by Metro - Tram - Buses - Night Bus
                     for sequence in 0 ..< self.searchRoute.count {
                         for eachRoutes in 0 ..< ((self.searchRoute.count)-1-sequence) {
                             if (self.searchRoute[eachRoutes].routeType)! > (self.searchRoute[eachRoutes+1].routeType)! {
@@ -95,7 +100,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                         }
                     }
                 }
-                
                 if (results.stops?.count)!>0{       // Bubble sort for stop distance
                     for sequence in 0 ..< self.searchStops.count {
                         for eachStops in 0 ..< self.searchStops.count-1-sequence{
@@ -124,7 +128,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                         }
                     }
                 }
-                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -135,7 +138,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -154,7 +156,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0{
+        if indexPath.section == 0 { // Inflating with route results
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchRoutes", for: indexPath) as! SearchRouteTableViewCell
             cell.routeInfoLabel.text = searchRoute[indexPath.row].routeName
             cell.routeNameLabel.backgroundColor = changeColorByRouteType(routeType: searchRoute[indexPath.row].routeType!)
@@ -165,7 +167,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             }else{
                 cell.routeNameLabel.text = searchRoute[indexPath.row].routeNumber
             }
-            switch searchRoute[indexPath.row].routeType{
+            switch searchRoute[indexPath.row].routeType{    //Showing icons
             case 0:
                 cell.routeTypeIcon.image = UIImage(named: "trainIcon_PTVColour")
             case 1:
@@ -181,7 +183,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             }
             return cell
         }
-        if indexPath.section == 1{
+        if indexPath.section == 1{  // Inflating with stop Results
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchStops", for: indexPath) as! SearchStopsTableViewCell
             if searchStops[indexPath.row].routeType! == 4{
                 cell.stopNameLabel.text = "\(searchStops[indexPath.row].stopName!) (Night Bus)"
@@ -195,8 +197,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                     cell.stopDistanceLabel.text = "\(String(format:"%.2f",Double(searchStops[indexPath.row].stopDistance!/1000)))km away"
                 }
                 cell.stopDistanceLabel.text = "\(Int(searchStops[indexPath.row].stopDistance!))m away"
-            } else {
-                // Using provided location to calculate
+            } else {    // Using provided location to calculate
                 if (searchStops[indexPath.row].stopLatitude != nil && searchStops[indexPath.row].stopLongitude != nil){
                     let userlocation = CLLocation(latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
                     let distance = userlocation.distance(from: CLLocation(latitude: searchStops[indexPath.row].stopLatitude!, longitude: searchStops[indexPath.row].stopLongitude!))
@@ -209,7 +210,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
                     cell.stopDistanceLabel.text = ""
                 }
             }
-            switch searchStops[indexPath.row].routeType{
+            switch searchStops[indexPath.row].routeType{    // Showing icons
             case 0:
                 cell.stopIcon.image = UIImage(named: "trainIcon_PTVColour")
             case 1:
@@ -225,7 +226,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             }
             return cell
         }
-        if indexPath.section == 2{
+        if indexPath.section == 2 { //Inflating with Myki Outlets
             let cell = tableView.dequeueReusableCell(withIdentifier: "searchOutlets", for: indexPath) as! SearchOutletsTableViewCell
             cell.businessNameLabel.text = searchOutlets[indexPath.row].outeletBusiness
             cell.businessAddressLabel.text = "\(searchOutlets[indexPath.row].outletName!), \(searchOutlets[indexPath.row].outletSuburb!)"
@@ -248,14 +249,23 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionName: String
+        var sectionName: String
         switch section {
         case 0:
             sectionName = NSLocalizedString("Routes:", comment: "Routes Result")
+            if searchRoute.count == 0 {
+                sectionName = NSLocalizedString("", comment: "")
+            }
         case 1:
             sectionName = NSLocalizedString("Stops:", comment: "Stops Result")
+            if searchStops.count == 0 {
+                sectionName = NSLocalizedString("", comment: "")
+            }
         case 2:
             sectionName = NSLocalizedString("MyKi Outlets:", comment: "MyKi Outlet Result")
+            if searchOutlets.count == 0{
+                sectionName = NSLocalizedString("", comment: "")
+            }
         default:
             sectionName = ""
         }
@@ -266,8 +276,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // Get the new view controller using segue.destination. Pass the selected object to the new view controller.
         if segue.identifier == "searchToRoute"{
             let page2:DirectionsViewController = segue.destination as! DirectionsViewController
             page2.routeId = searchRoute[(tableView.indexPathForSelectedRow?.row)!].routeId!
