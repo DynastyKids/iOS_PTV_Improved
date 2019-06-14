@@ -41,9 +41,12 @@ class DisruptionsTableViewController: UITableViewController {
                 return
             }
             do{
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-                let disruptionData = try decoder.decode(DisruptionsResponse.self, from: data!)
+                JSONDecoder().dateDecodingStrategy = .iso8601
+                let disruptionData = try JSONDecoder().decode(DisruptionsResponse.self, from: data!)
+                if disruptionData.message != nil {     // Error message response
+                    self.displayMessage(title: "Oops!", message: "Reveice error response from server, please try again later")
+                    return;
+                }
                 if (disruptionData.disruptions?.metroTrain?.count ?? 0 > 0){
                     self.disruptions = (disruptionData.disruptions?.metroTrain)!
                     for _ in 0 ..< (disruptionData.disruptions?.metroTrain?.count)! {
@@ -164,13 +167,14 @@ class DisruptionsTableViewController: UITableViewController {
         return cell
     }
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
     }
-    */
 
     
     // MARK: - Navigation

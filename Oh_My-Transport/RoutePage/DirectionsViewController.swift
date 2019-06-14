@@ -66,6 +66,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do {
                 let routeData = try JSONDecoder().decode(RouteResponse.self, from: data!)
+                if routeData.message != nil {
+                    self.displayMessage(title: "Oops!", message: "There has some error happens on server, try again later")
+                    return;
+                }
                 if routeData.route?.routeNumber != nil{
                     self.routeName = routeData.route?.routeNumber
                 } else{
@@ -96,6 +100,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do{
                 let stopsdata = try JSONDecoder().decode(StopsResponseByRouteId.self, from: data!)
+                if stopsdata.message != nil {
+                    self.displayMessage(title: "Oops!", message: "There has some error happens on server, try again later")
+                    return;
+                }
                 if stopsdata.stops != nil{
                     self.allstopsdata = stopsdata.stops!            // All stops data are in.
                     var distance:[Double] = []
@@ -135,6 +143,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         do{
                             let directionData = try JSONDecoder().decode(DirectionsResponse.self, from: data!)
                             self.routeDirections = directionData.directions!
+                            if directionData.message != nil {
+                                self.displayMessage(title: "Oops!", message: "There has some error happens on server, try again later")
+                                return;
+                            }
                             DispatchQueue.main.async {
                                 self.directionsTableView.reloadData()
                             }
@@ -158,6 +170,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do{
                 let disruptionData = try JSONDecoder().decode(DisruptionsResponse.self, from: data!)
+                if disruptionData.message != nil {
+                    self.displayMessage(title: "Oops!", message: "There has some error happens on server, try again later")
+                    return;
+                }
                 if (self.routeType == 0 && (disruptionData.disruptions?.metroTrain?.count)!>0) {
                     self.disruptiondata += (disruptionData.disruptions?.metroTrain)!
                 } else if (self.routeType == 1 && (disruptionData.disruptions?.metroTram?.count)!>0){
@@ -252,7 +268,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 let url = URL(string: showRouteDepartureOnStop(routeType: routeType, stopId: allstopsdata[each].stopId!, routeId: routeId, directionId: routeDirections[indexPath.row].directionId!))
                 _ = URLSession.shared.dataTask(with: url!){ (data, response, error) in
                     if error != nil{
-                        print("Stops fetch failed")
+                        
                         return
                     }
                     do{
@@ -275,7 +291,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                         var count = 0
                         for _ in departures!{
                             let differences = Calendar.current.dateComponents([.minute], from: NSDate.init(timeIntervalSinceNow: 0) as Date, to: Iso8601toDate(iso8601Date: (departures![count].estimatedDepartureUTC ?? (departures![count].scheduledDepartureUTC ?? nil)!)))
-                            print("Time Difference:\(String(describing: differences.minute))")
                             if differences.minute! >= -1{ break }
                             count += 1
                         }
@@ -303,6 +318,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                             }
                         }
                     }catch{
+                        self.displayMessage(title: "Error", message: "Error on network connection, please check your network settings")
                         print("Error:\(error)")
                     }
                 }.resume()
@@ -358,12 +374,21 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         if saveFlag == true{
             do {
                 try managedContext?.save()
-                
             } catch {
-                print("Error to save route")
+                displayMessage(title: "Error", message: "Error on saving your route, please try again later")
+                print("Error to save route:\(error)")
             }
         }
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
     }
     
     // MARK: - Functions for MapView
@@ -375,10 +400,10 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongtitude), span: currentLocationSpan)
         userPosition = CLLocation(latitude: currentLatitude, longitude: currentLongtitude)
         self.routeMapView.setRegion(region, animated: true)
-        print("Currnet Location = \(currentLatitude),\(currentLongtitude)")
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Unable to access your current location")
+        displayMessage(title: "Oops~", message: "Unable to access your location, please make sure you have correct setting")
+        print("Unable to access location:\(error)")
     }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is customPointAnnotation){

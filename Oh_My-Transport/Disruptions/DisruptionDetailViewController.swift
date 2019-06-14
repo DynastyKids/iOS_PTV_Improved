@@ -9,16 +9,6 @@
 import UIKit
 import Foundation
 
-struct disruptionByIdResponse: Codable{
-    var disruption: Disruption?
-    var status: Status?
-    
-    private enum CodingKeys: String, CodingKey{
-        case disruption
-        case status
-    }
-}
-
 class DisruptionDetailViewController: UIViewController {
     
     @IBOutlet weak var disruptionTitleLabel: UILabel!
@@ -40,16 +30,17 @@ class DisruptionDetailViewController: UIViewController {
         
         //Disruption sample detail page
         let url = URL(string: fetchAddress)
-        print(fetchAddress)
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if let error = error {
                 print("Download failed: \(String(describing: error))")
                 return
             }
-            do {
-                // Data recieved.  Decode it from JSON.
-                let decoder = JSONDecoder()
-                let disruptionDetail = try decoder.decode(disruptionByIdResponse.self, from: data!)
+            do {        // Data recieved.  Decode it from JSON.
+                let disruptionDetail = try JSONDecoder().decode(DisruptionByIdResponse.self, from: data!)
+                if disruptionDetail.message != nil {     // Error message response
+                    self.displayMessage(title: "Oops!", message: "Reveice error response from server, please try again later")
+                    return;
+                }
                 DispatchQueue.main.async {
                     self.updateScreen(disruption: disruptionDetail.disruption!)
                 }
@@ -60,15 +51,14 @@ class DisruptionDetailViewController: UIViewController {
         task.resume()
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
     }
-    */
     
     func updateScreen(disruption:Disruption){
         self.disruptionTitleLabel.text = disruption.title

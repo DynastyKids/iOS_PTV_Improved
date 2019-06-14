@@ -248,9 +248,9 @@ class StopPageTableViewController: UITableViewController {
             stop.stopSuburb = stopSuburb
             do {
                 try managedContext?.save()
-                print("Saving stops")
             } catch {
-                print("Error to save stop")
+                displayMessage(title: "Oops~", message: "Unable to save your preference stop, please try again later")
+                print("Error to save stops:\(error)")
             }
         }
         self.navigationController?.popToRootViewController(animated: true)
@@ -394,5 +394,14 @@ class StopPageTableViewController: UITableViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
     }
 }

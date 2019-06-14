@@ -1642,7 +1642,7 @@ This application will collect personal information about you via this mobile app
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="4" y="68" width="406" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.6 (Build 284 @ 14 June 2019)
+                                <mutableString key="text">Version 1.2.7 (Build 285 @ 14 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University, also for education and research purpose of Swift architecture. All data were provided by Public Transport Victoria without warranty, also no warranties were provided due to service change, delayed or cancelled. It's is your responsible to be check the annoucement at PTV disruption page, or platform annoucements. Traffic may vary and effect the service running schedule.  
 For data privacy, please click the button to see details.

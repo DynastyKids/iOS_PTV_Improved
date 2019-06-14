@@ -68,7 +68,8 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Unable to access your current location")
+        displayMessage(title: "Oops~", message: "Unable to access your location, please make sure you have correct setting")
+        print("Unable to access location:\(error)")
     }
     
     override func didReceiveMemoryWarning() {
@@ -216,6 +217,15 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             page2.stopId = senderStopId
             page2.managedContext = managedContext
         }
+    }
+    
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
     }
 }
 

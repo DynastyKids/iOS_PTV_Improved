@@ -69,6 +69,10 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             }
             do{
                 let patternData = try JSONDecoder().decode(PatternResponse.self, from: data!)
+                if patternData.message != nil {
+                    self.displayMessage(title: "Oops!", message: "There has some error happens on server, try again later")
+                    return;
+                }
                 // Loading disruption data
                 if((patternData.disruptions?.count)!>0){
                     self.disruptiondata = patternData.disruptions!
@@ -128,7 +132,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                     count += 1
                 }
                 DispatchQueue.main.async {
-                    print("Reload table view")
                     self.routeTableView.reloadData()
                     if serviceDestination != "" {
                         self.navigationItem.title = "\(serviceDestination) Service"
@@ -182,7 +185,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         if indexPath.section == 0 {     // Section 0 (Disruptions)
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeDisruption", for: indexPath) as! RoutesDisruptionsTableViewCell
             cell.disruptionInfoLabel.text = "\(disruptiondata.count) Disruptions may affect your travel"
-            print("Disruptions: \(disruptiondata.count)")
             return cell
         }
         if indexPath.section == 1 {     // Section 1 (Stops)
@@ -294,6 +296,15 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         locationManager.stopUpdatingLocation()
     }
     
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
+    }
+    
     // MARK: - Functions for MapView
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
@@ -305,7 +316,8 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Unable to access your current location")
+        displayMessage(title: "Oops~", message: "Unable to access your location, please make sure you have correct setting")
+        print("Unable to access location:\(error)")
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

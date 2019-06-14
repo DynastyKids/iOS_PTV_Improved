@@ -50,14 +50,28 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
         self.view.addSubview(indicator)
     }
     
-    // MARK: - Search Bar  source
+    // MARK: - Search Bar source
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, searchText.count > 0 else {
+            displayMessage(title: "Oops!", message: "Search terms cannot be empty")
             return;
         }
         indicator.startAnimating()
         indicator.backgroundColor = UIColor.white
-        let replacedText = searchText.replacingOccurrences(of: " ", with: "%20")
+        var replacedText = searchText.replacingOccurrences(of: "%", with: "%25")    // Replacing chars in string
+        replacedText = replacedText.replacingOccurrences(of: " ", with: "%20")
+        replacedText = replacedText.replacingOccurrences(of: "/", with: "%2f")
+        for each in replacedText.data(using: .ascii, allowLossyConversion: true)!{ // Converting string to ascii
+            // Reference: https://stackoverflow.com/questions/29835242/whats-the-simplest-way-to-convert-from-a-single-character-string-to-an-ascii-va
+            if (each<37 || (each>37&&each<48) || (each>58&&each<64) || (each>90&&each<97) || each>122){
+                displayMessage(title: "Oops!", message: "There has invalid characters in your searchbox")
+                indicator.stopAnimating()
+                return;
+            }
+        }
+        self.searchStops.removeAll()    // Remove all existing data in array
+        self.searchRoute.removeAll()
+        self.searchOutlets.removeAll()
         let requestUrl: String = showSearchResults(searchTerm: replacedText, latitude: locationManager.location?.coordinate.latitude ?? -37.8171571, longitude: locationManager.location?.coordinate.longitude ?? 144.9663325)
         
         _ = URLSession.shared.dataTask(with: URL(string: requestUrl)!){ (data, response, error) in
@@ -71,9 +85,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
             }
             do{
                 let results = try JSONDecoder().decode(SearchResult.self, from: data!)
-                self.searchStops.removeAll()    // Remove all existing data in array
-                self.searchRoute.removeAll()
-                self.searchOutlets.removeAll()
+                if results.message != nil {     // Error message response
+                    self.displayMessage(title: "Oops!", message: "There has invalid characters in your searchbox")
+                    return;
+                }
                 if results.stops?.count ?? 0 > 0 {   // Fill stops array when > 0
                     self.searchStops = results.stops!
                 }
@@ -319,7 +334,15 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, CLL
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
+    }
 }
 extension SearchTableViewController: NSFetchedResultsControllerDelegate{
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

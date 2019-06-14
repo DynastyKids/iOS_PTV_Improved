@@ -411,6 +411,10 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 do{
                     let routeInfo = try JSONDecoder().decode(RouteResponse.self, from: data!)
+                    if routeInfo.message != nil {     // Error message response
+                        self.displayMessage(title: "Oops!", message: "Reveice error response from server, please try again later")
+                        return;
+                    }
                     DispatchQueue.main.async {
                         cell.routeNameLabel.text = routeInfo.route?.routeName
                         cell.routeNumberLabel.backgroundColor = changeColorByRouteType(routeType: routeType)
@@ -450,7 +454,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
+        switch section {    // Setting Section Name
         case 0:
             if nearbyStops.count == 0 {
                 return NSLocalizedString("", comment: "")
@@ -475,7 +479,6 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1{
             let action = UIContextualAction(style: .destructive, title: "Remove"){(action, view, completion) in
-                print("indexPath = \(indexPath)")
                 let OverrideIndexPath = IndexPath(row: indexPath.row, section: 0)
                 let item = self.stopFetchedResultsController.object(at: OverrideIndexPath)
                 self.stopFetchedResultsController.managedObjectContext.delete(item)
@@ -557,7 +560,8 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         nslock.unlock()
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error while get user location:\(error)")
+        displayMessage(title: "Oops~", message: "Unable to access your location, please make sure you have correct setting")
+        print("Unable to access location:\(error)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -602,8 +606,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             do{
-                let decoder = JSONDecoder()
-                let nearbyData = try decoder.decode(StopResponseByLocation.self, from: data!)
+                let nearbyData = try JSONDecoder().decode(StopResponseByLocation.self, from: data!)
                 guard nearbyData.status?.health == 1 else{
                     return
                 }
@@ -628,6 +631,15 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
+    
+    func displayMessage(title: String, message: String) {
+        // Setup an alert to show user details about the Person UIAlertController manages an alert instance
+        let alertController = UIAlertController(title: title, message: message, preferredStyle:
+            UIAlertController.Style.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        return
+    }
 }
 
 extension HomepageViewController: NSFetchedResultsControllerDelegate{
@@ -643,7 +655,6 @@ extension HomepageViewController: NSFetchedResultsControllerDelegate{
         switch type {
         case .insert:
             if let indexPath = newIndexPath {
-                print("Insert at:\(indexPath)")
                 var overrideIndexPath = indexPath
                 if controller == stopFetchedResultsController{
                     overrideIndexPath = IndexPath(row: indexPath.row, section: 1)
@@ -655,7 +666,6 @@ extension HomepageViewController: NSFetchedResultsControllerDelegate{
             }
         case .delete:
             if let indexPath = indexPath {
-                print("Delete at:\(indexPath)")
                 var overrideIndexPath = indexPath
                 if controller == stopFetchedResultsController{
                     overrideIndexPath = IndexPath(row: indexPath.row, section: 1)

@@ -97,9 +97,11 @@ struct Departure: Codable{
  */
 struct DirectionsResponse: Codable{
     var directions: [DirectionWithDescription]?     //Directions of travel of route
+    var message: String?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
         case directions
+        case message
         case status
     }
 }
@@ -142,9 +144,23 @@ struct DirectionWithDescription: Codable {
  */
 struct DisruptionsResponse: Codable{
     var disruptions: Disruptions?
+    var message: String?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
         case disruptions
+        case message
+        case status
+    }
+}
+
+struct DisruptionByIdResponse: Codable{
+    var disruption: Disruption?
+    var message: String?
+    var status: Status?
+    
+    private enum CodingKeys: String, CodingKey{
+        case disruption
+        case message
         case status
     }
 }
@@ -342,6 +358,7 @@ struct PatternResponse: Codable {
 //    var routes: [RouteWithStatus]?
 //    var runs: [Run]?
 //    var directions: [DirectionWithDescription]?
+    var message: String?
     var status: Status?
     
     private enum CodingKeys: String, CodingKey{
@@ -351,6 +368,7 @@ struct PatternResponse: Codable {
 //        case routes
 //        case runs
 //        case directions
+        case message
         case status
     }
     
@@ -362,6 +380,7 @@ struct PatternResponse: Codable {
 //        self.routes = try? container.decode([RouteWithStatus].self, forKey: .routes)
 //        self.runs = try? container.decode([Run].self, forKey: .runs)
 //        self.directions = try? container.decode([DirectionWithDescription].self, forKey: .directions)
+        self.message = try? container.decode(String.self, forKey: .message)
         self.status = try? container.decode(Status.self, forKey: .status)
     }
 }
@@ -374,10 +393,12 @@ struct PatternResponse: Codable {
     GET /v3/Routes/{Route_id}
  */
 struct RouteResponse: Codable{
-    var route: RouteWithStatus? //  Train lines, tram routes, bus routes, regional coach routes, Night Bus routes ,
+    var route: RouteWithStatus? //  Train lines, tram routes, bus routes, regional coach routes, Night Bus routes
+    var message: String?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
         case route
+        case message
         case status
     }
 }
@@ -438,9 +459,11 @@ struct RouteServiceStatus: Codable {
  */
 struct RunsResponse: Codable {
     var runs: [Run]?
+    var message: String?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
         case runs
+        case message
         case status
     }
 }
@@ -547,11 +570,13 @@ struct SearchResult: Codable {
     var stops: [ResultStop]?
     var routes: [ResultRoute]?
     var outlets: [ResultOutlet]?
+    var message: String?
     var status: Status?
     private enum CodingKeys: String, CodingKey{
         case stops
         case routes
         case outlets
+        case message
         case status
     }
 }
@@ -836,7 +861,13 @@ struct Gps: Codable{
 struct StopsResponseByRouteId: Codable {
     var stops: [stopOnRoute]?
 //    var disruptions
+    var message: String?
     var status: Status?
+    private enum CodingKeys: String, CodingKey{
+        case stops
+        case message
+        case status
+    }
 }
 
 struct stopOnRoute: Codable {
