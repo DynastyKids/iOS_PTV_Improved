@@ -289,7 +289,13 @@ class StopPageTableViewController: UITableViewController {
             let cellData = departureData[indexPath.row]
             for each in nextDepartRoutesData{
                 if cellData.routesId == each.routeId{
-                    if (each.routeType == 0 || each.routeType == 3 || each.routeNumber == nil){
+                    if (each.routeType == 2 && each.GtfsId != "" && each.routeNumber == ""){    // Patch fix for regional buses
+                        var routeName: String
+                        routeName = each.GtfsId!
+                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                        routeName = String(routeName[cuttedName...])
+                        cell.routeSignLabel.text = routeName.uppercased()
+                    }else if (each.routeType == 0 || each.routeType == 3 || each.routeNumber == nil){
                         var routeName: String
                         if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
                             routeName = each.routeName!     // City Loop train will having no route gtfsid
@@ -297,7 +303,7 @@ class StopPageTableViewController: UITableViewController {
                         } else{
                             routeName = each.GtfsId!
                             let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
-                            cell.routeSignLabel.text = String(routeName[cuttedName...])
+                            cell.routeSignLabel.text = String(routeName[cuttedName...]).uppercased()
                         }
                     }else{
                         cell.routeSignLabel.text = each.routeNumber

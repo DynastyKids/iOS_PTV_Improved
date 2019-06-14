@@ -143,11 +143,17 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 if searchRouteId0 == each.routeId{
                                     cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
                                     cell.departure0Route.textColor = UIColor.white
-                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    if (each.routeType == 2 && each.GtfsId != "" && each.routeNumber == ""){    // Patch fix for regional buses
+                                        var routeName: String
+                                        routeName = each.GtfsId!
+                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                        routeName = String(routeName[cuttedName...])
+                                        cell.departure0Route.text = routeName.uppercased()
+                                    }else if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                         var routeName: String
                                         if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
                                             routeName = each.routeName!     // City Loop train will having no route gtfsid
-                                            cell.departure0Route.text = routeName
+                                            cell.departure0Route.text = routeName.uppercased()
                                         } else{
                                             routeName = each.GtfsId!
                                             let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
@@ -166,11 +172,17 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 if searchRouteId1 == each.routeId{
                                     cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
                                     cell.departure1Route.textColor = UIColor.white
-                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    if (each.routeType == 2 && each.GtfsId != "" && each.routeNumber == ""){    // Patch fix for regional buses
+                                        var routeName: String
+                                        routeName = each.GtfsId!
+                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                        routeName = String(routeName[cuttedName...])
+                                        cell.departure1Route.text = routeName.uppercased()
+                                    }else if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                         var routeName: String
                                         if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
                                             routeName = each.routeName!     // City Loop train will having no route gtfsid
-                                            cell.departure1Route.text = routeName
+                                            cell.departure1Route.text = routeName.uppercased()
                                         } else{
                                             routeName = each.GtfsId!
                                             let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
@@ -189,11 +201,17 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 if searchRouteId2 == each.routeId{
                                     cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
                                     cell.departure2Route.textColor = UIColor.white
-                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    if (each.routeType == 2 && each.GtfsId != "" && each.routeNumber == ""){    // Patch fix for regional buses
+                                        var routeName: String
+                                        routeName = each.GtfsId!
+                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                        routeName = String(routeName[cuttedName...])
+                                        cell.departure0Route.text = routeName.uppercased()
+                                    }else if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                         var routeName: String
                                         if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
                                             routeName = each.routeName!     // City Loop train will having no route gtfsid
-                                            cell.departure2Route.text = routeName
+                                            cell.departure2Route.text = routeName.uppercased()
                                         } else{
                                             routeName = each.GtfsId!
                                             let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
@@ -293,11 +311,17 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 if searchRouteId0 == each.routeId{
                                     cell.departure0Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
                                     cell.departure0Route.textColor = UIColor.white
-                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    if (each.routeType == 2 && each.GtfsId != "" && each.routeNumber == ""){    // Patch fix for regional buses
+                                        var routeName: String
+                                        routeName = each.GtfsId!
+                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                        routeName = String(routeName[cuttedName...])
+                                        cell.departure0Route.text = routeName.uppercased()
+                                    }else if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                         var routeName: String
                                         if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
                                             routeName = each.routeName!     // City Loop train will having no route gtfsid
-                                            cell.departure0Route.text = routeName
+                                            cell.departure0Route.text = routeName.uppercased()
                                         } else{
                                             routeName = each.GtfsId!
                                             let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
@@ -316,7 +340,13 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 if searchRouteId1 == each.routeId{
                                     cell.departure1Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
                                     cell.departure1Route.textColor = UIColor.white
-                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    if (each.routeType == 2 && each.GtfsId != "" && each.routeNumber == ""){    // Patch fix for regional buses
+                                        var routeName: String
+                                        routeName = each.GtfsId!
+                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                        routeName = String(routeName[cuttedName...])
+                                        cell.departure1Route.text = routeName.uppercased()
+                                    }else if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                         var routeName: String
                                         if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
                                             routeName = each.routeName!     // City Loop train will having no route gtfsid
@@ -340,7 +370,13 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                 if searchRouteId2 == each.routeId{
                                     cell.departure2Route.backgroundColor = changeColorByRouteType(routeType: each.routeType!)
                                     cell.departure2Route.textColor = UIColor.white
-                                    if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
+                                    if (each.routeType == 2 && each.GtfsId != "" && each.routeNumber == ""){    // Patch fix for regional buses
+                                        var routeName: String
+                                        routeName = each.GtfsId!
+                                        let cuttedName = routeName.index(routeName.startIndex, offsetBy: 2)
+                                        routeName = String(routeName[cuttedName...])
+                                        cell.departure2Route.text = routeName.uppercased()
+                                    }else if(each.routeType == 0 || each.routeType == 3 || each.routeType == nil){
                                         var routeName: String
                                         if (each.GtfsId == "" || each.GtfsId == nil) && (each.routeName != nil && each.routeName != ""){
                                             routeName = each.routeName!     // City Loop train will having no route gtfsid

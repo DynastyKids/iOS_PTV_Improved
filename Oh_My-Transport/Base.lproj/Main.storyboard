@@ -410,10 +410,10 @@
             </objects>
             <point key="canvasLocation" x="-1484" y="1220"/>
         </scene>
-        <!--Search-->
+        <!--Search Results-->
         <scene sceneID="9x5-Iy-gOC">
             <objects>
-                <tableViewController title="Search" id="3Cl-YF-8nc" customClass="SearchTableViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Search Results" id="3Cl-YF-8nc" customClass="SearchTableViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="wuB-BI-XuU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1110,10 +1110,10 @@
             </objects>
             <point key="canvasLocation" x="510" y="2245"/>
         </scene>
-        <!--Disruptions Detail-->
+        <!--Disruption Details-->
         <scene sceneID="f2n-yQ-vOF">
             <objects>
-                <viewController title="Disruptions Detail" id="BJB-We-4jd" customClass="DisruptionDetailViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Disruption Details" id="BJB-We-4jd" customClass="DisruptionDetailViewController" customModule="Oh_My_Transport" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z3Y-kl-n6r">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1272,10 +1272,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nEF-c4-Lmb">
-                                                    <rect key="frame" x="20" y="4" width="348" height="20.666666666666668"/>
+                                                    <rect key="frame" x="20" y="4" width="348" height="20.333333333333332"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqj-iX-noi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.333333333333332"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="110" id="xge-Uj-0Sh"/>
                                                             </constraints>
@@ -1284,7 +1284,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terminal Stop" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CKX-cC-t7p">
-                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.666666666666668"/>
+                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1292,10 +1292,10 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gGF-XN-Y27">
-                                                    <rect key="frame" x="20" y="28.666666666666671" width="348" height="20.333333333333329"/>
+                                                    <rect key="frame" x="20" y="28.333333333333329" width="348" height="20.666666666666671"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nearest Stop:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpV-Cf-Z6E">
-                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.333333333333332"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="20.666666666666668"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="110" id="Iuf-Wd-LuG"/>
                                                             </constraints>
@@ -1304,7 +1304,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Et-mW-cWv">
-                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.333333333333332"/>
+                                                            <rect key="frame" x="114" y="0.0" width="234" height="20.666666666666668"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1642,11 +1642,13 @@ This application will collect personal information about you via this mobile app
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="4" y="68" width="406" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.6 (Build 281 @ 1 June 2019)
+                                <mutableString key="text">Version 1.2.6 (Build 283 @ 14 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
- Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.  For data privacy, please click the button to see details. 
-Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Apple Swift 4 architecture. API Key were provided by Public Transport Victoria. All data were provided without warranty, also no warranties were provided due to late of service. It's is your responsible to be at stops/ stations early as traffic may vary and effect the actual running times.  </mutableString>
+ Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.
+
+Technical testing Support: Version management and Crashing report collection support are provided by PgyerSDK. Details available on http://www.pgyer.com/sdk  For data privacy, please click the button to see details. 
+Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University also for education and research purpose of Swift architecture. All data were provided by Public Transport Victoria without warranty, also no warranties were provided due to service change, delayed or cancelled. It's is your responsible to be check the annoucement at PTV disruption page, or platform annoucements. Traffic may vary and effect the service running schedule.  </mutableString>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
