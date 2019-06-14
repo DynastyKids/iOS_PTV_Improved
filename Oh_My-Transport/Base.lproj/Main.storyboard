@@ -226,17 +226,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="kRe-Q0-XCA">
-                                                    <rect key="frame" x="20" y="11" width="262" height="28.666666666666671"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kRe-Q0-XCA">
+                                                    <rect key="frame" x="20" y="11" width="262" height="22"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Stop Name" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ou-Mu-dGI" userLabel="stopNameLabel">
-                                                            <rect key="frame" x="0.0" y="0.0" width="262" height="12.666666666666666"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="262" height="0.0"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Suburb Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7K9-q5-qaW" userLabel="suburbLabel">
-                                                            <rect key="frame" x="0.0" y="28.666666666666664" width="262" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="8" width="262" height="14"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -311,7 +311,6 @@
                                                 <constraint firstAttribute="bottom" secondItem="6aI-Ub-KLM" secondAttribute="bottom" constant="4" id="f4C-1n-vkc"/>
                                                 <constraint firstAttribute="trailing" secondItem="6aI-Ub-KLM" secondAttribute="trailing" constant="2" id="nXe-Ut-wsL"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="kRe-Q0-XCA" secondAttribute="bottom" id="oOk-N0-UVE"/>
-                                                <constraint firstAttribute="bottom" secondItem="kRe-Q0-XCA" secondAttribute="bottom" constant="4" id="y9O-ea-RqL"/>
                                                 <constraint firstItem="6aI-Ub-KLM" firstAttribute="leading" secondItem="kRe-Q0-XCA" secondAttribute="trailing" id="yHX-uG-CE6"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1642,7 +1641,7 @@ This application will collect personal information about you via this mobile app
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="4" y="68" width="406" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.7 (Build 285 @ 14 June 2019)
+                                <mutableString key="text">Version 1.2.7 (Build 286 @ 14 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University, also for education and research purpose of Swift architecture. All data were provided by Public Transport Victoria without warranty, also no warranties were provided due to service change, delayed or cancelled. It's is your responsible to be check the annoucement at PTV disruption page, or platform annoucements. Traffic may vary and effect the service running schedule.  
 For data privacy, please click the button to see details.
@@ -1697,8 +1696,8 @@ Technical testing Support: Version management and Crashing report collection sup
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hKS-pF-xub"/>
-        <segue reference="zXA-WO-h7o"/>
-        <segue reference="evR-un-G8n"/>
+        <segue reference="tH8-GN-WaY"/>
+        <segue reference="yW6-4j-AAm"/>
+        <segue reference="rUw-3q-bGF"/>
     </inferredMetricsTieBreakers>
 </document>

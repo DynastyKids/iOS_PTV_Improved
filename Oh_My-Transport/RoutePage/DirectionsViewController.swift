@@ -100,10 +100,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do{
                 let stopsdata = try JSONDecoder().decode(StopsResponseByRouteId.self, from: data!)
-                if stopsdata.message != nil {
-                    self.displayMessage(title: "Oops!", message: "There has some error happens on server, try again later")
-                    return;
-                }
                 if stopsdata.stops != nil{
                     self.allstopsdata = stopsdata.stops!            // All stops data are in.
                     var distance:[Double] = []
@@ -170,10 +166,6 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             do{
                 let disruptionData = try JSONDecoder().decode(DisruptionsResponse.self, from: data!)
-                if disruptionData.message != nil {
-                    self.displayMessage(title: "Oops!", message: "There has some error happens on server, try again later")
-                    return;
-                }
                 if (self.routeType == 0 && (disruptionData.disruptions?.metroTrain?.count)!>0) {
                     self.disruptiondata += (disruptionData.disruptions?.metroTrain)!
                 } else if (self.routeType == 1 && (disruptionData.disruptions?.metroTram?.count)!>0){

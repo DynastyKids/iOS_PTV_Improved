@@ -361,7 +361,6 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
                                     }
                                 }
                             }
-                            
                             // Route 2
                             cell.departure2Time.text = Iso8601Countdown(iso8601Date: (savedStopsDeaprtureSequence[2].estimatedDepartureUTC) ?? ((savedStopsDeaprtureSequence[2].scheduledDepartureUTC ?? nil)!), status: false)
                             cell.departure2Time.textColor = UIColor.black
@@ -527,8 +526,10 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         if segue.identifier == "showSavedStop"{
             let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.routeType = (routeType[(homeTableView.indexPathForSelectedRow!.row)])
-            page2.stopId = (stopId[(homeTableView.indexPathForSelectedRow!.row)])
+            let readIndexPath = IndexPath(row: homeTableView.indexPathForSelectedRow!.row, section: 0)
+            let savedStop = stopFetchedResultsController.object(at: readIndexPath)
+            page2.routeType = Int(savedStop.routeType)
+            page2.stopId = Int(savedStop.stopId)
             page2.managedContext = stopFetchedResultsController.managedObjectContext
             page2.navigationItem.rightBarButtonItem?.isEnabled = false
         }
@@ -537,6 +538,7 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
             let readIndexPath = IndexPath(row: homeTableView.indexPathForSelectedRow!.row, section: 0)
             let savedRoute = routeFetchedResultsController.object(at: readIndexPath)
             page2.routeId = Int(savedRoute.routeId)
+            page2.routeType = Int(savedRoute.routeType)
             page2.managedContext = routeFetchedResultsController.managedObjectContext
             page2.navigationItem.rightBarButtonItem?.isEnabled = true
         }
