@@ -50,7 +50,6 @@ class HomepageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // MARK: - Table view data source
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }

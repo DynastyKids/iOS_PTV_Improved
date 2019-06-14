@@ -60,7 +60,6 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     //MARK: - CLLocationManager Delegates
     //Create a MKCoordinateSpan target for setting scan range
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
@@ -74,14 +73,6 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()     // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -120,8 +111,6 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         self.performSegue(withIdentifier: "showStopsFromMap", sender: nil)
     }
     
-    
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is customPointAnnotation){
             return nil
@@ -152,7 +141,14 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     func updateSearchResults(){
         mainMapView.removeAnnotations(mainMapView.annotations)
-        let url = URL(string: nearByStopsOnSelect(latitude: Double(mapCenterLatitude), longtitude: Double(mapCenterLongitude)))
+        let currentMapSpan = mainMapView.region.span
+        var url = URL(string: nearByStopsOnSelect(latitude: Double(mapCenterLatitude), longtitude: Double(mapCenterLongitude)))
+        if (currentMapSpan.latitudeDelta > 0.11 || currentMapSpan.longitudeDelta > 0.1){ // Showing major train and vline station on large span
+            url = URL(string: nearByTrainStopsOnSelect(latitude: Double(mapCenterLatitude), longtitude: Double(mapCenterLongitude)))
+        }
+        if (currentMapSpan.latitudeDelta > 0.99 || currentMapSpan.longitudeDelta > 0.99){ // Showing vline station on large span
+            url = URL(string: nearByVlineStopsOnSelect(latitude: Double(mapCenterLatitude), longtitude: Double(mapCenterLongitude)))
+        }
         _ = URLSession.shared.dataTask(with: url!){ (data, response, error) in
             if error != nil {
                 print("Nearby Stops fetch failed:\(error!)")
@@ -193,15 +189,11 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
             }.resume()
     }
     
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showStopsFromMap" {
-            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
-            page2.routeType = senderRouteType
-            page2.stopId = senderStopId
-            page2.managedContext = managedContext
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -211,6 +203,19 @@ class SelectStopOnMapViewController: UIViewController, CLLocationManagerDelegate
         stopsFetchedRequest.sortDescriptors = [stopSortDescriptors]
         stopFetchedResultsController = NSFetchedResultsController(fetchRequest: stopsFetchedRequest, managedObjectContext: CoreDataStack().managedContext, sectionNameKeyPath: nil, cacheName: nil)
         stopFetchedResultsController.delegate = self
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showStopsFromMap" {
+            let page2:StopPageTableViewController = segue.destination as! StopPageTableViewController
+            page2.routeType = senderRouteType
+            page2.stopId = senderStopId
+            page2.managedContext = managedContext
+        }
     }
 }
 

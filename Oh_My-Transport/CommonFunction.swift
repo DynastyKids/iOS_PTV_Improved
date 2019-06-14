@@ -269,6 +269,16 @@ public func nearByStopsOnSelect(latitude: Double, longtitude: Double) -> String{
     return extractedFunc(request)
 }
 
+public func nearByTrainStopsOnSelect(latitude: Double, longtitude: Double) -> String{    // View metro and vline stops only at large scale
+    let request: String = "/v3/stops/location/\(latitude),\(longtitude)?route_types=0&route_types=3&max_results=750&max_distance=9999999&devid="+PrimaryDevId
+    return extractedFunc(request)
+}
+
+public func nearByVlineStopsOnSelect(latitude: Double, longtitude: Double) -> String{    // View vline stops only at large scale
+    let request: String = "/v3/stops/location/\(latitude),\(longtitude)?route_types=3&max_results=750&max_distance=9999999&devid="+PrimaryDevId
+    return extractedFunc(request)
+}
+
 enum CryptoAlgorithm {
     case MD5, SHA1
     var HMACAlgorithm: CCHmacAlgorithm {

@@ -12,13 +12,13 @@ import CoreLocation
 import CoreData
 
 class DirectionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate {
-    
     // MARK: - CoreData Properties
     var managedContext: NSManagedObjectContext!
     var stops: FavStop?
     var stopFetchedResultsController: NSFetchedResultsController<FavStop>!
     var saveFlag = true
     
+    // MARK: - Core Locations Properties
     let locationManager = CLLocationManager()
     var nslock = NSLock()
     var currentLocation:CLLocation!
@@ -37,6 +37,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var routeDirections: [DirectionWithDescription] = []
     
+    // MARK: - Storyboard Properties
     @IBOutlet weak var directionsTableView: UITableView!
     @IBOutlet weak var routeMapView: MKMapView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -70,7 +71,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
                 } else{
                     self.routeName = routeData.route?.routeName
                 }
-                DispatchQueue.main.async {
+                DispatchQueue.main.async {  // Showing navigation title
                     if self.routeType == 0 {
                         self.navigationItem.title = "\(self.routeName!)"
                     } else if self.routeType == 1{
@@ -350,7 +351,7 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func saveRoute(_ sender: Any) {
+    @IBAction func saveRoute(_ sender: Any) {   // Allow user to save routes
         let route = FavRoute(context: managedContext)
         route.routeId = Int32(routeId)
         route.routeType = Int32(routeType)
@@ -366,11 +367,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     // MARK: - Functions for MapView
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
-        // 使用线路中间车站
         let currentLatitude = locations[0].coordinate.latitude
         let currentLongtitude = locations[0].coordinate.longitude
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongtitude), span: currentLocationSpan)
@@ -378,16 +377,13 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         self.routeMapView.setRegion(region, animated: true)
         print("Currnet Location = \(currentLatitude),\(currentLongtitude)")
     }
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Unable to access your current location")
     }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if !(annotation is customPointAnnotation){
             return nil
         }
-        
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "stops")
         if annotationView == nil{
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "stops")
@@ -410,11 +406,9 @@ class DirectionsViewController: UIViewController, UITableViewDelegate, UITableVi
         
         return annotationView
     }
-    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         self.performSegue(withIdentifier: "showServiceFromMap", sender: nil)
     }
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let annotation = view.annotation
         

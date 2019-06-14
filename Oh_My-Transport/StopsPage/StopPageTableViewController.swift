@@ -24,8 +24,9 @@ class StopPageTableViewController: UITableViewController {
     var stopName: String = ""
     var stopSuburb: String = ""
     var routeId: Int = -1
-    
-    var stopInfo:StopDetails?
+
+    var stopLatitude: Double?
+    var stopLongitude: Double?
     
     var departureData: [Departure] = []
     var nextDepartRoutesData: [RouteWithStatus] = []
@@ -180,8 +181,10 @@ class StopPageTableViewController: UITableViewController {
                             routeType = value as! Int
                         } else if "\(key)" == "stop_latitude" && (value is NSNull) == false{
                             stopLatitude = value as! Double
+                            self.stopLatitude = value as! Double
                         } else if "\(key)" == "stop_longitude" && (value is NSNull) == false{
                             stopLongitude = value as! Double
+                            self.stopLongitude = value as! Double
                         } else if "\(key)" == "stop_sequence" && (value is NSNull) == false{
                             stopSequence = value as! Int
                         }
@@ -354,7 +357,8 @@ class StopPageTableViewController: UITableViewController {
             page2.runId = departureData[tableView.indexPathForSelectedRow!.row].runId!
             page2.routeId = departureData[tableView.indexPathForSelectedRow!.row].routesId!
             page2.routeType = routeType
-            page2.stopInfo = stopInfo
+            page2.stopLatitude = self.stopLatitude
+            page2.stopLongitude = self.stopLongitude
         }
     }
     

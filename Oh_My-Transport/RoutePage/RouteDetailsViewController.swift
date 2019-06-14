@@ -12,15 +12,16 @@ import CoreData
 import CoreLocation
 
 class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate {
-    
+    // MARK: Core Location Properties
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation!
-
+    
     var routeType: Int = 0
     var runId: Int = 0          // Required value from last segue
     var routeId: Int = 0        // Required value from last segue
     var senderStopId: Int = 0
-    var stopInfo: StopDetails?     // Optional value from last segue
+    var stopLongitude: Double?     // Optional value from last segue
+    var stopLatitude: Double?      // Optional value from last segue
 
     // MARK: - Receiving data from whole array carrying all necessary data
     var disruptiondata: [Disruption] = []
@@ -159,18 +160,15 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             page2.url = URL(string: disruptionByRoute(routeId: routeId))
         }
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
     
     // MARK: - Table view data source
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if disruptiondata.count > 0{
@@ -180,7 +178,6 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
         return dictonaryStopId.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {     // Section 0 (Disruptions)
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeDisruption", for: indexPath) as! RoutesDisruptionsTableViewCell
@@ -218,20 +215,37 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
             if (departsData[indexPath.row].flags?.contains("PUO"))!{
                 flagText += "* Pick-up Only "
             }
-            if (departsData[indexPath.row].flags?.contains("MO"))!{
-                flagText += "* Mondays Only "
-            }
-            if (departsData[indexPath.row].flags?.contains("TU"))!{
-                flagText += "* Tuesdays Only "
-            }
-            if (departsData[indexPath.row].flags?.contains("WE"))!{
-                flagText += "* Wednesdays Only "
-            }
-            if (departsData[indexPath.row].flags?.contains("TH"))!{
-                flagText += "* Thursdays Only "
-            }
-            if (departsData[indexPath.row].flags?.contains("FR"))!{
-                flagText += "* Fridays Only "
+            if ((departsData[indexPath.row].flags?.contains("MO"))! || (departsData[indexPath.row].flags?.contains("TU"))! || (departsData[indexPath.row].flags?.contains("WE"))! || (departsData[indexPath.row].flags?.contains("TH"))! || (departsData[indexPath.row].flags?.contains("FR"))!){
+                flagText += "*"
+                if (departsData[indexPath.row].flags?.contains("MO"))!{
+                    flagText += " Mondays"
+                    if ((departsData[indexPath.row].flags?.contains("TU"))! || (departsData[indexPath.row].flags?.contains("WE"))! || (departsData[indexPath.row].flags?.contains("TH"))! || (departsData[indexPath.row].flags?.contains("FR"))!){
+                        flagText += ","
+                    }
+                }
+                if (departsData[indexPath.row].flags?.contains("TU"))!{
+                    flagText += " Tuesdays"
+                    if ((departsData[indexPath.row].flags?.contains("WE"))! || (departsData[indexPath.row].flags?.contains("TH"))! || (departsData[indexPath.row].flags?.contains("FR"))!){
+                        flagText += ","
+                    }
+                }
+                if (departsData[indexPath.row].flags?.contains("WE"))!{
+                    flagText += " Wednesday"
+                    if ((departsData[indexPath.row].flags?.contains("TH"))! || (departsData[indexPath.row].flags?.contains("FR"))!){
+                        flagText += ","
+                    }
+                }
+                if (departsData[indexPath.row].flags?.contains("TH"))!{
+                    flagText += " Thursday"
+                    if (departsData[indexPath.row].flags?.contains("FR"))!{
+                        flagText += ","
+                    }
+                }
+                if (departsData[indexPath.row].flags?.contains("FR"))!{
+                    flagText += " Friday"
+                }
+                flagText += " Only "
+                
             }
             if (departsData[indexPath.row].flags?.contains("SS"))!{
                 flagText += "* SchoolDay Only "
@@ -284,8 +298,8 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.stopUpdatingLocation()
         let currentLocationSpan:MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
-        let myLatitude = stopInfo?.stopLocation?.gps?.latitude ?? locations[0].coordinate.latitude
-        let myLongtitude = stopInfo?.stopLocation?.gps?.longitude ?? locations[0].coordinate.longitude
+        let myLatitude = stopLatitude ?? locations[0].coordinate.latitude
+        let myLongtitude = stopLongitude ?? locations[0].coordinate.longitude
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: myLatitude, longitude: myLongtitude), span: currentLocationSpan)
         self.routeMapView.setRegion(region, animated: true)
     }

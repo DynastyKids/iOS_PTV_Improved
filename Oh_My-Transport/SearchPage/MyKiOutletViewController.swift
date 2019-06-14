@@ -18,6 +18,7 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var outletMapView: MKMapView!
     @IBOutlet weak var navigateButton: UIButton!
     
+    // MARK: - Storyboards label Property
     @IBOutlet weak var businessNameLabel: UILabel!
     @IBOutlet weak var businessAddressLabel: UILabel!
     @IBOutlet weak var businessAddressButton: UIButton!     // Preserved for URI Jump to Googlemap / Apple Map
@@ -36,17 +37,15 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Initalize the mapKit
+        // Initalize the User location show on map
         if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedAlways){
             guard locationManager.location != nil else {
                 return
             }
         }
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        
         DispatchQueue.main.async {
             self.locationManager.startUpdatingLocation()
         }
@@ -56,7 +55,6 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
         if outlet?.outletName != nil{
             businessAddressLabel.text = "\((outlet?.outletName) ?? ""), \((outlet?.outletSuburb) ?? ""), VIC \((outlet?.outletPostcode)!)"
         }
-//        businessAddressButton
         let userlocation = CLLocation(latitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!)
         let distance = userlocation.distance(from: CLLocation(latitude: outlet!.outletLatitude!, longitude: outlet!.outletLongitude!))
         if Double(distance) >= 1000{
@@ -82,37 +80,37 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
             if outlet?.outletBusinessHourMon != nil {
                 businessMondayLabel.text = "Mon:\((outlet?.outletBusinessHourMon!)!)"
             } else {
-                businessMondayLabel.text = "Unknown"
+                businessMondayLabel.text = "Mon: Unknown"
             }
             if outlet?.outletBusinessHourTue != nil {
                 businessTuesdayLabel.text = "Tue:\((outlet?.outletBusinessHourTue!)!)"
             } else{
-                businessTuesdayLabel.text = "Unknown"
+                businessTuesdayLabel.text = "Tue: Unknown"
             }
             if outlet?.outletBusinessHourWed != nil {
                 businessWednesdayLabel.text = "Wed:\((outlet?.outletBusinessHourWed!)!)"
             } else{
-                businessWednesdayLabel.text = "Unknown"
+                businessWednesdayLabel.text = "Wed: Unknown"
             }
             if outlet?.outletBusinessHourThur != nil {
                 businessThursdayLabel.text = "Thu:\((outlet?.outletBusinessHourThur!)!)"
             } else{
-                businessThursdayLabel.text = "Unknown"
+                businessThursdayLabel.text = "Thu: Unknown"
             }
             if outlet?.outletBusinessHourFri != nil {
                 businessFridayLabel.text = "Fri:  \((outlet?.outletBusinessHourFri!)!)"
             } else{
-                businessFridayLabel.text = "Unknown"
+                businessFridayLabel.text = "Fri:  Unknown"
             }
             if outlet?.outletBusinessHourSat != nil {
                 businessSaturdayLabel.text = "Sat:\((outlet?.outletBusinessHourSat!)!)"
             } else{
-                businessSaturdayLabel.text = "Unknown"
+                businessSaturdayLabel.text = "Sat: Unknown"
             }
             if outlet?.outletBusinessHourSun != nil{
                 businessSundayLabel.text = "Sun:\((outlet?.outletBusinessHourSun!)!)"
             } else{
-                businessSundayLabel.text = "Unknown"
+                businessSundayLabel.text = "Sun: Unknown"
             }
         }
         
@@ -131,11 +129,11 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        self.locationManager.stopUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -150,11 +148,11 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        super.didReceiveMemoryWarning()         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func navigateMeButton(_ sender: Any) {    // Reference: https://www.youtube.com/watch?v=INfCmCxLC0o
+    @IBAction func navigateMeButton(_ sender: Any) {    // Create navigation button allow to use external app for navigation
+        // Reference: https://www.youtube.com/watch?v=INfCmCxLC0o
         _ = CLLocationCoordinate2DMake(CLLocationDegrees((outlet?.outletLatitude)!), CLLocationDegrees((outlet?.outletLongitude)!))
         let regionSpan = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: (outlet?.outletLatitude)!, longitude: (outlet?.outletLongitude)!), latitudinalMeters: CLLocationDistance(1000), longitudinalMeters: CLLocationDistance(1000))
         
@@ -165,5 +163,4 @@ class MyKiOutletViewController: UIViewController, CLLocationManagerDelegate {
         mapItem.name = outlet?.outeletBusiness
         mapItem.openInMaps(launchOptions: options)
     }
-    
 }
