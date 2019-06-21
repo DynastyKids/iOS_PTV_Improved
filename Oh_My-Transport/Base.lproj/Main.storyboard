@@ -428,7 +428,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hnS-oo-n7s">
                                             <rect key="frame" x="20" y="11" width="348" height="22"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="busIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xnA-zC-qaa">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xnA-zC-qaa">
                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="6MS-eC-A5J"/>
@@ -494,7 +494,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ev7-ID-8ul">
                                             <rect key="frame" x="20" y="11" width="348" height="22"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="regionalTrainIcon" translatesAutoresizingMaskIntoConstraints="NO" id="6yB-at-2xh">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6yB-at-2xh">
                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="VRt-Lq-gfz"/>
@@ -1641,7 +1641,7 @@ This application will collect personal information about you via this mobile app
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Mer-84-M7w">
                                 <rect key="frame" x="4" y="68" width="406" height="620"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Version 1.2.7 (Build 286 @ 14 June 2019)
+                                <string key="text">Version 1.2.7 (Build 286 @ 14 June 2019)
  This transport app is build in Victoria for all Victorians, with PTV API supported allows you to lookup the timetable data from Public Transport Victoria. 
 Disclamier:  This application is build by Wenkai Gong for Assessment purpose FIT3178 iOS Application Development at Monash University, also for education and research purpose of Swift architecture. All data were provided by Public Transport Victoria without warranty, also no warranties were provided due to service change, delayed or cancelled. It's is your responsible to be check the annoucement at PTV disruption page, or platform annoucements. Traffic may vary and effect the service running schedule.  
 For data privacy, please click the button to see details.
@@ -1650,7 +1650,7 @@ License &amp; Data Sources:
 Timetabling Data Source: Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence.
  Icon Data Source: Licensed from Icon8.com under a Creative Commons Attribution-NoDerivs 3.0 Unported License.
 
-Technical testing Support: Version management and Crashing report collection support are provided by PgyerSDK. Details available on https://www.pgyer.com/lang/select?l=en&amp;redi=https%3A%2F%2Fwww.pgyer.com%2Fsdk  </mutableString>
+Technical testing Support: Version management and Crashing report collection support are provided by PgyerSDK. Details available on https://www.pgyer.com/lang/select?l=en&amp;redi=https%3A%2F%2Fwww.pgyer.com%2Fsdk  </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1686,18 +1686,16 @@ Technical testing Support: Version management and Crashing report collection sup
     </scenes>
     <resources>
         <image name="AboutIcon" width="25" height="25"/>
-        <image name="busIcon" width="25" height="25"/>
         <image name="mapIcon" width="26" height="26"/>
         <image name="plans" width="25" height="25"/>
-        <image name="regionalTrainIcon" width="25" height="25"/>
         <image name="sateliteIcon_White" width="25" height="25"/>
         <image name="ticket_Colour" width="25" height="25"/>
         <image name="warningIcon" width="25" height="25"/>
         <image name="warning_White" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tH8-GN-WaY"/>
+        <segue reference="hKS-pF-xub"/>
         <segue reference="yW6-4j-AAm"/>
-        <segue reference="rUw-3q-bGF"/>
+        <segue reference="Zt6-QJ-tnR"/>
     </inferredMetricsTieBreakers>
 </document>
