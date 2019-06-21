@@ -1663,6 +1663,7 @@ Technical testing Support: Version management and Crashing report collection sup
                                             <segue destination="BTD-U8-ean" kind="show" id="2sp-sx-Xb0"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Xol-ZI-BuF"/>
                                 </items>
                             </toolbar>
                         </subviews>
