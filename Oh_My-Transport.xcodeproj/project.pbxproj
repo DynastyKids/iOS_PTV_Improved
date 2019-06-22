@@ -20,6 +20,8 @@
 		5A570FD3229C3C0500569007 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A570FD2229C3C0500569007 /* CoreDataController.swift */; };
 		5A570FD5229C3CCC00569007 /* FavStopData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A570FD4229C3CCC00569007 /* FavStopData.swift */; };
 		5A570FD7229C3CD500569007 /* FavRouteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A570FD6229C3CD500569007 /* FavRouteData.swift */; };
+		5A599BCD22BDDA0300E0FE9D /* HelpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A599BCC22BDDA0300E0FE9D /* HelpPageViewController.swift */; };
+		5A599BF222BDDBB200E0FE9D /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A599BF122BDDBB200E0FE9D /* HelpViewController.swift */; };
 		5A77875C22AF7CFE006CFF78 /* JourneyPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A77875B22AF7CFE006CFF78 /* JourneyPlannerViewController.swift */; };
 		5A7B1AF6227EEB5E0012E09C /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */; };
 		5A85D5B8229084AA00E01AD9 /* DirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A85D5B7229084AA00E01AD9 /* DirectionsViewController.swift */; };
@@ -78,6 +80,8 @@
 		5A570FD2229C3C0500569007 /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		5A570FD4229C3CCC00569007 /* FavStopData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStopData.swift; sourceTree = "<group>"; };
 		5A570FD6229C3CD500569007 /* FavRouteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavRouteData.swift; sourceTree = "<group>"; };
+		5A599BCC22BDDA0300E0FE9D /* HelpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPageViewController.swift; sourceTree = "<group>"; };
+		5A599BF122BDDBB200E0FE9D /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		5A77875B22AF7CFE006CFF78 /* JourneyPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyPlannerViewController.swift; sourceTree = "<group>"; };
 		5A7B1AF5227EEB5E0012E09C /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		5A85D5B7229084AA00E01AD9 /* DirectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 		5A331BF522731FAF00467C8B /* Oh_My-Transport */ = {
 			isa = PBXGroup;
 			children = (
+				5A599BF022BDDB8F00E0FE9D /* HelpPage */,
 				5AE5ECC8229C538F00D65A04 /* ObjectCLibrary */,
 				5AEEE87A2297B8E300EF6D83 /* SearchPage */,
 				5A85D5B62290845A00E01AD9 /* RoutePage */,
@@ -196,6 +201,15 @@
 				5A77875B22AF7CFE006CFF78 /* JourneyPlannerViewController.swift */,
 			);
 			path = "Oh_My-Transport";
+			sourceTree = "<group>";
+		};
+		5A599BF022BDDB8F00E0FE9D /* HelpPage */ = {
+			isa = PBXGroup;
+			children = (
+				5A599BCC22BDDA0300E0FE9D /* HelpPageViewController.swift */,
+				5A599BF122BDDBB200E0FE9D /* HelpViewController.swift */,
+			);
+			path = HelpPage;
 			sourceTree = "<group>";
 		};
 		5A7B1AF4227EE91D0012E09C /* DataModel */ = {
@@ -402,6 +416,7 @@
 				5A331C0D2273276700467C8B /* localTransportData.xcdatamodeld in Sources */,
 				5A570FD5229C3CCC00569007 /* FavStopData.swift in Sources */,
 				5A570FD7229C3CD500569007 /* FavRouteData.swift in Sources */,
+				5A599BF222BDDBB200E0FE9D /* HelpViewController.swift in Sources */,
 				5A85D5B8229084AA00E01AD9 /* DirectionsViewController.swift in Sources */,
 				5A77875C22AF7CFE006CFF78 /* JourneyPlannerViewController.swift in Sources */,
 				5AEF7DD42291C53F0087C087 /* nearbyStopsTableViewCell.swift in Sources */,
@@ -414,6 +429,7 @@
 				5A85D5C2229086AE00E01AD9 /* RoutesStopTableViewCell.swift in Sources */,
 				5AEA77D2227C67D8005A6A74 /* DisruptionsTableViewController.swift in Sources */,
 				5AFA5F4E227F445600FAAA1D /* disruptionTableViewCell.swift in Sources */,
+				5A599BCD22BDDA0300E0FE9D /* HelpPageViewController.swift in Sources */,
 				5A570FD3229C3C0500569007 /* CoreDataController.swift in Sources */,
 				5AEF7DC3229196A50087C087 /* FavRoute+CoreDataClass.swift in Sources */,
 				5AEF7DCE2291BF590087C087 /* HomepageViewController.swift in Sources */,
