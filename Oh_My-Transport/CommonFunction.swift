@@ -15,9 +15,6 @@ private let HARDCODEDURL: String = "https://timetableapi.ptv.vic.gov.au"
 private var PrimaryDevId: String = "3001122"
 private var PrimaryDevKey: String = "3c74a383-c69a-4e8d-b2f8-2e4c598b50b2"
 
-private var SecondaryDevId: String = "3001136"
-private var SecondaryDevKey: String = "5d246d05-f36d-4606-96df-829d509a4e60"
-
 // Countdown Conversion
 public func Iso8601Countdown(iso8601Date: String, status: Bool?) -> String {
     if iso8601Date == "nil"{
@@ -161,22 +158,14 @@ public func extractedFunc(_ request: String) -> String {
     return requestAddress
 }
 
-public func alternativeExtractedFunc(_ request: String) -> String {
-    let signature: String = request.hmac(algorithm: CryptoAlgorithm.SHA1, key: SecondaryDevKey)
-    let requestAddress: String = HARDCODEDURL+request+"&signature="+signature
-    
-    print("Request: \(requestAddress)")
-    return requestAddress
-}
-
 // Departures
 public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int) -> String{       // View departures for a specific route from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?expand=all&devid="+PrimaryDevId
     return extractedFunc(request)
 }
 public func showRouteDepartureOnStop(routeType: Int, stopId: Int, routeId: Int, directionId: Int) -> String{      // View departures for a specific route from a stop (With Direction condition)
-    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&expand=all&devid="+SecondaryDevId
-    return alternativeExtractedFunc(request)
+    let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)/route/\(routeId)?direction_id=\(directionId)&expand=all&devid="+PrimaryDevId
+    return extractedFunc(request)
 }
 public func nextDepartureURL(routeType: Int, stopId: Int) -> String{            // View departures for all routes from a stop
     let request: String = "/v3/departures/route_type/\(routeType)/stop/\(stopId)?max_results=200&expand=all&devid="+PrimaryDevId
@@ -234,8 +223,8 @@ public func showRoutesRun(routeId: Int, routeType: Int) -> String{      //View a
 }
 
 public func showRunInfo(runId: Int, routeType: Int) -> String{          // View the trip/service run for a specific run ID and route type
-    let request: String = "/v3/runs/\(runId)/route_type/\(routeType)?devid="+SecondaryDevId
-    return alternativeExtractedFunc(request)
+    let request: String = "/v3/runs/\(runId)/route_type/\(routeType)?devid="+PrimaryDevId
+    return extractedFunc(request)
 }
 
 // Search
