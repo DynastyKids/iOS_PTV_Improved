@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        PgyManager.shared()?.isFeedbackEnabled = false
-        PgyManager.shared()?.start(withAppId: "f19a5962a4dfdc16169caf71585a0864")   // Loading with Dandelion SDK crash reporter
+        //PgyManager.shared()?.isFeedbackEnabled = false
+        //PgyManager.shared()?.start(withAppId: "f19a5962a4dfdc16169caf71585a0864")   // Loading with Dandelion SDK crash reporter
         
         
         let center = UNUserNotificationCenter.current()

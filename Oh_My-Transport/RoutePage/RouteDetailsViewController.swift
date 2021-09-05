@@ -189,7 +189,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
         }
         if indexPath.section == 1 {     // Section 1 (Stops)
             let cell = tableView.dequeueReusableCell(withIdentifier: "routeStops", for: indexPath) as! RoutesStopTableViewCell
-            let cellDepartureTime = departsData[indexPath.row].estimatedDepartureUTC ?? departsData[indexPath.row].scheduledDepartureUTC ?? nil!
+            let cellDepartureTime = departsData[indexPath.row].estimatedDepartureUTC ?? departsData[indexPath.row].scheduledDepartureUTC
             
             // Fetching Stop name
             var count = 0
@@ -253,7 +253,7 @@ class RouteDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 flagText += "* SchoolDay Only "
             }
             cell.routeAdditionInfoLabel.text = flagText
-            cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime, withTime: true, withDate: false)
+            cell.routeStopTimeLabel.text = Iso8601toString(iso8601Date: cellDepartureTime!, withTime: true, withDate: false)
             cell.routeStatusLabel.text = "Scheduled"
             cell.routeStatusLabel.textColor = UIColor.gray
             if departsData[indexPath.row].estimatedDepartureUTC != nil {
